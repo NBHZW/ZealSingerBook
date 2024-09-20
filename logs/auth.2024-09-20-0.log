@@ -1,0 +1,10 @@
+2024-09-20 11:33:49.587 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 9688 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-20 11:33:49.588 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-20 11:33:50.686 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-20 11:33:50.697 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-20 11:33:50.697 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-20 11:33:50.770 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-20 11:33:50.771 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1139 ms
+2024-09-20 11:33:51.358 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-20 11:33:51.366 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.273 seconds (process running for 3.609)
+2024-09-20 11:45:22.526 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...

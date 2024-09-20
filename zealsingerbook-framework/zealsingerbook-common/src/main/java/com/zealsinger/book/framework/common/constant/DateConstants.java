@@ -1,4 +1,4 @@
-package com.zealsinger.book.framework.common.constant;
+package com.zealsinger.framework.common.constant;
 
 public interface DateConstants {
     /**

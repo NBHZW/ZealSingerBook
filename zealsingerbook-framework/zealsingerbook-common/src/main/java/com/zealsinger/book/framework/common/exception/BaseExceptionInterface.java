@@ -1,4 +1,4 @@
-package com.zealsinger.book.framework.common.exception;
+package com.zealsinger.framework.common.exception;
 
 public interface BaseExceptionInterface {
     String getErrorCode();

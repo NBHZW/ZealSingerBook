@@ -1,7 +1,7 @@
 package com.zealsinger.zealsingerbookauth.controller;
 
 import com.zealsinger.aspect.ZealLog;
-import com.zealsinger.book.framework.common.response.Response;
+import com.zealsinger.framework.common.response.Response;
 import com.zealsinger.zealsingerbookauth.domain.entity.UserDO;
 import com.zealsinger.zealsingerbookauth.mapper.UserDOMapper;
 import jakarta.annotation.Resource;

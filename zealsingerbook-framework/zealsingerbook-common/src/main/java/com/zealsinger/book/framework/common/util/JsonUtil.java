@@ -1,4 +1,4 @@
-package com.zealsinger.book.framework.common.util;
+package com.zealsinger.framework.common.util;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.zealsinger.book.framework.common.constant.DateConstants;
+import com.zealsinger.framework.common.constant.DateConstants;
 import lombok.SneakyThrows;
 
 import java.time.LocalDateTime;

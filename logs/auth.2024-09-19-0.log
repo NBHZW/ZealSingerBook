@@ -1,0 +1,30 @@
+2024-09-19 15:24:12.090 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 19680 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook)
+2024-09-19 15:24:12.091 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-19 15:24:13.283 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-19 15:24:13.297 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-19 15:24:13.297 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-19 15:24:13.388 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-19 15:24:13.388 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1257 ms
+2024-09-19 15:24:14.089 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-19 15:24:14.096 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.548 seconds (process running for 3.743)
+2024-09-19 15:24:39.894 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-19 15:24:39.894 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-19 15:24:39.895 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-19 15:24:39.930 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [统一Response格式返回测试And自定义切面日志测试], 入参: , 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testResponse =================================== 
+2024-09-19 15:24:39.967 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [统一Response格式返回测试And自定义切面日志测试], 耗时: 1ms, 出参: {"success":false,"message":"ZealSinger - Response fail 返回测试","errorCode":null,"data":null} =================================== 
+2024-09-19 16:04:01.410 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-19 17:17:10.962 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 24136 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook)
+2024-09-19 17:17:10.964 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-19 17:17:11.834 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-19 17:17:11.841 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-19 17:17:11.842 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-19 17:17:11.905 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-19 17:17:11.905 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 906 ms
+2024-09-19 17:17:12.417 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-19 17:17:12.424 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 1.892 seconds (process running for 3.077)
+2024-09-19 17:17:20.518 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-19 17:17:20.518 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-19 17:17:20.520 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-09-19 17:17:20.547 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [统一Response格式返回测试And自定义切面日志测试], 入参: , 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testResponse =================================== 
+2024-09-19 17:17:20.577 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [统一Response格式返回测试And自定义切面日志测试], 耗时: 2ms, 出参: {"success":false,"message":"ZealSinger - Response fail 返回测试","errorCode":null,"data":null} =================================== 
+2024-09-19 17:17:24.590 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...

@@ -3,9 +3,10 @@ package com.zealsinger.config;
 import com.zealsinger.aspect.ApiOperationLogAspect;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 
-@AutoConfiguration
+@Configuration
 public class ZealSingerLogAutoConfiguration {
     @Bean
     public ApiOperationLogAspect apiOperationLogAspect(){
