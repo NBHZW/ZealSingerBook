@@ -1,6 +1,7 @@
-package com.zealsinger.framework.common.exception;
+package com.zealsinger.book.framework.common.exception;
 
-import lombok.Data;
+
+import com.zealsinger.framework.common.exception.BaseExceptionInterface;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,7 +1,8 @@
 package com.zealsinger.zealsingerbookauth.controller;
 
 import com.zealsinger.aspect.ZealLog;
-import com.zealsinger.framework.common.response.Response;
+import com.zealsinger.book.framework.common.exception.BusinessException;
+import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.zealsingerbookauth.domain.entity.UserDO;
 import com.zealsinger.zealsingerbookauth.mapper.UserDOMapper;
 import jakarta.annotation.Resource;
@@ -25,5 +26,12 @@ public class TestController {
     @ZealLog(description = "jackson统一配置测试")
     public Response<?> testJackson(@RequestBody UserDO user){
         return Response.success(user);
+    }
+
+    @GetMapping("/exceptionhandler")
+    @ZealLog(description = "全局异常捕获器测试")
+    public Response<?> testException(){
+        int i =1/0;
+        return null;
     }
 }

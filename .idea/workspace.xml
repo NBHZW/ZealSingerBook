@@ -4,35 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
-      <change afterPath="$PROJECT_DIR$/.flattened-pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/image-20240919113640977.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/image-20240919151209443.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/logs/auth.2024-09-19-0.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/logs/auth.2024-09-20-0.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/logs/auth.2024-09-19-0.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/enums/ResponseCodeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/logback-spring.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-framework/.flattened-pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsinger-operationlog-spring-boot-starter/.flattened-pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/.flattened-pom.xml" afterDir="false" />
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:规范化模块依赖关系;解决子模块单独打包异常的问题">
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/exception/GlobalExceptionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/day02.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day02.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/config/JacksonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/config/JacksonConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-20-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-20-0.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/TestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsinger-operationlog-spring-boot-starter/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsinger-operationlog-spring-boot-starter/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsinger-operationlog-spring-boot-starter/src/main/java/com/zealsinger/aspect/ApiOperationLogAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsinger-operationlog-spring-boot-starter/src/main/java/com/zealsinger/aspect/ApiOperationLogAspect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsinger-operationlog-spring-boot-starter/src/main/java/com/zealsinger/config/ZealSingerLogAutoConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsinger-operationlog-spring-boot-starter/src/main/java/com/zealsinger/config/ZealSingerLogAutoConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/DateConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/DateConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/exception/BaseExceptionInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/exception/BaseExceptionInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/enums/ResponseCodeEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/exception/BusinessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/exception/BusinessException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/response/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/response/Response.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/util/JsonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/util/JsonUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,8 +22,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -86,6 +65,7 @@
     "JUnit.ZealsingerbookAuthApplicationTests.contextLoads.executor": "Run",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "Maven.ZealSingerBook [clean].executor": "Run",
+    "Maven.ZealSingerBook [install].executor": "Run",
     "Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:clean].executor": "Run",
     "Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:flatten].executor": "Run",
     "Maven.ZealSingerBook [package].executor": "Run",
@@ -200,6 +180,7 @@
       <workItem from="1726735860694" duration="1376000" />
       <workItem from="1726737256994" duration="3247000" />
       <workItem from="1726802143588" duration="1768000" />
+      <workItem from="1726822738049" duration="5882000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -209,7 +190,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726715788346</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat:规范化模块依赖关系;解决子模块单独打包异常的问题">
+      <option name="closed" value="true" />
+      <created>1726822838770</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1726822838770</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,6 +218,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter" />
+    <MESSAGE value="feat:规范化模块依赖关系;解决子模块单独打包异常的问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:规范化模块依赖关系;解决子模块单独打包异常的问题" />
   </component>
 </project>

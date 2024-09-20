@@ -1,8 +1,13 @@
 package com.zealsinger.zealsingerbookauth.domain.enums;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
+@Getter
 public enum ResponseCodeEnum {
     /**
      * code 采用 模块Name+序列的方式  方便出问题的时候定位到是哪个模块
