@@ -8,3 +8,182 @@
 2024-09-20 11:33:51.358 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
 2024-09-20 11:33:51.366 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.273 seconds (process running for 3.609)
 2024-09-20 11:45:22.526 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-20 20:30:30.005 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 19524 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-20 20:30:30.008 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-20 20:30:31.012 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-20 20:30:31.020 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-20 20:30:31.021 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-20 20:30:31.087 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-20 20:30:31.087 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1040 ms
+2024-09-20 20:30:31.641 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-20 20:30:31.648 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.124 seconds (process running for 3.582)
+2024-09-20 20:31:21.851 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-20 20:31:21.851 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-20 20:31:21.852 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-20 20:31:21.886 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [统一Response格式返回测试And自定义切面日志测试], 入参: , 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testResponse =================================== 
+2024-09-20 20:31:21.923 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [统一Response格式返回测试And自定义切面日志测试], 耗时: 2ms, 出参: {"success":false,"message":"ZealSinger - Response fail 返回测试","errorCode":null,"data":null} =================================== 
+2024-09-20 20:31:30.704 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [jackson统一配置测试], 入参: {"id":10,"username":null,"createTime":"2024-05-14 12:00:00","updateTime":"2024-05-15 12:00:00"}, 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testJackson =================================== 
+2024-09-20 20:31:30.707 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [jackson统一配置测试], 耗时: 2ms, 出参: {"success":true,"message":null,"errorCode":null,"data":{"id":10,"username":null,"createTime":"2024-05-14 12:00:00","updateTime":"2024-05-15 12:00:00"}} =================================== 
+2024-09-20 20:32:11.437 [http-nio-8080-exec-3] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [jackson统一配置测试], 入参: {"id":10,"username":"zealsinger","createTime":"2024-05-14 12:00:00","updateTime":"2024-05-15 12:00:00"}, 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testJackson =================================== 
+2024-09-20 20:32:11.438 [http-nio-8080-exec-3] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [jackson统一配置测试], 耗时: 1ms, 出参: {"success":true,"message":null,"errorCode":null,"data":{"id":10,"username":"zealsinger","createTime":"2024-05-14 12:00:00","updateTime":"2024-05-15 12:00:00"}} =================================== 
+2024-09-20 20:32:21.378 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-20 20:52:14.231 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 21052 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-20 20:52:14.234 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-20 20:52:15.082 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-20 20:52:15.089 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-20 20:52:15.089 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-20 20:52:15.157 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-20 20:52:15.157 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 884 ms
+2024-09-20 20:52:15.657 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-20 20:52:15.664 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 1.9 seconds (process running for 2.435)
+2024-09-20 20:52:22.044 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-20 20:52:22.045 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-20 20:52:22.045 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2024-09-20 20:52:22.139 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [jackson统一配置测试], 入参: {"id":10,"username":"zealsinger","createTime":"2024-05-14 12:00:00","updateTime":"2024-05-15 12:00:00"}, 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testJackson =================================== 
+2024-09-20 20:52:22.143 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [jackson统一配置测试], 耗时: 1ms, 出参: {"success":true,"message":null,"errorCode":null,"data":{"id":10,"username":"zealsinger","createTime":"2024-05-14 12:00:00","updateTime":"2024-05-15 12:00:00"}} =================================== 
+2024-09-20 20:52:35.674 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-20 22:25:56.797 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 19188 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-20 22:25:56.800 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-20 22:25:58.225 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-20 22:25:58.238 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-20 22:25:58.238 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-20 22:25:58.336 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-20 22:25:58.336 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1491 ms
+2024-09-20 22:25:59.050 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-20 22:25:59.056 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.863 seconds (process running for 3.501)
+2024-09-20 22:26:32.100 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-20 22:26:32.100 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-20 22:26:32.101 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-20 22:26:32.135 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [全局异常捕获器测试], 入参: , 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testException =================================== 
+2024-09-20 22:26:32.138 [http-nio-8080-exec-1] ERROR c.z.z.exception.GlobalExceptionHandler - /test/exceptionhandler request error, 
+java.lang.ArithmeticException: / by zero
+	at com.zealsinger.zealsingerbookauth.controller.TestController.testException(TestController.java:34)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.zealsinger.aspect.ApiOperationLogAspect.doAround(ApiOperationLogAspect.java:39)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:623)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:703)
+	at com.zealsinger.zealsingerbookauth.controller.TestController$$SpringCGLIB$$0.testException(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:207)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:152)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:884)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1080)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:973)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1011)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:705)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:814)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:223)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:400)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:859)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1734)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-09-20 22:28:07.797 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-20 23:06:07.557 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 2148 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-20 23:06:07.558 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-20 23:06:08.676 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-20 23:06:08.687 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-20 23:06:08.688 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-20 23:06:08.762 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-20 23:06:08.762 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1161 ms
+2024-09-20 23:06:09.389 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-20 23:06:09.396 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.327 seconds (process running for 3.491)
+2024-09-20 23:06:54.416 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-20 23:06:59.991 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 19952 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-20 23:06:59.995 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-20 23:07:01.024 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-20 23:07:01.031 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-20 23:07:01.032 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-20 23:07:01.099 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-20 23:07:01.099 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1052 ms
+2024-09-20 23:07:01.690 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-20 23:07:01.697 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.284 seconds (process running for 3.038)
+2024-09-20 23:12:36.222 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-20 23:12:38.643 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 20368 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-20 23:12:38.645 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-20 23:12:39.617 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-20 23:12:39.627 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-20 23:12:39.628 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-20 23:12:39.702 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-20 23:12:39.702 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1013 ms
+2024-09-20 23:12:40.309 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-20 23:12:40.315 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.319 seconds (process running for 2.994)
+2024-09-20 23:24:08.415 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-20 23:24:11.737 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 23132 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-20 23:24:11.739 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-20 23:24:12.683 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-20 23:24:12.691 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-20 23:24:12.692 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-20 23:24:12.768 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-20 23:24:12.768 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 985 ms
+2024-09-20 23:24:13.365 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-20 23:24:13.371 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.124 seconds (process running for 2.736)
+2024-09-20 23:26:12.626 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-20 23:26:12.626 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-20 23:26:12.628 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-09-20 23:26:29.569 [http-nio-8080-exec-7] WARN  o.s.core.LocalVariableTableParameterNameDiscoverer - Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.zealsinger.zealsingerbookauth.controller.TestController
+2024-09-20 23:26:29.580 [http-nio-8080-exec-7] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [Sa-Token登录接口测试], 入参: null,null, 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testLogin =================================== 
+2024-09-20 23:26:29.590 [http-nio-8080-exec-7] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [Sa-Token登录接口测试], 耗时: 2ms, 出参: {"success":false,"message":"登录失败","errorCode":null,"data":null} =================================== 
+2024-09-20 23:26:46.244 [http-nio-8080-exec-8] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [测试Sa-Token登录状态查询接口测试], 入参: , 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: isLogin =================================== 
+2024-09-20 23:26:46.248 [http-nio-8080-exec-8] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [测试Sa-Token登录状态查询接口测试], 耗时: 4ms, 出参: {"success":true,"message":null,"errorCode":null,"data":"当前会话登录状态: false"} =================================== 
+2024-09-20 23:27:43.340 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [Sa-Token登录接口测试], 入参: "zealsinger","123123", 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testLogin =================================== 
+2024-09-20 23:27:43.345 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [Sa-Token登录接口测试], 耗时: 5ms, 出参: {"success":true,"message":null,"errorCode":null,"data":"登录成功"} =================================== 
+2024-09-20 23:27:54.117 [http-nio-8080-exec-4] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [Sa-Token登录接口测试], 入参: "zealsinger","123123", 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testLogin =================================== 
+2024-09-20 23:27:54.118 [http-nio-8080-exec-4] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [Sa-Token登录接口测试], 耗时: 1ms, 出参: {"success":true,"message":null,"errorCode":null,"data":"登录成功"} =================================== 
+2024-09-20 23:28:00.288 [http-nio-8080-exec-5] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [Sa-Token登录接口测试], 入参: "zealsinger","123123", 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testLogin =================================== 
+2024-09-20 23:28:00.290 [http-nio-8080-exec-5] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [Sa-Token登录接口测试], 耗时: 2ms, 出参: {"success":true,"message":null,"errorCode":null,"data":"登录成功"} =================================== 
+2024-09-20 23:37:41.046 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...

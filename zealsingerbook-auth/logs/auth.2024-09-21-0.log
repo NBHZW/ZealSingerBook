@@ -1,0 +1,56 @@
+2024-09-21 10:00:55.024 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Starting ZealsingerbookAuthApplicationTests using Java 17.0.5 with PID 17776 (started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth)
+2024-09-21 10:00:55.025 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - The following 1 profile is active: "dev"
+2024-09-21 10:00:55.999 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 10:00:56.003 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 10:00:56.040 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2024-09-21 10:00:58.267 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Started ZealsingerbookAuthApplicationTests in 3.911 seconds (process running for 5.048)
+2024-09-21 10:00:59.886 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 10:01:28.155 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Starting ZealsingerbookAuthApplicationTests using Java 17.0.5 with PID 4996 (started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth)
+2024-09-21 10:01:28.158 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - The following 1 profile is active: "dev"
+2024-09-21 10:01:28.969 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 10:01:28.973 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 10:01:29.024 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 19 ms. Found 0 Redis repository interfaces.
+2024-09-21 10:01:31.056 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Started ZealsingerbookAuthApplicationTests in 3.51 seconds (process running for 4.387)
+2024-09-21 10:01:32.568 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 10:01:53.298 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Starting ZealsingerbookAuthApplicationTests using Java 17.0.5 with PID 21440 (started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth)
+2024-09-21 10:01:53.301 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - The following 1 profile is active: "dev"
+2024-09-21 10:01:54.057 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 10:01:54.060 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 10:01:54.100 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 19 ms. Found 0 Redis repository interfaces.
+2024-09-21 10:01:56.167 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Started ZealsingerbookAuthApplicationTests in 3.463 seconds (process running for 4.394)
+2024-09-21 10:01:57.724 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 10:02:37.468 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Starting ZealsingerbookAuthApplicationTests using Java 17.0.5 with PID 7244 (started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth)
+2024-09-21 10:02:37.474 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - The following 1 profile is active: "dev"
+2024-09-21 10:02:38.346 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 10:02:38.349 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 10:02:38.391 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2024-09-21 10:02:40.562 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Started ZealsingerbookAuthApplicationTests in 3.735 seconds (process running for 4.629)
+2024-09-21 10:02:42.174 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 15:22:29.459 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Starting ZealsingerbookAuthApplicationTests using Java 17.0.5 with PID 21380 (started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth)
+2024-09-21 15:22:29.460 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - The following 1 profile is active: "dev"
+2024-09-21 15:22:30.331 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 15:22:30.334 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 15:22:30.380 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2024-09-21 15:22:33.163 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Started ZealsingerbookAuthApplicationTests in 4.293 seconds (process running for 5.281)
+2024-09-21 15:22:34.771 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 15:22:47.571 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Starting ZealsingerbookAuthApplicationTests using Java 17.0.5 with PID 19380 (started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth)
+2024-09-21 15:22:47.574 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - The following 1 profile is active: "dev"
+2024-09-21 15:22:48.353 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 15:22:48.356 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 15:22:48.403 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 0 Redis repository interfaces.
+2024-09-21 15:22:51.012 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Started ZealsingerbookAuthApplicationTests in 3.983 seconds (process running for 4.842)
+2024-09-21 15:22:51.695 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 15:24:06.269 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Starting ZealsingerbookAuthApplicationTests using Java 17.0.5 with PID 11452 (started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth)
+2024-09-21 15:24:06.273 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - The following 1 profile is active: "dev"
+2024-09-21 15:24:07.127 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 15:24:07.130 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 15:24:07.182 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 19 ms. Found 0 Redis repository interfaces.
+2024-09-21 15:24:09.698 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Started ZealsingerbookAuthApplicationTests in 3.963 seconds (process running for 4.813)
+2024-09-21 15:24:10.366 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 16:19:43.932 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Starting ZealsingerbookAuthApplicationTests using Java 17.0.5 with PID 22540 (started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth)
+2024-09-21 16:19:43.934 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - The following 1 profile is active: "dev"
+2024-09-21 16:19:44.678 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 16:19:44.682 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 16:19:44.727 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2024-09-21 16:19:47.068 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Started ZealsingerbookAuthApplicationTests in 3.743 seconds (process running for 5.708)
+2024-09-21 16:19:47.087 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...

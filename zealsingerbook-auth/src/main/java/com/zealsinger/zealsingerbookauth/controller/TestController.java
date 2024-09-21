@@ -1,5 +1,6 @@
 package com.zealsinger.zealsingerbookauth.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.zealsinger.aspect.ZealLog;
 import com.zealsinger.book.framework.common.exception.BusinessException;
 import com.zealsinger.book.framework.common.response.Response;
@@ -33,5 +34,21 @@ public class TestController {
     public Response<?> testException(){
         int i =1/0;
         return null;
+    }
+
+    @GetMapping("/user/login")
+    @ZealLog(description = "Sa-Token登录接口测试")
+    public Response<?> testLogin(String username,String password){
+        if("zealsinger".equals(username) && "123123".equals(password)){
+            StpUtil.login(1000);
+            return Response.success("登录成功");
+        }
+        return Response.fail("登录失败");
+    }
+
+    @GetMapping("/user/islogin")
+    @ZealLog(description = "测试Sa-Token登录状态查询接口测试")
+    public Response<?> isLogin(){
+        return Response.success("当前会话登录状态: " + StpUtil.isLogin());
     }
 }

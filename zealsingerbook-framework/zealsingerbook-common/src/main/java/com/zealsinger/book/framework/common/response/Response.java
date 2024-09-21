@@ -1,6 +1,7 @@
 package com.zealsinger.book.framework.common.response;
 
-import com.zealsinger.framework.common.exception.BaseExceptionInterface;
+
+import com.zealsinger.book.framework.common.exception.BaseExceptionInterface;
 import com.zealsinger.book.framework.common.exception.BusinessException;
 import lombok.Data;
 

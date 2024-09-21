@@ -1,0 +1,246 @@
+2024-09-21 16:20:39.622 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 21640 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-21 16:20:39.624 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-21 16:20:40.119 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 16:20:40.122 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 16:20:40.147 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2024-09-21 16:20:40.693 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-21 16:20:40.703 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-21 16:20:40.703 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-21 16:20:40.784 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-21 16:20:40.784 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1116 ms
+2024-09-21 16:20:41.772 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-21 16:20:41.781 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.668 seconds (process running for 3.318)
+2024-09-21 16:21:53.177 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-21 16:21:53.177 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-21 16:21:53.178 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-21 16:21:53.261 [http-nio-8080-exec-1] ERROR c.z.z.exception.GlobalExceptionHandler - /verification/code/send request error, 
+org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot construct instance of `com.zealsinger.zealsingerbookauth.domain.vo.SendVerificationCodeReqVO` (although at least one Creator exists): cannot deserialize from Object value (no delegate- or property-based Creator)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:406)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.read(AbstractJackson2HttpMessageConverter.java:354)
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodArgumentResolver.readWithMessageConverters(AbstractMessageConverterMethodArgumentResolver.java:182)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.readWithMessageConverters(RequestResponseBodyMethodProcessor.java:163)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.resolveArgument(RequestResponseBodyMethodProcessor.java:136)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:181)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:148)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:884)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1080)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:973)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1011)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:814)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:223)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:400)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:859)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1734)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot construct instance of `com.zealsinger.zealsingerbookauth.domain.vo.SendVerificationCodeReqVO` (although at least one Creator exists): cannot deserialize from Object value (no delegate- or property-based Creator)
+ at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 2, column: 5]
+	at com.fasterxml.jackson.databind.exc.MismatchedInputException.from(MismatchedInputException.java:63)
+	at com.fasterxml.jackson.databind.DeserializationContext.reportInputMismatch(DeserializationContext.java:1733)
+	at com.fasterxml.jackson.databind.DeserializationContext.handleMissingInstantiator(DeserializationContext.java:1358)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1420)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:352)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:185)
+	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext.readRootValue(DefaultDeserializationContext.java:323)
+	at com.fasterxml.jackson.databind.ObjectReader._bindAndClose(ObjectReader.java:2105)
+	at com.fasterxml.jackson.databind.ObjectReader.readValue(ObjectReader.java:1481)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:395)
+	... 54 common frames omitted
+2024-09-21 20:04:17.361 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 20:06:10.366 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 4160 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-21 20:06:10.368 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-21 20:06:10.887 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 20:06:10.891 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 20:06:10.919 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2024-09-21 20:06:11.529 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-21 20:06:11.538 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-21 20:06:11.539 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-21 20:06:11.619 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-21 20:06:11.619 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1210 ms
+2024-09-21 20:06:12.539 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-21 20:06:12.545 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.666 seconds (process running for 3.376)
+2024-09-21 20:06:49.038 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-21 20:06:49.038 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-21 20:06:49.040 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-21 20:06:49.143 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"13203210631"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-21 20:06:49.731 [http-nio-8080-exec-1] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - ==> 手机号: 13203210631, 已生成验证码：【383841】
+2024-09-21 20:06:49.732 [http-nio-8080-exec-1] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - 成功向手机号 13203210631  发送验证码 383841 , 有效期 3min
+2024-09-21 20:06:49.733 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 开始短信发送, phone: 13203210631, signName: ZealSingerBook, templateCode: SMS_473835044, templateParam: 383841
+2024-09-21 20:06:49.763 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [发送登录验证码], 耗时: 619ms, 出参: {"success":true,"message":null,"errorCode":null,"data":null} =================================== 
+2024-09-21 20:06:50.645 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Sat, 21 Sep 2024 12:06:49 GMT","content-length":"173","keep-alive":"timeout=25","x-acs-request-id":"0C9CC0CD-A49A-50E1-B534-94248349FCBB","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1gbjfL/ScZu3GQ5EnRfNhdA9","access-control-expose-headers":"*","x-acs-trace-id":"8bd4ee8fea331d4eff1f8ba297f41111"},"statusCode":200,"body":{"bizId":null,"code":"isv.INVALID_JSON_PARAM","message":"模板变量JSON格式错误 或 JSON变量属性与模板占位符不一致","requestId":"0C9CC0CD-A49A-50E1-B534-94248349FCBB"}}
+2024-09-21 20:11:25.704 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 20:11:29.728 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 22856 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-21 20:11:29.730 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-21 20:11:30.271 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 20:11:30.272 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 20:11:30.298 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
+2024-09-21 20:11:30.946 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-21 20:11:30.954 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-21 20:11:30.954 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-21 20:11:31.059 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-21 20:11:31.059 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1288 ms
+2024-09-21 20:11:32.072 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-21 20:11:32.081 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.85 seconds (process running for 3.536)
+2024-09-21 20:11:36.284 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-21 20:11:36.284 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-21 20:11:36.285 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-21 20:11:36.377 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"13203210631"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-21 20:11:36.867 [http-nio-8080-exec-1] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - ==> 手机号: 13203210631, 已生成验证码：【913269】
+2024-09-21 20:11:36.868 [http-nio-8080-exec-1] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - 成功向手机号 13203210631  发送验证码 913269 , 有效期 3min
+2024-09-21 20:11:36.868 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 开始短信发送, phone: 13203210631, signName: ZealSingerBook, templateCode: SMS_305445467, templateParam: 913269
+2024-09-21 20:11:36.905 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [发送登录验证码], 耗时: 520ms, 出参: {"success":true,"message":null,"errorCode":null,"data":null} =================================== 
+2024-09-21 20:11:37.546 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Sat, 21 Sep 2024 12:11:36 GMT","content-length":"173","keep-alive":"timeout=25","x-acs-request-id":"3A50BD63-E68E-50EE-AA2F-E971A83A412A","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1ILSCFGJKDsXY3VOlib593g9","access-control-expose-headers":"*","x-acs-trace-id":"64ecb5cc128b78df90934b9de8e7dda7"},"statusCode":200,"body":{"bizId":null,"code":"isv.INVALID_JSON_PARAM","message":"模板变量JSON格式错误 或 JSON变量属性与模板占位符不一致","requestId":"3A50BD63-E68E-50EE-AA2F-E971A83A412A"}}
+2024-09-21 20:13:33.422 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 20:13:37.494 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 22704 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-21 20:13:37.497 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-21 20:13:38.048 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 20:13:38.050 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 20:13:38.076 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2024-09-21 20:13:38.736 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-21 20:13:38.744 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-21 20:13:38.744 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-21 20:13:38.837 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-21 20:13:38.837 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1301 ms
+2024-09-21 20:13:39.805 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-21 20:13:39.812 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.799 seconds (process running for 3.501)
+2024-09-21 20:13:52.442 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-21 20:13:52.442 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-21 20:13:52.443 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2024-09-21 20:13:52.531 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"13203210631"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-21 20:13:53.000 [http-nio-8080-exec-1] WARN  c.z.z.exception.GlobalExceptionHandler - /verification/code/send request fail, errorCode: AUTH-20000, errorMessage: 请求太频繁,3分钟后再尝试
+2024-09-21 20:14:33.319 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"13203210631"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-21 20:14:33.350 [http-nio-8080-exec-2] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - ==> 手机号: 13203210631, 已生成验证码：【603927】
+2024-09-21 20:14:33.351 [http-nio-8080-exec-2] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - 成功向手机号 13203210631  发送验证码 603927 , 有效期 3min
+2024-09-21 20:14:33.351 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 开始短信发送, phone: 13203210631, signName: ZealSingerBook, templateCode: SMS_473835044, templateParam: {"code":"603927"}
+2024-09-21 20:14:33.380 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [发送登录验证码], 耗时: 61ms, 出参: {"success":true,"message":null,"errorCode":null,"data":null} =================================== 
+2024-09-21 20:14:34.121 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Sat, 21 Sep 2024 12:14:33 GMT","content-length":"133","keep-alive":"timeout=25","x-acs-request-id":"7A5E2E29-C03F-5C18-B59A-0052F2DCA3B4","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1oWSLZvu+MwD3vK4sDBbBEQ1","access-control-expose-headers":"*","x-acs-trace-id":"e8a0d8aa7532418de846eb6d9e19deec"},"statusCode":200,"body":{"bizId":null,"code":"isv.SMS_SIGNATURE_ILLEGAL","message":"该账号下找不到对应签名","requestId":"7A5E2E29-C03F-5C18-B59A-0052F2DCA3B4"}}
+2024-09-21 20:15:22.229 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 20:15:26.541 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 23888 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-21 20:15:26.542 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-21 20:15:27.034 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 20:15:27.037 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 20:15:27.062 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
+2024-09-21 20:15:27.638 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-21 20:15:27.647 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-21 20:15:27.647 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-21 20:15:27.719 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-21 20:15:27.719 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1139 ms
+2024-09-21 20:15:28.590 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-21 20:15:28.597 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.52 seconds (process running for 3.174)
+2024-09-21 20:15:35.906 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-21 20:15:35.907 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-21 20:15:35.908 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-21 20:15:35.996 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"13203210631"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-21 20:15:36.460 [http-nio-8080-exec-1] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - ==> 手机号: 13203210631, 已生成验证码：【694541】
+2024-09-21 20:15:36.461 [http-nio-8080-exec-1] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - 成功向手机号 13203210631  发送验证码 694541 , 有效期 3min
+2024-09-21 20:15:36.462 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 开始短信发送, phone: 13203210631, signName: Zeal书, templateCode: SMS_473835044, templateParam: {"code":"694541"}
+2024-09-21 20:15:36.497 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [发送登录验证码], 耗时: 494ms, 出参: {"success":true,"message":null,"errorCode":null,"data":null} =================================== 
+2024-09-21 20:15:37.459 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Sat, 21 Sep 2024 12:15:36 GMT","content-length":"110","keep-alive":"timeout=25","x-acs-request-id":"A674A9CA-39B7-57D5-938F-15DC8CA90B6D","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1Dc6zULa0gNljKSaWWKyrOg0","access-control-expose-headers":"*","x-acs-trace-id":"478f43bd7a792871f7e26d0f82a7d43a"},"statusCode":200,"body":{"bizId":"674205726920936200^0","code":"OK","message":"OK","requestId":"A674A9CA-39B7-57D5-938F-15DC8CA90B6D"}}
+2024-09-21 20:17:08.724 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 20:25:34.252 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 23804 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-21 20:25:34.253 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-21 20:25:34.789 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 20:25:34.791 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 20:25:34.814 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
+2024-09-21 20:25:35.428 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-21 20:25:35.436 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-21 20:25:35.438 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-21 20:25:35.516 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-21 20:25:35.517 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1221 ms
+2024-09-21 20:25:36.410 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-21 20:25:36.417 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.696 seconds (process running for 3.434)
+2024-09-21 20:25:45.904 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-21 20:25:45.905 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-21 20:25:45.905 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2024-09-21 20:25:46.005 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"1320"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-21 20:25:46.501 [http-nio-8080-exec-1] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - ==> 手机号: 1320, 已生成验证码：【652355】
+2024-09-21 20:25:46.503 [http-nio-8080-exec-1] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - 成功向手机号 1320  发送验证码 652355 , 有效期 3min
+2024-09-21 20:25:46.503 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 开始短信发送, phone: 1320, signName: Zeal书, templateCode: SMS_473835044, templateParam: {"code":"652355"}
+2024-09-21 20:25:46.534 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [发送登录验证码], 耗时: 527ms, 出参: {"success":true,"message":null,"errorCode":null,"data":null} =================================== 
+2024-09-21 20:25:47.303 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Sat, 21 Sep 2024 12:25:46 GMT","content-length":"124","keep-alive":"timeout=25","x-acs-request-id":"B521531C-DF74-51FB-8116-13520E36B07A","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1K2K/wyT2Heh0aG21BqOLkg8","access-control-expose-headers":"*","x-acs-trace-id":"78b2319237b85ceb9a0a6ee2d7a71f23"},"statusCode":200,"body":{"bizId":null,"code":"isv.MOBILE_NUMBER_ILLEGAL","message":"手机号码格式错误","requestId":"B521531C-DF74-51FB-8116-13520E36B07A"}}
+2024-09-21 20:26:42.776 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 20:26:46.069 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 18828 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-21 20:26:46.070 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-21 20:26:46.586 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 20:26:46.589 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 20:26:46.613 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
+2024-09-21 20:26:47.182 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-21 20:26:47.190 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-21 20:26:47.191 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-21 20:26:47.266 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-21 20:26:47.266 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1152 ms
+2024-09-21 20:26:48.131 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-21 20:26:48.138 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.553 seconds (process running for 3.171)
+2024-09-21 20:27:00.352 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-21 20:27:00.352 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-21 20:27:00.353 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-21 20:27:00.453 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"1320"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-21 20:27:00.961 [http-nio-8080-exec-1] WARN  c.z.z.exception.GlobalExceptionHandler - /verification/code/send request fail, errorCode: AUTH-20000, errorMessage: 请求太频繁,3分钟后再尝试
+2024-09-21 20:27:48.072 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"1320"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-21 20:27:48.104 [http-nio-8080-exec-2] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - ==> 手机号: 1320, 已生成验证码：【704929】
+2024-09-21 20:27:48.104 [http-nio-8080-exec-2] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - 成功向手机号 1320  发送验证码 704929 , 有效期 3min
+2024-09-21 20:27:48.105 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 开始短信发送, phone: 1320, signName: Zeal书, templateCode: SMS_473835044, templateParam: {"code":"704929"}
+2024-09-21 20:27:48.133 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [发送登录验证码], 耗时: 61ms, 出参: {"success":true,"message":null,"errorCode":null,"data":null} =================================== 
+2024-09-21 20:27:48.796 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Sat, 21 Sep 2024 12:27:47 GMT","content-length":"124","keep-alive":"timeout=25","x-acs-request-id":"AC48FBE0-D434-598C-9082-513885E2BAE7","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1g22hJ0hiYbt9PukDaLtqSg8","access-control-expose-headers":"*","x-acs-trace-id":"fb3530591069fc04a94b3df943e22d8e"},"statusCode":200,"body":{"bizId":null,"code":"isv.MOBILE_NUMBER_ILLEGAL","message":"手机号码格式错误","requestId":"AC48FBE0-D434-598C-9082-513885E2BAE7"}}
+2024-09-21 20:29:10.561 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-21 20:29:13.815 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 8112 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-21 20:29:13.816 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-21 20:29:14.315 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-21 20:29:14.317 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-21 20:29:14.341 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
+2024-09-21 20:29:14.916 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-21 20:29:14.924 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-21 20:29:14.925 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-21 20:29:15.001 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-21 20:29:15.001 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1142 ms
+2024-09-21 20:29:15.868 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-21 20:29:15.874 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.512 seconds (process running for 3.131)
+2024-09-21 20:29:21.017 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-21 20:29:21.017 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-21 20:29:21.018 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2024-09-21 20:29:21.126 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"1320"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-21 20:29:21.723 [http-nio-8080-exec-1] WARN  c.z.z.exception.GlobalExceptionHandler - /verification/code/send request fail, errorCode: AUTH-20000, errorMessage: 请求太频繁,3分钟后再尝试
+2024-09-21 20:29:31.586 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"1320"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-21 20:29:31.618 [http-nio-8080-exec-2] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - ==> 手机号: 1320, 已生成验证码：【904645】
+2024-09-21 20:29:31.619 [http-nio-8080-exec-2] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - 成功向手机号 1320  发送验证码 904645 , 有效期 3min
+2024-09-21 20:29:31.620 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 开始短信发送, phone: 1320, signName: Zeal书, templateCode: SMS_473835044, templateParam: {"code":"904645"}
+2024-09-21 20:29:31.651 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [发送登录验证码], 耗时: 65ms, 出参: {"success":true,"message":null,"errorCode":null,"data":null} =================================== 
+2024-09-21 20:29:32.357 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Sat, 21 Sep 2024 12:29:31 GMT","content-length":"124","keep-alive":"timeout=25","x-acs-request-id":"F1A53370-B5A0-5AC1-BD3F-DB5C18F83A06","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1Jr0UU0FLjJBkLR9VL5qkGg8","access-control-expose-headers":"*","x-acs-trace-id":"ff29464d9866f11ba2b69cf364904258"},"statusCode":200,"body":{"bizId":null,"code":"isv.MOBILE_NUMBER_ILLEGAL","message":"手机号码格式错误","requestId":"F1A53370-B5A0-5AC1-BD3F-DB5C18F83A06"}}
+2024-09-21 20:30:33.016 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
