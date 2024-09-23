@@ -46,6 +46,7 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <dysmsapi.version>3.0.0</dysmsapi.version>
         <sa-token-redis-jackson>1.39.0</sa-token-redis-jackson>
+        <mybatis-plus>3.5.7</mybatis-plus>
     </properties>
 
 
@@ -97,12 +98,12 @@
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
-            <!-- Mybatis -->
+<!--            &lt;!&ndash; Mybatis &ndash;&gt;
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${spring-boot.version}</version>
-            </dependency>
+            </dependency>-->
 
 
             <!-- MySQL 驱动 -->
@@ -162,6 +163,12 @@
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-redis-jackson</artifactId>
                 <version>${sa-token-redis-jackson}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

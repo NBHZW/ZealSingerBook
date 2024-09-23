@@ -7,9 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum StatusEnum {
     // 启用
-    ENABLE((byte) 0),
+    ENABLE(0),
     // 禁用
-    DISABLED((byte) 1);
+    DISABLED(1);
 
-    private final Byte value;
+    private final Integer value;
 }

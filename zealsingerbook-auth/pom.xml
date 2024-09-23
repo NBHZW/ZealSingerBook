@@ -37,12 +37,12 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <!-- Mybatis -->
+<!--        &lt;!&ndash; Mybatis &ndash;&gt;
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>${spring-boot.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- MySQL 驱动 -->
         <dependency>
@@ -110,6 +110,11 @@
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-redis-jackson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         </dependency>
     </dependencies>
 

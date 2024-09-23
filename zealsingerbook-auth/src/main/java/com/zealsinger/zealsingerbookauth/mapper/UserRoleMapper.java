@@ -1,17 +1,10 @@
 package com.zealsinger.zealsingerbookauth.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zealsinger.zealsingerbookauth.domain.entity.UserRole;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface UserRoleMapper {
-    int deleteByPrimaryKey(Long id);
+@Mapper
+public interface UserRoleMapper extends BaseMapper<UserRole> {
 
-    int insert(UserRole record);
-
-    int insertSelective(UserRole record);
-
-    UserRole selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(UserRole record);
-
-    int updateByPrimaryKey(UserRole record);
 }

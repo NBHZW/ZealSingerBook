@@ -1,17 +1,17 @@
 package com.zealsinger.zealsingerbookauth.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zealsinger.zealsingerbookauth.domain.entity.Permission;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface PermissionMapper {
-    int deleteByPrimaryKey(Long id);
+import java.util.List;
 
-    int insert(Permission record);
-
-    int insertSelective(Permission record);
-
-    Permission selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Permission record);
-
-    int updateByPrimaryKey(Permission record);
+@Mapper
+public interface PermissionMapper extends BaseMapper<Permission> {
+    /**
+     * 查询 APP 端所有被启用的权限
+     *
+     * @return
+     */
+    List<Permission> selectAppEnabledList();
 }

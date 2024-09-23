@@ -1,17 +1,17 @@
 package com.zealsinger.zealsingerbookauth.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zealsinger.zealsingerbookauth.domain.entity.Role;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface RoleMapper {
-    int deleteByPrimaryKey(Long id);
+import java.util.List;
 
-    int insert(Role record);
-
-    int insertSelective(Role record);
-
-    Role selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Role record);
-
-    int updateByPrimaryKey(Role record);
+@Mapper
+public interface RoleMapper extends BaseMapper<Role> {
+    /**
+     * 查询所有被启用的角色
+     *
+     * @return
+     */
+    List<Role> selectEnabledList();
 }

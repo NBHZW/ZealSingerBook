@@ -1,0 +1,434 @@
+2024-09-23 10:20:16.385 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 18408 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 10:20:16.387 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 10:20:17.028 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 10:20:17.032 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 10:20:17.064 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2024-09-23 10:20:17.866 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 10:20:17.876 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 10:20:17.876 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 10:20:17.961 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 10:20:17.961 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1532 ms
+2024-09-23 10:20:19.330 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-23 10:20:19.342 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 3.441 seconds (process running for 4.98)
+2024-09-23 10:20:19.344 [main] INFO  c.z.z.run.PushRolePermissionsRedisRunner - ==> 服务启动，开始同步角色权限数据到 Redis 中...
+2024-09-23 10:20:19.401 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2024-09-23 10:20:20.016 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==>  Preparing: select id, role_key, role_name from t_role where status=0 and is_deleted=0;
+2024-09-23 10:20:20.038 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==> Parameters: 
+2024-09-23 10:20:20.188 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - <==      Total: 1
+2024-09-23 10:20:20.191 [main] INFO  c.z.z.run.PushRolePermissionsRedisRunner - ==> 服务启动，成功同步角色权限数据到 Redis 中...
+2024-09-23 10:20:48.322 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-23 10:20:48.322 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-23 10:20:48.323 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-23 10:20:48.433 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [用户登录/注册], 入参: {"phoneNumber":"13203210631","code":"604192","password":"","type":1}, 请求类: com.zealsinger.zealsingerbookauth.controller.UserController, 请求方法: loginAndRegister =================================== 
+2024-09-23 10:20:49.006 [http-nio-8080-exec-1] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==>  Preparing: select id, password from t_user where phone = ?
+2024-09-23 10:20:49.007 [http-nio-8080-exec-1] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==> Parameters: 13203210631(String)
+2024-09-23 10:20:49.045 [http-nio-8080-exec-1] DEBUG c.z.z.mapper.UserMapper.selectByPhone - <==      Total: 1
+2024-09-23 10:20:49.350 [http-nio-8080-exec-1] INFO  c.z.zealsingerbookauth.server.Impl.UserServiceImpl - ===>用户 1 登录成功
+2024-09-23 10:20:49.635 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [用户登录/注册], 耗时: 1199ms, 出参: {"success":true,"message":null,"errorCode":null,"data":"15b80245-4e6b-421e-9005-4593fb925ab4"} =================================== 
+2024-09-23 11:02:33.949 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2024-09-23 11:02:33.952 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2024-09-23 11:02:39.841 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 21844 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 11:02:39.843 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 11:02:40.390 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 11:02:40.393 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 11:02:40.417 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
+2024-09-23 11:02:41.017 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 11:02:41.026 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 11:02:41.026 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 11:02:41.109 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 11:02:41.109 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1226 ms
+2024-09-23 11:02:42.079 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-23 11:02:42.085 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.753 seconds (process running for 3.511)
+2024-09-23 11:02:42.700 [main] INFO  c.z.z.run.PushRolePermissionsRedisRunner - ==> 服务启动，开始同步角色权限数据到 Redis 中...
+2024-09-23 11:02:42.729 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2024-09-23 11:03:15.550 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==>  Preparing: select id, role_key, role_name from t_role where status=0 and is_deleted=0;
+2024-09-23 11:03:15.566 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==> Parameters: 
+2024-09-23 11:03:20.250 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - <==      Total: 1
+2024-09-23 11:03:20.269 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - ==>  Preparing: select role_id, permission_id from t_role_permission_rel where role_id in ( ? )
+2024-09-23 11:03:20.269 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - ==> Parameters: 1(Long)
+2024-09-23 11:03:20.607 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - <==      Total: 2
+2024-09-23 11:03:20.610 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-09-23 11:03:20.626 [main] ERROR org.springframework.boot.SpringApplication - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761)
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:748)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291)
+	at com.zealsinger.zealsingerbookauth.ZealsingerbookAuthApplication.main(ZealsingerbookAuthApplication.java:13)
+Caused by: java.lang.NullPointerException: null
+	at java.base/java.util.stream.Collectors.lambda$groupingBy$53(Collectors.java:1142)
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+	at com.zealsinger.zealsingerbookauth.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:758)
+	... 5 common frames omitted
+2024-09-23 11:03:20.772 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2024-09-23 11:03:20.774 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2024-09-23 11:04:27.921 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 17252 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 11:04:27.923 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 11:04:28.452 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 11:04:28.454 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 11:04:28.479 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2024-09-23 11:04:29.076 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 11:04:29.084 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 11:04:29.085 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 11:04:29.160 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 11:04:29.160 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1198 ms
+2024-09-23 11:04:30.121 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-23 11:04:30.128 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.666 seconds (process running for 3.318)
+2024-09-23 11:04:30.633 [main] WARN  c.z.z.run.PushRolePermissionsRedisRunner - ==> 角色权限数据已经同步至 Redis 中，不再同步...
+2024-09-23 11:04:44.244 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-23 11:04:46.527 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 5188 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 11:04:46.531 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 11:04:47.050 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 11:04:47.050 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 11:04:47.080 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2024-09-23 11:04:47.653 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 11:04:47.661 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 11:04:47.661 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 11:04:47.733 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 11:04:47.734 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1160 ms
+2024-09-23 11:04:48.677 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-23 11:04:48.682 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.602 seconds (process running for 3.25)
+2024-09-23 11:04:49.153 [main] INFO  c.z.z.run.PushRolePermissionsRedisRunner - ==> 服务启动，开始同步角色权限数据到 Redis 中...
+2024-09-23 11:04:49.183 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2024-09-23 11:04:49.711 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==>  Preparing: select id, role_key, role_name from t_role where status=0 and is_deleted=0;
+2024-09-23 11:04:49.726 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==> Parameters: 
+2024-09-23 11:04:49.774 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - <==      Total: 1
+2024-09-23 11:05:27.533 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - ==>  Preparing: select role_id, permission_id from t_role_permission_rel where role_id in ( ? )
+2024-09-23 11:05:27.536 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - ==> Parameters: 1(Long)
+2024-09-23 11:05:27.572 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - <==      Total: 2
+2024-09-23 11:06:27.678 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-09-23 11:06:27.691 [main] ERROR org.springframework.boot.SpringApplication - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761)
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:748)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291)
+	at com.zealsinger.zealsingerbookauth.ZealsingerbookAuthApplication.main(ZealsingerbookAuthApplication.java:13)
+Caused by: java.lang.NullPointerException: null
+	at java.base/java.util.stream.Collectors.lambda$groupingBy$53(Collectors.java:1142)
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+	at com.zealsinger.zealsingerbookauth.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:758)
+	... 5 common frames omitted
+2024-09-23 11:06:27.846 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2024-09-23 11:06:27.850 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2024-09-23 11:06:30.238 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 15776 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 11:06:30.240 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 11:06:30.776 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 11:06:30.778 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 11:06:30.804 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2024-09-23 11:06:31.387 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 11:06:31.394 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 11:06:31.395 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 11:06:31.474 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 11:06:31.474 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1190 ms
+2024-09-23 11:06:32.428 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-23 11:06:32.434 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.638 seconds (process running for 3.272)
+2024-09-23 11:06:32.984 [main] WARN  c.z.z.run.PushRolePermissionsRedisRunner - ==> 角色权限数据已经同步至 Redis 中，不再同步...
+2024-09-23 11:06:47.952 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-23 11:06:50.279 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 3380 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 11:06:50.279 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 11:06:50.818 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 11:06:50.818 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 11:06:50.850 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2024-09-23 11:06:51.425 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 11:06:51.432 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 11:06:51.432 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 11:06:51.504 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 11:06:51.506 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1178 ms
+2024-09-23 11:06:52.468 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-23 11:06:52.474 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.63 seconds (process running for 3.265)
+2024-09-23 11:06:52.993 [main] INFO  c.z.z.run.PushRolePermissionsRedisRunner - ==> 服务启动，开始同步角色权限数据到 Redis 中...
+2024-09-23 11:06:53.020 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2024-09-23 11:06:53.580 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==>  Preparing: select id, role_key, role_name from t_role where status=0 and is_deleted=0;
+2024-09-23 11:06:53.594 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==> Parameters: 
+2024-09-23 11:06:53.654 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - <==      Total: 1
+2024-09-23 11:06:59.009 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - ==>  Preparing: select * from t_role_permission_rel where role_id in ( ? )
+2024-09-23 11:06:59.011 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - ==> Parameters: 1(Long)
+2024-09-23 11:06:59.051 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - <==      Total: 2
+2024-09-23 11:08:08.647 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-09-23 11:08:08.667 [main] ERROR org.springframework.boot.SpringApplication - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761)
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:748)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291)
+	at com.zealsinger.zealsingerbookauth.ZealsingerbookAuthApplication.main(ZealsingerbookAuthApplication.java:13)
+Caused by: java.lang.NullPointerException: element cannot be mapped to a null key
+	at java.base/java.util.Objects.requireNonNull(Objects.java:233)
+	at java.base/java.util.stream.Collectors.lambda$groupingBy$53(Collectors.java:1142)
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+	at com.zealsinger.zealsingerbookauth.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:758)
+	... 5 common frames omitted
+2024-09-23 11:08:08.834 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2024-09-23 11:08:08.839 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2024-09-23 11:09:39.336 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 22624 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 11:09:39.337 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 11:09:39.889 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 11:09:39.892 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 11:09:39.918 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2024-09-23 11:09:40.513 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 11:09:40.522 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 11:09:40.522 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 11:09:40.602 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 11:09:40.602 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1224 ms
+2024-09-23 11:09:41.589 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-23 11:09:41.596 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.779 seconds (process running for 3.433)
+2024-09-23 11:09:42.084 [main] WARN  c.z.z.run.PushRolePermissionsRedisRunner - ==> 角色权限数据已经同步至 Redis 中，不再同步...
+2024-09-23 11:09:50.198 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-23 11:09:52.606 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 1764 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 11:09:52.606 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 11:09:53.140 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 11:09:53.141 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 11:09:53.168 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
+2024-09-23 11:09:53.742 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 11:09:53.750 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 11:09:53.750 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 11:09:53.825 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 11:09:53.826 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1176 ms
+2024-09-23 11:09:54.756 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-23 11:09:54.764 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 2.605 seconds (process running for 3.301)
+2024-09-23 11:09:55.306 [main] INFO  c.z.z.run.PushRolePermissionsRedisRunner - ==> 服务启动，开始同步角色权限数据到 Redis 中...
+2024-09-23 11:09:55.336 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2024-09-23 11:09:55.994 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==>  Preparing: select id, role_key, role_name from t_role where status=0 and is_deleted=0;
+2024-09-23 11:09:56.009 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==> Parameters: 
+2024-09-23 11:09:56.072 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - <==      Total: 1
+2024-09-23 11:09:59.773 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - ==>  Preparing: select * from t_role_permission_rel where role_id in ( ? )
+2024-09-23 11:09:59.774 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - ==> Parameters: 1(Long)
+2024-09-23 11:09:59.808 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectByRoleIds - <==      Total: 2
+2024-09-23 11:13:54.896 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-09-23 11:13:54.920 [main] ERROR org.springframework.boot.SpringApplication - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761)
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:748)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291)
+	at com.zealsinger.zealsingerbookauth.ZealsingerbookAuthApplication.main(ZealsingerbookAuthApplication.java:13)
+Caused by: java.lang.NullPointerException: element cannot be mapped to a null key
+	at java.base/java.util.Objects.requireNonNull(Objects.java:233)
+	at java.base/java.util.stream.Collectors.lambda$groupingBy$53(Collectors.java:1142)
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+	at com.zealsinger.zealsingerbookauth.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:758)
+	... 5 common frames omitted
+2024-09-23 11:13:55.093 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2024-09-23 11:13:55.102 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2024-09-23 12:10:07.159 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 13716 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 12:10:07.160 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 12:10:07.878 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 12:10:07.882 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 12:10:07.916 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2024-09-23 12:10:08.673 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 12:10:08.676 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 12:10:08.676 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 12:10:08.766 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 12:10:08.766 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1552 ms
+2024-09-23 12:10:09.101 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.PermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-23 12:10:09.121 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userController': Injection of resource dependencies failed
+2024-09-23 12:10:09.122 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-23 12:10:09.124 [main] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+2024-09-23 12:10:09.147 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-09-23 12:10:09.165 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call a method that does not exist. The attempt was made from the following location:
+
+    com.baomidou.mybatisplus.core.MybatisMapperAnnotationBuilder.parse(MybatisMapperAnnotationBuilder.java:122)
+
+The following method did not exist:
+
+    'void org.apache.ibatis.session.Configuration.parsePendingMethods(boolean)'
+
+The calling method's class, com.baomidou.mybatisplus.core.MybatisMapperAnnotationBuilder, was loaded from the following location:
+
+    jar:file:/E:/apache-maven-3.8.8/Maven_repo/com/baomidou/mybatis-plus-core/3.5.7/mybatis-plus-core-3.5.7.jar!/com/baomidou/mybatisplus/core/MybatisMapperAnnotationBuilder.class
+
+The called method's class, org.apache.ibatis.session.Configuration, is available from the following locations:
+
+    jar:file:/E:/apache-maven-3.8.8/Maven_repo/org/mybatis/mybatis/3.5.13/mybatis-3.5.13.jar!/org/apache/ibatis/session/Configuration.class
+
+The called method's class hierarchy was loaded from the following locations:
+
+    org.apache.ibatis.session.Configuration: file:/E:/apache-maven-3.8.8/Maven_repo/org/mybatis/mybatis/3.5.13/mybatis-3.5.13.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains compatible versions of the classes com.baomidou.mybatisplus.core.MybatisMapperAnnotationBuilder and org.apache.ibatis.session.Configuration
+
+2024-09-23 12:12:41.934 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 16448 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 12:12:41.935 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 12:12:42.517 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 12:12:42.519 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 12:12:42.547 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2024-09-23 12:12:43.152 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 12:12:43.158 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 12:12:43.160 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 12:12:43.240 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 12:12:43.240 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1263 ms
+2024-09-23 12:12:43.544 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.PermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-23 12:12:43.571 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userController': Injection of resource dependencies failed
+2024-09-23 12:12:43.572 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-23 12:12:43.574 [main] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+2024-09-23 12:12:43.595 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-09-23 12:12:43.609 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call a method that does not exist. The attempt was made from the following location:
+
+    com.baomidou.mybatisplus.core.MybatisMapperAnnotationBuilder.parse(MybatisMapperAnnotationBuilder.java:122)
+
+The following method did not exist:
+
+    'void org.apache.ibatis.session.Configuration.parsePendingMethods(boolean)'
+
+The calling method's class, com.baomidou.mybatisplus.core.MybatisMapperAnnotationBuilder, was loaded from the following location:
+
+    jar:file:/E:/apache-maven-3.8.8/Maven_repo/com/baomidou/mybatis-plus-core/3.5.7/mybatis-plus-core-3.5.7.jar!/com/baomidou/mybatisplus/core/MybatisMapperAnnotationBuilder.class
+
+The called method's class, org.apache.ibatis.session.Configuration, is available from the following locations:
+
+    jar:file:/E:/apache-maven-3.8.8/Maven_repo/org/mybatis/mybatis/3.5.13/mybatis-3.5.13.jar!/org/apache/ibatis/session/Configuration.class
+
+The called method's class hierarchy was loaded from the following locations:
+
+    org.apache.ibatis.session.Configuration: file:/E:/apache-maven-3.8.8/Maven_repo/org/mybatis/mybatis/3.5.13/mybatis-3.5.13.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains compatible versions of the classes com.baomidou.mybatisplus.core.MybatisMapperAnnotationBuilder and org.apache.ibatis.session.Configuration
+
+2024-09-23 12:12:51.617 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 10872 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 12:12:51.619 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 12:12:52.162 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 12:12:52.164 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 12:12:52.191 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2024-09-23 12:12:52.770 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 12:12:52.778 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 12:12:52.778 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 12:12:52.857 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 12:12:52.857 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1199 ms
+2024-09-23 12:12:53.141 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.PermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-23 12:12:53.160 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userController': Injection of resource dependencies failed
+2024-09-23 12:12:53.160 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-23 12:12:53.163 [main] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+2024-09-23 12:12:53.182 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-09-23 12:12:53.195 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call a method that does not exist. The attempt was made from the following location:
+
+    com.baomidou.mybatisplus.core.MybatisMapperAnnotationBuilder.parse(MybatisMapperAnnotationBuilder.java:122)
+
+The following method did not exist:
+
+    'void org.apache.ibatis.session.Configuration.parsePendingMethods(boolean)'
+
+The calling method's class, com.baomidou.mybatisplus.core.MybatisMapperAnnotationBuilder, was loaded from the following location:
+
+    jar:file:/E:/apache-maven-3.8.8/Maven_repo/com/baomidou/mybatis-plus-core/3.5.7/mybatis-plus-core-3.5.7.jar!/com/baomidou/mybatisplus/core/MybatisMapperAnnotationBuilder.class
+
+The called method's class, org.apache.ibatis.session.Configuration, is available from the following locations:
+
+    jar:file:/E:/apache-maven-3.8.8/Maven_repo/org/mybatis/mybatis/3.5.13/mybatis-3.5.13.jar!/org/apache/ibatis/session/Configuration.class
+
+The called method's class hierarchy was loaded from the following locations:
+
+    org.apache.ibatis.session.Configuration: file:/E:/apache-maven-3.8.8/Maven_repo/org/mybatis/mybatis/3.5.13/mybatis-3.5.13.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains compatible versions of the classes com.baomidou.mybatisplus.core.MybatisMapperAnnotationBuilder and org.apache.ibatis.session.Configuration
+
+2024-09-23 12:16:51.341 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Starting ZealsingerbookAuthApplication using Java 17.0.5 with PID 11376 (D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-auth\target\classes started by John in D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test)
+2024-09-23 12:16:51.342 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-23 12:16:51.890 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-23 12:16:51.892 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-23 12:16:51.918 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2024-09-23 12:16:52.498 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-23 12:16:52.505 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-23 12:16:52.506 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-23 12:16:52.579 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-23 12:16:52.580 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1198 ms
+2024-09-23 12:16:52.878 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.PermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-23 12:16:52.912 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.RoleMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-23 12:16:52.928 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.RolePermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-23 12:16:52.947 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-23 12:16:52.963 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.UserRoleMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-23 12:16:53.903 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-23 12:16:53.910 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 3.016 seconds (process running for 3.676)
+2024-09-23 12:16:54.482 [main] INFO  c.z.z.run.PushRolePermissionsRedisRunner - ==> 服务启动，开始同步角色权限数据到 Redis 中...
+2024-09-23 12:16:54.514 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2024-09-23 12:16:55.292 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==>  Preparing: select id, role_key, role_name from t_role where status=0 and is_deleted=0;
+2024-09-23 12:16:55.305 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==> Parameters: 
+2024-09-23 12:16:55.349 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - <==      Total: 1
+2024-09-23 12:16:55.392 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectList - ==>  Preparing: SELECT id,role_id,permission_id,create_time,update_time,is_deleted FROM t_role_permission_rel WHERE (role_id IN (?))
+2024-09-23 12:16:55.393 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectList - ==> Parameters: 1(Long)
+2024-09-23 12:16:55.432 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectList - <==      Total: 2
+2024-09-23 12:16:55.434 [main] DEBUG c.z.z.mapper.PermissionMapper.selectAppEnabledList - ==>  Preparing: select id, name, permission_key from t_permission where status = 0 and type = 3 and is_deleted = 0
+2024-09-23 12:16:55.434 [main] DEBUG c.z.z.mapper.PermissionMapper.selectAppEnabledList - ==> Parameters: 
+2024-09-23 12:16:55.469 [main] DEBUG c.z.z.mapper.PermissionMapper.selectAppEnabledList - <==      Total: 2
+2024-09-23 12:16:55.587 [main] INFO  c.z.z.run.PushRolePermissionsRedisRunner - ==> 服务启动，成功同步角色权限数据到 Redis 中...
+2024-09-23 12:17:25.331 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2024-09-23 12:17:25.337 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed

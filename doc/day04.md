@@ -591,7 +591,7 @@ CREATE TABLE `t_role_permission_rel` (
 
 因为我们的**仿小红书项目 是个To C的产品**  消费者面更广 服务的标准化和便捷化要求都高 所以我们的项目 最终使用 **混合模式**
 
-
+**网关中只对普通用户的操作进行鉴权，其他角色，如管理员等等，到时候在具体的管理后台服务中再鉴权，以保证网关做最少的工作，实现最大的吞吐量**
 
 ## 权限数据获取方案
 
@@ -704,4 +704,248 @@ spring:
 ![image-20240922104423453](../../ZealSingerBook/img/image-20240922104423453.png)
 
 # 用户登录/注册接口
+
+逻辑流程图
+
+![image-20240923095627603](../../ZealSingerBook/img/image-20240923095627603.png)
+
+可以看到 小红书的登录逻辑 最默认的就是**手机号+验证码**的方式 并且如果该用户是第一次进行入系统 是会进行**自动注册**的，所以我们也按照这个逻辑进行编写即可
+
+## 前提准备
+
+首先 对于请求体的定义如下
+
+```Java
+/*
+我们采用手机号+验证码 and  手机号+密码 两种方式登录 
+所以 手机号是必须的 不能为空  带有注解notnull必须被校验
+但是由于方式的不同 code和password可以允许为空  所以不进行入参字段的强制校验
+type用于区分操作类型
+*/
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserLoginReqVO {
+    @NotNull(message = "手机号不能为空")
+    @PhoneNumber
+    private String phoneNumber;
+
+    /**
+     * 验证码
+     */
+    private String code;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    /**
+     * 登录类型：1手机号验证码，或者是2账号密码
+     */
+    @NotNull(message = "登录类型不能为空")
+    private Integer type;
+}
+```
+
+我们在登录和注册的时候，自然也需要将用户登录信息和token和用户信息保存到redis中，并且对于用户需要进行身份的存储,所以这里存在部分内容需要在redis中保存记录对应的Key的常量值
+
+其中，用户登录信息和token为一组，主要有sa-token自动存放到redis中，sa-token登录的时候会需要传入一个id，我们使用user表中的主键为id即可，token自动生成，这一组key-value就存放完毕；
+
+然后 对于新用户 我们注册的时候 我们用户需要一个账号ID 这个id是自动生成的，但是需要注意，**id自然是需要保证唯一，不重复，并且在表中最好保持递增性，这个就可以通过redis的incr对同一个key的自增实现 ； 有了ID之后，我们可以通过“指定字符串前缀+ID”的格式生成默认的用户昵称**
+
+验证码是存放在redis中的会过期的（暂定为3min  为了测试可以先永久）数据，一个用户在过期时间内不能频繁请求验证，验证码是随机数生成可能会重复，所以一般采用 **用户为key，验证码code为value**的形式保存，因为key和用户相关，**要能key和用户一一对应**，user表中具备唯一属性的字段只有主键;账号;手机号三者，但是考虑到**新用户登录的话自动注册后才会有主键和账号，而手机号是前端传参获得，必定是不会为空的，所以我们key采用“指定字符串前缀：手机号"的形式保存**
+
+所以为了方便Redis操作，我们需要定义一些Redis的常量Key先规范保存
+
+```Java
+public class RedisConstant {
+    /*
+    * redis中存放验证码的字符串前缀
+    */
+    public static final String VERIFICATION_CODE_KEY_PREFIX="zealsinger_verification_code:";
+
+    /**
+     * 用户账户ID  在redis中保存一个永久的key value从100开始
+       通过 INCR 命令即可实现每次对其自增 1
+     */
+    public static final String ZEALSINGER_BOOK_ID_GENERATOR_KEY="zealsinger_id_generator";
+
+    /**
+     * 用户角色数据 KEY 前缀
+     */
+    private static final String USER_ROLES_KEY_PREFIX = "user:roles:";
+
+    /**
+     * 角色对应的权限集合 KEY 前缀
+     */
+    private static final String ROLE_PERMISSIONS_KEY_PREFIX = "role:permissions:";
+
+    /**
+     * 构建角色对应的权限集合 KEY
+     * @param roleId
+     * @return
+     */
+    public static String buildRolePermissionsKey(Long roleId) {
+        return ROLE_PERMISSIONS_KEY_PREFIX + roleId;
+    }
+
+    /**
+     * 构建验证码KEY  特点前缀:手机号
+     * @param phone
+     * @return
+     */
+    public static String buildUserRoleKey(String phone) {
+        return USER_ROLES_KEY_PREFIX + phone;
+    }
+
+    public static String getVerificationCodeKeyPrefix(String phone){
+        return VERIFICATION_CODE_KEY_PREFIX+phone;
+    }
+}
+```
+
+自然，我们的用户也需要具备角色属性，角色属性我们通过主键ID标识每个用户的角色身份，这个也可以定义为常量
+
+```Java
+public class RoleConstants {
+    /**
+     * 普通用户的角色 ID
+     */
+    public static final Long COMMON_USER_ROLE_ID = 1L;
+
+}
+```
+
+那么自此，我们就可以开始写登录注册接口
+
+## 手机号+验证码方式
+
+### Controller
+
+接收参数  调用server中的方法 很简单  不多说
+
+```Java
+@PostMapping("/login")
+    @ZealLog(description = "用户登录/注册")
+    public Response<String> loginAndRegister(@Validated @RequestBody UserLoginReqVO userLoginReqVO) {
+        return userService.loginAndRegister(userLoginReqVO);
+    }
+```
+
+### Service
+
+Service中就代码逻辑丰富了 一行一行看
+
+```Java
+@Service
+@Slf4j
+public class UserServiceImpl implements UserService {
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private UserRoleMapper userRoleMapper;
+    @Resource
+    private RedisTemplate<String,Object> redisTemplate;
+    
+    // 这里采用编程式事务
+    @Resource
+    private TransactionTemplate transactionTemplate;
+
+    @Override
+    public Response<String> loginAndRegister(UserLoginReqVO userLoginReqVO) {
+        // 根据不同的类型进行判断逻辑
+        // 如果为验证码登录
+        SaTokenInfo tokenInfo = null;
+        Long userId = null;
+        if(LoginTypeEnum.VERIFICATION_CODE.getValue().equals(userLoginReqVO.getType())){
+            // 验证码登录 先检测验证码
+            String key = RedisConstant.getVerificationCodeKeyPrefix(userLoginReqVO.getPhoneNumber());
+            Object o = redisTemplate.opsForValue().get(key);
+            if(o == null){
+                throw new BusinessException(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
+            }else{
+                // 如果验证码正确
+                if(String.valueOf(o).equals(userLoginReqVO.getCode())){
+                    // 检测是否存在用户 如果有 则直接登录 没有则登录+注册添加用户信息
+                    User user = userMapper.selectByPhone(userLoginReqVO.getPhoneNumber());
+                    if(user==null){
+                        userId = registerUser(userLoginReqVO.getPhoneNumber());
+                        log.info("===>用户 {} 注册成功",userId);
+                    }else{
+                        userId = user.getId();
+                    }
+                    StpUtil.login(userId);
+                    log.info("===>用户 {} 登录成功",userId);
+                    tokenInfo = StpUtil.getTokenInfo();
+                    return Response.success(tokenInfo.tokenValue);
+                }else{
+                    // 验证码不正确 抛出异常
+                    throw new BusinessException(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
+                }
+            }
+        }else{
+            // 账号密码登录
+
+        }
+        return null;
+    }
+
+    /**
+     * 系统自动注册用户
+     * @param phone
+     * @return
+     */
+    public Long registerUser(String phone) {
+        transactionTemplate.execute(status->{
+            try{
+                // 获取全局自增的小哈书 ID
+                Long zealId = redisTemplate.opsForValue().increment(RedisConstant.ZEALSINGER_BOOK_ID_GENERATOR_KEY);
+                User userDO = User.builder()
+                        .phone(phone)
+                        // 自动生成 账号ID  我们从100开始递增作为账号 
+                        .zealsingerBookId(String.valueOf(zealId))
+                        // 自动生成昵称  前缀+账号ID, 如：zealsingerbook100
+                        .nickname("zealsingerbook" + zealId)
+                        // 账号状态为启用
+                        .status(StatusEnum.ENABLE.getValue())
+                        .createTime(LocalDateTime.now())
+                        .updateTime(LocalDateTime.now())
+                        // 设置逻辑删除状态  这个枚举类在Common模块中
+                        .isDeleted(DeletedEnum.NO.getValue())
+                        .build();
+
+                // 添加入库
+                userMapper.insert(userDO);
+
+                // 获取刚刚添加入库的用户 ID
+                Long userId = userDO.getId();
+
+                // 给该用户分配一个默认角色
+                UserRole userRoleDO = UserRole.builder()
+                        .userId(userId)
+                        .roleId(RoleConstants.COMMON_USER_ROLE_ID)
+                        .createTime(LocalDateTime.now())
+                        .updateTime(LocalDateTime.now())
+                        .isDeleted(DeletedEnum.NO.getValue())
+                        .build();
+                userRoleMapper.insert(userRoleDO);
+
+                // 登录逻辑;将该用户的角色 ID 存入 Redis 中
+                List<Long> roles = Lists.newArrayList();
+                roles.add(RoleConstants.COMMON_USER_ROLE_ID);
+                String userRolesKey = RedisConstant.buildUserRoleKey(phone);
+                redisTemplate.opsForValue().set(userRolesKey, JsonUtil.ObjToJsonString(roles));
+                return userId;
+            }catch (Exception e) {
+                // 标记为事件回滚
+                status.setRollbackOnly();
+                log.error("系统注册服务出现故障!!!");
+                return null;
+            }
+        });
+        return null;
+    }
+}
+```
 

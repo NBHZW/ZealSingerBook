@@ -1,17 +1,13 @@
 package com.zealsinger.zealsingerbookauth.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zealsinger.zealsingerbookauth.domain.entity.RolePermission;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
-public interface RolePermissionMapper {
-    int deleteByPrimaryKey(Long id);
+import java.util.List;
 
-    int insert(RolePermission record);
+@Mapper
+public interface RolePermissionMapper extends BaseMapper<RolePermission> {
 
-    int insertSelective(RolePermission record);
-
-    RolePermission selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(RolePermission record);
-
-    int updateByPrimaryKey(RolePermission record);
 }
