@@ -4,8 +4,8 @@ spring:
     # 数据库连接信息
     url: jdbc:mysql://114.115.208.175:3306/zealsinger_book?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
     username: root # 数据库用户名
-    # password: yunfuwuxiaoguanjia # 数据库密码
-    password: R1CIR0k4Pj2XtAQz9Rb6etnoOLsk9OEOqL2i4RvlseLDrzkOC6/aaS84jax63znY38vaVbDc6IZRGKwi9lX0JQ== # 数据库密码
+    password: yunfuwuxiaoguanjia # 数据库密码
+    # password: R1CIR0k4Pj2XtAQz9Rb6etnoOLsk9OEOqL2i4RvlseLDrzkOC6/aaS84jax63znY38vaVbDc6IZRGKwi9lX0JQ== # 数据库密码
     type: com.alibaba.druid.pool.DruidDataSource
     druid: # Druid 连接池
       initial-size: 5 # 初始化连接池大小

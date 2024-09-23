@@ -94,6 +94,52 @@ sa-token:
 
 ```
 
+然后测试对应的逻辑
+
+```Java
+/*
+可以看到  基于StpUtil这个工具类可以使用很多方法来进行登录相关的操作
+*/
+@GetMapping("/user/login")
+    @ZealLog(description = "Sa-Token登录接口测试")
+    public Response<?> testLogin(String username,String password){
+        if("zealsinger".equals(username) && "123123".equals(password)){
+            StpUtil.login(1000);
+            return Response.success("登录成功");
+        }
+        return Response.fail("登录失败");
+    }
+
+// 检测登录的状态接口
+    @GetMapping("/user/islogin")
+    @ZealLog(description = "测试Sa-Token登录状态查询接口测试")
+    public Response<?> isLogin(){
+        return Response.success("当前会话登录状态: " + StpUtil.isLogin());
+    }
+```
+
+![image-20240922100705705](../../ZealSingerBook/img/image-20240922100705705.png)
+
+在浏览器中访问测试
+
+直接访问登录接口  可以看到返回了登录失败
+
+![image-20240922100838474](../../ZealSingerBook/img/image-20240922100838474.png)
+
+访问检测登录状态的接口  可以发现也是没有登录
+
+![image-20240922101047655](../../ZealSingerBook/img/image-20240922101047655.png)
+
+然后添加路径参数访问 返回登录成功
+
+![image-20240922100939395](../../ZealSingerBook/img/image-20240922100939395.png)
+
+再次访问查询登录状态的接口  这个时候可以看到 登录状态变成了true
+
+![image-20240922101137462](../../ZealSingerBook/img/image-20240922101137462.png)
+
+
+
 ## 手机号+验证码登录接口
 
 首先理清楚验证码登录逻辑
@@ -359,4 +405,303 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, St
 }
 
 ```
+
+### RBAC权限模型
+
+在学Spring Security的时候 就接触过RBAC权限模型了，但实际上，我们之前接触的RBAC模型是比较简单的RBAC
+
+**RBAC的核心 就是通过角色和用户和权限的关联 从而进行权限控制   用户有角色这类属性（用户和角色有联系）  权限不会和用户直接绑定 而是直接和角色绑定 从而实现用户和权限的联系**
+
+![image-20240922083109939](../../ZealSingerBook/img/image-20240922083109939.png)
+
+**一个用户可以是多个角色  每个角色可以有多个权限  每个权限也可以被多个角色拥有  形成 n:n:n**
+
+![image-20240922083423206](../../ZealSingerBook/img/image-20240922083423206.png)
+
+我们上面说到的RBAC模型，是最基础的RBAC，也就是RBAC0，随着业务的复杂度提高已经各种业务场景的出现，RBAC模型也出现了改良优化，推出了RBAC1   RBAC2  RBAC3
+
+#### RBAC1
+
+RBAC 1 在 RBAC 0 的基础上增加了角色**层次结构**（Role Hierarchies）。角色层次结构允许角色之间存在**继承关系**，**一个角色可以继承另一个角色的权限  ；  继承关系是传递的，如果角色 C 继承角色 B，而角色 B 继承角色 A，那么角色 C 将拥有角色 A 和角色 B 的所有权限**
+
+**类似于类的继承 A继承B  那么A天生就拥有B所拥有的权限，除此之外，A还能有自己的特有权限**
+
+优点是：
+
+- **简化权限管理**：通过角色继承，可以减少重复定义权限的工作。
+- **提高灵活性**：可以方便地对角色进行分层管理，满足不同层次用户的权限需求
+
+```
+场景举例
+高级经理继承经理   经理继承员工
+那么经理只有员工的管理权限和自己的区别于员工的私有权限
+但是高级经理永远有经理和员工的所有权限 还能拥有区别于经理和员工的私有权限
+```
+
+#### RBAC2--基于约束的RBAC
+
+所谓的基于约束，就是对角色一种前置要求，如果想要设置用户的角色是B，那么必须要先成为其前置角色A 或者是 某个用户不能同时设置为某两个角色（可以看特点里面的举例）；约束是用于加强访问控制策略的规则或条件，可以限制用户、角色和权限的关联方式
+
+主要特点
+
+- **互斥角色**：某些角色不能同时赋予同一个用户。例如，审计员和财务员角色不能同时赋予同一个用户，以避免暗黑交易。
+- **先决条件**：用户要获得某个角色，必须先拥有另一个角色。例如，公司研发人员要成为高级程序员，必须先成为中级程序员。
+- **基数约束**：限制某个角色可以被赋予的用户数量。例如，某个项目的经理角色只能赋予一个用户，以确保项目的唯一责任人。
+
+优点：
+
+- **加强安全性**：通过约束规则，可以避免权限滥用和利益冲突。
+- **精细化管理**：可以更精细地控制用户的角色分配和权限管理。
+
+#### RBAC 3----统一模型
+
+RBAC3 = RBAC1 + RBAC2  拥有RBAC1 和 2 的所有特点，将两者结合使用的
+
+#### 建库建表
+
+RBAC相关内容介绍完毕，可以准备创建对应的数据库表格了。
+
+因为我们知道**RBAC主要的三个表是 用户表  角色表  权限表 三张表  然后 用户与角色  角色与权限 之间需要有联系  也就是还需要 用户-角色表  角色-权限表  所以也就是五张表**
+
+用户表t_user之前已经创立过了，就不多说了
+
+##### 角色表t_role
+
+```sql
+CREATE TABLE `t_role` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `role_name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '角色名',
+  `role_key` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '角色唯一标识',
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '状态(0：启用 1：禁用)',
+  `sort` int unsigned NOT NULL DEFAULT 0 COMMENT '管理系统中的显示顺序',
+  `remark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后一次更新时间',
+  `is_deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除(0：未删除 1：已删除)',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `uk_role_key` (`role_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色表';
+
+```
+
+##### 权限表t_permission
+
+```sql
+CREATE TABLE `t_permission` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `parent_id` bigint unsigned NOT NULL DEFAULT '0' COMMENT '父ID',
+  `name` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '权限名称',
+  `type` tinyint unsigned NOT NULL COMMENT '类型(1：目录 2：菜单 3：按钮)',
+  `menu_url` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单路由',
+  `menu_icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单图标',
+  `sort` int unsigned NOT NULL DEFAULT 0 COMMENT '管理系统中的显示顺序',
+  `permission_key` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '权限标识',
+  `status` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '状态(0：启用；1：禁用)',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除(0：未删除 1：已删除)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='权限表';
+
+/*
+pareant_id主要是方便搭建权限结构树形结构
+type标识权限类型，前台模块，可以理解为操作，
+menu_url菜单路由 当权限类型为目录的时候 保存前端对应的路由地址
+menu_icon菜单图标 图标Lego
+permission_key权限唯一标识，如 system:role:add , 用于表示后台角色新增的权限 ，供权限框架使用
+*/
+
+```
+
+##### 用户角色表t_user_role_rel
+
+```SQL
+CREATE TABLE `t_user_role_rel` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `user_id` bigint unsigned NOT NULL COMMENT '用户ID',
+  `role_id` bigint unsigned NOT NULL COMMENT '角色ID',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除(0：未删除 1：已删除)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户角色表';
+
+```
+
+角色权限表t_role_permission_rel
+
+```SQL
+CREATE TABLE `t_role_permission_rel` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `role_id` bigint unsigned NOT NULL COMMENT '角色ID',
+  `permission_id` bigint unsigned NOT NULL COMMENT '权限ID',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除(0：未删除 1：已删除)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色权限表';
+
+```
+
+## 鉴权架构
+
+我们创建Auth模块，目的就是为了进行登录校验和鉴权，但是整个流程该如何设计呢？
+
+考虑到我们是分布式架构，我们的服务自然是不会暴露在外网环境，而是会通过nginx和路由网关，将外部的访问路由到内部环境中
+
+![image-20240922085939179](../../ZealSingerBook/img/image-20240922085939179.png)
+
+那么在此架构之下，我们的鉴权方式有如下几种：
+
+### 每个微服务（模块）中进行鉴权
+
+也就是**网关处不进行鉴权，而是当服务转发到确定的微服务模块上**之后，再进行对应的鉴权操作，这样的**好处在于**：
+
+- **每个服务的鉴权是分开的，只需要处理自己服务的鉴权业务，模块压力小，避免单点瓶颈；**
+- **业务分散，独立性强**
+- **灵活性高，每个微服务模块都能根据自己模块业务需求定制专属的鉴权规则**
+
+**缺点是：**
+
+- 每个微服务都要单独实现，维护成本高
+- 不一致风险，每个微服务之间的由于个性化定制的鉴权规则，导致鉴权逻辑不一致从而权限难以把握，引发系统安全风险
+- 增加开发和部署成本
+
+
+
+### 网关统一鉴权
+
+在网关处进行了统一鉴权，减去那完毕后再转发
+
+**优点是：**
+
+- 在网关处统一鉴权，保证了鉴权逻辑的一致性，减少了不一致风险，同时也避免了代码重复
+- 简化模块的开发，让微服务每个模块能更加专注于业务的处理，简化开发和维护
+- 统一鉴权可以利用负载均衡，缓存等技术进行性能优化，提升整体效率
+
+**缺点是：**
+
+- 网关成为了唯一了鉴权处理地点，负责所有的鉴权处理，网关设备的性能和故障会直接影响整个系统
+- 网关可能对于不同的路由需要不同的鉴权逻辑，导致网关的实现复杂度和维护难度大大提高
+- 所有请求都需要在网关处鉴权后再路由，增加系统响应时间
+
+### 混合模式
+
+结合 **微服务中单独鉴权和网关统一鉴权**  两种方式进行权限校验  利用网关进行粗粒度的初步的权限校验，然后再每个微服务中再进行细粒度的二次鉴权
+
+因为我们的**仿小红书项目 是个To C的产品**  消费者面更广 服务的标准化和便捷化要求都高 所以我们的项目 最终使用 **混合模式**
+
+
+
+## 权限数据获取方案
+
+对于每个模块的权限数据获取 还是比较好操作的 直接操作数据库即可一般 但是问题在于  **网关处如何获取权限数据从而进行第一次粗粒度的初步校验**
+
+1. ### **网关服务中也继承ORM框架（Mybatis这种），直接从数据库中获取数据**
+
+   **直接从数据库中获取  实时性强  能保证是最新的数据  ； 不设置额外的缓存层，也不会需要远程调用，结构简单**
+
+   **但是同时，会导致更多的SQL查询，增加数据库的压力，性能下降，不适合高并发量，可拓展性差，SQL或成为性能瓶颈**
+
+   
+
+2. ### **先从Redis中获取权限数据，如果没有则从数据库中获取**
+
+   **添加了缓存层，大部分请求可以被缓存处理，减少了数据库压力，提高了一定的性能**
+
+   **同时 引入了新的问题  缓存和数据库的双写一致性的问题，添加了缓存层，系统复杂性增强**
+
+   
+
+3. ### **网关先从 Redis 中获取权限数据，若获取不到，走 RPC 调用权限服务获取数据**
+
+   **同上  减少数据库压力，提高性能，通过RPC调用权限模块的接口，相较于1和2不需要在网关处进行权限库的操作，实现了网关和权限模块的解耦**
+
+   **同时 走RPC自然会带来更多的网络开销，也容易收到网络的影响，同样也增加了系统复杂性**
+
+   
+
+4. ### **只走Redis获取权限数据，不走RPC也不走数据库**（采用）
+
+   **只有Redis，没有RPC和数据库操作，是性能最高和数据库压力最小的方案**
+
+   **同时 对于Redis中数据的实时更新要求更大  否则容易出现数据不一致问题  并且因为网关只会从Redis中获取  如果Redis挂了则会有较大影响，易出现单点故障**
+
+因为我们这次主要是为了搭建一个高并发读写的项目 所以主要是能承受最大高并发的方案4
+
+## Sa-Token整合Redis
+
+我们上面用Sa-Token做了简单的登录和登录状态检测接口 但是会发现一个问题 我们登录之后 重启项目之后 再次检测登录状态 就会变为未登录
+
+这个是因为Sa-Token中记录的登录状态没有存储到Redis中 ，没有持久 重启之后不能记录 不适用于分布式的环境
+
+Sa-Token中提供了集成Redis的方法
+
+[集成 Redis (sa-token.cc)](https://sa-token.cc/doc.html#/up/integ-redis)
+
+```xml
+<!-- Sa-Token 整合 Redis （使用 jdk 默认序列化方式） -->
+<dependency>
+    <groupId>cn.dev33</groupId>
+    <artifactId>sa-token-redis</artifactId>
+    <version>1.39.0</version>
+</dependency>
+
+// 我们使用的这个
+<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+<dependency>
+    <groupId>cn.dev33</groupId>
+    <artifactId>sa-token-redis-jackson</artifactId>
+    <version>1.39.0</version>
+</dependency>
+
+```
+
+然后需要配置Redis实例  但是我们项目本身也会需要Redis连接 所以我们需要一个Redis连接池  commons-pool2 这个库就能提供 我们之前redis配置的时候就导入仪过了，配置也写好了，所以无需额外配置了
+
+```
+<!-- 提供Redis连接池 -->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-pool2</artifactId>
+</dependency>
+
+
+spring: 
+    # redis配置 
+    redis:
+        # Redis数据库索引（默认为0）
+        database: 1
+        # Redis服务器地址
+        host: 127.0.0.1
+        # Redis服务器连接端口
+        port: 6379
+        # Redis服务器连接密码（默认为空）
+        # password: 
+        # 连接超时时间
+        timeout: 10s
+        lettuce:
+            pool:
+                # 连接池最大连接数
+                max-active: 200
+                # 连接池最大阻塞等待时间（使用负值表示没有限制）
+                max-wait: -1ms
+                # 连接池中的最大空闲连接
+                max-idle: 10
+                # 连接池中的最小空闲连接
+                min-idle: 0
+
+```
+
+集成Redis之后，Sa-Token会自动将token认证码保存到redis中
+
+![image-20240922104157777](../../ZealSingerBook/img/image-20240922104157777.png)
+
+![image-20240922104212742](../../ZealSingerBook/img/image-20240922104212742.png)
+
+（需要注意 login对应的传入的id是value  sa-token生成的token凭证才是key）
+
+![image-20240922104423453](../../ZealSingerBook/img/image-20240922104423453.png)
+
+# 用户登录/注册接口
 

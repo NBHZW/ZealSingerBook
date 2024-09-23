@@ -1,8 +1,6 @@
 package com.zealsinger.zealsingerbookauth;
 
 import com.alibaba.druid.filter.config.ConfigTools;
-import com.zealsinger.zealsingerbookauth.domain.entity.UserDO;
-import com.zealsinger.zealsingerbookauth.mapper.UserDOMapper;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,16 +16,8 @@ class ZealsingerbookAuthApplicationTests {
     private RedisTemplate redisTemplate;
 
     @Resource
-    private UserDOMapper userTestMapper;
-
-    @Resource
     private ThreadPoolTaskExecutor taskExecutor;
 
-    @Test
-    void connectTest(){
-        UserDO userDO = userTestMapper.selectByPrimaryKey(3L);
-        System.out.println(userDO);
-    }
 
     @Test
     void contextLoads() throws Exception {
