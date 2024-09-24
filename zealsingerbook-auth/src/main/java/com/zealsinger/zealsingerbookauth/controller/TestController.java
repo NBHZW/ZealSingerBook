@@ -3,10 +3,14 @@ package com.zealsinger.zealsingerbookauth.controller;
 import cn.dev33.satoken.stp.StpUtil;
 import com.zealsinger.aspect.ZealLog;
 import com.zealsinger.book.framework.common.response.Response;
-import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RefreshScope
 @RequestMapping("/test")
 public class TestController {
 
@@ -39,5 +43,14 @@ public class TestController {
     @ZealLog(description = "测试Sa-Token登录状态查询接口测试")
     public Response<?> isLogin(){
         return Response.success("当前会话登录状态: " + StpUtil.isLogin());
+    }
+
+
+    @Value("${rate-limit.api.limit}")
+    private Integer limit;
+    @GetMapping("/nacos/limit")
+    @ZealLog(description = "nacos热部署限流配置属性配置")
+    public String testNacosLimit(){
+        return "当前接口限流配置为: " + limit;
     }
 }

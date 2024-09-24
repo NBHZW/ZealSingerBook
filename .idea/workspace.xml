@@ -4,30 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:添加用户验证码登录注册接口">
-      <change afterPath="$PROJECT_DIR$/logs/auth.2024-09-23-0.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/run/PushRolePermissionsRedisRunner.java" afterDir="false" />
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:整合MyBatisPlus+实现了登录注册接口">
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/config/MyBatisPlusDateHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/bootstrap.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/day04.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day04.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-23-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-23-0.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/constant/RedisConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/constant/RoleConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/constant/RoleConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/entity/Permission.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/entity/Permission.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/entity/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/entity/RolePermission.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/entity/RolePermission.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/entity/UserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/entity/UserRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/mapper/PermissionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/mapper/PermissionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/mapper/RoleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/mapper/RoleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/mapper/RolePermissionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/mapper/RolePermissionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/mapper/UserRoleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/mapper/UserRoleMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/ZealsingerbookAuthApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/ZealsingerbookAuthApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/TestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/mapper/PermissionMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/mapper/PermissionMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/mapper/RoleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/mapper/RoleMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/mapper/RolePermissionMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/mapper/RolePermissionMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/enums/StatusEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/enums/StatusEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,6 +238,8 @@
       <workItem from="1726987100763" duration="9155000" />
       <workItem from="1727049825700" duration="10595000" />
       <workItem from="1727064060015" duration="987000" />
+      <workItem from="1727065102791" duration="179000" />
+      <workItem from="1727079814399" duration="5120000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -290,7 +281,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727050259861</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat:整合MyBatisPlus+实现了登录注册接口">
+      <option name="closed" value="true" />
+      <created>1727065258311</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1727065258311</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -314,6 +313,7 @@
     <MESSAGE value="feat:新增全局异常捕获器" />
     <MESSAGE value="feat:添加短信发送服务工具类和发送验证码接口+@PhoneNumber自定义注解约束传参手机号正则校验" />
     <MESSAGE value="feat:添加用户验证码登录注册接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:添加用户验证码登录注册接口" />
+    <MESSAGE value="feat:整合MyBatisPlus+实现了登录注册接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:整合MyBatisPlus+实现了登录注册接口" />
   </component>
 </project>

@@ -1,6 +1,5 @@
 package com.zealsinger.zealsingerbookauth;
 
-import com.zealsinger.aspect.ZealLog;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -104,8 +104,6 @@ public class UserServiceImpl implements UserService {
                         .nickname("zealsingerbook" + zealId)
                         // 状态为启用
                         .status(StatusEnum.ENABLE.getValue())
-                        .createTime(LocalDateTime.now())
-                        .updateTime(LocalDateTime.now())
                         // 逻辑删除
                         .isDeleted(DeletedEnum.NO.getValue())
                         .build();
@@ -120,8 +118,6 @@ public class UserServiceImpl implements UserService {
                 UserRole userRoleDO = UserRole.builder()
                         .userId(userId)
                         .roleId(RoleConstants.COMMON_USER_ROLE_ID)
-                        .createTime(LocalDateTime.now())
-                        .updateTime(LocalDateTime.now())
                         .isDeleted(DeletedEnum.NO.getValue())
                         .build();
                 userRoleMapper.insert(userRoleDO);

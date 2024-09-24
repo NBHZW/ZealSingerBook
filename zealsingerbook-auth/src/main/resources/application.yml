@@ -9,3 +9,7 @@ spring:
 mybatis:
   # MyBatis xml 配置文件路径
   mapper-locations: classpath:/mapper/**/*.xml
+
+rate-limit:
+  api:
+    limit: 100 # 接口限流阈值
