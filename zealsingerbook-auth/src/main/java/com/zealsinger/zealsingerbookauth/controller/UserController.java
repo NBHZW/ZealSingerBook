@@ -23,4 +23,9 @@ public class UserController {
     public Response<String> loginAndRegister(@Validated @RequestBody UserLoginReqVO userLoginReqVO) {
         return userService.loginAndRegister(userLoginReqVO);
     }
+
+    @PostMapping("/logout")
+    public Response<?> logout() {
+        return Response.success();
+    }
 }

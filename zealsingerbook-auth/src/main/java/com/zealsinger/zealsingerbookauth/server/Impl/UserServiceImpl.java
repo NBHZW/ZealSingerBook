@@ -2,19 +2,22 @@ package com.zealsinger.zealsingerbookauth.server.Impl;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Lists;
 import com.zealsinger.book.framework.common.enums.DeletedEnum;
 import com.zealsinger.book.framework.common.enums.StatusEnum;
 import com.zealsinger.book.framework.common.exception.BusinessException;
 import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.book.framework.common.util.JsonUtil;
-import com.zealsinger.zealsingerbookauth.constant.RedisConstant;
+import com.zealsinger.book.framework.common.constant.RedisConstant;
 import com.zealsinger.zealsingerbookauth.constant.RoleConstants;
+import com.zealsinger.zealsingerbookauth.domain.entity.Role;
 import com.zealsinger.zealsingerbookauth.domain.entity.User;
 import com.zealsinger.zealsingerbookauth.domain.entity.UserRole;
 import com.zealsinger.zealsingerbookauth.domain.enums.LoginTypeEnum;
 import com.zealsinger.zealsingerbookauth.domain.enums.ResponseCodeEnum;
 import com.zealsinger.zealsingerbookauth.domain.vo.UserLoginReqVO;
+import com.zealsinger.zealsingerbookauth.mapper.RoleMapper;
 import com.zealsinger.zealsingerbookauth.mapper.UserMapper;
 import com.zealsinger.zealsingerbookauth.mapper.UserRoleMapper;
 import jakarta.annotation.Resource;
@@ -23,7 +26,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -34,6 +36,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private RoleMapper roleMapper;
 
     @Resource
     private UserRoleMapper userRoleMapper;
@@ -122,9 +127,9 @@ public class UserServiceImpl implements UserService {
                         .build();
                 userRoleMapper.insert(userRoleDO);
 
-                // 将该用户的角色 ID 存入 Redis 中
-                List<Long> roles = Lists.newArrayList();
-                roles.add(RoleConstants.COMMON_USER_ROLE_ID);
+                // 将该用户的对应角色 存入 Redis 中
+                List<String> roles = Lists.newArrayList();
+                roles.add(roleMapper.selectOne(new LambdaQueryWrapper<Role>().eq(Role::getId, RoleConstants.COMMON_USER_ROLE_ID)).getRoleKey());
                 String userRolesKey = RedisConstant.buildUserRoleKey(phone);
                 redisTemplate.opsForValue().set(userRolesKey, JsonUtil.ObjToJsonString(roles));
                 return userId;

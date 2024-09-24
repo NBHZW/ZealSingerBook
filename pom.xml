@@ -18,6 +18,7 @@
     <modules>
         <module>zealsingerbook-auth</module>
         <module>zealsingerbook-framework</module>
+        <module>zealsingerbook-gateway</module>
     </modules>
 
     <properties>
@@ -165,6 +166,14 @@
                 <artifactId>sa-token-redis-jackson</artifactId>
                 <version>${sa-token-redis-jackson}</version>
             </dependency>
+
+
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>com.baomidou</groupId>

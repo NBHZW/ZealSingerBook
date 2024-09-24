@@ -965,5 +965,210 @@ public class UserServiceImpl implements UserService {
 
 这个改如何实现呢？**因为角色-权限信息修改可能比较少，而且这个一般是没有接口直接触发的，所以我们考虑在项目启动之后自动加载角色-权限信息**
 
+### 实现项目启动后立马加载权限数据
+
+在 Spring Boot 项目中，可以通过多种方式在项目启动时执行初始化工作
+
+#### 使用@PostConstruct
+
+@PostConstruct注解是可以作用于Spring容器初始化Bean之后立即执行特定的方法
+
+**作用时机为Bean依赖注入完成之后，也就是Bean完全初始化之前执行，作用于当前所在的Bean**
+
+```Java
+
+@Component
+public class MyInitializer {
+
+    @PostConstruct
+    public void init() {
+        // 初始化工作
+        System.out.println("初始化工作完成");
+    }
+}
+
+```
+
+#### 实现@ApplicationRunner接口
+
+ApplicationRunner接口提供了在Spring Boot应用程序启动后执行特定代码的方式
+
+**在Spring Boot应用启动后，所有的Bean都已经被创建和初始化之后执行，不是针对某个Bean**
+
+一般用于Spring Boot命令参数 配置文件或者启动参数的访问
+
+```Java
+
+@Component
+public class MyApplicationRunner implements ApplicationRunner {
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        // 初始化工作
+        System.out.println("初始化工作完成");
+    }
+}
+
+```
+
+####  实现 `CommandLineRunner` 接口
+
+类似于ApplicationRunner接口 也是在SpringBoot项目启动之后执行方法
+
+**在Spring Boot应用启动后，所有的Bean都已经被创建和初始化之后执行，不是针对某个Bean**
+
+**一般用于执行全局性的初始化任务，适用于需要在应用准备就绪后执行的逻辑，比如发送通知、开启后台任务等**
+
+```Java
+
+@Component
+public class MyCommandLineRunner implements CommandLineRunner {
+
+    @Override
+    public void run(String... args) throws Exception {
+        // 初始化工作
+        System.out.println("初始化工作完成");
+    }
+}
+
+```
+
+#### 使用 `@EventListener` 注解监听 `ApplicationReadyEvent`
+
+如下在配置类中进行使用@EventListener注解作用于一个自定义的方法，注解的参数可以是某个Bean对象，作用就是当参数对应的Bean对象初始化之后，立刻执行注解所标记的方法
+
+```Java
+
+@Component
+public class MyApplicationReadyListener {
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void onApplicationReady() {
+        // 初始化工作
+        System.out.println("初始化工作完成");
+    }
+}
+```
+
+#### 使用 `SmartInitializingSingleton` 接口
+
+`SmartInitializingSingleton` 接口提供了一种在**所有单例 bean** 初始化完成后执行代码的方式。
+
+在所有单例Bean都初始化之后执行，即在`finishBeanFactoryInitialization`阶段
+
+```Java
+@Component
+public class MySmartInitializingSingleton implements SmartInitializingSingleton {
+
+    @Override
+    public void afterSingletonsInstantiated() {
+        // 初始化工作
+        System.out.println("初始化工作完成");
+    }
+}
+
+```
+
+#### 使用 Spring Boot 的 `InitializingBean` 接口
+
+通过实现 `InitializingBean` 接口的 `afterPropertiesSet` 方法，可以在 bean 的属性设置完成后执行初始化工作
+
+**在Bean的属性被设置之后，但在`@PostConstruct`方法之后，`init-method`之前执行**
+
+```Java
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyInitializingBean implements InitializingBean {
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        // 初始化工作
+        System.out.println("初始化工作完成");
+    }
+}
+
+```
+
+------
+
+这里我们采用实现ApplicationRunner接口的方式来进行角色-权限的对应关系的初始化
+
+```Java
+@Component
+@Slf4j
+public class PushRolePermissionsRedisRunner implements ApplicationRunner {
+    @Resource
+    private RoleMapper roleMapper;
+
+    @Resource
+    private PermissionMapper permissionMapper;
+
+    @Resource
+    private RolePermissionMapper rolePermissionMapper;
+
+    @Resource
+    private RedisTemplate<String,String> redisTemplate;
+
+    // 权限同步标记 Key  加锁保证单独使用
+    private static final String PUSH_PERMISSION_FLAG = "push_permission_flag";
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        // 是否能够同步数据: 原子操作，只有在键 PUSH_PERMISSION_FLAG 不存在时，才会设置该键的值为 "1"，并设置过期时间为 1 天
+        boolean canPushed = Boolean.TRUE.equals(redisTemplate.opsForValue().setIfAbsent(PUSH_PERMISSION_FLAG, "1", 1, TimeUnit.DAYS));
+        // 如果无法同步权限数据
+        if (!canPushed) {
+            log.warn("==> 角色权限数据已经同步至 Redis 中，不再同步...");
+            return;
+        }
+
+        log.info("==> 服务启动，开始同步角色权限数据到 Redis 中...");
+
+        // 所有可用角色
+        List<Role> enableRoleList = roleMapper.selectEnabledList();
+        // 按照角色分类，将同一角色的权限放到一起为List 然后一起存到redis中
+        if(!CollectionUtil.isEmpty(enableRoleList)){
+            List<Long> enableRoleIdList = enableRoleList.stream().map(Role::getId).toList();
+            // 获得所有角色对应的所有权限ID
+            LambdaQueryWrapper<RolePermission> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.in(RolePermission::getRoleId, enableRoleIdList);
+            List<RolePermission> rolePermissions = rolePermissionMapper.selectList(queryWrapper);
+            // 按照角色进行分类 将对应的权限id整合为List  得到 roleId--权限ID的List 关系
+            Map<Long, List<Long>> roleIdPermissionIdsMap = rolePermissions.stream().collect(
+                    Collectors.groupingBy(RolePermission::getRoleId,
+                            Collectors.mapping(RolePermission::getPermissionId, Collectors.toList()))
+            );
+            // 查询 APP 端所有被启用的权限  得到可用的 权限ID--对应的权限
+            List<Permission> enablePermissionList = permissionMapper.selectAppEnabledList();
+            Map<Long,Permission> enablePermissionMap = enablePermissionList.stream().collect(
+                    Collectors.toMap(Permission::getId,permission -> permission)
+            );
+
+            // 组织 角色ID-权限 关系
+            Map<Long, List<Permission>> roleIdPermissionMap = Maps.newHashMap(); // 最终结果Map
+            enableRoleIdList.forEach(roleId->{
+                List<Long> permissionIdList = roleIdPermissionIdsMap.get(roleId);
+                List<Permission> permissionList = new ArrayList<>();
+                if(CollectionUtil.isNotEmpty(permissionIdList)){
+                    for (Long permissionId : permissionIdList) {
+                        Permission permission = enablePermissionMap.get(permissionId);
+                        permissionList.add(permission);
+                    }
+                }
+                if(!permissionIdList.isEmpty()){
+                    roleIdPermissionMap.put(roleId,permissionList);
+                }
+            });
+
+            roleIdPermissionMap.forEach((key,value)->{
+                redisTemplate.opsForValue().set(RedisConstant.buildRolePermissionsKey(key),JsonUtil.ObjToJsonString(value));
+            });
+        }
 
 
+        log.info("==> 服务启动，成功同步角色权限数据到 Redis 中...");
+    }
+}
+```

@@ -1,4 +1,4 @@
-package com.zealsinger.zealsingerbookauth.constant;
+package com.zealsinger.book.framework.common.constant;
 
 public class RedisConstant {
     public static final String VERIFICATION_CODE_KEY_PREFIX="zealsinger_verification_code:";
@@ -22,11 +22,11 @@ public class RedisConstant {
 
     /**
      * 构建角色对应的权限集合 KEY
-     * @param roleId
+     * @param
      * @return
      */
-    public static String buildRolePermissionsKey(Long roleId) {
-        return ROLE_PERMISSIONS_KEY_PREFIX + roleId;
+    public static String buildRolePermissionsKey(String roleKey) {
+        return ROLE_PERMISSIONS_KEY_PREFIX + roleKey;
     }
 
 

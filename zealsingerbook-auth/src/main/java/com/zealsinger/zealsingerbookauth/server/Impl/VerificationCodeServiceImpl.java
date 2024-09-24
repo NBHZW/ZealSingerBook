@@ -3,7 +3,7 @@ package com.zealsinger.zealsingerbookauth.server.Impl;
 import cn.hutool.core.util.RandomUtil;
 import com.zealsinger.book.framework.common.exception.BusinessException;
 import com.zealsinger.book.framework.common.response.Response;
-import com.zealsinger.zealsingerbookauth.constant.RedisConstant;
+import com.zealsinger.book.framework.common.constant.RedisConstant;
 import com.zealsinger.zealsingerbookauth.domain.enums.ResponseCodeEnum;
 import com.zealsinger.zealsingerbookauth.domain.vo.SendVerificationCodeReqVO;
 import com.zealsinger.zealsingerbookauth.server.VerificationCodeService;
