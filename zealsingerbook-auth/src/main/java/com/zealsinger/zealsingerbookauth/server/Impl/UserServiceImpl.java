@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
                 // 将该用户的对应角色 存入 Redis 中
                 List<String> roles = Lists.newArrayList();
                 roles.add(roleMapper.selectOne(new LambdaQueryWrapper<Role>().eq(Role::getId, RoleConstants.COMMON_USER_ROLE_ID)).getRoleKey());
-                String userRolesKey = RedisConstant.buildUserRoleKey(phone);
+                String userRolesKey = RedisConstant.buildUserRoleKey(userId);
                 redisTemplate.opsForValue().set(userRolesKey, JsonUtil.ObjToJsonString(roles));
                 return userId;
             }catch (Exception e) {

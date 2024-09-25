@@ -2,7 +2,7 @@
 2024-09-19 15:32:48.578 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - The following 1 profile is active: "dev"
 2024-09-19 15:32:51.051 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Started ZealsingerbookAuthApplicationTests in 2.99 seconds (process running for 3.826)
 2024-09-19 15:32:52.211 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
-2024-09-19 15:32:56.649 [Druid-ConnectionPool-Create-1852212002] ERROR com.alibaba.druid.pool.DruidDataSource - create connection Exception, url: jdbc:mysql://114.115.208.175:3306/zealsinger_book?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai, errorCode 0, state 08001
+2024-09-19 15:32:56.649 [Druid-ConnectionPool-Create-1852212002] ERROR com.alibaba.druid.pool.DruidDataSource - create connection Exception, url: jdbc:mysql://127.0.0.1:3306/zealsingerbook?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai, errorCode 0, state 08001
 java.sql.SQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:110)
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
@@ -79,7 +79,7 @@ Caused by: com.mysql.cj.exceptions.CJException: Access denied for user 'root'@'1
 2024-09-19 15:37:51.563 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - The following 1 profile is active: "dev"
 2024-09-19 15:37:53.964 [main] INFO  c.z.z.ZealsingerbookAuthApplicationTests - Started ZealsingerbookAuthApplicationTests in 2.92 seconds (process running for 3.837)
 2024-09-19 15:37:55.037 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
-2024-09-19 15:37:59.506 [Druid-ConnectionPool-Create-554515010] ERROR com.alibaba.druid.pool.DruidDataSource - create connection Exception, url: jdbc:mysql://114.115.208.175:3306/zealsinger_book?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai, errorCode 0, state 08001
+2024-09-19 15:37:59.506 [Druid-ConnectionPool-Create-554515010] ERROR com.alibaba.druid.pool.DruidDataSource - create connection Exception, url: jdbc:mysql://127.0.0.1:3306/zealsingerbook?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai, errorCode 0, state 08001
 java.sql.SQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:110)
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)

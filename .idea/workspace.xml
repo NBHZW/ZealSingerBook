@@ -4,28 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:">
-      <change afterPath="$PROJECT_DIR$/doc/day05.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/doc/day06.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/logs/auth.2024-09-24-0.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/ZealsingerbookGatewayApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/auth/SaTokenConfigure.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/auth/StpInterfaceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/constant/RedisKeyConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/test/java/com/zealsinger/AppTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:添加网关权限和角色处理">
+      <change afterPath="$PROJECT_DIR$/logs/auth.2024-09-25-0.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/config/RedisTemplateConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/enums/ResponseCodeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/filter/AddUserId2HeaderFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/day04.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day04.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/RedisConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/run/PushRolePermissionsRedisRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/run/PushRolePermissionsRedisRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/day06.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day06.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-22-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-22-0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-24-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-24-0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/logs/auth.2024-09-19-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/logs/auth.2024-09-19-0.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/VerificationCodeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/VerificationCodeServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/generatorConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/generatorConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/test/java/com/zealsinger/zealsingerbookauth/ZealsingerbookAuthApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/test/java/com/zealsinger/zealsingerbookauth/ZealsingerbookAuthApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/RedisConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/auth/SaTokenConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/auth/SaTokenConfigure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/src/test/java/com/zealsinger/AppTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +35,7 @@
         <option value="AnnotationType" />
         <option value="Interface" />
         <option value="Enum" />
+        <option value="module-info" />
         <option value="Class" />
       </list>
     </option>
@@ -73,55 +71,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "JUnit.ZealsingerbookAuthApplicationTests.connectTest.executor": "Debug",
-    "JUnit.ZealsingerbookAuthApplicationTests.contextLoads.executor": "Run",
-    "JUnit.ZealsingerbookAuthApplicationTests.redisTest.executor": "Run",
-    "JUnit.ZealsingerbookAuthApplicationTests.threadPoolTest.executor": "Debug",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "Maven.ZealSingerBook [clean].executor": "Run",
-    "Maven.ZealSingerBook [install].executor": "Run",
-    "Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:clean].executor": "Run",
-    "Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:flatten].executor": "Run",
-    "Maven.ZealSingerBook [package].executor": "Run",
-    "Maven.zealsinger-operationlog-spring-boot-starter [clean].executor": "Run",
-    "Maven.zealsinger-operationlog-spring-boot-starter [install].executor": "Run",
-    "Maven.zealsinger-operationlog-spring-boot-starter [package].executor": "Run",
-    "Maven.zealsingerbook-auth [clean].executor": "Run",
-    "Maven.zealsingerbook-auth [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor": "Run",
-    "Maven.zealsingerbook-auth [package].executor": "Run",
-    "Maven.zealsingerbook-common [clean].executor": "Run",
-    "Maven.zealsingerbook-common [install].executor": "Run",
-    "Maven.zealsingerbook-common [package].executor": "Run",
-    "Maven.zealsingerbook-framework [clean].executor": "Run",
-    "Maven.zealsingerbook-framework [install].executor": "Run",
-    "Maven.zealsingerbook-framework [package].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.ZealsingerbookAuthApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookGatewayApplication.executor": "Debug",
-    "git-widget-placeholder": "master",
-    "jdk.selected.JAVA_MODULE": "17",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/ZhuoMian/AutoGreen-master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "模块",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.45402297",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.connectTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.contextLoads.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.redisTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.threadPoolTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:flatten].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-operationlog-spring-boot-starter [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-operationlog-spring-boot-starter [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-operationlog-spring-boot-starter [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-auth [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-auth [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-auth [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-common [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-common [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-common [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-framework [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-framework [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-framework [package].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ZealsingerbookAuthApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookGatewayApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/ZhuoMian/AutoGreen-master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.45402297&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -287,7 +285,12 @@
       <workItem from="1727138310684" duration="1334000" />
       <workItem from="1727142803985" duration="5157000" />
       <workItem from="1727157195097" duration="28000" />
-      <workItem from="1727163802421" duration="9993000" />
+      <workItem from="1727163802421" duration="12383000" />
+      <workItem from="1727230545477" duration="544000" />
+      <workItem from="1727231948859" duration="2520000" />
+      <workItem from="1727249699841" duration="2980000" />
+      <workItem from="1727258442373" duration="638000" />
+      <workItem from="1727269194894" duration="3297000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -345,7 +348,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727138535959</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat:添加网关权限和角色处理">
+      <option name="closed" value="true" />
+      <created>1727183568997</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1727183568997</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,15 +382,21 @@
     <MESSAGE value="feat:添加用户验证码登录注册接口" />
     <MESSAGE value="feat:整合MyBatisPlus+实现了登录注册接口" />
     <MESSAGE value="feat:添加createTime和updateTime的拦截自动处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:添加createTime和updateTime的拦截自动处理" />
+    <MESSAGE value="feat:添加网关权限和角色处理" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:添加网关权限和角色处理" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/UserController.java</url>
-          <line>28</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/auth/StpInterfaceImpl.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

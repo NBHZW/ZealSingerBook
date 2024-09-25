@@ -32,11 +32,11 @@ public class RedisConstant {
 
     /**
      * 构建验证码 KEY
-     * @param phone
+     * @param loginId
      * @return
      */
-    public static String buildUserRoleKey(String phone) {
-        return USER_ROLES_KEY_PREFIX + phone;
+    public static String buildUserRoleKey(Long loginId) {
+        return USER_ROLES_KEY_PREFIX + loginId;
     }
 
     public static String getVerificationCodeKeyPrefix(String phone){

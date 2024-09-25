@@ -21,7 +21,7 @@ class ZealsingerbookAuthApplicationTests {
 
     @Test
     void contextLoads() throws Exception {
-        String password = "yunfuwuxiaoguanjia";
+        String password = "hzw123";
         String[] arr = ConfigTools.genKeyPair(512);
 
         // 私钥

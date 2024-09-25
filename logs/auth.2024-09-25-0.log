@@ -1,0 +1,1260 @@
+2024-09-25 15:46:44.378 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 15:46:44.436 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 15:46:44.667 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 15:46:44.671 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - [settings] [req-serv] nacos-server port:8848
+2024-09-25 15:46:44.672 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - [settings] [http-client] connect timeout:1000
+2024-09-25 15:46:44.674 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - PER_TASK_CONFIG_SIZE: 3000.0
+2024-09-25 15:46:44.714 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2024-09-25 15:46:44.714 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2024-09-25 15:46:44.719 [main] INFO  c.a.n.client.auth.ram.identify.CredentialWatcher - null No credential found
+2024-09-25 15:46:44.988 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 15:46:45.000 [main] INFO  c.a.n.client.config.impl.LocalConfigInfoProcessor - LOCAL_SNAPSHOT_PATH:C:\Users\John\nacos\config
+2024-09-25 15:46:45.005 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of dd82f44e-331d-4307-9709-131d915b7294_config-0
+2024-09-25 15:46:45.025 [main] INFO  com.alibaba.nacos.common.remote.client - [dd82f44e-331d-4307-9709-131d915b7294_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$581/0x0000000800f2e698
+2024-09-25 15:46:45.025 [main] INFO  com.alibaba.nacos.common.remote.client - [dd82f44e-331d-4307-9709-131d915b7294_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$582/0x0000000800f2eab8
+2024-09-25 15:46:45.025 [main] INFO  com.alibaba.nacos.common.remote.client - [dd82f44e-331d-4307-9709-131d915b7294_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2024-09-25 15:46:45.026 [main] INFO  com.alibaba.nacos.common.remote.client - [dd82f44e-331d-4307-9709-131d915b7294_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2024-09-25 15:46:45.032 [main] INFO  com.alibaba.nacos.common.remote.client - [dd82f44e-331d-4307-9709-131d915b7294_config-0] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
+2024-09-25 15:46:45.063 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-25 15:46:46.076 [main] INFO  com.alibaba.nacos.common.remote.client - [dd82f44e-331d-4307-9709-131d915b7294_config-0] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727250404575_192.168.17.1_51754
+2024-09-25 15:46:46.078 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [dd82f44e-331d-4307-9709-131d915b7294_config-0] Notify connected event to listeners.
+2024-09-25 15:46:46.078 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [dd82f44e-331d-4307-9709-131d915b7294_config-0] Connected,notify listen context...
+2024-09-25 15:46:46.078 [main] INFO  com.alibaba.nacos.common.remote.client - [dd82f44e-331d-4307-9709-131d915b7294_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2024-09-25 15:46:46.078 [main] INFO  com.alibaba.nacos.common.remote.client - [dd82f44e-331d-4307-9709-131d915b7294_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$602/0x0000000801093c38
+2024-09-25 15:46:46.118 [main] INFO  com.alibaba.nacos.client.config.impl.Limiter - limitTime:5.0
+2024-09-25 15:46:46.174 [main] INFO  com.alibaba.nacos.client.config.utils.JvmUtil - isMultiInstance:false
+2024-09-25 15:46:46.193 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[zealsingerbook-auth.yaml] & group[DEFAULT_GROUP]
+2024-09-25 15:46:46.202 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[zealsingerbook-auth-dev.yaml] & group[DEFAULT_GROUP]
+2024-09-25 15:46:46.203 [main] INFO  o.s.c.b.c.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth,DEFAULT_GROUP'}]
+2024-09-25 15:46:46.225 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 15:46:46.226 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-25 15:46:46.708 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-25 15:46:46.711 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-25 15:46:46.732 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2024-09-25 15:46:46.889 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=89555d7a-49c3-3ecf-84db-594254dc4216
+2024-09-25 15:46:47.397 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-25 15:46:47.406 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-25 15:46:47.406 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-25 15:46:47.470 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-25 15:46:47.470 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1232 ms
+2024-09-25 15:46:47.825 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.PermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 15:46:47.856 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.RoleMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 15:46:47.872 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.RolePermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 15:46:47.892 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 15:46:47.907 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.UserRoleMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 15:46:49.330 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-25 15:46:49.334 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from ans.namespace attribute : null
+2024-09-25 15:46:49.335 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from ALIBABA_ALIWARE_NAMESPACE attribute :null
+2024-09-25 15:46:49.335 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from namespace attribute :null
+2024-09-25 15:46:49.342 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2024-09-25 15:46:49.342 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2024-09-25 15:46:49.346 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 957b67d5-56b6-4f7d-83c0-becf935a22a9
+2024-09-25 15:46:49.347 [main] INFO  com.alibaba.nacos.common.remote.client - [957b67d5-56b6-4f7d-83c0-becf935a22a9] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2024-09-25 15:46:49.347 [main] INFO  com.alibaba.nacos.common.remote.client - [957b67d5-56b6-4f7d-83c0-becf935a22a9] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2024-09-25 15:46:49.347 [main] INFO  com.alibaba.nacos.common.remote.client - [957b67d5-56b6-4f7d-83c0-becf935a22a9] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2024-09-25 15:46:49.348 [main] INFO  com.alibaba.nacos.common.remote.client - [957b67d5-56b6-4f7d-83c0-becf935a22a9] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
+2024-09-25 15:46:49.348 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-25 15:46:49.473 [main] INFO  com.alibaba.nacos.common.remote.client - [957b67d5-56b6-4f7d-83c0-becf935a22a9] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727250408050_192.168.17.1_51755
+2024-09-25 15:46:49.473 [main] INFO  com.alibaba.nacos.common.remote.client - [957b67d5-56b6-4f7d-83c0-becf935a22a9] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2024-09-25 15:46:49.473 [main] INFO  com.alibaba.nacos.common.remote.client - [957b67d5-56b6-4f7d-83c0-becf935a22a9] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$602/0x0000000801093c38
+2024-09-25 15:46:49.473 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [957b67d5-56b6-4f7d-83c0-becf935a22a9] Notify connected event to listeners.
+2024-09-25 15:46:49.473 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.naming - Grpc connection connect
+2024-09-25 15:46:49.475 [main] INFO  com.alibaba.nacos.client.naming - [REGISTER-SERVICE] zealsingerbook registering service zealsingerbook-auth with instance Instance{instanceId='null', ip='192.168.195.1', port=8080, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={IPv6=null, preserved.register.source=SPRING_CLOUD}}
+2024-09-25 15:46:49.490 [main] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP zealsingerbook-auth 192.168.195.1:8080 register finished
+2024-09-25 15:46:49.667 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 5.945 seconds (process running for 7.986)
+2024-09-25 15:46:50.182 [main] INFO  c.z.z.run.PushRolePermissionsRedisRunner - ==> 服务启动，开始同步角色权限数据到 Redis 中...
+2024-09-25 15:46:50.228 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2024-09-25 15:46:50.380 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==>  Preparing: select id, role_key, role_name from t_role where status=0 and is_deleted=0;
+2024-09-25 15:46:50.394 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - ==> Parameters: 
+2024-09-25 15:46:50.411 [main] DEBUG c.z.z.mapper.RoleMapper.selectEnabledList - <==      Total: 1
+2024-09-25 15:46:50.457 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectList - ==>  Preparing: SELECT id,role_id,permission_id,create_time,update_time,is_deleted FROM t_role_permission_rel WHERE (role_id IN (?))
+2024-09-25 15:46:50.458 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectList - ==> Parameters: 1(Long)
+2024-09-25 15:46:50.462 [main] DEBUG c.z.z.mapper.RolePermissionMapper.selectList - <==      Total: 2
+2024-09-25 15:46:50.468 [main] DEBUG c.z.z.mapper.PermissionMapper.selectAppEnabledList - ==>  Preparing: select id, name, permission_key from t_permission where status = 0 and type = 3 and is_deleted = 0
+2024-09-25 15:46:50.468 [main] DEBUG c.z.z.mapper.PermissionMapper.selectAppEnabledList - ==> Parameters: 
+2024-09-25 15:46:50.470 [main] DEBUG c.z.z.mapper.PermissionMapper.selectAppEnabledList - <==      Total: 2
+2024-09-25 15:46:50.530 [main] INFO  c.z.z.run.PushRolePermissionsRedisRunner - ==> 服务启动，成功同步角色权限数据到 Redis 中...
+2024-09-25 15:46:50.534 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - nacos.cache.data.init.snapshot = true 
+2024-09-25 15:46:50.534 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth.yaml+DEFAULT_GROUP+zealsingerbook
+2024-09-25 15:46:50.543 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-25 15:46:50.543 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP
+2024-09-25 15:46:50.544 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth+DEFAULT_GROUP+zealsingerbook
+2024-09-25 15:46:50.544 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, cnt=1
+2024-09-25 15:46:50.544 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth, group=DEFAULT_GROUP
+2024-09-25 15:46:50.544 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth-dev.yaml+DEFAULT_GROUP+zealsingerbook
+2024-09-25 15:46:50.544 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-25 15:46:50.544 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP
+2024-09-25 15:52:00.932 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-25 15:52:00.933 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-25 15:52:00.934 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-25 15:52:00.981 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [用户登录/注册], 入参: {"phoneNumber":"13203210631","code":"604192","password":"","type":1}, 请求类: com.zealsinger.zealsingerbookauth.controller.UserController, 请求方法: loginAndRegister =================================== 
+2024-09-25 15:52:10.988 [http-nio-8080-exec-1] ERROR c.z.z.exception.GlobalExceptionHandler - /user/login request error, 
+org.springframework.dao.QueryTimeoutException: Redis command timed out
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:68)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:41)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:40)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:38)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:248)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:961)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$4(LettuceConnection.java:818)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:665)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker.just(LettuceInvoker.java:94)
+	at org.springframework.data.redis.connection.lettuce.LettuceStringCommands.get(LettuceStringCommands.java:52)
+	at org.springframework.data.redis.connection.DefaultedRedisConnection.get(DefaultedRedisConnection.java:284)
+	at org.springframework.data.redis.core.DefaultValueOperations$1.inRedis(DefaultValueOperations.java:54)
+	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:61)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:406)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:373)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:97)
+	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:50)
+	at com.zealsinger.zealsingerbookauth.server.Impl.UserServiceImpl.loginAndRegister(UserServiceImpl.java:64)
+	at com.zealsinger.zealsingerbookauth.controller.UserController.loginAndRegister(UserController.java:24)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.zealsinger.aspect.ApiOperationLogAspect.doAround(ApiOperationLogAspect.java:40)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:623)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:703)
+	at com.zealsinger.zealsingerbookauth.controller.UserController$$SpringCGLIB$$0.loginAndRegister(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:207)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:152)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:884)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1080)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:973)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1011)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:814)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:223)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:400)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:859)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1734)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: io.lettuce.core.RedisCommandTimeoutException: Command timed out after 10 second(s)
+	at io.lettuce.core.internal.ExceptionFactory.createTimeoutException(ExceptionFactory.java:59)
+	at io.lettuce.core.internal.Futures.awaitOrCancel(Futures.java:246)
+	at io.lettuce.core.LettuceFutures.awaitOrCancel(LettuceFutures.java:74)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:959)
+	... 90 common frames omitted
+2024-09-25 15:52:18.730 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [用户登录/注册], 入参: {"phoneNumber":"13203210631","code":"604192","password":"","type":1}, 请求类: com.zealsinger.zealsingerbookauth.controller.UserController, 请求方法: loginAndRegister =================================== 
+2024-09-25 15:52:20.202 [lettuce-eventExecutorLoop-1-5] INFO  io.lettuce.core.protocol.ConnectionWatchdog - Reconnecting, last destination was /111.229.213.244:6379
+2024-09-25 15:52:20.293 [lettuce-nioEventLoop-4-2] INFO  io.lettuce.core.protocol.ReconnectionHandler - Reconnected to 111.229.213.244/<unresolved>:6379
+2024-09-25 15:52:20.324 [http-nio-8080-exec-2] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==>  Preparing: select id, password from t_user where phone = ?
+2024-09-25 15:52:20.324 [http-nio-8080-exec-2] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==> Parameters: 13203210631(String)
+2024-09-25 15:52:20.330 [http-nio-8080-exec-2] DEBUG c.z.z.mapper.UserMapper.selectByPhone - <==      Total: 0
+2024-09-25 15:52:20.365 [http-nio-8080-exec-2] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - ==>  Preparing: insert into t_user (id, zealsinger_book_id, `password`, nickname, avatar, birthday, background_img, phone, sex, `status`, introduction, create_time, update_time, is_deleted) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-09-25 15:52:20.366 [http-nio-8080-exec-2] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - ==> Parameters: null, 102(String), null, zealsingerbook102(String), null, null, null, 13203210631(String), null, 0(Integer), null, 2024-09-25T15:52:20.365372900(LocalDateTime), 2024-09-25T15:52:20.365372900(LocalDateTime), false(Boolean)
+2024-09-25 15:52:20.409 [http-nio-8080-exec-2] ERROR c.z.zealsingerbookauth.server.Impl.UserServiceImpl - 系统注册服务出现故障!!!
+2024-09-25 15:52:20.412 [http-nio-8080-exec-2] INFO  c.z.zealsingerbookauth.server.Impl.UserServiceImpl - ===>用户 null 注册成功
+2024-09-25 15:52:20.413 [http-nio-8080-exec-2] ERROR c.z.z.exception.GlobalExceptionHandler - /user/login request error, 
+cn.dev33.satoken.exception.SaTokenException: loginId 不能为空
+	at cn.dev33.satoken.stp.StpLogic.checkLoginArgs(StpLogic.java:564)
+	at cn.dev33.satoken.stp.StpLogic.createLoginSession(StpLogic.java:464)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:438)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:397)
+	at cn.dev33.satoken.stp.StpUtil.login(StpUtil.java:164)
+	at com.zealsinger.zealsingerbookauth.server.Impl.UserServiceImpl.loginAndRegister(UserServiceImpl.java:78)
+	at com.zealsinger.zealsingerbookauth.controller.UserController.loginAndRegister(UserController.java:24)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.zealsinger.aspect.ApiOperationLogAspect.doAround(ApiOperationLogAspect.java:40)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:623)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:703)
+	at com.zealsinger.zealsingerbookauth.controller.UserController$$SpringCGLIB$$0.loginAndRegister(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:207)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:152)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:884)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1080)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:973)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1011)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:814)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:223)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:400)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:859)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1734)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-09-25 15:54:29.416 [http-nio-8080-exec-4] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [用户登录/注册], 入参: {"phoneNumber":"13203210631","code":"604192","password":"","type":1}, 请求类: com.zealsinger.zealsingerbookauth.controller.UserController, 请求方法: loginAndRegister =================================== 
+2024-09-25 15:54:34.872 [http-nio-8080-exec-4] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==>  Preparing: select id, password from t_user where phone = ?
+2024-09-25 15:54:34.874 [http-nio-8080-exec-4] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==> Parameters: 13203210631(String)
+2024-09-25 15:54:34.876 [http-nio-8080-exec-4] DEBUG c.z.z.mapper.UserMapper.selectByPhone - <==      Total: 0
+2024-09-25 15:54:40.441 [http-nio-8080-exec-4] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - ==>  Preparing: insert into t_user (id, zealsinger_book_id, `password`, nickname, avatar, birthday, background_img, phone, sex, `status`, introduction, create_time, update_time, is_deleted) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-09-25 15:54:40.445 [http-nio-8080-exec-4] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - ==> Parameters: null, 103(String), null, zealsingerbook103(String), null, null, null, 13203210631(String), null, 0(Integer), null, 2024-09-25T15:54:40.441021100(LocalDateTime), 2024-09-25T15:54:40.441021100(LocalDateTime), false(Boolean)
+2024-09-25 15:54:40.454 [http-nio-8080-exec-4] ERROR c.z.zealsingerbookauth.server.Impl.UserServiceImpl - 系统注册服务出现故障!!!
+2024-09-25 15:54:53.494 [http-nio-8080-exec-4] INFO  c.z.zealsingerbookauth.server.Impl.UserServiceImpl - ===>用户 null 注册成功
+2024-09-25 15:54:53.500 [http-nio-8080-exec-4] ERROR c.z.z.exception.GlobalExceptionHandler - /user/login request error, 
+cn.dev33.satoken.exception.SaTokenException: loginId 不能为空
+	at cn.dev33.satoken.stp.StpLogic.checkLoginArgs(StpLogic.java:564)
+	at cn.dev33.satoken.stp.StpLogic.createLoginSession(StpLogic.java:464)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:438)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:397)
+	at cn.dev33.satoken.stp.StpUtil.login(StpUtil.java:164)
+	at com.zealsinger.zealsingerbookauth.server.Impl.UserServiceImpl.loginAndRegister(UserServiceImpl.java:78)
+	at com.zealsinger.zealsingerbookauth.controller.UserController.loginAndRegister(UserController.java:24)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.zealsinger.aspect.ApiOperationLogAspect.doAround(ApiOperationLogAspect.java:40)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:623)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:703)
+	at com.zealsinger.zealsingerbookauth.controller.UserController$$SpringCGLIB$$0.loginAndRegister(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:207)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:152)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:884)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1080)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:973)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1011)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:814)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:223)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:400)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:859)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1734)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-09-25 15:54:53.525 [Thread-1] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2024-09-25 15:54:53.527 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2024-09-25 15:54:53.527 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2024-09-25 15:54:53.527 [Thread-1] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2024-09-25 15:54:53.595 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2024-09-25 15:54:53.595 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - [DEREGISTER-SERVICE] zealsingerbook deregistering service zealsingerbook-auth with instance: Instance{instanceId='null', ip='192.168.195.1', port=8080, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={}}
+2024-09-25 15:54:53.603 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2024-09-25 15:54:53.603 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown begin
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown begin
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown stop
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown stop
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown begin
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown begin
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown stop
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServerListManager do shutdown begin
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Start destroying NacosRestTemplate
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Destruction of the end
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServerListManager do shutdown stop
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown begin
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Start destroying NacosRestTemplate
+2024-09-25 15:54:53.604 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Destruction of the end
+2024-09-25 15:54:53.605 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown stop
+2024-09-25 15:54:53.605 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown rpc client, set status to shutdown
+2024-09-25 15:54:53.605 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@4c1aa400[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2024-09-25 15:54:53.605 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1727250408050_192.168.17.1_51755
+2024-09-25 15:54:53.609 [SpringApplicationShutdownHook] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@24938a67[Running, pool size = 3, active threads = 0, queued tasks = 0, completed tasks = 116]
+2024-09-25 15:54:53.609 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - Shutdown grpc redo service executor java.util.concurrent.ScheduledThreadPoolExecutor@49b80c52[Running, pool size = 1, active threads = 0, queued tasks = 1, completed tasks = 155]
+2024-09-25 15:54:53.609 [SpringApplicationShutdownHook] INFO  c.a.n.client.auth.ram.identify.CredentialWatcher - [null] CredentialWatcher is stopped
+2024-09-25 15:54:53.609 [SpringApplicationShutdownHook] INFO  c.a.n.client.auth.ram.identify.CredentialService - [null] CredentialService is freed
+2024-09-25 15:54:53.610 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown stop
+2024-09-25 15:54:53.738 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2024-09-25 15:54:53.746 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2024-09-25 15:54:57.657 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 15:54:57.708 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 15:54:57.897 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 15:54:57.899 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - [settings] [req-serv] nacos-server port:8848
+2024-09-25 15:54:57.900 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - [settings] [http-client] connect timeout:1000
+2024-09-25 15:54:57.901 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - PER_TASK_CONFIG_SIZE: 3000.0
+2024-09-25 15:54:57.930 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2024-09-25 15:54:57.931 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2024-09-25 15:54:57.935 [main] INFO  c.a.n.client.auth.ram.identify.CredentialWatcher - null No credential found
+2024-09-25 15:54:58.200 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 15:54:58.212 [main] INFO  c.a.n.client.config.impl.LocalConfigInfoProcessor - LOCAL_SNAPSHOT_PATH:C:\Users\John\nacos\config
+2024-09-25 15:54:58.216 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0
+2024-09-25 15:54:58.233 [main] INFO  com.alibaba.nacos.common.remote.client - [9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$581/0x0000000800f2eda8
+2024-09-25 15:54:58.233 [main] INFO  com.alibaba.nacos.common.remote.client - [9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$582/0x0000000800f2f1c8
+2024-09-25 15:54:58.233 [main] INFO  com.alibaba.nacos.common.remote.client - [9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2024-09-25 15:54:58.234 [main] INFO  com.alibaba.nacos.common.remote.client - [9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2024-09-25 15:54:58.240 [main] INFO  com.alibaba.nacos.common.remote.client - [9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
+2024-09-25 15:54:58.273 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-25 15:54:59.162 [main] INFO  com.alibaba.nacos.common.remote.client - [9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727250897668_192.168.17.1_52129
+2024-09-25 15:54:59.162 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0] Notify connected event to listeners.
+2024-09-25 15:54:59.163 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0] Connected,notify listen context...
+2024-09-25 15:54:59.163 [main] INFO  com.alibaba.nacos.common.remote.client - [9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2024-09-25 15:54:59.163 [main] INFO  com.alibaba.nacos.common.remote.client - [9cc48875-563f-4c24-ac0e-e8177b3ed637_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$602/0x00000008010945a0
+2024-09-25 15:54:59.201 [main] INFO  com.alibaba.nacos.client.config.impl.Limiter - limitTime:5.0
+2024-09-25 15:54:59.221 [main] INFO  com.alibaba.nacos.client.config.utils.JvmUtil - isMultiInstance:false
+2024-09-25 15:54:59.233 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[zealsingerbook-auth.yaml] & group[DEFAULT_GROUP]
+2024-09-25 15:54:59.238 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[zealsingerbook-auth-dev.yaml] & group[DEFAULT_GROUP]
+2024-09-25 15:54:59.239 [main] INFO  o.s.c.b.c.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth,DEFAULT_GROUP'}]
+2024-09-25 15:54:59.261 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 15:54:59.263 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-25 15:54:59.750 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-25 15:54:59.752 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-25 15:54:59.775 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2024-09-25 15:54:59.939 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=89555d7a-49c3-3ecf-84db-594254dc4216
+2024-09-25 15:55:00.391 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-25 15:55:00.401 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-25 15:55:00.401 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-25 15:55:00.465 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-25 15:55:00.466 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1190 ms
+2024-09-25 15:55:00.799 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.PermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 15:55:00.832 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.RoleMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 15:55:00.853 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.RolePermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 15:55:00.880 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 15:55:00.897 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.UserRoleMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 15:55:02.410 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-25 15:55:02.414 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from ans.namespace attribute : null
+2024-09-25 15:55:02.414 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from ALIBABA_ALIWARE_NAMESPACE attribute :null
+2024-09-25 15:55:02.415 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from namespace attribute :null
+2024-09-25 15:55:02.423 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2024-09-25 15:55:02.423 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2024-09-25 15:55:02.427 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of e0738dca-cf89-44ed-992a-e624650bed4d
+2024-09-25 15:55:02.429 [main] INFO  com.alibaba.nacos.common.remote.client - [e0738dca-cf89-44ed-992a-e624650bed4d] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2024-09-25 15:55:02.429 [main] INFO  com.alibaba.nacos.common.remote.client - [e0738dca-cf89-44ed-992a-e624650bed4d] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2024-09-25 15:55:02.429 [main] INFO  com.alibaba.nacos.common.remote.client - [e0738dca-cf89-44ed-992a-e624650bed4d] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2024-09-25 15:55:02.429 [main] INFO  com.alibaba.nacos.common.remote.client - [e0738dca-cf89-44ed-992a-e624650bed4d] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
+2024-09-25 15:55:02.429 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-25 15:55:02.545 [main] INFO  com.alibaba.nacos.common.remote.client - [e0738dca-cf89-44ed-992a-e624650bed4d] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727250901125_192.168.17.1_52134
+2024-09-25 15:55:02.545 [main] INFO  com.alibaba.nacos.common.remote.client - [e0738dca-cf89-44ed-992a-e624650bed4d] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2024-09-25 15:55:02.545 [main] INFO  com.alibaba.nacos.common.remote.client - [e0738dca-cf89-44ed-992a-e624650bed4d] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$602/0x00000008010945a0
+2024-09-25 15:55:02.545 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [e0738dca-cf89-44ed-992a-e624650bed4d] Notify connected event to listeners.
+2024-09-25 15:55:02.545 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.naming - Grpc connection connect
+2024-09-25 15:55:02.546 [main] INFO  com.alibaba.nacos.client.naming - [REGISTER-SERVICE] zealsingerbook registering service zealsingerbook-auth with instance Instance{instanceId='null', ip='192.168.195.1', port=8080, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={IPv6=null, preserved.register.source=SPRING_CLOUD}}
+2024-09-25 15:55:02.559 [main] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP zealsingerbook-auth 192.168.195.1:8080 register finished
+2024-09-25 15:55:02.741 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 5.711 seconds (process running for 6.354)
+2024-09-25 15:55:03.217 [main] WARN  c.z.z.run.PushRolePermissionsRedisRunner - ==> 角色权限数据已经同步至 Redis 中，不再同步...
+2024-09-25 15:55:03.220 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - nacos.cache.data.init.snapshot = true 
+2024-09-25 15:55:03.221 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth.yaml+DEFAULT_GROUP+zealsingerbook
+2024-09-25 15:55:03.228 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-25 15:55:03.228 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP
+2024-09-25 15:55:03.229 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth+DEFAULT_GROUP+zealsingerbook
+2024-09-25 15:55:03.229 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, cnt=1
+2024-09-25 15:55:03.229 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth, group=DEFAULT_GROUP
+2024-09-25 15:55:03.230 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth-dev.yaml+DEFAULT_GROUP+zealsingerbook
+2024-09-25 15:55:03.230 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-25 15:55:03.230 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP
+2024-09-25 15:55:07.853 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-25 15:55:07.853 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-25 15:55:07.854 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-09-25 15:55:07.894 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [用户登录/注册], 入参: {"phoneNumber":"13203210631","code":"604192","password":"","type":1}, 请求类: com.zealsinger.zealsingerbookauth.controller.UserController, 请求方法: loginAndRegister =================================== 
+2024-09-25 15:55:10.450 [http-nio-8080-exec-1] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2024-09-25 15:55:10.588 [http-nio-8080-exec-1] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==>  Preparing: select id, password from t_user where phone = ?
+2024-09-25 15:55:10.603 [http-nio-8080-exec-1] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==> Parameters: 13203210631(String)
+2024-09-25 15:55:10.614 [http-nio-8080-exec-1] DEBUG c.z.z.mapper.UserMapper.selectByPhone - <==      Total: 0
+2024-09-25 15:55:16.479 [http-nio-8080-exec-1] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - ==>  Preparing: insert into t_user (id, zealsinger_book_id, `password`, nickname, avatar, birthday, background_img, phone, sex, `status`, introduction, create_time, update_time, is_deleted) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-09-25 15:55:16.484 [http-nio-8080-exec-1] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - ==> Parameters: null, 104(String), null, zealsingerbook104(String), null, null, null, 13203210631(String), null, 0(Integer), null, 2024-09-25T15:55:16.478661(LocalDateTime), 2024-09-25T15:55:16.478661(LocalDateTime), false(Boolean)
+2024-09-25 15:55:16.689 [http-nio-8080-exec-1] ERROR c.z.zealsingerbookauth.server.Impl.UserServiceImpl - 系统注册服务出现故障!!!
+2024-09-25 15:55:26.433 [http-nio-8080-exec-1] INFO  c.z.zealsingerbookauth.server.Impl.UserServiceImpl - ===>用户 null 注册成功
+2024-09-25 15:55:26.436 [http-nio-8080-exec-1] ERROR c.z.z.exception.GlobalExceptionHandler - /user/login request error, 
+cn.dev33.satoken.exception.SaTokenException: loginId 不能为空
+	at cn.dev33.satoken.stp.StpLogic.checkLoginArgs(StpLogic.java:564)
+	at cn.dev33.satoken.stp.StpLogic.createLoginSession(StpLogic.java:464)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:438)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:397)
+	at cn.dev33.satoken.stp.StpUtil.login(StpUtil.java:164)
+	at com.zealsinger.zealsingerbookauth.server.Impl.UserServiceImpl.loginAndRegister(UserServiceImpl.java:78)
+	at com.zealsinger.zealsingerbookauth.controller.UserController.loginAndRegister(UserController.java:24)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.zealsinger.aspect.ApiOperationLogAspect.doAround(ApiOperationLogAspect.java:40)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:623)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:703)
+	at com.zealsinger.zealsingerbookauth.controller.UserController$$SpringCGLIB$$0.loginAndRegister(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:207)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:152)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:884)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1080)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:973)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1011)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:814)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:223)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:400)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:859)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1734)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-09-25 15:55:31.166 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [用户登录/注册], 入参: {"phoneNumber":"13203210631","code":"604192","password":"","type":1}, 请求类: com.zealsinger.zealsingerbookauth.controller.UserController, 请求方法: loginAndRegister =================================== 
+2024-09-25 15:55:35.112 [http-nio-8080-exec-2] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==>  Preparing: select id, password from t_user where phone = ?
+2024-09-25 15:55:35.113 [http-nio-8080-exec-2] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==> Parameters: 13203210631(String)
+2024-09-25 15:55:35.114 [http-nio-8080-exec-2] DEBUG c.z.z.mapper.UserMapper.selectByPhone - <==      Total: 0
+2024-09-25 15:56:04.443 [http-nio-8080-exec-2] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - ==>  Preparing: insert into t_user (id, zealsinger_book_id, `password`, nickname, avatar, birthday, background_img, phone, sex, `status`, introduction, create_time, update_time, is_deleted) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-09-25 15:56:04.448 [http-nio-8080-exec-2] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - ==> Parameters: null, 105(String), null, zealsingerbook105(String), null, null, null, 13203210631(String), null, 0(Integer), null, 2024-09-25T15:56:04.442142400(LocalDateTime), 2024-09-25T15:56:04.443151300(LocalDateTime), false(Boolean)
+2024-09-25 15:57:07.795 [http-nio-8080-exec-2] ERROR c.z.zealsingerbookauth.server.Impl.UserServiceImpl - 系统注册服务出现故障!!!
+2024-09-25 15:57:07.797 [http-nio-8080-exec-2] INFO  c.z.zealsingerbookauth.server.Impl.UserServiceImpl - ===>用户 null 注册成功
+2024-09-25 15:57:07.798 [http-nio-8080-exec-2] ERROR c.z.z.exception.GlobalExceptionHandler - /user/login request error, 
+cn.dev33.satoken.exception.SaTokenException: loginId 不能为空
+	at cn.dev33.satoken.stp.StpLogic.checkLoginArgs(StpLogic.java:564)
+	at cn.dev33.satoken.stp.StpLogic.createLoginSession(StpLogic.java:464)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:438)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:397)
+	at cn.dev33.satoken.stp.StpUtil.login(StpUtil.java:164)
+	at com.zealsinger.zealsingerbookauth.server.Impl.UserServiceImpl.loginAndRegister(UserServiceImpl.java:78)
+	at com.zealsinger.zealsingerbookauth.controller.UserController.loginAndRegister(UserController.java:24)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.zealsinger.aspect.ApiOperationLogAspect.doAround(ApiOperationLogAspect.java:40)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:623)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:703)
+	at com.zealsinger.zealsingerbookauth.controller.UserController$$SpringCGLIB$$0.loginAndRegister(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:207)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:152)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:884)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1080)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:973)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1011)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:814)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:223)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:400)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:859)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1734)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-09-25 15:57:12.443 [http-nio-8080-exec-3] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [用户登录/注册], 入参: {"phoneNumber":"13203210631","code":"604192","password":"","type":1}, 请求类: com.zealsinger.zealsingerbookauth.controller.UserController, 请求方法: loginAndRegister =================================== 
+2024-09-25 15:57:14.955 [http-nio-8080-exec-3] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==>  Preparing: select id, password from t_user where phone = ?
+2024-09-25 15:57:14.956 [http-nio-8080-exec-3] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==> Parameters: 13203210631(String)
+2024-09-25 15:57:14.959 [http-nio-8080-exec-3] DEBUG c.z.z.mapper.UserMapper.selectByPhone - <==      Total: 0
+2024-09-25 15:57:18.477 [http-nio-8080-exec-3] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - ==>  Preparing: insert into t_user (id, zealsinger_book_id, `password`, nickname, avatar, birthday, background_img, phone, sex, `status`, introduction, create_time, update_time, is_deleted) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-09-25 15:57:18.484 [http-nio-8080-exec-3] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - ==> Parameters: null, 106(String), null, zealsingerbook106(String), null, null, null, 13203210631(String), null, 0(Integer), null, 2024-09-25T15:57:18.476582800(LocalDateTime), 2024-09-25T15:57:18.476582800(LocalDateTime), false(Boolean)
+2024-09-25 15:57:18.490 [http-nio-8080-exec-3] DEBUG c.z.zealsingerbookauth.mapper.UserMapper.insert - <==    Updates: 1
+2024-09-25 15:57:22.927 [http-nio-8080-exec-3] DEBUG c.z.z.mapper.UserRoleMapper.insert - ==>  Preparing: insert into t_user_role_rel (id, user_id, role_id, create_time, update_time, is_deleted ) values (?, ?, ?, ?, ?, ? )
+2024-09-25 15:57:22.931 [http-nio-8080-exec-3] DEBUG c.z.z.mapper.UserRoleMapper.insert - ==> Parameters: null, 1(Long), 1(Long), 2024-09-25T15:57:22.927293400(LocalDateTime), 2024-09-25T15:57:22.927293400(LocalDateTime), false(Boolean)
+2024-09-25 15:57:22.934 [http-nio-8080-exec-3] DEBUG c.z.z.mapper.UserRoleMapper.insert - <==    Updates: 1
+2024-09-25 15:57:23.161 [http-nio-8080-exec-3] DEBUG c.z.z.mapper.RoleMapper.selectList - ==>  Preparing: SELECT id,role_name,role_key,status,sort,remark,create_time,update_time,is_deleted FROM t_role WHERE (id = ?)
+2024-09-25 15:57:23.163 [http-nio-8080-exec-3] DEBUG c.z.z.mapper.RoleMapper.selectList - ==> Parameters: 1(Long)
+2024-09-25 15:57:23.179 [http-nio-8080-exec-3] DEBUG c.z.z.mapper.RoleMapper.selectList - <==      Total: 1
+2024-09-25 15:57:23.220 [http-nio-8080-exec-3] INFO  c.z.zealsingerbookauth.server.Impl.UserServiceImpl - ===>用户 null 注册成功
+2024-09-25 15:57:23.220 [http-nio-8080-exec-3] ERROR c.z.z.exception.GlobalExceptionHandler - /user/login request error, 
+cn.dev33.satoken.exception.SaTokenException: loginId 不能为空
+	at cn.dev33.satoken.stp.StpLogic.checkLoginArgs(StpLogic.java:564)
+	at cn.dev33.satoken.stp.StpLogic.createLoginSession(StpLogic.java:464)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:438)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:397)
+	at cn.dev33.satoken.stp.StpUtil.login(StpUtil.java:164)
+	at com.zealsinger.zealsingerbookauth.server.Impl.UserServiceImpl.loginAndRegister(UserServiceImpl.java:78)
+	at com.zealsinger.zealsingerbookauth.controller.UserController.loginAndRegister(UserController.java:24)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.zealsinger.aspect.ApiOperationLogAspect.doAround(ApiOperationLogAspect.java:40)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:623)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:703)
+	at com.zealsinger.zealsingerbookauth.controller.UserController$$SpringCGLIB$$0.loginAndRegister(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:207)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:152)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:884)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1080)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:973)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1011)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:814)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:223)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:400)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:859)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1734)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-09-25 15:57:42.957 [http-nio-8080-exec-5] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [用户登录/注册], 入参: {"phoneNumber":"13203210631","code":"604192","password":"","type":1}, 请求类: com.zealsinger.zealsingerbookauth.controller.UserController, 请求方法: loginAndRegister =================================== 
+2024-09-25 15:57:42.991 [http-nio-8080-exec-5] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==>  Preparing: select id, password from t_user where phone = ?
+2024-09-25 15:57:42.991 [http-nio-8080-exec-5] DEBUG c.z.z.mapper.UserMapper.selectByPhone - ==> Parameters: 13203210631(String)
+2024-09-25 15:57:42.992 [http-nio-8080-exec-5] DEBUG c.z.z.mapper.UserMapper.selectByPhone - <==      Total: 1
+2024-09-25 15:57:43.267 [http-nio-8080-exec-5] INFO  c.z.zealsingerbookauth.server.Impl.UserServiceImpl - ===>用户 1 登录成功
+2024-09-25 15:57:43.534 [http-nio-8080-exec-5] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [用户登录/注册], 耗时: 577ms, 出参: {"success":true,"message":null,"errorCode":null,"data":"5dedfdbb-b511-42a9-a698-c9d41b1fdc78"} =================================== 
+2024-09-25 16:12:24.441 [Thread-1] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2024-09-25 16:12:24.441 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2024-09-25 16:12:24.441 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2024-09-25 16:12:24.441 [Thread-1] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2024-09-25 16:12:24.491 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2024-09-25 16:12:24.492 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - [DEREGISTER-SERVICE] zealsingerbook deregistering service zealsingerbook-auth with instance: Instance{instanceId='null', ip='192.168.195.1', port=8080, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={}}
+2024-09-25 16:12:24.500 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2024-09-25 16:12:24.500 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown begin
+2024-09-25 16:12:24.500 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown begin
+2024-09-25 16:12:24.502 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown stop
+2024-09-25 16:12:24.502 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown stop
+2024-09-25 16:12:24.502 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown begin
+2024-09-25 16:12:24.502 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown begin
+2024-09-25 16:12:24.502 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown stop
+2024-09-25 16:12:24.502 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServerListManager do shutdown begin
+2024-09-25 16:12:24.502 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Start destroying NacosRestTemplate
+2024-09-25 16:12:24.502 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Destruction of the end
+2024-09-25 16:12:24.503 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServerListManager do shutdown stop
+2024-09-25 16:12:24.503 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown begin
+2024-09-25 16:12:24.503 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Start destroying NacosRestTemplate
+2024-09-25 16:12:24.503 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Destruction of the end
+2024-09-25 16:12:24.503 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown stop
+2024-09-25 16:12:24.503 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown rpc client, set status to shutdown
+2024-09-25 16:12:24.503 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@2819db88[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2024-09-25 16:12:24.503 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1727250901125_192.168.17.1_52134
+2024-09-25 16:12:24.507 [SpringApplicationShutdownHook] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@1defc2ea[Running, pool size = 3, active threads = 0, queued tasks = 0, completed tasks = 202]
+2024-09-25 16:12:24.507 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - Shutdown grpc redo service executor java.util.concurrent.ScheduledThreadPoolExecutor@10def7b[Running, pool size = 1, active threads = 0, queued tasks = 1, completed tasks = 315]
+2024-09-25 16:12:24.507 [SpringApplicationShutdownHook] INFO  c.a.n.client.auth.ram.identify.CredentialWatcher - [null] CredentialWatcher is stopped
+2024-09-25 16:12:24.507 [SpringApplicationShutdownHook] INFO  c.a.n.client.auth.ram.identify.CredentialService - [null] CredentialService is freed
+2024-09-25 16:12:24.507 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown stop
+2024-09-25 16:12:24.639 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2024-09-25 16:12:24.647 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2024-09-25 17:48:20.290 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 17:48:20.410 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 17:48:20.861 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 17:48:20.865 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - [settings] [req-serv] nacos-server port:8848
+2024-09-25 17:48:20.866 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - [settings] [http-client] connect timeout:1000
+2024-09-25 17:48:20.867 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - PER_TASK_CONFIG_SIZE: 3000.0
+2024-09-25 17:48:20.924 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2024-09-25 17:48:20.925 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2024-09-25 17:48:20.931 [main] INFO  c.a.n.client.auth.ram.identify.CredentialWatcher - null No credential found
+2024-09-25 17:48:22.432 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 17:48:22.455 [main] INFO  c.a.n.client.config.impl.LocalConfigInfoProcessor - LOCAL_SNAPSHOT_PATH:C:\Users\John\nacos\config
+2024-09-25 17:48:22.462 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 8d81e742-16ff-41fd-9866-a39a181c1d31_config-0
+2024-09-25 17:48:22.497 [main] INFO  com.alibaba.nacos.common.remote.client - [8d81e742-16ff-41fd-9866-a39a181c1d31_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$569/0x0000000800efd670
+2024-09-25 17:48:22.497 [main] INFO  com.alibaba.nacos.common.remote.client - [8d81e742-16ff-41fd-9866-a39a181c1d31_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$570/0x0000000800efda90
+2024-09-25 17:48:22.498 [main] INFO  com.alibaba.nacos.common.remote.client - [8d81e742-16ff-41fd-9866-a39a181c1d31_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2024-09-25 17:48:22.498 [main] INFO  com.alibaba.nacos.common.remote.client - [8d81e742-16ff-41fd-9866-a39a181c1d31_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2024-09-25 17:48:22.512 [main] INFO  com.alibaba.nacos.common.remote.client - [8d81e742-16ff-41fd-9866-a39a181c1d31_config-0] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
+2024-09-25 17:48:22.571 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-25 17:48:24.399 [main] INFO  com.alibaba.nacos.common.remote.client - [8d81e742-16ff-41fd-9866-a39a181c1d31_config-0] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727257702731_192.168.17.1_62413
+2024-09-25 17:48:24.400 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [8d81e742-16ff-41fd-9866-a39a181c1d31_config-0] Notify connected event to listeners.
+2024-09-25 17:48:24.400 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [8d81e742-16ff-41fd-9866-a39a181c1d31_config-0] Connected,notify listen context...
+2024-09-25 17:48:24.400 [main] INFO  com.alibaba.nacos.common.remote.client - [8d81e742-16ff-41fd-9866-a39a181c1d31_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2024-09-25 17:48:24.402 [main] INFO  com.alibaba.nacos.common.remote.client - [8d81e742-16ff-41fd-9866-a39a181c1d31_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$590/0x00000008010851a0
+2024-09-25 17:48:24.476 [main] INFO  com.alibaba.nacos.client.config.impl.Limiter - limitTime:5.0
+2024-09-25 17:48:24.535 [main] INFO  com.alibaba.nacos.client.config.utils.JvmUtil - isMultiInstance:false
+2024-09-25 17:48:24.559 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[zealsingerbook-auth.yaml] & group[DEFAULT_GROUP]
+2024-09-25 17:48:24.569 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[zealsingerbook-auth-dev.yaml] & group[DEFAULT_GROUP]
+2024-09-25 17:48:24.571 [main] INFO  o.s.c.b.c.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth,DEFAULT_GROUP'}]
+2024-09-25 17:48:24.606 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 17:48:24.607 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-25 17:48:25.406 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-25 17:48:25.410 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-25 17:48:25.447 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2024-09-25 17:48:25.702 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=89555d7a-49c3-3ecf-84db-594254dc4216
+2024-09-25 17:48:26.467 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-25 17:48:26.483 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-25 17:48:26.483 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-25 17:48:26.587 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-25 17:48:26.588 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1956 ms
+2024-09-25 17:48:27.050 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.PermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 17:48:27.102 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.RoleMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 17:48:27.130 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.RolePermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 17:48:27.160 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 17:48:27.191 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.UserRoleMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 17:48:29.420 [main] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2024-09-25 17:48:31.250 [main] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2024-09-25 17:48:31.356 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-25 17:48:31.363 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from ans.namespace attribute : null
+2024-09-25 17:48:31.363 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from ALIBABA_ALIWARE_NAMESPACE attribute :null
+2024-09-25 17:48:31.364 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from namespace attribute :null
+2024-09-25 17:48:31.386 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2024-09-25 17:48:31.386 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2024-09-25 17:48:31.392 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 2c8de564-5d8a-430b-97be-a0a21af5a491
+2024-09-25 17:48:31.395 [main] INFO  com.alibaba.nacos.common.remote.client - [2c8de564-5d8a-430b-97be-a0a21af5a491] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2024-09-25 17:48:31.395 [main] INFO  com.alibaba.nacos.common.remote.client - [2c8de564-5d8a-430b-97be-a0a21af5a491] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2024-09-25 17:48:31.396 [main] INFO  com.alibaba.nacos.common.remote.client - [2c8de564-5d8a-430b-97be-a0a21af5a491] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2024-09-25 17:48:31.396 [main] INFO  com.alibaba.nacos.common.remote.client - [2c8de564-5d8a-430b-97be-a0a21af5a491] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
+2024-09-25 17:48:31.396 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-25 17:48:31.528 [main] INFO  com.alibaba.nacos.common.remote.client - [2c8de564-5d8a-430b-97be-a0a21af5a491] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727257710026_192.168.17.1_62419
+2024-09-25 17:48:31.528 [main] INFO  com.alibaba.nacos.common.remote.client - [2c8de564-5d8a-430b-97be-a0a21af5a491] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2024-09-25 17:48:31.528 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [2c8de564-5d8a-430b-97be-a0a21af5a491] Notify connected event to listeners.
+2024-09-25 17:48:31.528 [main] INFO  com.alibaba.nacos.common.remote.client - [2c8de564-5d8a-430b-97be-a0a21af5a491] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$590/0x00000008010851a0
+2024-09-25 17:48:31.528 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.naming - Grpc connection connect
+2024-09-25 17:48:31.531 [main] INFO  com.alibaba.nacos.client.naming - [REGISTER-SERVICE] zealsingerbook registering service zealsingerbook-auth with instance Instance{instanceId='null', ip='192.168.195.1', port=8080, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={IPv6=[2408:8452:24af:a511:46ed:1a96:d6cf:181b], preserved.register.source=SPRING_CLOUD}}
+2024-09-25 17:48:31.570 [main] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP zealsingerbook-auth 192.168.195.1:8080 register finished
+2024-09-25 17:48:32.842 [main] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2024-09-25 17:48:32.857 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 14.748 seconds (process running for 16.16)
+2024-09-25 17:48:33.959 [main] WARN  c.z.z.run.PushRolePermissionsRedisRunner - ==> 角色权限数据已经同步至 Redis 中，不再同步...
+2024-09-25 17:48:33.963 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - nacos.cache.data.init.snapshot = true 
+2024-09-25 17:48:33.963 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth.yaml+DEFAULT_GROUP+zealsingerbook
+2024-09-25 17:48:33.973 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-25 17:48:33.973 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP
+2024-09-25 17:48:33.974 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth+DEFAULT_GROUP+zealsingerbook
+2024-09-25 17:48:33.974 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, cnt=1
+2024-09-25 17:48:33.974 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth, group=DEFAULT_GROUP
+2024-09-25 17:48:33.975 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth-dev.yaml+DEFAULT_GROUP+zealsingerbook
+2024-09-25 17:48:33.975 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-25 17:48:33.975 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP
+2024-09-25 17:48:44.698 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-25 17:48:44.698 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-25 17:48:44.699 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2024-09-25 17:48:44.778 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"19520680604"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-25 17:48:44.928 [http-nio-8080-exec-1] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - ==> 手机号: 19520680604, 已生成验证码：【687336】
+2024-09-25 17:48:44.930 [http-nio-8080-exec-1] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - 成功向手机号 19520680604  发送验证码 687336 , 有效期 3min
+2024-09-25 17:48:44.930 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 开始短信发送, phone: 19520680604, signName: Zeal书, templateCode: SMS_473835044, templateParam: {"code":"687336"}
+2024-09-25 17:48:45.010 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [发送登录验证码], 耗时: 231ms, 出参: {"success":true,"message":null,"errorCode":null,"data":null} =================================== 
+2024-09-25 17:48:46.468 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Wed, 25 Sep 2024 09:48:45 GMT","content-length":"148","keep-alive":"timeout=25","x-acs-request-id":"C03CD694-49CA-587D-A014-F8D24CA63B37","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1LMgWbKhy+yW8iyOMDjoJVA6","access-control-expose-headers":"*","x-acs-trace-id":"614242c73489aac644dffa866b73a7e5"},"statusCode":200,"body":{"bizId":null,"code":"isv.SMS_TEST_NUMBER_LIMIT","message":"只能向已回复授权信息的手机号发送","requestId":"C03CD694-49CA-587D-A014-F8D24CA63B37"}}
+2024-09-25 18:00:03.629 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2024-09-25 18:00:03.629 [Thread-1] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2024-09-25 18:00:03.630 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2024-09-25 18:00:03.631 [Thread-1] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2024-09-25 18:00:03.699 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2024-09-25 18:00:03.699 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - [DEREGISTER-SERVICE] zealsingerbook deregistering service zealsingerbook-auth with instance: Instance{instanceId='null', ip='192.168.195.1', port=8080, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={}}
+2024-09-25 18:00:03.709 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2024-09-25 18:00:03.709 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown begin
+2024-09-25 18:00:03.709 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown begin
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown stop
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown stop
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown begin
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown begin
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown stop
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServerListManager do shutdown begin
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Start destroying NacosRestTemplate
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Destruction of the end
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServerListManager do shutdown stop
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown begin
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Start destroying NacosRestTemplate
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Destruction of the end
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown stop
+2024-09-25 18:00:03.711 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown rpc client, set status to shutdown
+2024-09-25 18:00:03.712 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@22a909e2[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2024-09-25 18:00:03.712 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1727257710026_192.168.17.1_62419
+2024-09-25 18:00:03.719 [nacos-grpc-client-executor-192.168.17.131-146] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - [1727257710026_192.168.17.1_62419]Ignore complete event,isRunning:false,isAbandon=false
+2024-09-25 18:00:03.724 [SpringApplicationShutdownHook] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@2e46ce85[Running, pool size = 4, active threads = 0, queued tasks = 0, completed tasks = 147]
+2024-09-25 18:00:03.724 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - Shutdown grpc redo service executor java.util.concurrent.ScheduledThreadPoolExecutor@20072fbe[Running, pool size = 1, active threads = 0, queued tasks = 1, completed tasks = 230]
+2024-09-25 18:00:03.725 [SpringApplicationShutdownHook] INFO  c.a.n.client.auth.ram.identify.CredentialWatcher - [null] CredentialWatcher is stopped
+2024-09-25 18:00:03.725 [SpringApplicationShutdownHook] INFO  c.a.n.client.auth.ram.identify.CredentialService - [null] CredentialService is freed
+2024-09-25 18:00:03.725 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown stop
+2024-09-25 18:00:03.861 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2024-09-25 18:01:17.620 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 18:01:17.722 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 18:01:18.073 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 18:01:18.076 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - [settings] [req-serv] nacos-server port:8848
+2024-09-25 18:01:18.076 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - [settings] [http-client] connect timeout:1000
+2024-09-25 18:01:18.077 [main] INFO  com.alibaba.nacos.client.utils.ParamUtil - PER_TASK_CONFIG_SIZE: 3000.0
+2024-09-25 18:01:18.128 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2024-09-25 18:01:18.129 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2024-09-25 18:01:18.134 [main] INFO  c.a.n.client.auth.ram.identify.CredentialWatcher - null No credential found
+2024-09-25 18:01:19.595 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 18:01:19.615 [main] INFO  c.a.n.client.config.impl.LocalConfigInfoProcessor - LOCAL_SNAPSHOT_PATH:C:\Users\John\nacos\config
+2024-09-25 18:01:19.624 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0
+2024-09-25 18:01:19.657 [main] INFO  com.alibaba.nacos.common.remote.client - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$581/0x0000000800f24ae8
+2024-09-25 18:01:19.659 [main] INFO  com.alibaba.nacos.common.remote.client - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$582/0x0000000800f24f08
+2024-09-25 18:01:19.660 [main] INFO  com.alibaba.nacos.common.remote.client - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2024-09-25 18:01:19.660 [main] INFO  com.alibaba.nacos.common.remote.client - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2024-09-25 18:01:19.676 [main] INFO  com.alibaba.nacos.common.remote.client - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
+2024-09-25 18:01:19.740 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-25 18:01:21.465 [main] INFO  com.alibaba.nacos.common.remote.client - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727258479810_192.168.17.1_63617
+2024-09-25 18:01:21.466 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] Notify connected event to listeners.
+2024-09-25 18:01:21.467 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] Connected,notify listen context...
+2024-09-25 18:01:21.467 [main] INFO  com.alibaba.nacos.common.remote.client - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2024-09-25 18:01:21.468 [main] INFO  com.alibaba.nacos.common.remote.client - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$602/0x00000008010a9ad0
+2024-09-25 18:01:21.557 [main] INFO  com.alibaba.nacos.client.config.impl.Limiter - limitTime:5.0
+2024-09-25 18:01:21.583 [main] INFO  com.alibaba.nacos.client.config.utils.JvmUtil - isMultiInstance:false
+2024-09-25 18:01:21.603 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[zealsingerbook-auth.yaml] & group[DEFAULT_GROUP]
+2024-09-25 18:01:21.611 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[zealsingerbook-auth-dev.yaml] & group[DEFAULT_GROUP]
+2024-09-25 18:01:21.613 [main] INFO  o.s.c.b.c.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-zealsingerbook-auth,DEFAULT_GROUP'}]
+2024-09-25 18:01:21.651 [main] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
+2024-09-25 18:01:21.653 [main] INFO  c.z.z.ZealsingerbookAuthApplication - The following 1 profile is active: "dev"
+2024-09-25 18:01:22.587 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-09-25 18:01:22.593 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-09-25 18:01:22.661 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30 ms. Found 0 Redis repository interfaces.
+2024-09-25 18:01:23.102 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=89555d7a-49c3-3ecf-84db-594254dc4216
+2024-09-25 18:01:24.250 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-09-25 18:01:24.272 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-09-25 18:01:24.273 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2024-09-25 18:01:24.410 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-09-25 18:01:24.410 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2729 ms
+2024-09-25 18:01:25.073 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.PermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 18:01:25.123 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.RoleMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 18:01:25.154 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.RolePermissionMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 18:01:25.183 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.UserMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 18:01:25.217 [main] WARN  c.b.mybatisplus.core.injector.methods.Insert - [com.zealsinger.zealsingerbookauth.mapper.UserRoleMapper.insert] Has been loaded by XML or SqlProvider or Mybatis's Annotation, so ignoring this injection for [class com.baomidou.mybatisplus.core.injector.methods.Insert]
+2024-09-25 18:01:27.554 [main] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2024-09-25 18:01:29.516 [main] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2024-09-25 18:01:29.640 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-09-25 18:01:29.646 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from ans.namespace attribute : null
+2024-09-25 18:01:29.647 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from ALIBABA_ALIWARE_NAMESPACE attribute :null
+2024-09-25 18:01:29.648 [main] INFO  com.alibaba.nacos.client.naming - initializer namespace from namespace attribute :null
+2024-09-25 18:01:29.663 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2024-09-25 18:01:29.663 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2024-09-25 18:01:29.677 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of b952a4b2-060f-4a8f-a03f-81579f59e3d9
+2024-09-25 18:01:29.680 [main] INFO  com.alibaba.nacos.common.remote.client - [b952a4b2-060f-4a8f-a03f-81579f59e3d9] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2024-09-25 18:01:29.680 [main] INFO  com.alibaba.nacos.common.remote.client - [b952a4b2-060f-4a8f-a03f-81579f59e3d9] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2024-09-25 18:01:29.681 [main] INFO  com.alibaba.nacos.common.remote.client - [b952a4b2-060f-4a8f-a03f-81579f59e3d9] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2024-09-25 18:01:29.683 [main] INFO  com.alibaba.nacos.common.remote.client - [b952a4b2-060f-4a8f-a03f-81579f59e3d9] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
+2024-09-25 18:01:29.683 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-25 18:01:29.812 [main] INFO  com.alibaba.nacos.common.remote.client - [b952a4b2-060f-4a8f-a03f-81579f59e3d9] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727258488304_192.168.17.1_63636
+2024-09-25 18:01:29.812 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [b952a4b2-060f-4a8f-a03f-81579f59e3d9] Notify connected event to listeners.
+2024-09-25 18:01:29.812 [main] INFO  com.alibaba.nacos.common.remote.client - [b952a4b2-060f-4a8f-a03f-81579f59e3d9] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2024-09-25 18:01:29.812 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.naming - Grpc connection connect
+2024-09-25 18:01:29.812 [main] INFO  com.alibaba.nacos.common.remote.client - [b952a4b2-060f-4a8f-a03f-81579f59e3d9] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$602/0x00000008010a9ad0
+2024-09-25 18:01:29.816 [main] INFO  com.alibaba.nacos.client.naming - [REGISTER-SERVICE] zealsingerbook registering service zealsingerbook-auth with instance Instance{instanceId='null', ip='192.168.195.1', port=8080, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={IPv6=[2408:8452:24af:a511:46ed:1a96:d6cf:181b], preserved.register.source=SPRING_CLOUD}}
+2024-09-25 18:01:29.832 [main] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP zealsingerbook-auth 192.168.195.1:8080 register finished
+2024-09-25 18:01:31.141 [main] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2024-09-25 18:01:31.166 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 15.676 seconds (process running for 16.862)
+2024-09-25 18:01:32.207 [main] WARN  c.z.z.run.PushRolePermissionsRedisRunner - ==> 角色权限数据已经同步至 Redis 中，不再同步...
+2024-09-25 18:01:32.212 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - nacos.cache.data.init.snapshot = true 
+2024-09-25 18:01:32.212 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth.yaml+DEFAULT_GROUP+zealsingerbook
+2024-09-25 18:01:32.224 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-25 18:01:32.224 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP
+2024-09-25 18:01:32.226 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth+DEFAULT_GROUP+zealsingerbook
+2024-09-25 18:01:32.226 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, cnt=1
+2024-09-25 18:01:32.226 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth, group=DEFAULT_GROUP
+2024-09-25 18:01:32.227 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth-dev.yaml+DEFAULT_GROUP+zealsingerbook
+2024-09-25 18:01:32.227 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-25 18:01:32.227 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP
+2024-09-25 18:02:44.059 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-25 18:02:44.059 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-25 18:02:44.061 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-09-25 18:02:44.134 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"13203210631"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-25 18:02:54.145 [http-nio-8080-exec-1] ERROR c.z.z.exception.GlobalExceptionHandler - /verification/code/send request error, 
+org.springframework.dao.QueryTimeoutException: Redis command timed out
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:68)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:41)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:40)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:38)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:248)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:961)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$4(LettuceConnection.java:818)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:673)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$DefaultSingleInvocationSpec.get(LettuceInvoker.java:589)
+	at org.springframework.data.redis.connection.lettuce.LettuceKeyCommands.exists(LettuceKeyCommands.java:72)
+	at org.springframework.data.redis.core.RedisTemplate.lambda$hasKey$3(RedisTemplate.java:571)
+	at org.springframework.data.redis.core.RedisTemplate.lambda$doWithKeys$22(RedisTemplate.java:785)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:406)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:373)
+	at org.springframework.data.redis.core.RedisTemplate.doWithKeys(RedisTemplate.java:785)
+	at org.springframework.data.redis.core.RedisTemplate.hasKey(RedisTemplate.java:571)
+	at com.zealsinger.zealsingerbookauth.server.Impl.VerificationCodeServiceImpl.send(VerificationCodeServiceImpl.java:37)
+	at com.zealsinger.zealsingerbookauth.controller.VerificationCodeController.sendVerification(VerificationCodeController.java:26)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:343)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at com.zealsinger.aspect.ApiOperationLogAspect.doAround(ApiOperationLogAspect.java:40)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:623)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:752)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:703)
+	at com.zealsinger.zealsingerbookauth.controller.VerificationCodeController$$SpringCGLIB$$0.sendVerification(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:207)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:152)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:884)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1080)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:973)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1011)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:814)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:223)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:185)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:158)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:119)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:400)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:859)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1734)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: io.lettuce.core.RedisCommandTimeoutException: Command timed out after 10 second(s)
+	at io.lettuce.core.internal.ExceptionFactory.createTimeoutException(ExceptionFactory.java:59)
+	at io.lettuce.core.protocol.CommandExpiryWriter.lambda$potentiallyExpire$0(CommandExpiryWriter.java:176)
+	at io.netty.util.concurrent.PromiseTask.runTask(PromiseTask.java:98)
+	at io.netty.util.concurrent.ScheduledFutureTask.run(ScheduledFutureTask.java:153)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask$$$capture(AbstractEventExecutor.java:174)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java)
+	at io.netty.util.concurrent.DefaultEventExecutor.run(DefaultEventExecutor.java:66)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 common frames omitted
+2024-09-25 18:03:07.320 [lettuce-eventExecutorLoop-1-3] INFO  io.lettuce.core.protocol.ConnectionWatchdog - Reconnecting, last destination was /111.229.213.244:6379
+2024-09-25 18:03:07.521 [lettuce-nioEventLoop-4-2] INFO  io.lettuce.core.protocol.ReconnectionHandler - Reconnected to 111.229.213.244/<unresolved>:6379
+2024-09-25 18:03:52.212 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"13203210631"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-25 18:03:52.404 [http-nio-8080-exec-2] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - ==> 手机号: 13203210631, 已生成验证码：【134710】
+2024-09-25 18:03:52.406 [http-nio-8080-exec-2] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - 成功向手机号 13203210631  发送验证码 134710 , 有效期 3min
+2024-09-25 18:03:52.406 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 开始短信发送, phone: 13203210631, signName: Zeal书, templateCode: SMS_473835044, templateParam: {"code":"134710"}
+2024-09-25 18:03:52.528 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [发送登录验证码], 耗时: 315ms, 出参: {"success":true,"message":null,"errorCode":null,"data":null} =================================== 
+2024-09-25 18:03:54.066 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Wed, 25 Sep 2024 10:03:52 GMT","content-length":"110","keep-alive":"timeout=25","x-acs-request-id":"B80D73ED-2073-5FB0-8035-D262E03AB575","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1gcSpQQHbt6n2SGF4bdfwiw0","access-control-expose-headers":"*","x-acs-trace-id":"58855c922d227a317d535f14b6ad4906"},"statusCode":200,"body":{"bizId":"365223227258632253^0","code":"OK","message":"OK","requestId":"B80D73ED-2073-5FB0-8035-D262E03AB575"}}
+2024-09-25 18:04:18.343 [http-nio-8080-exec-3] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [发送登录验证码], 入参: {"phone":"19520680604"}, 请求类: com.zealsinger.zealsingerbookauth.controller.VerificationCodeController, 请求方法: sendVerification =================================== 
+2024-09-25 18:04:18.510 [http-nio-8080-exec-3] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - ==> 手机号: 19520680604, 已生成验证码：【895721】
+2024-09-25 18:04:18.511 [http-nio-8080-exec-3] INFO  c.z.z.server.Impl.VerificationCodeServiceImpl - 成功向手机号 19520680604  发送验证码 895721 , 有效期 3min
+2024-09-25 18:04:18.511 [AuthExecutor-2] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 开始短信发送, phone: 19520680604, signName: Zeal书, templateCode: SMS_473835044, templateParam: {"code":"895721"}
+2024-09-25 18:04:18.712 [http-nio-8080-exec-3] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [发送登录验证码], 耗时: 369ms, 出参: {"success":true,"message":null,"errorCode":null,"data":null} =================================== 
+2024-09-25 18:04:19.134 [AuthExecutor-2] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Wed, 25 Sep 2024 10:04:17 GMT","content-length":"148","keep-alive":"timeout=25","x-acs-request-id":"705B00D2-DE7C-55B5-824F-0E3EEF0C620B","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1iA3xXdqyMqBhALfMO3zbsw6","access-control-expose-headers":"*","x-acs-trace-id":"91926e8eb6bd224ddd282e5aec182ce5"},"statusCode":200,"body":{"bizId":null,"code":"isv.SMS_TEST_NUMBER_LIMIT","message":"只能向已回复授权信息的手机号发送","requestId":"705B00D2-DE7C-55B5-824F-0E3EEF0C620B"}}
+2024-09-25 18:11:17.113 [nacos-grpc-client-executor-192.168.17.131-134] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - [1727258479810_192.168.17.1_63617]Request stream error, switch server,error={}
+com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: CANCELLED: RST_STREAM closed stream. HTTP/2 error code: CANCEL
+	at com.alibaba.nacos.shaded.io.grpc.Status.asRuntimeException(Status.java:539)
+	at com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$StreamObserverToCallListenerAdapter.onClose(ClientCalls.java:487)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:563)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:70)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInternal(ClientCallImpl.java:744)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:723)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at com.alibaba.nacos.shaded.io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-09-25 18:11:17.113 [nacos-grpc-client-executor-192.168.17.131-122] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - [1727258488304_192.168.17.1_63636]Request stream error, switch server,error={}
+com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: CANCELLED: RST_STREAM closed stream. HTTP/2 error code: CANCEL
+	at com.alibaba.nacos.shaded.io.grpc.Status.asRuntimeException(Status.java:539)
+	at com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$StreamObserverToCallListenerAdapter.onClose(ClientCalls.java:487)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:563)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:70)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInternal(ClientCallImpl.java:744)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:723)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at com.alibaba.nacos.shaded.io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-09-25 18:11:17.115 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [b952a4b2-060f-4a8f-a03f-81579f59e3d9] Try to reconnect to a new server, server is  not appointed, will choose a random server.
+2024-09-25 18:11:17.115 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [5573f26e-bf53-45c5-b9b5-eaae51a3d727_config-0] Try to reconnect to a new server, server is  not appointed, will choose a random server.
+2024-09-25 18:11:17.115 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-25 18:11:17.115 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-25 18:11:17.990 [Thread-1] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2024-09-25 18:11:17.990 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2024-09-25 18:11:17.990 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2024-09-25 18:11:17.991 [Thread-1] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2024-09-25 18:11:18.079 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2024-09-25 18:11:18.079 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - [DEREGISTER-SERVICE] zealsingerbook deregistering service zealsingerbook-auth with instance: Instance{instanceId='null', ip='192.168.195.1', port=8080, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={}}
+2024-09-25 18:11:18.193 [SpringApplicationShutdownHook] ERROR com.alibaba.nacos.common.remote.client - Send request fail, request = InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes = 0, errorMessage = Client not connected, current status:UNHEALTHY
+2024-09-25 18:11:18.302 [SpringApplicationShutdownHook] ERROR com.alibaba.nacos.common.remote.client - Send request fail, request = InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes = 1, errorMessage = Client not connected, current status:UNHEALTHY
+2024-09-25 18:11:18.410 [SpringApplicationShutdownHook] ERROR com.alibaba.nacos.common.remote.client - Send request fail, request = InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes = 2, errorMessage = Client not connected, current status:UNHEALTHY
+2024-09-25 18:11:18.434 [SpringApplicationShutdownHook] ERROR c.a.cloud.nacos.registry.NacosServiceRegistry - ERR_NACOS_DEREGISTER, de-register failed...NacosRegistration{nacosDiscoveryProperties=NacosDiscoveryProperties{serverAddr='192.168.17.131:8848', username='', password='', endpoint='', namespace='zealsingerbook', watchDelay=30000, logName='', service='zealsingerbook-auth', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={IPv6=[2408:8452:24af:a511:46ed:1a96:d6cf:181b], preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='192.168.195.1', networkInterface='', port=8080, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null, instanceEnabled=true, ephemeral=true, failureToleranceEnabled=false}, ipDeleteTimeout=null, failFast=true}},
+com.alibaba.nacos.api.exception.NacosException: Client not connected, current status:UNHEALTHY
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:643)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:623)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:357)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.doDeregisterService(NamingGrpcClientProxy.java:234)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.deregisterService(NamingGrpcClientProxy.java:220)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.deregisterService(NamingClientProxyDelegate.java:125)
+	at com.alibaba.nacos.client.naming.NacosNamingService.deregisterInstance(NacosNamingService.java:192)
+	at com.alibaba.nacos.client.naming.NacosNamingService.deregisterInstance(NacosNamingService.java:182)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.deregister(NacosServiceRegistry.java:107)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.deregister(AbstractAutoServiceRegistration.java:281)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.stop(AbstractAutoServiceRegistration.java:299)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.destroy(AbstractAutoServiceRegistration.java:233)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleElement.invoke(InitDestroyAnnotationBeanPostProcessor.java:424)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:382)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:212)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:191)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:587)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:559)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1177)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:520)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1170)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1082)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1051)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:173)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1001)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:139)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-09-25 18:11:18.434 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2024-09-25 18:11:18.435 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown begin
+2024-09-25 18:11:18.435 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown begin
+2024-09-25 18:11:18.436 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown stop
+2024-09-25 18:11:18.436 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.cache.ServiceInfoHolder do shutdown stop
+2024-09-25 18:11:18.436 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown begin
+2024-09-25 18:11:18.436 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown begin
+2024-09-25 18:11:18.436 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServiceInfoUpdateService do shutdown stop
+2024-09-25 18:11:18.436 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServerListManager do shutdown begin
+2024-09-25 18:11:18.436 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Start destroying NacosRestTemplate
+2024-09-25 18:11:18.437 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Destruction of the end
+2024-09-25 18:11:18.437 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.core.ServerListManager do shutdown stop
+2024-09-25 18:11:18.437 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown begin
+2024-09-25 18:11:18.437 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Start destroying NacosRestTemplate
+2024-09-25 18:11:18.437 [SpringApplicationShutdownHook] WARN  com.alibaba.nacos.client.naming - [NamingHttpClientManager] Destruction of the end
+2024-09-25 18:11:18.437 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.http.NamingHttpClientProxy do shutdown stop
+2024-09-25 18:11:18.437 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown rpc client, set status to shutdown
+2024-09-25 18:11:18.437 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@17c0f39a[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2024-09-25 18:11:18.437 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1727258488304_192.168.17.1_63636
+2024-09-25 18:11:18.438 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 192.168.17.131 ,port 9848 is available , error ={}
+java.lang.InterruptedException: null
+	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:438)
+	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.serverCheck(GrpcClient.java:218)
+	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.connectToServer(GrpcClient.java:329)
+	at com.alibaba.nacos.common.remote.client.RpcClient.reconnect(RpcClient.java:502)
+	at com.alibaba.nacos.common.remote.client.RpcClient.lambda$start$2(RpcClient.java:343)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-09-25 18:11:18.444 [SpringApplicationShutdownHook] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@48450bf3[Running, pool size = 5, active threads = 0, queued tasks = 0, completed tasks = 125]
+2024-09-25 18:11:18.445 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - Shutdown grpc redo service executor java.util.concurrent.ScheduledThreadPoolExecutor@6bc5fc8[Running, pool size = 1, active threads = 0, queued tasks = 1, completed tasks = 195]
+2024-09-25 18:11:18.445 [SpringApplicationShutdownHook] INFO  c.a.n.client.auth.ram.identify.CredentialWatcher - [null] CredentialWatcher is stopped
+2024-09-25 18:11:18.445 [SpringApplicationShutdownHook] INFO  c.a.n.client.auth.ram.identify.CredentialService - [null] CredentialService is freed
+2024-09-25 18:11:18.446 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown stop
+2024-09-25 18:11:18.447 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1727258488304_192.168.17.1_63636
+2024-09-25 18:11:18.594 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [b952a4b2-060f-4a8f-a03f-81579f59e3d9] Client is shutdown, stop reconnect to server
+2024-09-25 18:11:18.605 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
