@@ -37,7 +37,7 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
             // 设置 401 状态码
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             // 构建响应结果
-            result = Response.fail(ResponseCodeEnum.UNAUTHORIZED.getErrorCode(), "未携带 Token 令牌");
+            result = Response.fail(ResponseCodeEnum.UNAUTHORIZED.getErrorCode(), ex.getMessage());
         } else if (ex instanceof NotPermissionException) {
             // 权限认证失败时，设置 401 状态码
             response.setStatusCode(HttpStatus.UNAUTHORIZED);

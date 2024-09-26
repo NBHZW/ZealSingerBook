@@ -407,3 +407,49 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
 ```
 
 无论任何的报错 我们都是返回的ResponseCodeEnum.UNAUTHORIZED的信息 也就是显示 **权限不足** 但是这样子是不友好的 因为我们实际上可能是token没有 或者无效 或者别的愿意  所以我们**需要精细化这个返回信息**
+
+Sa-Token的超类异常SaTokenException下分为了很多的小异常，我们需要在异常捕获器分别捕获，然后大应对应的不同的信息
+
+```
+-- SaTokenException
+    -- NotLoginException // 未登录异常
+    -- NotPermissionException // 权限不足异常
+    -- NotRoleException // 不具备对应角色异常
+    -- ...
+```
+
+```Java
+if (ex instanceof NotLoginException) {
+            // 设置 401 状态码
+            response.setStatusCode(HttpStatus.UNAUTHORIZED);
+            // 构建响应结果  这里返回的信息使用异常自带的信息而不是枚举类中code对应的是因为 这个异常NotLoginException既包含了未登录，也包含了token无效（比如过期了）的异常情况 所以不好统一处理 直接使用自带的信息即可
+            result = Response.fail(ResponseCodeEnum.UNAUTHORIZED.getErrorCode(), ex.getMessage());
+        } else if (ex instanceof NotPermissionException) {
+            // 权限认证失败时，设置 401 状态码
+            response.setStatusCode(HttpStatus.UNAUTHORIZED);
+            // 构建响应结果
+            result = Response.fail(ResponseCodeEnum.UNAUTHORIZED.getErrorCode(), ResponseCodeEnum.UNAUTHORIZED.getErrorMessage());
+        } else { // 其他异常，则统一提示 “系统繁忙” 错误
+            result = Response.fail(ResponseCodeEnum.SYSTEM_ERROR);
+        }
+```
+
+**全局异常捕获完成之后，就需要在sa-token配置中，将删除的setError属性更改配置后再次添加**
+
+**setError是sa-token内部的异常捕获 会在上面setAuth方法进行token，角色，权限校验出问题的时候进行异常的抛出，我们就在其内部进行特定的异常抛出即可，抛出后就会被全局异常捕获器捕获到，从而进行统一处理**
+
+```Java
+// 异常处理方法：每次setAuth函数出现异常时进入
+                .setError(e -> {
+                    // return SaResult.error(e.getMessage());
+                    // 手动抛出异常，抛给全局异常处理器
+                    if (e instanceof NotLoginException) { // 未登录异常
+                        throw new NotLoginException(e.getMessage(), null, null);
+                    } else if (e instanceof NotPermissionException || e instanceof NotRoleException) { // 权限不足，或不具备角色，统一抛出权限不足异常
+                        throw new NotPermissionException(e.getMessage());
+                    } else { // 其他异常，则抛出一个运行时异常
+                        throw new RuntimeException(e.getMessage());
+                    }
+                })
+```
+

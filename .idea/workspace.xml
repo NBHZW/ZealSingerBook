@@ -5,24 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:添加网关权限和角色处理">
-      <change afterPath="$PROJECT_DIR$/logs/auth.2024-09-25-0.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/config/RedisTemplateConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/enums/ResponseCodeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/filter/AddUserId2HeaderFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/day06.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day06.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-22-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-22-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-24-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-24-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/logs/auth.2024-09-19-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/logs/auth.2024-09-19-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/generatorConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/generatorConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/test/java/com/zealsinger/zealsingerbookauth/ZealsingerbookAuthApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/test/java/com/zealsinger/zealsingerbookauth/ZealsingerbookAuthApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/RedisConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/auth/SaTokenConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/auth/SaTokenConfigure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/src/test/java/com/zealsinger/AppTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/exception/GlobalExceptionHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,6 +276,8 @@
       <workItem from="1727249699841" duration="2980000" />
       <workItem from="1727258442373" duration="638000" />
       <workItem from="1727269194894" duration="3297000" />
+      <workItem from="1727279860027" duration="1032000" />
+      <workItem from="1727318595169" duration="1037000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -356,7 +343,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727183568997</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feat:添加网关权限和角色处理">
+      <option name="closed" value="true" />
+      <created>1727279882839</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1727279882839</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
