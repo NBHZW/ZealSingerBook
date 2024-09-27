@@ -84,7 +84,7 @@
 2024-09-22 21:17:16.475 [AuthExecutor-1] INFO  c.zealsinger.zealsingerbookauth.sms.AliyunHelper - ==> 短信发送成功, response{"headers":{"access-control-allow-origin":"*","date":"Sun, 22 Sep 2024 13:17:16 GMT","content-length":"110","keep-alive":"timeout=25","x-acs-request-id":"C3CF8C27-9EF9-56E1-A249-039C72D40199","connection":"keep-alive","content-type":"application/json;charset=utf-8","etag":"1z2a9diDW2PJX+JRb6qg2yw0","access-control-expose-headers":"*","x-acs-trace-id":"408f939c7e58a9e70b3ba8108db7808e"},"statusCode":200,"body":{"bizId":"677115227011036211^0","code":"OK","message":"OK","requestId":"C3CF8C27-9EF9-56E1-A249-039C72D40199"}}
 2024-09-22 21:17:33.761 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [用户登录/注册], 入参: {"phoneNumber":"13203210631","code":"172689","password":"","type":1}, 请求类: com.zealsinger.zealsingerbookauth.controller.UserController, 请求方法: loginAndRegister =================================== 
 2024-09-22 21:17:33.845 [http-nio-8080-exec-2] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
-2024-09-22 21:17:38.324 [Druid-ConnectionPool-Create-714279724] ERROR com.alibaba.druid.pool.DruidDataSource - create connection Exception, url: jdbc:mysql://127.0.0.1:3306/zealsingerbook?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai, errorCode 0, state 08001
+2024-09-22 21:17:38.324 [Druid-ConnectionPool-Create-714279724] ERROR com.alibaba.druid.pool.DruidDataSource - create connection Exception, url: jdbc:mysql://127.0.0.1:3306/zealsingerbook?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai, errorCode 0, state 08001
 java.sql.SQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:110)
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
@@ -787,7 +787,7 @@ Caused by: com.fasterxml.jackson.core.JsonParseException: Invalid UTF-8 start by
 	... 92 common frames omitted
 2024-09-22 21:26:47.707 [http-nio-8080-exec-6] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [用户登录/注册], 入参: {"phoneNumber":"13203210631","code":"604192","password":"","type":1}, 请求类: com.zealsinger.zealsingerbookauth.controller.UserController, 请求方法: loginAndRegister =================================== 
 2024-09-22 21:26:50.591 [http-nio-8080-exec-6] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
-2024-09-22 21:26:54.987 [Druid-ConnectionPool-Create-389547715] ERROR com.alibaba.druid.pool.DruidDataSource - create connection Exception, url: jdbc:mysql://127.0.0.1:3306/zealsingerbook?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai, errorCode 0, state 08001
+2024-09-22 21:26:54.987 [Druid-ConnectionPool-Create-389547715] ERROR com.alibaba.druid.pool.DruidDataSource - create connection Exception, url: jdbc:mysql://127.0.0.1:3306/zealsingerbook?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai, errorCode 0, state 08001
 java.sql.SQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:110)
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)

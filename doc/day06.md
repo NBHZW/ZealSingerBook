@@ -453,3 +453,304 @@ if (ex instanceof NotLoginException) {
                 })
 ```
 
+# 将userId传递到下游
+
+现在有个很大的问题，如果是我们的单体架构项目，我们可以将登录信息存储到ThreadLocal中，相当于将登录信息存储到程序上下文中，方便后续需要用户信息使用
+
+但是我们现在是分布式服务，登录逻辑是在网关调用的auth接口，然后进行登录的，也就是说，**userID实际上只有auth模块能知道是什么，对于其他模块是隐藏的，这个就很不方便后续获取登录信息，这个该如何解决呢？**
+
+我们的**网关模块，虽然不能直接得到userId，但是登录后返回的token以及后续的token校验都是在网关模块中，网关可以通过解析token从而得到userId的信息**，所有的服务请求肯定率先是传递给网关，那么**第二个问题来了，网关如何将解析出来的userID穿透传递给下游呢？ 因为模块与模块之间的引用实际上都是Http协议调用实现的  所以我们其实可以将解析出来的userId封装到Http请求中，从而让下游服务能得到登录用户信息**
+
+**在gateway中，提供了一个全局过滤器GlobalFilter，能过滤所有的网关的请求，我们可以在过滤器中对Htpp进行二次封装，将用户登录信息封装进去**
+
+```Java
+@Component
+@Slf4j
+public class AddUserId2HeaderFilter implements GlobalFilter {
+    /**
+     * 请求头中，用户 ID 的键
+     */
+    private static final String HEADER_USER_ID = "userId";
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        log.info("==================> TokenConvertFilter");
+        // 用户 ID
+        Long userId = null;
+        try {
+            // 获取当前登录用户的 ID
+            // StpUtil.getLoginIdAsLong(); : 通过 SaToken 工具类获取当前用户 ID。如果请求中携带了 Token 令牌，则会获取成功；如果未携带，能执行到这里，说明请求的接口无需权限校验，这个时候获取用户 ID 会报抛异常， catch() 到异常后，不做任何修改，将请求传递给过滤器链中的下一个过滤器，发行请求即可，这里抛异常会被后续的异常捕获器捕获到不会进入到下游中
+            userId = StpUtil.getLoginIdAsLong();
+        } catch (Exception e) {
+            // 若没有登录，则直接放行
+            return chain.filter(exchange);
+        }
+
+        log.info("## 当前登录的用户 ID: {}", userId);
+
+        Long finalUserId = userId;
+        ServerWebExchange newExchange = exchange.mutate()
+                // 将用户 ID 设置到请求头中
+                .request(builder -> builder.header(HEADER_USER_ID, String.valueOf(finalUserId)))
+                .build();
+        return chain.filter(newExchange);
+    }
+}
+
+GlobalFilter : 这是一个全局过滤器接口，会对所有通过网关的请求生效。
+filter() 入参解释：
+ServerWebExchange exchange：表示当前的 HTTP 请求和响应的上下文，包括请求头、请求体、响应头、响应体等信息。可以通过它来获取和修改请求和响应。
+GatewayFilterChain chain：代表网关过滤器链，通过调用 chain.filter(exchange) 方法可以将请求传递给下一个过滤器进行处理。
+chain.filter(exchange) : 将请求传递给过滤器链中的下一个过滤器进行处理。当前没有对请求进行任何修改。
+```
+
+这里有涉及到了一个**过滤器的优先级问题**，因为大家可以发现，**Sa-Token的对于接口访问的权限和角色过滤，实际上也是一个过滤器（也就是Sa-Token的那个配置文件）**
+
+![image-20240926201832922](../../ZealSingerBook/img/image-20240926201832922.png)
+
+那么现在就会出现一个问题，如果GlobalFilter过滤器比Sa-Token的鉴权过滤器先执行，那么就会出现存入无用用户信息或者出现用户信息为null的情况，这样肯定是不对的，我们应该让Sa-Token的鉴权过滤比全局过滤器优先执行，这样就能**保证放入到下游的userId不为null，并且通过的鉴权，保证用户登录安全和可用性，或者是不需要权限鉴权的操作**
+
+如何实现这个执行先后关系呢？这个**需要用到Spring中的一个过滤器的权重注解@Order**
+
+可以看到sa-token中的过滤器中标记了注解@Order(-100)  值越小 权重越大  优先级越高  而我们的全局GlobalFilter没有设置数值的，也就是默认值，自然是优先级比sa-toekn小的，所以必定会先经过sa-token的鉴权过滤器，然后才是我们的过滤器去添加用户信息
+
+![image-20240926202752487](../../ZealSingerBook/img/image-20240926202752487.png)
+
+## 下游接收user信息
+
+顺带说一下下游接收处理，因为网关是将userid信息放到了请求头中
+
+```
+.request(builder -> builder.header(HEADER_USER_ID, String.valueOf(finalUserId)))
+```
+
+所以我们可以直接从请求头中获取  如图 给推出登录的接口进行接收打印 
+
+![image-20240926203309718](../../ZealSingerBook/img/image-20240926203309718.png)
+
+apifox请求测试一下  可以看到  auth模块中和网关日志中均有体现userId的获取
+
+![image-20240926203527603](../../ZealSingerBook/img/image-20240926203527603.png)
+
+![image-20240926203639148](../../ZealSingerBook/img/image-20240926203639148.png)
+
+![image-20240926203651274](../../ZealSingerBook/img/image-20240926203651274.png)
+
+# 完善退出登录逻辑
+
+退出登录的逻辑很简单，就是利用SaToken的工具类调用logout方法即可
+
+```java
+StpUtil.logout(userId)
+```
+
+![image-20240926204242404](../../ZealSingerBook/img/image-20240926204242404.png)
+
+![image-20240926204302386](../../ZealSingerBook/img/image-20240926204302386.png)
+
+![image-20240926204310437](../../ZealSingerBook/img/image-20240926204310437.png)
+
+当我们再次用相同的token调用退出登录接口的时候，就会出现token无效的异常信息  说明退出登录成功
+
+![image-20240926204346581](../../ZealSingerBook/img/image-20240926204346581.png)
+
+# 下游获取userId统一配置
+
+## ThreadLocal方式统一获取userId，保存至程序上下文
+
+可以看到,我们的下游获取userId的方式是在接口处添加请求头中信息的获取,这样子就会很麻烦  总不能每一个都多写一个对请求头的中userID的获取吧?!
+
+![image-20240926211615620](../../ZealSingerBook/img/image-20240926211615620.png)
+
+所以,我们可以在下游封装一个过滤器,用于将请求中的信息封装到ThreadLocal中,从而方便后续拿取数据  集成类 OncePerRequestFilter (Token过滤器中经常使用的) 当然 还得准备一个封装了ThreadLocal和ThreadLocal相关操作的类,用于设置与获取上下文数据
+
+```Java
+public class LoginUserContextHolder {
+    // 初始化一个 ThreadLocal 变量 withInitial方法接收一个Supplier函数接口 可以让每个线程第一次调用get方法时延迟初始化变量 也就是惰性加载 要使用的时候才会ThreadLocal中创建HashMap
+    private static final ThreadLocal<Map<String, Object>> LOGIN_USER_CONTEXT_THREAD_LOCAL
+            = ThreadLocal.withInitial(HashMap::new);
+
+    public static void set(String key, Object value) {
+        Map<String, Object> map = LOGIN_USER_CONTEXT_THREAD_LOCAL.get();
+        map.put(key, value);
+    }
+
+    public static Object get(String key) {
+        Map<String, Object> map = LOGIN_USER_CONTEXT_THREAD_LOCAL.get();
+        return Objects.isNull(map) ? null : map.get(key);
+    }
+
+
+    /**
+     * 设置用户 ID
+     *
+     * @param value
+     */
+    public static void setUserId(Object value) {
+        LOGIN_USER_CONTEXT_THREAD_LOCAL.get().put(GlobalConstants.USER_ID, value);
+    }
+
+    /**
+     * 获取用户 ID
+     *
+     * @return
+     */
+    public static Long getUserId() {
+        Object value = LOGIN_USER_CONTEXT_THREAD_LOCAL.get().get(GlobalConstants.USER_ID);
+        if (Objects.isNull(value)) {
+            return null;
+        }
+        return Long.valueOf(value.toString());
+    }
+
+    /**
+     * 删除 ThreadLocal
+     */
+    public static void remove() {
+        LOGIN_USER_CONTEXT_THREAD_LOCAL.remove();
+    }
+}
+```
+
+```Java
+@Component
+@Slf4j
+public class HeaderUserId2ContextFilter extends OncePerRequestFilter {
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String userId = request.getHeader(GlobalConstants.USER_ID);
+        log.info("## HeaderUserId2ContextFilter, 用户 ID: {}", userId);
+        if(StringUtils.isNotBlank(userId)){
+            LoginUserContextHolder.setUserId(userId);
+            log.info("## 用户 ID: {} 存入ThreadLocal", userId);
+            try {
+                filterChain.doFilter(request, response);
+            } finally {
+                // 一定要删除 ThreadLocal ，防止内存泄露  需要注意ThreadLocal中的内存泄露问题(看八股笔记)
+                LoginUserContextHolder.remove();
+                log.info("===== 删除 ThreadLocal， userId: {}", userId);
+            }
+        }else{
+            filterChain.doFilter(request, response);
+        }
+    }
+}
+```
+
+那么在下游的接口中,就能使用ThreadLocal获取userId  修改之前的退出登录的逻辑  不采用传参和@RequestHandler的方式接收uerId
+
+![image-20240926212219186](../../ZealSingerBook/img/image-20240926212219186.png)
+
+## ThreadLocal异步问题
+
+根据实际情况和ThreadLocal底层原理其实不难发现，ThreadLocal之所以能实现线程上下文共享数据，是因为内部是一个以Thread为key的Map，所以同一个Thread内肯定是能拿到数据的，但是问题又来了，例如我们的阿里云发送消息的逻辑，是**依靠线程池完成的异步任务，而异步任务自然是不同于主线程的，这就会导致异步任务中如果需要userId，就无法从我们上面定义的ThreaLocal中获取**
+
+```Java
+// 假设退出登录的逻辑我们这样写
+@Override
+    public Response<?> logout() {
+        Long userId = LoginUserContextHolder.getUserId();
+
+        log.info("==> 用户退出登录, userId: {}", userId);
+
+        threadPoolTaskExecutor.submit(() -> {
+            Long userId2 = LoginUserContextHolder.getUserId();
+            log.info("==> 异步线程中获取 userId: {}", userId2);
+        });
+
+        // 退出登录 (指定用户 ID)
+        StpUtil.logout(userId);
+
+        return Response.success();
+    }
+```
+
+- 解决设想一    使用  **`InheritableThreadLocal`** （能解决部分 但是还有部分场景无法解决）
+
+**`InheritableThreadLocal`**是ThreadLocal的子类，是Java中提供的，它允许存入里面的数据，除了操作线程之间会进行共享，也允许父子线程之间进行数据共享，如下
+
+```java 
+    public static void main(String[] args) {
+    
+    	// 初始化 InheritableThreadLocal
+        ThreadLocal<Long> threadLocal = new InheritableThreadLocal<>();
+        
+        // 假设用户 ID 为 1
+        Long userId = 1L;
+        
+        // 设置用户 ID 到 InheritableThreadLocal 中
+        threadLocal.set(userId);
+        
+        System.out.println("主线程打印用户 ID: " + threadLocal.get());
+
+		// 异步线程  主线程下创建的子线程  也可以拿到这个数据
+        new Thread(() -> {
+            System.out.println("异步线程打印用户 ID: " + threadLocal.get());
+        }).start();
+    }
+
+```
+
+可以看到，**InheritableThreadLocal还是比ThreadLocal能应付更多的场景，但是要知道，我们分布式服务中为了保证每个服务尽可能的多承受，我们一般不会使用子线程的，而是使用线程池，对于线程池而言，我们每个线程的时候都是创建一个新线程，和主线程不一定存在明确的父子关系，新线程的创建也不一定是全部由主线程创建的，子线程之间也不会存在一定的关系，所以也不是很适用**
+
+![image-20240927085344164](../../ZealSingerBook/img/image-20240927085344164.png)
+
+- 使用阿里的 TransmittableThreadLocal（解决方案）
+
+`TransmittableThreadLocal` 是阿里巴巴开源的一个库，专门为了解决在使用线程池或异步执行框架时，`InheritableThreadLocal` 不能传递父子线程上下文的问题。`TransmittableThreadLocal` 能够将父线程中的上下文在子线程或线程池中执行时也能够保持一致。
+
+导入依赖
+
+```Java
+	// 父模块中
+	<properties>
+		// 省略...
+        <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
+    </properties>
+    
+        <!-- 统一依赖管理 -->
+    <dependencyManagement>
+        <dependencies>
+			// 省略...
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable-thread-local.version}</version>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+
+
+// 认证模块中
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>transmittable-thread-local</artifactId>
+</dependency>
+
+
+```
+
+我们先看原本的逻辑中，我们测试退出登录接口，实现线程池和子线程的方式分别从ThreadLocal中获取userId并且打印，可以看到如下结果  可以看到 无论是子线程还是线程池 都是获取不到的
+
+![image-20240927091618414](../../ZealSingerBook/img/image-20240927091618414.png)
+
+![image-20240927092215115](../../ZealSingerBook/img/image-20240927092215115.png)
+
+然后我们修改ThreadLocal的类型
+
+```Java
+//原本
+private static final ThreadLocal<Map<String, Object>> LOGIN_USER_CONTEXT_THREAD_LOCAL
+            = ThreadLocal.withInitial(HashMap::new);
+            
+//现在
+private static final ThreadLocal<Map<String, Object>> LOGIN_USER_CONTEXT_THREAD_LOCAL
+            = TransmittableThreadLocal.withInitial(HashMap::new);
+```
+
+然后我们再次访问接口查看输出  这次可以看到 无论是子线程还是线程池中都能获取到了 So Cool
+
+![image-20240927092918626](../../ZealSingerBook/img/image-20240927092918626.png)

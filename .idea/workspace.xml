@@ -4,10 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:添加网关权限和角色处理">
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:修改网关中全局异常捕获的对于token过期的异常信息的统一">
+      <change afterPath="$PROJECT_DIR$/logs/auth.2024-09-26-0.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/auth.2024-09-27-0.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/vo/UpdatePasswordReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/filter/HeaderUserId2ContextFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/filter/LoginUserContextHolder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/GlobalConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/day06.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day06.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-22-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-22-0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-24-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-24-0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/logs/auth.2024-09-19-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/logs/auth.2024-09-19-0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/VerificationCodeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/VerificationCodeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -277,7 +292,9 @@
       <workItem from="1727258442373" duration="638000" />
       <workItem from="1727269194894" duration="3297000" />
       <workItem from="1727279860027" duration="1032000" />
-      <workItem from="1727318595169" duration="1037000" />
+      <workItem from="1727318595169" duration="3821000" />
+      <workItem from="1727352402363" duration="5882000" />
+      <workItem from="1727396250312" duration="4047000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -351,7 +368,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727279882839</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="feat:修改网关中全局异常捕获的对于token过期的异常信息的统一">
+      <option name="closed" value="true" />
+      <created>1727320184630</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1727320184630</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -378,22 +403,7 @@
     <MESSAGE value="feat:整合MyBatisPlus+实现了登录注册接口" />
     <MESSAGE value="feat:添加createTime和updateTime的拦截自动处理" />
     <MESSAGE value="feat:添加网关权限和角色处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:添加网关权限和角色处理" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java</url>
-          <line>122</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/auth/StpInterfaceImpl.java</url>
-          <line>39</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="feat:修改网关中全局异常捕获的对于token过期的异常信息的统一" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:修改网关中全局异常捕获的对于token过期的异常信息的统一" />
   </component>
 </project>

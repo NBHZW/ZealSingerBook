@@ -40,7 +40,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
             throw new BusinessException(ResponseCodeEnum.REQUEST_FREQUENT);
         }
         // 不存在 生成验证码并且发送过去
-        String code = RandomUtil.randomNumbers(6);
+        String code = RandomUtil.randomNumbers(6).replace("\"","");
         log.info("==> 手机号: {}, 已生成验证码：【{}】", phone, code);
 
         // todo 异步调用第三方服务发送消息

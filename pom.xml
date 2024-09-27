@@ -49,12 +49,20 @@
         <sa-token-redis-jackson>1.39.0</sa-token-redis-jackson>
         <mybatis-plus>3.5.7</mybatis-plus>
         <nacos-config.version>0.3.0-RC</nacos-config.version>
+        <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
     </properties>
 
 
     <!--统一依赖管理  防止多次依赖-->
     <dependencyManagement>
         <dependencies>
+            <!--TeansmittableThreadLocal 解决异步和父子模块之间的ThreadLocal中无法数据功响的问题-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable-thread-local.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.zealsinger.framework</groupId>
                 <artifactId>zealsingerbook-common</artifactId>

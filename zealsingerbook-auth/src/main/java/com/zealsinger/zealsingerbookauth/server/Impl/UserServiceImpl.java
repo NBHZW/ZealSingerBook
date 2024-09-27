@@ -17,12 +17,15 @@ import com.zealsinger.zealsingerbookauth.domain.entity.UserRole;
 import com.zealsinger.zealsingerbookauth.domain.enums.LoginTypeEnum;
 import com.zealsinger.zealsingerbookauth.domain.enums.ResponseCodeEnum;
 import com.zealsinger.zealsingerbookauth.domain.vo.UserLoginReqVO;
+import com.zealsinger.zealsingerbookauth.filter.LoginUserContextHolder;
 import com.zealsinger.zealsingerbookauth.mapper.RoleMapper;
 import com.zealsinger.zealsingerbookauth.mapper.UserMapper;
 import com.zealsinger.zealsingerbookauth.mapper.UserRoleMapper;
+import com.zealsinger.zealsingerbookauth.server.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -48,6 +51,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private TransactionTemplate transactionTemplate;
+
+    @Resource
+    private ThreadPoolTaskExecutor taskExecutor;
 
 
 
@@ -89,6 +95,16 @@ public class UserServiceImpl implements UserService {
 
         }
         return null;
+    }
+
+    @Override
+    public Response<?> logout() {
+        Long userId = LoginUserContextHolder.getUserId();
+        log.info("===>用户 {} 退出登录",userId);
+        new Thread(() -> log.info("===>用户 {}   1",LoginUserContextHolder.getUserId()));
+        taskExecutor.submit(() -> log.info("===>用户 {}   2 ",LoginUserContextHolder.getUserId()));
+        // StpUtil.logout(userId);
+        return Response.success();
     }
 
     /**
