@@ -14,7 +14,11 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     SYSTEM_ERROR("AUTH-10000", "出错啦，请联系后台小哥，小哥要加班咯~"),
     PARAM_NOT_VALID("AUTH-10001", "参数错误"),
     REQUEST_FREQUENT("AUTH-20000","请求太频繁,3分钟后再尝试"),
-    VERIFICATION_CODE_ERROR("AUTH-20001", "验证码错误");
+    VERIFICATION_CODE_ERROR("AUTH-20001", "验证码错误"),
+    USER_NOT_FOUND("AUTH-20002", "用户不存在"),
+    PHONE_OR_PASSWORD_ERROR("AUTH-20004", "手机号或密码错误"),
+    ;
+
     private final String errorCode;
     private final String errorMessage;
 

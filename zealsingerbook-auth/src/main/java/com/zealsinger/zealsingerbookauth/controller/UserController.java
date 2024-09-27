@@ -2,6 +2,7 @@ package com.zealsinger.zealsingerbookauth.controller;
 
 import com.zealsinger.aspect.ZealLog;
 import com.zealsinger.book.framework.common.response.Response;
+import com.zealsinger.zealsingerbookauth.domain.vo.UpdatePasswordReqVO;
 import com.zealsinger.zealsingerbookauth.domain.vo.UserLoginReqVO;
 import com.zealsinger.zealsingerbookauth.server.UserService;
 import jakarta.annotation.Resource;
@@ -24,7 +25,14 @@ public class UserController {
     }
 
     @PostMapping("/logout")
+    @ZealLog(description = "用户登出")
     public Response<?> logout() {
         return userService.logout();
+    }
+
+    @PostMapping("/password/update")
+    @ZealLog(description = "修改密码")
+    public Response<?> updatePassword(@Validated @RequestBody UpdatePasswordReqVO updatePasswordReqVO) {
+        return userService.updatePassword(updatePasswordReqVO);
     }
 }

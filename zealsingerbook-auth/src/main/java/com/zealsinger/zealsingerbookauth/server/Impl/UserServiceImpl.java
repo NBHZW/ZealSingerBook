@@ -3,6 +3,7 @@ package com.zealsinger.zealsingerbookauth.server.Impl;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.google.common.collect.Lists;
 import com.zealsinger.book.framework.common.enums.DeletedEnum;
 import com.zealsinger.book.framework.common.enums.StatusEnum;
@@ -10,12 +11,14 @@ import com.zealsinger.book.framework.common.exception.BusinessException;
 import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.book.framework.common.util.JsonUtil;
 import com.zealsinger.book.framework.common.constant.RedisConstant;
+import com.zealsinger.zealsingerbookauth.config.PasswordEncoderConfig;
 import com.zealsinger.zealsingerbookauth.constant.RoleConstants;
 import com.zealsinger.zealsingerbookauth.domain.entity.Role;
 import com.zealsinger.zealsingerbookauth.domain.entity.User;
 import com.zealsinger.zealsingerbookauth.domain.entity.UserRole;
 import com.zealsinger.zealsingerbookauth.domain.enums.LoginTypeEnum;
 import com.zealsinger.zealsingerbookauth.domain.enums.ResponseCodeEnum;
+import com.zealsinger.zealsingerbookauth.domain.vo.UpdatePasswordReqVO;
 import com.zealsinger.zealsingerbookauth.domain.vo.UserLoginReqVO;
 import com.zealsinger.zealsingerbookauth.filter.LoginUserContextHolder;
 import com.zealsinger.zealsingerbookauth.mapper.RoleMapper;
@@ -24,12 +27,15 @@ import com.zealsinger.zealsingerbookauth.mapper.UserRoleMapper;
 import com.zealsinger.zealsingerbookauth.server.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author ZealSinger
@@ -53,7 +59,7 @@ public class UserServiceImpl implements UserService {
     private TransactionTemplate transactionTemplate;
 
     @Resource
-    private ThreadPoolTaskExecutor taskExecutor;
+    private PasswordEncoder passwordEncoder;
 
 
 
@@ -92,18 +98,43 @@ public class UserServiceImpl implements UserService {
             }
         }else{
             // 账号密码登录
-
+            LambdaUpdateWrapper<User> queryWrapper = new LambdaUpdateWrapper<>();
+            queryWrapper.eq(User::getPhone, userLoginReqVO.getPhoneNumber());
+            User user = userMapper.selectOne(queryWrapper);
+            // 判断该手机号是否注册
+            if (Objects.isNull(user)) {
+                throw new BusinessException(ResponseCodeEnum.USER_NOT_FOUND);
+            }
+            if(StringUtils.isNotBlank(userLoginReqVO.getPassword())){
+                boolean matches = passwordEncoder.matches(userLoginReqVO.getPassword(), user.getPassword());
+                if(matches){
+                    StpUtil.login(user.getId());
+                    log.info("===>用户 {} 登录成功",user.getId());
+                    tokenInfo = StpUtil.getTokenInfo();
+                    return Response.success(tokenInfo.tokenValue);
+                }else{
+                    throw new BusinessException(ResponseCodeEnum.PHONE_OR_PASSWORD_ERROR);
+                }
+            }else{
+                throw new BusinessException(ResponseCodeEnum.PHONE_OR_PASSWORD_ERROR);
+            }
         }
-        return null;
     }
 
     @Override
     public Response<?> logout() {
         Long userId = LoginUserContextHolder.getUserId();
         log.info("===>用户 {} 退出登录",userId);
-        new Thread(() -> log.info("===>用户 {}   1",LoginUserContextHolder.getUserId()));
-        taskExecutor.submit(() -> log.info("===>用户 {}   2 ",LoginUserContextHolder.getUserId()));
-        // StpUtil.logout(userId);
+        StpUtil.logout(userId);
+        return Response.success();
+    }
+
+    @Override
+    public Response<?> updatePassword(UpdatePasswordReqVO updatePasswordReqVO) {
+        String encodePassword = passwordEncoder.encode(updatePasswordReqVO.getPassword());
+        LambdaUpdateWrapper<User> userUpdateWrapper = new LambdaUpdateWrapper<>();
+        userUpdateWrapper.eq(User::getId,LoginUserContextHolder.getUserId()).set(User::getPassword,encodePassword);
+        userMapper.update(userUpdateWrapper);
         return Response.success();
     }
 
