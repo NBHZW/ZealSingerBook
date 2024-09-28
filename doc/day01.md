@@ -23,7 +23,7 @@
 
     <!--项目名称-->
     <name>${project.artifactId}</name>
-    <description>仿小红书的,基于Spring Cloud Alibaba的,微服务架构的Java项目</description>
+    <description>基于Spring Cloud Alibaba的,微服务架构的Java项目</description>
     <!--打包方式-->
     <packaging>pom</packaging>
 

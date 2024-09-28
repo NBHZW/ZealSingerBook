@@ -4,16 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:添加网关解析userId通过全局过滤器添加到requestHeader中传递给下游+下游通过过滤器捕获userId存入TransmittableThreadLocal作为模块上下文">
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/config/PasswordEncoderConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/vo/UpdatePasswordReqVO.java" afterDir="false" />
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:添加账号密码登录接口">
+      <change afterPath="$PROJECT_DIR$/doc/day07.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/oss.2024-09-28-0.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-api/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/ZealsingerbookOssApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/config/AliyunOssConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/config/AliyunOssProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/config/MinioConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/config/MinioProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/controller/FileController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/enums/ResponseCodeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/factory/FileStrategyFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/service/FileService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/service/Impl/FileServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/strategy/FileStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/strategy/Impl/AliyunOssFileStrategyImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/strategy/Impl/MinioFileStrategyImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources/application-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources/application-prod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources/logback-spring.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flattened-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.flattened-pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-27-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-27-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/domain/enums/ResponseCodeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/day01.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day01.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/day06.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day06.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/sms/AliyunAccessKeyProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/sms/AliyunAccessKeyProperties.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +48,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="AnnotationType" />
+        <option value="module-info" />
         <option value="Interface" />
         <option value="Enum" />
-        <option value="module-info" />
         <option value="Class" />
       </list>
     </option>
@@ -95,10 +119,11 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.ZealsingerbookAuthApplication.executor&quot;: &quot;Debug&quot;,
     &quot;Spring Boot.ZealsingerbookGatewayApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookOssApplication.executor&quot;: &quot;Debug&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/ZhuoMian/AutoGreen-master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/ZhuoMian/bigThree/Netty相关资料/ZealSingerBook-test/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -107,6 +132,7 @@
     &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.45402297&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -116,20 +142,25 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.zealsinger.oss.service.Impl" />
+      <recent name="com.zealsinger.oss.strategy.Impl" />
       <recent name="com.zealsinger.zealsingerbookauth.server.Impl" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-oss\zealsingerbook-oss-biz\src\main\resources" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook\zealsingerbook-auth\src\main\resources" />
     </key>
   </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ZealsingerbookGatewayApplication">
+  <component name="RunManager" selected="Spring Boot.ZealsingerbookOssApplication">
     <configuration name="ZealsingerbookAuthApplicationTests.connectTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="zealsingerbook-auth" />
       <extension name="coverage">
@@ -141,22 +172,6 @@
       <option name="PACKAGE_NAME" value="com.zealsinger.zealsingerbookauth" />
       <option name="MAIN_CLASS_NAME" value="com.zealsinger.zealsingerbookauth.ZealsingerbookAuthApplicationTests" />
       <option name="METHOD_NAME" value="connectTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ZealsingerbookAuthApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="zealsingerbook-auth" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.zealsinger.zealsingerbookauth.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.zealsinger.zealsingerbookauth" />
-      <option name="MAIN_CLASS_NAME" value="com.zealsinger.zealsingerbookauth.ZealsingerbookAuthApplicationTests" />
-      <option name="METHOD_NAME" value="contextLoads" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -227,13 +242,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ZealsingerbookOssApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="zealsingerbook-oss-biz" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.zealsinger.oss.ZealsingerbookOssApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zealsinger.oss.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.ZealsingerbookOssApplication" />
         <item itemvalue="Spring Boot.ZealsingerbookGatewayApplication" />
         <item itemvalue="JUnit.ZealsingerbookAuthApplicationTests.threadPoolTest" />
         <item itemvalue="JUnit.ZealsingerbookAuthApplicationTests.redisTest" />
         <item itemvalue="JUnit.ZealsingerbookAuthApplicationTests.connectTest" />
-        <item itemvalue="JUnit.ZealsingerbookAuthApplicationTests.contextLoads" />
       </list>
     </recent_temporary>
   </component>
@@ -285,7 +313,11 @@
       <workItem from="1727279860027" duration="1032000" />
       <workItem from="1727318595169" duration="3821000" />
       <workItem from="1727352402363" duration="5882000" />
-      <workItem from="1727396250312" duration="7847000" />
+      <workItem from="1727396250312" duration="8133000" />
+      <workItem from="1727428575643" duration="1288000" />
+      <workItem from="1727484820619" duration="7862000" />
+      <workItem from="1727503114768" duration="1764000" />
+      <workItem from="1727521231712" duration="5151000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -375,7 +407,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727400855792</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="feat:添加账号密码登录接口">
+      <option name="closed" value="true" />
+      <created>1727406681398</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1727406681398</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -404,6 +444,23 @@
     <MESSAGE value="feat:添加网关权限和角色处理" />
     <MESSAGE value="feat:修改网关中全局异常捕获的对于token过期的异常信息的统一" />
     <MESSAGE value="feat:添加网关解析userId通过全局过滤器添加到requestHeader中传递给下游+下游通过过滤器捕获userId存入TransmittableThreadLocal作为模块上下文" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:添加网关解析userId通过全局过滤器添加到requestHeader中传递给下游+下游通过过滤器捕获userId存入TransmittableThreadLocal作为模块上下文" />
+    <MESSAGE value="feat:添加账号密码登录接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:添加账号密码登录接口" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/exception/GlobalExceptionHandler.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/strategy/Impl/AliyunOssFileStrategyImpl.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

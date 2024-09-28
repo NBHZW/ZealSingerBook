@@ -15,5 +15,11 @@
     <file url="file://$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-oss/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-oss/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources" charset="UTF-8" />
   </component>
 </project>

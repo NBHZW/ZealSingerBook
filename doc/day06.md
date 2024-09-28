@@ -751,6 +751,6 @@ private static final ThreadLocal<Map<String, Object>> LOGIN_USER_CONTEXT_THREAD_
             = TransmittableThreadLocal.withInitial(HashMap::new);
 ```
 
-然后我们再次访问接口查看输出  这次可以看到 无论是子线程还是线程池中都能获取到了 So Cool
+然后我们再次访问接口查看输出  这次可以看到 无论是子线程还是线程池中都能获取到了     So Cool
 
 ![image-20240927092918626](../../ZealSingerBook/img/image-20240927092918626.png)

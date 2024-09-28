@@ -7,7 +7,7 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
-  <description>仿小红书的,基于Spring Cloud Alibaba的,微服务架构的Java项目</description>
+  <description>基于Spring Cloud Alibaba的,微服务架构的Java项目</description>
   <modules>
     <module>zealsingerbook-auth</module>
     <module>zealsingerbook-framework</module>

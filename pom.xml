@@ -10,7 +10,7 @@
 
     <!--项目名称-->
     <name>${project.artifactId}</name>
-    <description>仿小红书的,基于Spring Cloud Alibaba的,微服务架构的Java项目</description>
+    <description>基于Spring Cloud Alibaba的,微服务架构的Java项目</description>
     <!--打包方式-->
     <packaging>pom</packaging>
 
@@ -19,6 +19,7 @@
         <module>zealsingerbook-auth</module>
         <module>zealsingerbook-framework</module>
         <module>zealsingerbook-gateway</module>
+        <module>zealsingerbook-oss</module>
     </modules>
 
     <properties>
@@ -50,12 +51,27 @@
         <mybatis-plus>3.5.7</mybatis-plus>
         <nacos-config.version>0.3.0-RC</nacos-config.version>
         <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
+        <minio.version>8.2.1</minio.version>
+        <aliyun-oss>3.10.2</aliyun-oss>
     </properties>
 
 
     <!--统一依赖管理  防止多次依赖-->
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun-oss}</version>
+            </dependency>
+            <!-- 对象存储 Minio -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+
             <!--TeansmittableThreadLocal 解决异步和父子模块之间的ThreadLocal中无法数据功响的问题-->
             <dependency>
                 <groupId>com.alibaba</groupId>

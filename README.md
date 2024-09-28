@@ -2,7 +2,7 @@
 
 # 项目简介
 
-仿小红书的微服务架构的Java项目，微服务技术栈主要为Spring Cloud Alibaba那套
+微服务架构的Java项目，微服务技术栈主要为Spring Cloud Alibaba那套
 
 # 项目架构
 

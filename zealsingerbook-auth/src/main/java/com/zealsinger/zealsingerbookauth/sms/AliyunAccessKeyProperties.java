@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "aliyun")
+@ConfigurationProperties(prefix = "aliyun.oss")
 @Component
 @Data
 public class AliyunAccessKeyProperties {
