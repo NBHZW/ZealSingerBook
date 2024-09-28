@@ -20,6 +20,7 @@
         <module>zealsingerbook-framework</module>
         <module>zealsingerbook-gateway</module>
         <module>zealsingerbook-oss</module>
+        <module>zealsingerbook-user</module>
     </modules>
 
     <properties>
