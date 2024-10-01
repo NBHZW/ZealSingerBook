@@ -27,11 +27,11 @@ public class SaTokenConfigure {
                 .setAuth(obj -> {
                     // 登录校验 -- 拦截所有路由，并排除/user/doLogin 用于开放登录
                     SaRouter.match("/**")
-                            .notMatch("/auth/user/login")
+                            .notMatch("/auth/login")
                             .notMatch("/auth/verification/code/send")
                             .check(r->StpUtil.checkLogin());
 
-                    SaRouter.match("/auth/user/logout", r -> StpUtil.checkRole("common_user"));
+                    SaRouter.match("/auth/logout", r -> StpUtil.checkRole("common_user"));
 
                     /*
                     // 权限认证 -- 不同模块, 校验不同权限

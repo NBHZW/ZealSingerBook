@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zealsinger.book.framework.common.constant.RedisConstant;
-import com.zealsinger.book.framework.common.util.JsonUtil;
+import com.zealsinger.book.framework.common.utils.JsonUtil;
 import com.zealsinger.zealsingerbookauth.domain.entity.Permission;
 import com.zealsinger.zealsingerbookauth.domain.entity.Role;
 import com.zealsinger.zealsingerbookauth.domain.entity.RolePermission;

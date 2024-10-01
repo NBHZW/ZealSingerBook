@@ -1,5 +1,6 @@
 package com.zealsinger.oss.controller;
 
+import com.zealsinger.aspect.ZealLog;
 import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.oss.service.FileService;
 import io.minio.errors.*;
@@ -26,5 +27,11 @@ public class FileController {
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Response<?> uploadFile(@RequestPart(value = "file") MultipartFile file) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         return fileService.uploadFile(file);
+    }
+
+    @PostMapping("/test")
+    @ZealLog(description = "OpenFeign测试接口")
+    public Response<?> test(){
+        return Response.success("biz-oss");
     }
 }

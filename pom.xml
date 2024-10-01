@@ -205,6 +205,12 @@
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.zealsinger.oss</groupId>
+                <artifactId>zealsingerbook-oss-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

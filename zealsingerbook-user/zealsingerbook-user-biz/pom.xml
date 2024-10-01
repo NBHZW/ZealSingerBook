@@ -39,6 +39,13 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.zealsinger.frame</groupId>
+            <artifactId>zealsinger-bizcontext-spring-boot-starter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+
         <!--        &lt;!&ndash; Mybatis &ndash;&gt;
                 <dependency>
                     <groupId>org.mybatis.spring.boot</groupId>
@@ -103,6 +110,18 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.zealsinger.oss</groupId>
+            <artifactId>zealsingerbook-oss-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>2.0.39</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -110,6 +129,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- 代码生成器 -->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

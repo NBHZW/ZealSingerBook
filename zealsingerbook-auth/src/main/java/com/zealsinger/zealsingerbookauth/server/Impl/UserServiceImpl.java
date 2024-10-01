@@ -9,9 +9,9 @@ import com.zealsinger.book.framework.common.enums.DeletedEnum;
 import com.zealsinger.book.framework.common.enums.StatusEnum;
 import com.zealsinger.book.framework.common.exception.BusinessException;
 import com.zealsinger.book.framework.common.response.Response;
-import com.zealsinger.book.framework.common.util.JsonUtil;
+import com.zealsinger.book.framework.common.utils.JsonUtil;
 import com.zealsinger.book.framework.common.constant.RedisConstant;
-import com.zealsinger.zealsingerbookauth.config.PasswordEncoderConfig;
+import com.zealsinger.frame.filter.LoginUserContextHolder;
 import com.zealsinger.zealsingerbookauth.constant.RoleConstants;
 import com.zealsinger.zealsingerbookauth.domain.entity.Role;
 import com.zealsinger.zealsingerbookauth.domain.entity.User;
@@ -20,7 +20,6 @@ import com.zealsinger.zealsingerbookauth.domain.enums.LoginTypeEnum;
 import com.zealsinger.zealsingerbookauth.domain.enums.ResponseCodeEnum;
 import com.zealsinger.zealsingerbookauth.domain.vo.UpdatePasswordReqVO;
 import com.zealsinger.zealsingerbookauth.domain.vo.UserLoginReqVO;
-import com.zealsinger.zealsingerbookauth.filter.LoginUserContextHolder;
 import com.zealsinger.zealsingerbookauth.mapper.RoleMapper;
 import com.zealsinger.zealsingerbookauth.mapper.UserMapper;
 import com.zealsinger.zealsingerbookauth.mapper.UserRoleMapper;
@@ -29,7 +28,6 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -133,7 +131,7 @@ public class UserServiceImpl implements UserService {
     public Response<?> updatePassword(UpdatePasswordReqVO updatePasswordReqVO) {
         String encodePassword = passwordEncoder.encode(updatePasswordReqVO.getPassword());
         LambdaUpdateWrapper<User> userUpdateWrapper = new LambdaUpdateWrapper<>();
-        userUpdateWrapper.eq(User::getId,LoginUserContextHolder.getUserId()).set(User::getPassword,encodePassword);
+        userUpdateWrapper.eq(User::getId, LoginUserContextHolder.getUserId()).set(User::getPassword,encodePassword);
         userMapper.update(userUpdateWrapper);
         return Response.success();
     }

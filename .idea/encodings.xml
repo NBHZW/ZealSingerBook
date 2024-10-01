@@ -7,6 +7,10 @@
     <file url="file://$PROJECT_DIR$/zealsingerbook-auth/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-framework/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-framework/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-framework/zealsinger-bizcontext-spring-boot-starter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-framework/zealsinger-bizcontext-spring-boot-starter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-framework/zealsinger-jackson-spring-boot-starter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-framework/zealsinger-jackson-spring-boot-starter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-framework/zealsinger-operationlog-spring-boot-starter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-framework/zealsinger-operationlog-spring-boot-starter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-framework/zealsinger-optionlog-spring-boot-starter/src/main/java" charset="UTF-8" />

@@ -210,6 +210,7 @@ public class FileStrategyFactory {
     @Value("${storage.type}")
     private String storageType;
 
+    @Bean  // 这个Bean不可少 如果少了 就会出现工厂注入失败 从而导致实现类注入失败 导致整个逻辑无法正常进行
     public  FileStrategy getFileStrategy() {
         if (storageType == null) {
             throw new IllegalArgumentException("不可用的存储类型");
@@ -243,3 +244,94 @@ public class FileStrategyFactory {
 ![image-20240928110648766](../../ZealSingerBook/img/image-20240928110648766.png)
 
 ![image-20240928110806294](../../ZealSingerBook/img/image-20240928110806294.png)
+
+最终MInio实现类和Oss实现类如下
+
+```Java
+@Slf4j
+@Service
+public class MinioFileStrategyImpl implements FileStrategy {
+    @Resource
+    private MinioClient minioClient;
+
+    @Resource
+    private MinioProperties minioProperties;
+
+
+    @Override
+    public String upload(MultipartFile file, String bucketName) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        log.info("===>Minio进行存储服务中......");
+        if(file==null || file.getSize()==0){
+            log.error("==> 上传文件异常：文件大小为空 ...");
+            throw new BusinessException(ResponseCodeEnum.FILE_BLANK_ERRO);
+        }
+        try{
+            // 文件原始名字
+            String originalFileName = file.getOriginalFilename();
+            // 文件的 Content-Type
+            String contentType = file.getContentType();
+            // 获取文件的后缀，如 .jpg
+            String suffix = originalFileName.substring(originalFileName.lastIndexOf("."));
+            // 最终存入的名字
+            String fileName =  UUID.randomUUID() + suffix;
+
+            minioClient.putObject(PutObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(fileName)
+                    .stream(file.getInputStream(), file.getSize(), -1)
+                    .contentType(contentType)
+                    .build());
+
+            // 返回文件的访问链接
+            String url = String.format("%s/%s/%s", minioProperties.getEndpoint(), bucketName, fileName);
+            log.info("===>Minio存储服务完成，文件访问链接为：{}", url);
+            return url;
+        }catch (Exception e){
+            log.error("===>Minio存储服务异常：{}", e.getMessage());
+            throw new BusinessException(ResponseCodeEnum.MINIO_ERROR);
+        }
+
+
+    }
+}
+```
+
+```Java
+// 需要注意的是 阿里云OSS服务需要修改公共访问权限 否则URL贼复杂而且存在时效
+@Slf4j
+@Service
+public class AliyunOssFileStrategyImpl implements FileStrategy {
+
+    @Resource
+    private OSS ossClient;
+
+    @Resource
+    private AliyunOssProperties aliyunOssProperties;
+
+    @Override
+    public String upload(MultipartFile file, String bucketName) {
+        log.info("===>阿里云Oss进行存储服务中......");
+        if(file==null || file.getSize()==0){
+            log.error("==> 上传文件异常：文件大小为空 ...");
+            throw new BusinessException(ResponseCodeEnum.FILE_BLANK_ERRO);
+        }
+        try{
+            // 文件原始名字
+            String originalFileName = file.getOriginalFilename();
+            // 获取文件的后缀，如 .jpg
+            String suffix = originalFileName.substring(originalFileName.lastIndexOf("."));
+            // 最终存入的名字
+            String fileName =  UUID.randomUUID() + suffix;
+            InputStream fileStream = file.getInputStream();
+            ossClient.putObject(bucketName,fileName,fileStream);
+            ossClient.shutdown();
+            String url ="https://"+bucketName+"."+aliyunOssProperties.getEndpoint()+"/"+fileName;
+            return url;
+        }catch (Exception e){
+            log.error("==> Oss上传文件异常：{}",e.getMessage());
+            throw new BusinessException(ResponseCodeEnum.ALIOSS_ERROR);
+        }
+    }
+}
+```
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.zealsinger</groupId>
+    <artifactId>zealsingerbook-framework</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <groupId>com.zealsinger.frame</groupId>
+  <artifactId>zealsinger-jackson-spring-boot-starter</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>zealsinger-jackson-spring-boot-starter</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.zealsinger.framework</groupId>
+      <artifactId>zealsingerbook-common</artifactId>
+    </dependency>
+  </dependencies>
+</project>

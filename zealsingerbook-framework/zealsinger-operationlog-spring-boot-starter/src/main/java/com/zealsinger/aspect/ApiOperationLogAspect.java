@@ -2,7 +2,7 @@ package com.zealsinger.aspect;
 
 
 
-import com.zealsinger.book.framework.common.util.JsonUtil;
+import com.zealsinger.book.framework.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

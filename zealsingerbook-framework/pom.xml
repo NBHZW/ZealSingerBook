@@ -15,6 +15,8 @@
     <modules>
         <module>zealsingerbook-common</module>
         <module>zealsinger-operationlog-spring-boot-starter</module>
+        <module>zealsinger-bizcontext-spring-boot-starter</module>
+        <module>zealsinger-jackson-spring-boot-starter</module>
     </modules>
 
     <properties>
