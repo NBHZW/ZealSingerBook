@@ -1,6 +1,7 @@
 package com.zealsinger.frame.config;
 
 import com.zealsinger.frame.filter.HeaderUserId2ContextFilter;
+import com.zealsinger.frame.interceptor.FeignRequestInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -13,4 +14,10 @@ public class ContextAutoConfiguration {
         FilterRegistrationBean<HeaderUserId2ContextFilter> bean = new FilterRegistrationBean<>(filter);
         return bean;
     }
+
+    @Bean
+    public FeignRequestInterceptor feignRequestInterceptor() {
+        return new FeignRequestInterceptor();
+    }
+
 }

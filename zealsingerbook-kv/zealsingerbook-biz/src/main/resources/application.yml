@@ -1,0 +1,10 @@
+server:
+  port: 8084 # 项目启动的端口
+
+spring:
+  cassandra:
+    keyspace-name: zealsingerbook
+    contact-points: 192.168.17.131
+    port: 9042
+  profiles:
+    active: dev # 默认激活 dev 本地开发环境

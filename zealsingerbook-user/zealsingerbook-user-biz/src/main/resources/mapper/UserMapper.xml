@@ -21,4 +21,8 @@
     id, zealsinger_book_id, `password`, nickname, avatar, birthday, background_img, phone, 
     sex, `status`, introduction, create_time, update_time, is_deleted
   </sql>
+
+  <select id="selectByPhone" resultMap="BaseResultMap">
+    select id, password from t_user where phone = #{phone}
+  </select>
 </mapper>

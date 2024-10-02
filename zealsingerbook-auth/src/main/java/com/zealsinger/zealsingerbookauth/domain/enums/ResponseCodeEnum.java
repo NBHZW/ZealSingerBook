@@ -17,6 +17,7 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     VERIFICATION_CODE_ERROR("AUTH-20001", "验证码错误"),
     USER_NOT_FOUND("AUTH-20002", "用户不存在"),
     PHONE_OR_PASSWORD_ERROR("AUTH-20004", "手机号或密码错误"),
+    LOGIN_FAIL("AUTH-20005", "登录失败"),
     ;
 
     private final String errorCode;

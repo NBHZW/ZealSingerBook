@@ -151,6 +151,11 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.zealsinger.user</groupId>
+            <artifactId>zealsingerbook-user-api</artifactId>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

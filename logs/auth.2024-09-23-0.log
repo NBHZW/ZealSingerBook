@@ -67,7 +67,7 @@ Caused by: java.lang.NullPointerException: null
 	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
 	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
-	at com.zealsinger.zealsingerbookauth.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
+	at com.zealsinger.user.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
 	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:758)
 	... 5 common frames omitted
 2024-09-23 11:03:20.772 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
@@ -126,7 +126,7 @@ Caused by: java.lang.NullPointerException: null
 	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
 	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
-	at com.zealsinger.zealsingerbookauth.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
+	at com.zealsinger.user.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
 	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:758)
 	... 5 common frames omitted
 2024-09-23 11:06:27.846 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
@@ -186,7 +186,7 @@ Caused by: java.lang.NullPointerException: element cannot be mapped to a null ke
 	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
 	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
-	at com.zealsinger.zealsingerbookauth.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
+	at com.zealsinger.user.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
 	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:758)
 	... 5 common frames omitted
 2024-09-23 11:08:08.834 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
@@ -246,7 +246,7 @@ Caused by: java.lang.NullPointerException: element cannot be mapped to a null ke
 	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
 	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
 	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
-	at com.zealsinger.zealsingerbookauth.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
+	at com.zealsinger.user.run.PushRolePermissionsRedisRunner.run(PushRolePermissionsRedisRunner.java:70)
 	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:758)
 	... 5 common frames omitted
 2024-09-23 11:13:55.093 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...

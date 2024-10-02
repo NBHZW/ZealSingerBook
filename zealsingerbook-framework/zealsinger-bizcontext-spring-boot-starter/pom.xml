@@ -24,6 +24,13 @@
             <artifactId>zealsingerbook-common</artifactId>
         </dependency>
 
+        <!--Feign模块调用之间的实现userId等信息传递给下游-->
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+        </dependency>
+
         <!--异步中ThreadLocal中的共享问题-->
         <dependency>
             <groupId>com.alibaba</groupId>

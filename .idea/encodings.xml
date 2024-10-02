@@ -19,6 +19,12 @@
     <file url="file://$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-kv/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-kv/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-oss/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-oss/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-api/src/main/java" charset="UTF-8" />

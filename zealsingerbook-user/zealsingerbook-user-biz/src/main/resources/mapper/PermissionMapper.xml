@@ -19,4 +19,9 @@
     id, parent_id, `name`, `type`, menu_url, menu_icon, sort, permission_key, `status`, 
     create_time, update_time, is_deleted
   </sql>
+
+  <select id="selectAppEnabledList" resultType="com.zealsinger.user.domain.entity.Permission">
+    select id, name, permission_key from t_permission
+    where status = 0 and type = 3 and is_deleted = 0
+  </select>
 </mapper>

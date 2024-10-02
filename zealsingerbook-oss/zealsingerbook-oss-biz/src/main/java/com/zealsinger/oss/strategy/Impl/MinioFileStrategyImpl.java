@@ -34,7 +34,7 @@ public class MinioFileStrategyImpl implements FileStrategy {
         log.info("===>Minio进行存储服务中......");
         if(file==null || file.getSize()==0){
             log.error("==> 上传文件异常：文件大小为空 ...");
-            throw new BusinessException(ResponseCodeEnum.FILE_BLANK_ERRO);
+            throw new BusinessException(ResponseCodeEnum.FILE_BLANK_ERROR);
         }
         try{
             // 文件原始名字

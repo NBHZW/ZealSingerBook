@@ -2,37 +2,23 @@ package com.zealsinger.zealsingerbookauth.server.Impl;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.google.common.collect.Lists;
-import com.zealsinger.book.framework.common.enums.DeletedEnum;
-import com.zealsinger.book.framework.common.enums.StatusEnum;
+import com.zealsinger.book.framework.common.constant.RedisConstant;
 import com.zealsinger.book.framework.common.exception.BusinessException;
 import com.zealsinger.book.framework.common.response.Response;
-import com.zealsinger.book.framework.common.utils.JsonUtil;
-import com.zealsinger.book.framework.common.constant.RedisConstant;
 import com.zealsinger.frame.filter.LoginUserContextHolder;
-import com.zealsinger.zealsingerbookauth.constant.RoleConstants;
-import com.zealsinger.zealsingerbookauth.domain.entity.Role;
-import com.zealsinger.zealsingerbookauth.domain.entity.User;
-import com.zealsinger.zealsingerbookauth.domain.entity.UserRole;
+import com.zealsinger.user.dto.FindUserByPhoneRspDTO;
 import com.zealsinger.zealsingerbookauth.domain.enums.LoginTypeEnum;
 import com.zealsinger.zealsingerbookauth.domain.enums.ResponseCodeEnum;
 import com.zealsinger.zealsingerbookauth.domain.vo.UpdatePasswordReqVO;
 import com.zealsinger.zealsingerbookauth.domain.vo.UserLoginReqVO;
-import com.zealsinger.zealsingerbookauth.mapper.RoleMapper;
-import com.zealsinger.zealsingerbookauth.mapper.UserMapper;
-import com.zealsinger.zealsingerbookauth.mapper.UserRoleMapper;
+import com.zealsinger.zealsingerbookauth.rpc.UserRpcServer;
 import com.zealsinger.zealsingerbookauth.server.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionTemplate;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -42,19 +28,10 @@ import java.util.Objects;
 @Slf4j
 public class UserServiceImpl implements UserService {
     @Resource
-    private UserMapper userMapper;
-
-    @Resource
-    private RoleMapper roleMapper;
-
-    @Resource
-    private UserRoleMapper userRoleMapper;
+    private UserRpcServer userRpcServer;
 
     @Resource
     private RedisTemplate<String,Object> redisTemplate;
-
-    @Resource
-    private TransactionTemplate transactionTemplate;
 
     @Resource
     private PasswordEncoder passwordEncoder;
@@ -78,12 +55,9 @@ public class UserServiceImpl implements UserService {
                 // 如果验证码正确
                 if(String.valueOf(o).equals(userLoginReqVO.getCode())){
                     // 检测是否存在用户 如果有 则直接登录 没有则登录+注册添加用户信息
-                    User user = userMapper.selectByPhone(phoneNumber);
-                    if(user==null){
-                        userId = registerUser(phoneNumber);
-                        log.info("===>用户 {} 注册成功",userId);
-                    }else{
-                        userId = user.getId();
+                    userId = userRpcServer.registerUser(phoneNumber);
+                    if(Objects.isNull(userId)){
+                        throw new BusinessException(ResponseCodeEnum.LOGIN_FAIL);
                     }
                     StpUtil.login(userId);
                     log.info("===>用户 {} 登录成功",userId);
@@ -96,25 +70,19 @@ public class UserServiceImpl implements UserService {
             }
         }else{
             // 账号密码登录
-            LambdaUpdateWrapper<User> queryWrapper = new LambdaUpdateWrapper<>();
-            queryWrapper.eq(User::getPhone, userLoginReqVO.getPhoneNumber());
-            User user = userMapper.selectOne(queryWrapper);
-            // 判断该手机号是否注册
-            if (Objects.isNull(user)) {
+            FindUserByPhoneRspDTO userByPhone = userRpcServer.findUserByPhone(userLoginReqVO.getPhoneNumber());
+            if(Objects.isNull(userByPhone)){
                 throw new BusinessException(ResponseCodeEnum.USER_NOT_FOUND);
-            }
-            if(StringUtils.isNotBlank(userLoginReqVO.getPassword())){
-                boolean matches = passwordEncoder.matches(userLoginReqVO.getPassword(), user.getPassword());
+            }else{
+                boolean matches = passwordEncoder.matches(userLoginReqVO.getPassword(), userByPhone.getPassword());
                 if(matches){
-                    StpUtil.login(user.getId());
-                    log.info("===>用户 {} 登录成功",user.getId());
+                    StpUtil.login(userByPhone.getId());
+                    log.info("===>用户 {} 登录成功",userByPhone.getId());
                     tokenInfo = StpUtil.getTokenInfo();
                     return Response.success(tokenInfo.tokenValue);
                 }else{
                     throw new BusinessException(ResponseCodeEnum.PHONE_OR_PASSWORD_ERROR);
                 }
-            }else{
-                throw new BusinessException(ResponseCodeEnum.PHONE_OR_PASSWORD_ERROR);
             }
         }
     }
@@ -130,61 +98,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response<?> updatePassword(UpdatePasswordReqVO updatePasswordReqVO) {
         String encodePassword = passwordEncoder.encode(updatePasswordReqVO.getPassword());
-        LambdaUpdateWrapper<User> userUpdateWrapper = new LambdaUpdateWrapper<>();
-        userUpdateWrapper.eq(User::getId, LoginUserContextHolder.getUserId()).set(User::getPassword,encodePassword);
-        userMapper.update(userUpdateWrapper);
+        userRpcServer.updatePassword(encodePassword);
         return Response.success();
-    }
-
-    /**
-     * 系统自动注册用户
-     * @param phone
-     * @return
-     */
-    public Long registerUser(String phone) {
-        transactionTemplate.execute(status->{
-            try{
-                // 获取全局自增的小哈书 ID
-                Long zealId = redisTemplate.opsForValue().increment(RedisConstant.ZEALSINGER_BOOK_ID_GENERATOR_KEY);
-                User userDO = User.builder()
-                        .phone(phone)
-                        // 自动生成 账号ID
-                        .zealsingerBookId(String.valueOf(zealId))
-                        // 自动生成昵称, 如：zealsingerbook10000
-                        .nickname("zealsingerbook" + zealId)
-                        // 状态为启用
-                        .status(StatusEnum.ENABLE.getValue())
-                        // 逻辑删除
-                        .isDeleted(DeletedEnum.NO.getValue())
-                        .build();
-
-                // 添加入库
-                userMapper.insert(userDO);
-
-                // 获取刚刚添加入库的用户 ID
-                Long userId = userDO.getId();
-
-                // 给该用户分配一个默认角色
-                UserRole userRoleDO = UserRole.builder()
-                        .userId(userId)
-                        .roleId(RoleConstants.COMMON_USER_ROLE_ID)
-                        .isDeleted(DeletedEnum.NO.getValue())
-                        .build();
-                userRoleMapper.insert(userRoleDO);
-
-                // 将该用户的对应角色 存入 Redis 中
-                List<String> roles = Lists.newArrayList();
-                roles.add(roleMapper.selectOne(new LambdaQueryWrapper<Role>().eq(Role::getId, RoleConstants.COMMON_USER_ROLE_ID)).getRoleKey());
-                String userRolesKey = RedisConstant.buildUserRoleKey(userId);
-                redisTemplate.opsForValue().set(userRolesKey, JsonUtil.ObjToJsonString(roles));
-                return userId;
-            }catch (Exception e) {
-                // 标记为事件回滚
-                status.setRollbackOnly();
-                log.error("系统注册服务出现故障!!!");
-                return null;
-            }
-        });
-        return null;
     }
 }
