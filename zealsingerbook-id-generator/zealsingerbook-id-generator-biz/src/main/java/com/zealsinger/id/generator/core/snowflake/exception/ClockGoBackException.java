@@ -1,0 +1,7 @@
+package com.zealsinger.id.generator.core.snowflake.exception;
+
+public class ClockGoBackException extends RuntimeException {
+    public ClockGoBackException(String message) {
+        super(message);
+    }
+}

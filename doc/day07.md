@@ -56,7 +56,7 @@ docker run -d \
 如下 我们刚刚上传的图片的访问url为
 
 ```
-192.168.17.131:9090/zealsinger-book-bucket/cmd1.png
+8.154.40.120:9090/zealsinger-book-bucket/cmd1.png
 ```
 
 ![image-20240928093830444](../../ZealSingerBook/img/image-20240928093830444.png)

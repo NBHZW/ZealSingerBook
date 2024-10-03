@@ -2,6 +2,8 @@ package com.zealsinger.kv.controller;
 
 import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.kv.dto.AddNoteContentReqDTO;
+import com.zealsinger.kv.dto.DeleteNoteContentReqDTO;
+import com.zealsinger.kv.dto.FindNoteContentReqDTO;
 import com.zealsinger.kv.server.NoteContentServer;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -16,8 +18,18 @@ public class NoteContentController {
     @Resource
     private NoteContentServer noteContentService;
 
-    @PostMapping("/addNoteContent")
+    @PostMapping("/NoteContent/add")
     public Response<?> addNoteContent(@RequestBody @Validated AddNoteContentReqDTO addNoteContentReqDTO) {
         return noteContentService.addNoteContent(addNoteContentReqDTO);
+    }
+
+    @PostMapping("/NoteContent/find")
+    public Response<?> findNoteContent(@RequestBody @Validated FindNoteContentReqDTO findNoteContentReqDTO){
+        return noteContentService.findNoteContent(findNoteContentReqDTO);
+    }
+
+    @PostMapping("/NoteContent/delete")
+    public Response<?>  deleteNoteContent(@RequestBody @Validated DeleteNoteContentReqDTO deleteNoteContentReqDTO){
+        return noteContentService.deleteNoteContent(deleteNoteContentReqDTO);
     }
 }

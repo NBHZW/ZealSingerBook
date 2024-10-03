@@ -6071,9 +6071,9 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2024-09-23 17:29:57.950 [main] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$570/0x0000000800efc230
 2024-09-23 17:29:57.950 [main] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
 2024-09-23 17:29:57.952 [main] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
-2024-09-23 17:29:57.963 [main] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
-2024-09-23 17:29:58.026 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 17:29:59.827 [main] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727083799215_192.168.17.1_59731
+2024-09-23 17:29:57.963 [main] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Try to connect to server on start up, server: {serverIp = '8.154.40.120', server main port = 8848}
+2024-09-23 17:29:58.026 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 17:29:59.827 [main] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Success to connect to server [8.154.40.120:8848] on start up, connectionId = 1727083799215_192.168.17.1_59731
 2024-09-23 17:29:59.829 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Notify connected event to listeners.
 2024-09-23 17:29:59.829 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Connected,notify listen context...
 2024-09-23 17:29:59.829 [main] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
@@ -6105,24 +6105,24 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2024-09-23 17:30:08.091 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 14.534 seconds (process running for 15.917)
 2024-09-23 17:30:09.193 [main] WARN  c.z.z.run.PushRolePermissionsRedisRunner - ==> 角色权限数据已经同步至 Redis 中，不再同步...
 2024-09-23 17:30:09.198 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - nacos.cache.data.init.snapshot = true 
-2024-09-23 17:30:09.200 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-192.168.17.131_8848] [subscribe] zealsingerbook-auth.yaml+DEFAULT_GROUP
-2024-09-23 17:30:09.213 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-23 17:30:09.200 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-8.154.40.120_8848] [subscribe] zealsingerbook-auth.yaml+DEFAULT_GROUP
+2024-09-23 17:30:09.213 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP, cnt=1
 2024-09-23 17:30:09.213 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP
-2024-09-23 17:30:09.214 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-192.168.17.131_8848] [subscribe] zealsingerbook-auth+DEFAULT_GROUP
-2024-09-23 17:30:09.214 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, cnt=1
+2024-09-23 17:30:09.214 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-8.154.40.120_8848] [subscribe] zealsingerbook-auth+DEFAULT_GROUP
+2024-09-23 17:30:09.214 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, cnt=1
 2024-09-23 17:30:09.214 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth, group=DEFAULT_GROUP
-2024-09-23 17:30:09.214 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-192.168.17.131_8848] [subscribe] zealsingerbook-auth-dev.yaml+DEFAULT_GROUP
-2024-09-23 17:30:09.215 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-23 17:30:09.214 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-8.154.40.120_8848] [subscribe] zealsingerbook-auth-dev.yaml+DEFAULT_GROUP
+2024-09-23 17:30:09.215 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP, cnt=1
 2024-09-23 17:30:09.215 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP
-2024-09-23 17:31:03.504 [nacos-grpc-client-executor-192.168.17.131-26] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Receive server push request, request = ConfigChangeNotifyRequest, requestId = 1
-2024-09-23 17:31:03.505 [nacos-grpc-client-executor-192.168.17.131-26] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] [server-push] config changed. dataId=zealsingerbook-auth, group=DEFAULT_GROUP,tenant=null
-2024-09-23 17:31:03.505 [nacos-grpc-client-executor-192.168.17.131-26] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Ack server push request, request = ConfigChangeNotifyRequest, requestId = 1
+2024-09-23 17:31:03.504 [nacos-grpc-client-executor-8.154.40.120-26] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Receive server push request, request = ConfigChangeNotifyRequest, requestId = 1
+2024-09-23 17:31:03.505 [nacos-grpc-client-executor-8.154.40.120-26] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] [server-push] config changed. dataId=zealsingerbook-auth, group=DEFAULT_GROUP,tenant=null
+2024-09-23 17:31:03.505 [nacos-grpc-client-executor-8.154.40.120-26] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Ack server push request, request = ConfigChangeNotifyRequest, requestId = 1
 2024-09-23 17:31:03.551 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.utils.JvmUtil - isMultiInstance:false
-2024-09-23 17:31:03.558 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-192.168.17.131_8848] [data-received] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, tenant=, md5=0cec1bfaf902c078169507ecf1a4f0b2, content=rate-limit:
+2024-09-23 17:31:03.558 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-8.154.40.120_8848] [data-received] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, tenant=, md5=0cec1bfaf902c078169507ecf1a4f0b2, content=rate-limit:
   api:
     limit: 100 # 接口限流阈值, type=yaml
-2024-09-23 17:31:03.560 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [notify-listener] time cost=0ms in ClientWorker, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=0cec1bfaf902c078169507ecf1a4f0b2, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@1d60ce61 
-2024-09-23 17:31:03.562 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [notify-context] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=0cec1bfaf902c078169507ecf1a4f0b2
+2024-09-23 17:31:03.560 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [notify-listener] time cost=0ms in ClientWorker, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=0cec1bfaf902c078169507ecf1a4f0b2, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@1d60ce61
+2024-09-23 17:31:03.562 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [notify-context] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=0cec1bfaf902c078169507ecf1a4f0b2
 2024-09-23 17:31:04.911 [nacos.client.cachedata.internal.notifier] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
 2024-09-23 17:31:04.944 [nacos.client.cachedata.internal.notifier] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
 2024-09-23 17:31:04.949 [nacos.client.cachedata.internal.notifier] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
@@ -6134,20 +6134,20 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2024-09-23 17:31:05.044 [nacos.client.cachedata.internal.notifier] INFO  org.springframework.boot.SpringApplication - The following 1 profile is active: "dev"
 2024-09-23 17:31:05.051 [nacos.client.cachedata.internal.notifier] INFO  org.springframework.boot.SpringApplication - Started application in 1.477 seconds (process running for 72.877)
 2024-09-23 17:31:05.112 [nacos.client.cachedata.internal.notifier] INFO  o.s.cloud.endpoint.event.RefreshEventListener - Refresh keys changed: []
-2024-09-23 17:31:05.112 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [notify-ok] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=0cec1bfaf902c078169507ecf1a4f0b2, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@1d60ce61 ,cost=1552 millis.
+2024-09-23 17:31:05.112 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [notify-ok] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=0cec1bfaf902c078169507ecf1a4f0b2, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@1d60ce61 ,cost=1552 millis.
 2024-09-23 17:31:35.762 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-09-23 17:31:35.762 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2024-09-23 17:31:35.764 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
 2024-09-23 17:31:35.817 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [nacos热部署限流配置属性配置], 入参: , 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testNacosLimit =================================== 
 2024-09-23 17:31:35.818 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [nacos热部署限流配置属性配置], 耗时: 1ms, 出参: "当前接口限流配置为: null" =================================== 
-2024-09-23 17:31:56.413 [nacos-grpc-client-executor-192.168.17.131-48] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Receive server push request, request = ConfigChangeNotifyRequest, requestId = 2
-2024-09-23 17:31:56.414 [nacos-grpc-client-executor-192.168.17.131-48] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] [server-push] config changed. dataId=zealsingerbook-auth, group=DEFAULT_GROUP,tenant=null
-2024-09-23 17:31:56.414 [nacos-grpc-client-executor-192.168.17.131-48] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Ack server push request, request = ConfigChangeNotifyRequest, requestId = 2
-2024-09-23 17:31:56.465 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-192.168.17.131_8848] [data-received] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, tenant=, md5=1c6cac2243e62ce25b0172c51cc0cada, content=rate-limit:
+2024-09-23 17:31:56.413 [nacos-grpc-client-executor-8.154.40.120-48] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Receive server push request, request = ConfigChangeNotifyRequest, requestId = 2
+2024-09-23 17:31:56.414 [nacos-grpc-client-executor-8.154.40.120-48] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] [server-push] config changed. dataId=zealsingerbook-auth, group=DEFAULT_GROUP,tenant=null
+2024-09-23 17:31:56.414 [nacos-grpc-client-executor-8.154.40.120-48] INFO  com.alibaba.nacos.common.remote.client - [9d25e2bd-f4f7-4cf9-b1db-952641595bf2_config-0] Ack server push request, request = ConfigChangeNotifyRequest, requestId = 2
+2024-09-23 17:31:56.465 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-8.154.40.120_8848] [data-received] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, tenant=, md5=1c6cac2243e62ce25b0172c51cc0cada, content=rate-limit:
   api:
     limit: 120 # 接口限流阈值, type=yaml
-2024-09-23 17:31:56.465 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [notify-listener] time cost=0ms in ClientWorker, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=1c6cac2243e62ce25b0172c51cc0cada, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@1d60ce61 
-2024-09-23 17:31:56.465 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [notify-context] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=1c6cac2243e62ce25b0172c51cc0cada
+2024-09-23 17:31:56.465 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [notify-listener] time cost=0ms in ClientWorker, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=1c6cac2243e62ce25b0172c51cc0cada, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@1d60ce61
+2024-09-23 17:31:56.465 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [notify-context] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=1c6cac2243e62ce25b0172c51cc0cada
 2024-09-23 17:31:57.817 [nacos.client.cachedata.internal.notifier] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
 2024-09-23 17:31:57.863 [nacos.client.cachedata.internal.notifier] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
 2024-09-23 17:31:57.873 [nacos.client.cachedata.internal.notifier] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
@@ -6159,7 +6159,7 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2024-09-23 17:31:57.969 [nacos.client.cachedata.internal.notifier] INFO  org.springframework.boot.SpringApplication - The following 1 profile is active: "dev"
 2024-09-23 17:31:57.974 [nacos.client.cachedata.internal.notifier] INFO  org.springframework.boot.SpringApplication - Started application in 1.506 seconds (process running for 125.801)
 2024-09-23 17:31:58.028 [nacos.client.cachedata.internal.notifier] INFO  o.s.cloud.endpoint.event.RefreshEventListener - Refresh keys changed: [rate-limit.api.limit]
-2024-09-23 17:31:58.028 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [notify-ok] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=1c6cac2243e62ce25b0172c51cc0cada, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@1d60ce61 ,cost=1563 millis.
+2024-09-23 17:31:58.028 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [notify-ok] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=1c6cac2243e62ce25b0172c51cc0cada, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@1d60ce61 ,cost=1563 millis.
 2024-09-23 17:32:05.883 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [nacos热部署限流配置属性配置], 入参: , 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testNacosLimit =================================== 
 2024-09-23 17:32:05.884 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [nacos热部署限流配置属性配置], 耗时: 1ms, 出参: "当前接口限流配置为: null" =================================== 
 2024-09-23 17:33:14.751 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
@@ -6184,9 +6184,9 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2024-09-23 17:33:24.612 [main] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$582/0x0000000800f138b0
 2024-09-23 17:33:24.613 [main] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
 2024-09-23 17:33:24.614 [main] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
-2024-09-23 17:33:24.628 [main] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
-2024-09-23 17:33:24.682 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 17:33:26.374 [main] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727084005817_192.168.17.1_60120
+2024-09-23 17:33:24.628 [main] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Try to connect to server on start up, server: {serverIp = '8.154.40.120', server main port = 8848}
+2024-09-23 17:33:24.682 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 17:33:26.374 [main] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Success to connect to server [8.154.40.120:8848] on start up, connectionId = 1727084005817_192.168.17.1_60120
 2024-09-23 17:33:26.376 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Notify connected event to listeners.
 2024-09-23 17:33:26.376 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Connected,notify listen context...
 2024-09-23 17:33:26.376 [main] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
@@ -6218,28 +6218,28 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2024-09-23 17:33:33.621 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 13.193 seconds (process running for 14.396)
 2024-09-23 17:33:34.617 [main] WARN  c.z.z.run.PushRolePermissionsRedisRunner - ==> 角色权限数据已经同步至 Redis 中，不再同步...
 2024-09-23 17:33:34.622 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - nacos.cache.data.init.snapshot = true 
-2024-09-23 17:33:34.622 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-192.168.17.131_8848] [subscribe] zealsingerbook-auth.yaml+DEFAULT_GROUP
-2024-09-23 17:33:34.636 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-23 17:33:34.622 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-8.154.40.120_8848] [subscribe] zealsingerbook-auth.yaml+DEFAULT_GROUP
+2024-09-23 17:33:34.636 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP, cnt=1
 2024-09-23 17:33:34.636 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP
-2024-09-23 17:33:34.638 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-192.168.17.131_8848] [subscribe] zealsingerbook-auth+DEFAULT_GROUP
-2024-09-23 17:33:34.639 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, cnt=1
+2024-09-23 17:33:34.638 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-8.154.40.120_8848] [subscribe] zealsingerbook-auth+DEFAULT_GROUP
+2024-09-23 17:33:34.639 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, cnt=1
 2024-09-23 17:33:34.639 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth, group=DEFAULT_GROUP
-2024-09-23 17:33:34.639 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-192.168.17.131_8848] [subscribe] zealsingerbook-auth-dev.yaml+DEFAULT_GROUP
-2024-09-23 17:33:34.640 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-23 17:33:34.639 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-8.154.40.120_8848] [subscribe] zealsingerbook-auth-dev.yaml+DEFAULT_GROUP
+2024-09-23 17:33:34.640 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [add-listener] ok, tenant=, dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP, cnt=1
 2024-09-23 17:33:34.640 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP
 2024-09-23 17:33:42.474 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-09-23 17:33:42.475 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2024-09-23 17:33:42.476 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
 2024-09-23 17:33:42.521 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [nacos热部署限流配置属性配置], 入参: , 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testNacosLimit =================================== 
 2024-09-23 17:33:42.522 [http-nio-8080-exec-1] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [nacos热部署限流配置属性配置], 耗时: 1ms, 出参: "当前接口限流配置为: 120" =================================== 
-2024-09-23 17:33:51.103 [nacos-grpc-client-executor-192.168.17.131-17] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Receive server push request, request = ConfigChangeNotifyRequest, requestId = 3
-2024-09-23 17:33:51.104 [nacos-grpc-client-executor-192.168.17.131-17] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] [server-push] config changed. dataId=zealsingerbook-auth, group=DEFAULT_GROUP,tenant=null
-2024-09-23 17:33:51.104 [nacos-grpc-client-executor-192.168.17.131-17] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Ack server push request, request = ConfigChangeNotifyRequest, requestId = 3
-2024-09-23 17:33:51.136 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-192.168.17.131_8848] [data-received] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, tenant=, md5=550b471dae88eab39be55a9ba8d58d1d, content=rate-limit:
+2024-09-23 17:33:51.103 [nacos-grpc-client-executor-8.154.40.120-17] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Receive server push request, request = ConfigChangeNotifyRequest, requestId = 3
+2024-09-23 17:33:51.104 [nacos-grpc-client-executor-8.154.40.120-17] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] [server-push] config changed. dataId=zealsingerbook-auth, group=DEFAULT_GROUP,tenant=null
+2024-09-23 17:33:51.104 [nacos-grpc-client-executor-8.154.40.120-17] INFO  com.alibaba.nacos.common.remote.client - [d4e4b4a7-1f8b-4eb6-9fc3-526849de91ae_config-0] Ack server push request, request = ConfigChangeNotifyRequest, requestId = 3
+2024-09-23 17:33:51.136 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-8.154.40.120_8848] [data-received] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, tenant=, md5=550b471dae88eab39be55a9ba8d58d1d, content=rate-limit:
   api:
     limit: 130 # 接口限流阈值, type=yaml
-2024-09-23 17:33:51.140 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [notify-listener] time cost=0ms in ClientWorker, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=550b471dae88eab39be55a9ba8d58d1d, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@5f039ebe 
-2024-09-23 17:33:51.141 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [notify-context] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=550b471dae88eab39be55a9ba8d58d1d
+2024-09-23 17:33:51.140 [com.alibaba.nacos.client.Worker] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [notify-listener] time cost=0ms in ClientWorker, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=550b471dae88eab39be55a9ba8d58d1d, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@5f039ebe
+2024-09-23 17:33:51.141 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [notify-context] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=550b471dae88eab39be55a9ba8d58d1d
 2024-09-23 17:33:52.507 [nacos.client.cachedata.internal.notifier] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
 2024-09-23 17:33:52.548 [nacos.client.cachedata.internal.notifier] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
 2024-09-23 17:33:52.554 [nacos.client.cachedata.internal.notifier] WARN  com.alibaba.nacos.client.logging.NacosLogging - Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml
@@ -6251,7 +6251,7 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2024-09-23 17:33:52.641 [nacos.client.cachedata.internal.notifier] INFO  org.springframework.boot.SpringApplication - The following 1 profile is active: "dev"
 2024-09-23 17:33:52.649 [nacos.client.cachedata.internal.notifier] INFO  org.springframework.boot.SpringApplication - Started application in 1.496 seconds (process running for 33.424)
 2024-09-23 17:33:52.704 [nacos.client.cachedata.internal.notifier] INFO  o.s.cloud.endpoint.event.RefreshEventListener - Refresh keys changed: [rate-limit.api.limit]
-2024-09-23 17:33:52.704 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-192.168.17.131_8848] [notify-ok] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=550b471dae88eab39be55a9ba8d58d1d, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@5f039ebe ,cost=1563 millis.
+2024-09-23 17:33:52.704 [nacos.client.cachedata.internal.notifier] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-8.154.40.120_8848] [notify-ok] dataId=zealsingerbook-auth, group=DEFAULT_GROUP, md5=550b471dae88eab39be55a9ba8d58d1d, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@5f039ebe ,cost=1563 millis.
 2024-09-23 17:33:56.409 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求开始: [nacos热部署限流配置属性配置], 入参: , 请求类: com.zealsinger.zealsingerbookauth.controller.TestController, 请求方法: testNacosLimit =================================== 
 2024-09-23 17:33:56.410 [http-nio-8080-exec-2] INFO  com.zealsinger.aspect.ApiOperationLogAspect - ====== 请求结束: [nacos热部署限流配置属性配置], 耗时: 1ms, 出参: "当前接口限流配置为: 130" =================================== 
 2024-09-23 17:45:14.933 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
@@ -6275,9 +6275,9 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2024-09-23 17:45:29.674 [main] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$582/0x0000000800f149b0
 2024-09-23 17:45:29.675 [main] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
 2024-09-23 17:45:29.675 [main] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
-2024-09-23 17:45:29.687 [main] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
-2024-09-23 17:45:29.742 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 17:45:31.461 [main] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727084730893_192.168.17.1_61128
+2024-09-23 17:45:29.687 [main] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Try to connect to server on start up, server: {serverIp = '8.154.40.120', server main port = 8848}
+2024-09-23 17:45:29.742 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 17:45:31.461 [main] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Success to connect to server [8.154.40.120:8848] on start up, connectionId = 1727084730893_192.168.17.1_61128
 2024-09-23 17:45:31.462 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Notify connected event to listeners.
 2024-09-23 17:45:31.462 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Connected,notify listen context...
 2024-09-23 17:45:31.462 [main] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
@@ -6315,9 +6315,9 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2024-09-23 17:45:39.143 [main] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
 2024-09-23 17:45:39.143 [main] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
 2024-09-23 17:45:39.143 [main] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
-2024-09-23 17:45:39.145 [main] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Try to connect to server on start up, server: {serverIp = '192.168.17.131', server main port = 8848}
-2024-09-23 17:45:39.145 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 17:45:39.271 [main] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Success to connect to server [192.168.17.131:8848] on start up, connectionId = 1727084738857_192.168.17.1_61141
+2024-09-23 17:45:39.145 [main] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Try to connect to server on start up, server: {serverIp = '8.154.40.120', server main port = 8848}
+2024-09-23 17:45:39.145 [main] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 17:45:39.271 [main] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Success to connect to server [8.154.40.120:8848] on start up, connectionId = 1727084738857_192.168.17.1_61141
 2024-09-23 17:45:39.271 [main] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
 2024-09-23 17:45:39.271 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Notify connected event to listeners.
 2024-09-23 17:45:39.272 [main] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$602/0x000000080109b830
@@ -6328,16 +6328,16 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2024-09-23 17:45:40.644 [main] INFO  c.z.z.ZealsingerbookAuthApplication - Started ZealsingerbookAuthApplication in 15.243 seconds (process running for 16.389)
 2024-09-23 17:45:41.662 [main] WARN  c.z.z.run.PushRolePermissionsRedisRunner - ==> 角色权限数据已经同步至 Redis 中，不再同步...
 2024-09-23 17:45:41.666 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - nacos.cache.data.init.snapshot = true 
-2024-09-23 17:45:41.666 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth.yaml+DEFAULT_GROUP+zealsingerbook
-2024-09-23 17:45:41.675 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-23 17:45:41.666 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-8.154.40.120_8848] [subscribe] zealsingerbook-auth.yaml+DEFAULT_GROUP+zealsingerbook
+2024-09-23 17:45:41.675 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-8.154.40.120_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP, cnt=1
 2024-09-23 17:45:41.677 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth.yaml, group=DEFAULT_GROUP
-2024-09-23 17:45:41.678 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth+DEFAULT_GROUP+zealsingerbook
-2024-09-23 17:45:41.678 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, cnt=1
+2024-09-23 17:45:41.678 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-8.154.40.120_8848] [subscribe] zealsingerbook-auth+DEFAULT_GROUP+zealsingerbook
+2024-09-23 17:45:41.678 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-8.154.40.120_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth, group=DEFAULT_GROUP, cnt=1
 2024-09-23 17:45:41.678 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth, group=DEFAULT_GROUP
-2024-09-23 17:45:41.678 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-192.168.17.131_8848] [subscribe] zealsingerbook-auth-dev.yaml+DEFAULT_GROUP+zealsingerbook
-2024-09-23 17:45:41.679 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-192.168.17.131_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP, cnt=1
+2024-09-23 17:45:41.678 [main] INFO  com.alibaba.nacos.client.config.impl.ClientWorker - [fixed-zealsingerbook-8.154.40.120_8848] [subscribe] zealsingerbook-auth-dev.yaml+DEFAULT_GROUP+zealsingerbook
+2024-09-23 17:45:41.679 [main] INFO  com.alibaba.nacos.client.config.impl.CacheData - [fixed-zealsingerbook-8.154.40.120_8848] [add-listener] ok, tenant=zealsingerbook, dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP, cnt=1
 2024-09-23 17:45:41.679 [main] INFO  c.a.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=zealsingerbook-auth-dev.yaml, group=DEFAULT_GROUP
-2024-09-23 18:08:26.397 [nacos-grpc-client-executor-192.168.17.131-278] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - [1727084738857_192.168.17.1_61141]Request stream error, switch server,error={}
+2024-09-23 18:08:26.397 [nacos-grpc-client-executor-8.154.40.120-278] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - [1727084738857_192.168.17.1_61141]Request stream error, switch server,error={}
 com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: CANCELLED: RST_STREAM closed stream. HTTP/2 error code: CANCEL
 	at com.alibaba.nacos.shaded.io.grpc.Status.asRuntimeException(Status.java:539)
 	at com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$StreamObserverToCallListenerAdapter.onClose(ClientCalls.java:487)
@@ -6350,7 +6350,7 @@ com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: CANCELLED: RST_STREAM c
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:833)
-2024-09-23 18:08:26.397 [nacos-grpc-client-executor-192.168.17.131-291] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - [1727084730893_192.168.17.1_61128]Request stream error, switch server,error={}
+2024-09-23 18:08:26.397 [nacos-grpc-client-executor-8.154.40.120-291] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - [1727084730893_192.168.17.1_61128]Request stream error, switch server,error={}
 com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: CANCELLED: RST_STREAM closed stream. HTTP/2 error code: CANCEL
 	at com.alibaba.nacos.shaded.io.grpc.Status.asRuntimeException(Status.java:539)
 	at com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$StreamObserverToCallListenerAdapter.onClose(ClientCalls.java:487)
@@ -6365,9 +6365,9 @@ com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: CANCELLED: RST_STREAM c
 	at java.base/java.lang.Thread.run(Thread.java:833)
 2024-09-23 18:08:26.405 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Try to reconnect to a new server, server is  not appointed, will choose a random server.
 2024-09-23 18:08:26.405 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Try to reconnect to a new server, server is  not appointed, will choose a random server.
-2024-09-23 18:08:26.405 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 18:08:26.405 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 18:08:28.451 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 192.168.17.131 ,port 9848 is available , error ={}
+2024-09-23 18:08:26.405 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 18:08:26.405 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 18:08:28.451 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 8.154.40.120 ,port 9848 is available , error ={}
 java.util.concurrent.ExecutionException: com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: UNAVAILABLE: io exception
 	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.getDoneValue(AbstractFuture.java:566)
 	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:445)
@@ -6395,7 +6395,7 @@ Caused by: com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: UNAVAILABLE:
 	at com.alibaba.nacos.shaded.io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
 	at com.alibaba.nacos.shaded.io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
 	... 3 common frames omitted
-Caused by: com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: /192.168.17.131:9848
+Caused by: com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: /8.154.40.120:9848
 Caused by: java.net.ConnectException: Connection refused: no further information
 	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
 	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
@@ -6410,7 +6410,7 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
 	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
 	at java.base/java.lang.Thread.run(Thread.java:833)
-2024-09-23 18:08:28.451 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 192.168.17.131 ,port 9848 is available , error ={}
+2024-09-23 18:08:28.451 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 8.154.40.120 ,port 9848 is available , error ={}
 java.util.concurrent.ExecutionException: com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: UNAVAILABLE: io exception
 	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.getDoneValue(AbstractFuture.java:566)
 	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:445)
@@ -6438,7 +6438,7 @@ Caused by: com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: UNAVAILABLE:
 	at com.alibaba.nacos.shaded.io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
 	at com.alibaba.nacos.shaded.io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
 	... 3 common frames omitted
-Caused by: com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: /192.168.17.131:9848
+Caused by: com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: /8.154.40.120:9848
 Caused by: java.net.ConnectException: Connection refused: no further information
 	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
 	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
@@ -6453,9 +6453,9 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
 	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
 	at java.base/java.lang.Thread.run(Thread.java:833)
-2024-09-23 18:08:28.560 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 18:08:28.560 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 18:08:31.591 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 192.168.17.131 ,port 9848 is available , error ={}
+2024-09-23 18:08:28.560 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 18:08:28.560 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 18:08:31.591 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 8.154.40.120 ,port 9848 is available , error ={}
 java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 27 milliseconds, 338300 nanoseconds delay) for com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$GrpcFuture@26d7c302[status=PENDING, info=[GrpcFuture{clientCall=PendingCall{realCall=ClientCallImpl{method=MethodDescriptor{fullMethodName=Request/request, type=UNARY, idempotent=false, safe=false, sampledToLocalTracing=true, requestMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@13195e88, responseMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@735ac489, schemaDescriptor=com.alibaba.nacos.api.grpc.auto.RequestGrpc$RequestMethodDescriptorSupplier@708cd033}}}}]]
 	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:508)
 	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.serverCheck(GrpcClient.java:218)
@@ -6469,7 +6469,7 @@ java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 27 millise
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:833)
-2024-09-23 18:08:31.591 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 192.168.17.131 ,port 9848 is available , error ={}
+2024-09-23 18:08:31.591 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 8.154.40.120 ,port 9848 is available , error ={}
 java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 27 milliseconds, 277400 nanoseconds delay) for com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$GrpcFuture@6ade072f[status=PENDING, info=[GrpcFuture{clientCall=PendingCall{realCall=ClientCallImpl{method=MethodDescriptor{fullMethodName=Request/request, type=UNARY, idempotent=false, safe=false, sampledToLocalTracing=true, requestMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@13195e88, responseMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@735ac489, schemaDescriptor=com.alibaba.nacos.api.grpc.auto.RequestGrpc$RequestMethodDescriptorSupplier@708cd033}}}}]]
 	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:508)
 	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.serverCheck(GrpcClient.java:218)
@@ -6483,11 +6483,11 @@ java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 27 millise
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:833)
-2024-09-23 18:08:31.595 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Fail to connect server, after trying 1 times, last try server is {serverIp = '192.168.17.131', server main port = 8848}, error = unknown
-2024-09-23 18:08:31.596 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Fail to connect server, after trying 1 times, last try server is {serverIp = '192.168.17.131', server main port = 8848}, error = unknown
-2024-09-23 18:08:31.808 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 18:08:31.808 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 18:08:34.814 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 192.168.17.131 ,port 9848 is available , error ={}
+2024-09-23 18:08:31.595 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Fail to connect server, after trying 1 times, last try server is {serverIp = '8.154.40.120', server main port = 8848}, error = unknown
+2024-09-23 18:08:31.596 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Fail to connect server, after trying 1 times, last try server is {serverIp = '8.154.40.120', server main port = 8848}, error = unknown
+2024-09-23 18:08:31.808 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 18:08:31.808 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 18:08:34.814 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 8.154.40.120 ,port 9848 is available , error ={}
 java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 3 milliseconds, 261700 nanoseconds delay) for com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$GrpcFuture@1e9d1c97[status=PENDING, info=[GrpcFuture{clientCall=PendingCall{realCall=ClientCallImpl{method=MethodDescriptor{fullMethodName=Request/request, type=UNARY, idempotent=false, safe=false, sampledToLocalTracing=true, requestMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@13195e88, responseMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@735ac489, schemaDescriptor=com.alibaba.nacos.api.grpc.auto.RequestGrpc$RequestMethodDescriptorSupplier@708cd033}}}}]]
 	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:508)
 	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.serverCheck(GrpcClient.java:218)
@@ -6501,7 +6501,7 @@ java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 3 millisec
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:833)
-2024-09-23 18:08:34.814 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 192.168.17.131 ,port 9848 is available , error ={}
+2024-09-23 18:08:34.814 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 8.154.40.120 ,port 9848 is available , error ={}
 java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 3 milliseconds, 563900 nanoseconds delay) for com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$GrpcFuture@3a46027d[status=PENDING, info=[GrpcFuture{clientCall=PendingCall{realCall=ClientCallImpl{method=MethodDescriptor{fullMethodName=Request/request, type=UNARY, idempotent=false, safe=false, sampledToLocalTracing=true, requestMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@13195e88, responseMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@735ac489, schemaDescriptor=com.alibaba.nacos.api.grpc.auto.RequestGrpc$RequestMethodDescriptorSupplier@708cd033}}}}]]
 	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:508)
 	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.serverCheck(GrpcClient.java:218)
@@ -6515,20 +6515,20 @@ java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 3 millisec
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:833)
-2024-09-23 18:08:34.819 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Fail to connect server, after trying 2 times, last try server is {serverIp = '192.168.17.131', server main port = 8848}, error = unknown
-2024-09-23 18:08:34.819 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Fail to connect server, after trying 2 times, last try server is {serverIp = '192.168.17.131', server main port = 8848}, error = unknown
+2024-09-23 18:08:34.819 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [b6fe5afa-f51c-448e-ad37-c0746be5832a_config-0] Fail to connect server, after trying 2 times, last try server is {serverIp = '8.154.40.120', server main port = 8848}, error = unknown
+2024-09-23 18:08:34.819 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Fail to connect server, after trying 2 times, last try server is {serverIp = '8.154.40.120', server main port = 8848}, error = unknown
 2024-09-23 18:08:34.927 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
 2024-09-23 18:08:34.927 [Thread-1] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
 2024-09-23 18:08:34.942 [Thread-7] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
 2024-09-23 18:08:34.943 [Thread-1] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
 2024-09-23 18:08:35.037 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
 2024-09-23 18:08:35.037 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - [DEREGISTER-SERVICE] zealsingerbook deregistering service zealsingerbook-auth with instance: Instance{instanceId='null', ip='192.168.195.1', port=8080, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={}}
-2024-09-23 18:08:35.131 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
-2024-09-23 18:08:35.131 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:192.168.17.131 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 18:08:35.131 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
+2024-09-23 18:08:35.131 [com.alibaba.nacos.client.remote.worker] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - grpc client connection server:8.154.40.120 ip,serverPort:9848,grpcTslConfig:{"sslProvider":"OPENSSL","enableTls":false,"mutualAuthEnable":false,"trustAll":false}
 2024-09-23 18:08:35.147 [SpringApplicationShutdownHook] ERROR com.alibaba.nacos.common.remote.client - Send request fail, request = InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes = 0, errorMessage = Client not connected, current status:UNHEALTHY
 2024-09-23 18:08:35.251 [SpringApplicationShutdownHook] ERROR com.alibaba.nacos.common.remote.client - Send request fail, request = InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes = 1, errorMessage = Client not connected, current status:UNHEALTHY
 2024-09-23 18:08:35.361 [SpringApplicationShutdownHook] ERROR com.alibaba.nacos.common.remote.client - Send request fail, request = InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes = 2, errorMessage = Client not connected, current status:UNHEALTHY
-2024-09-23 18:08:35.380 [SpringApplicationShutdownHook] ERROR c.a.cloud.nacos.registry.NacosServiceRegistry - ERR_NACOS_DEREGISTER, de-register failed...NacosRegistration{nacosDiscoveryProperties=NacosDiscoveryProperties{serverAddr='192.168.17.131:8848', username='', password='', endpoint='', namespace='zealsingerbook', watchDelay=30000, logName='', service='zealsingerbook-auth', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={IPv6=[2408:8452:24af:a556:4b60:4cb4:aa24:397d], preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='192.168.195.1', networkInterface='', port=8080, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null, instanceEnabled=true, ephemeral=true, failureToleranceEnabled=false}, ipDeleteTimeout=null, failFast=true}},
+2024-09-23 18:08:35.380 [SpringApplicationShutdownHook] ERROR c.a.cloud.nacos.registry.NacosServiceRegistry - ERR_NACOS_DEREGISTER, de-register failed...NacosRegistration{nacosDiscoveryProperties=NacosDiscoveryProperties{serverAddr='8.154.40.120:8848', username='', password='', endpoint='', namespace='zealsingerbook', watchDelay=30000, logName='', service='zealsingerbook-auth', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={IPv6=[2408:8452:24af:a556:4b60:4cb4:aa24:397d], preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='192.168.195.1', networkInterface='', port=8080, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null, instanceEnabled=true, ephemeral=true, failureToleranceEnabled=false}, ipDeleteTimeout=null, failFast=true}},
 com.alibaba.nacos.api.exception.NacosException: Client not connected, current status:UNHEALTHY
 	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:643)
 	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:623)
@@ -6583,7 +6583,7 @@ com.alibaba.nacos.api.exception.NacosException: Client not connected, current st
 2024-09-23 18:08:35.384 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@70508089[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
 2024-09-23 18:08:35.384 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1727084738857_192.168.17.1_61141
 2024-09-23 18:08:35.384 [SpringApplicationShutdownHook] INFO  c.a.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@4e87d1f9[Running, pool size = 13, active threads = 0, queued tasks = 0, completed tasks = 291]
-2024-09-23 18:08:35.384 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 192.168.17.131 ,port 9848 is available , error ={}
+2024-09-23 18:08:35.384 [com.alibaba.nacos.client.remote.worker] ERROR c.a.nacos.common.remote.client.grpc.GrpcClient - Server check fail, please check server 8.154.40.120 ,port 9848 is available , error ={}
 java.lang.InterruptedException: null
 	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:438)
 	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.serverCheck(GrpcClient.java:218)
@@ -6602,5 +6602,5 @@ java.lang.InterruptedException: null
 2024-09-23 18:08:35.384 [SpringApplicationShutdownHook] INFO  c.a.n.client.auth.ram.identify.CredentialService - [null] CredentialService is freed
 2024-09-23 18:08:35.384 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.client.naming - com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate do shutdown stop
 2024-09-23 18:08:35.391 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1727084738857_192.168.17.1_61141
-2024-09-23 18:08:35.392 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Fail to connect server, after trying 3 times, last try server is {serverIp = '192.168.17.131', server main port = 8848}, error = unknown
+2024-09-23 18:08:35.392 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [746b2a64-6ff4-429e-aa62-225e5508cbfe] Fail to connect server, after trying 3 times, last try server is {serverIp = '8.154.40.120', server main port = 8848}, error = unknown
 2024-09-23 18:08:35.530 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...

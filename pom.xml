@@ -22,6 +22,7 @@
         <module>zealsingerbook-oss</module>
         <module>zealsingerbook-user</module>
         <module>zealsingerbook-kv</module>
+        <module>zealsingerbook-id-generator</module>
     </modules>
 
     <properties>

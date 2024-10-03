@@ -20,9 +20,9 @@ rate-limit:
 
 # minio
 minio:
-  endpoint: http://192.168.17.131:9000
+  endpoint: http://8.154.40.120:19000
   accessKey: zealsinger
-  secretKey: zealsingerbook
+  secretKey: zealsinger123
 
 #aliyun
 aliyun:

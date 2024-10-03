@@ -1,4 +1,4 @@
-package com.zealsinger.kv;
+package com.zealsinger.kv.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
