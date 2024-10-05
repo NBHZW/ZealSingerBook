@@ -23,6 +23,7 @@
         <module>zealsingerbook-user</module>
         <module>zealsingerbook-kv</module>
         <module>zealsingerbook-id-generator</module>
+        <module>zealsingerbook-note</module>
     </modules>
 
     <properties>
@@ -49,7 +50,7 @@
         <guava.version>33.0.0-jre</guava.version>
         <hutool.version>5.8.26</hutool.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <dysmsapi.version>3.0.0</dysmsapi.version>
+        <dysmsapi.version>2.0.24</dysmsapi.version>
         <sa-token-redis-jackson>1.39.0</sa-token-redis-jackson>
         <mybatis-plus>3.5.7</mybatis-plus>
         <nacos-config.version>0.3.0-RC</nacos-config.version>
@@ -57,12 +58,19 @@
         <minio.version>8.2.1</minio.version>
         <aliyun-oss>3.10.2</aliyun-oss>
         <feign-form.version>3.8.0</feign-form.version>
+        <caffeine.version>3.1.8</caffeine.version>
     </properties>
 
 
     <!--统一依赖管理  防止多次依赖-->
     <dependencyManagement>
         <dependencies>
+            <!-- Caffeine 本地缓存 -->
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.zealsinger.kv</groupId>
                 <artifactId>zealsingerbook-api</artifactId>
@@ -230,6 +238,12 @@
                 <groupId>io.github.openfeign.form</groupId>
                 <artifactId>feign-form</artifactId>
                 <version>${feign-form.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zealsinger.id.generator</groupId>
+                <artifactId>zealsingerbook-id-generator-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

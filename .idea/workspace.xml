@@ -4,76 +4,78 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:重构代码结构，优化模块任务分工">
-      <change afterPath="$PROJECT_DIR$/dependency-tree.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/doc/day10.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-api/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/ZealsingerbookIdGeneratorApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/controller/LeafController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/controller/LeafMonitorController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/IDGen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/common/CheckVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/common/PropertyFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/common/Result.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/common/Status.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/common/Utils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/common/ZeroIDGen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/segment/SegmentIDGenImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/segment/dao/IDAllocDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/segment/dao/IDAllocMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/segment/dao/impl/IDAllocDaoImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/segment/model/LeafAlloc.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/segment/model/Segment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/segment/model/SegmentBuffer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/snowflake/SnowflakeIDGenImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/snowflake/SnowflakeZookeeperHolder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/snowflake/exception/CheckLastTimeException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/snowflake/exception/CheckOtherNodeException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/core/snowflake/exception/ClockGoBackException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/exception/InitException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/exception/LeafServerException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/exception/NoKeyException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/model/SegmentBufferView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/service/SegmentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/service/SnowflakeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/resources/config/application-dev.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/resources/config/application-prod.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/resources/config/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/resources/config/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/resources/leaf.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/resources/logback-spring.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/DeleteNoteContentReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/FindNoteContentReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/FindNoteContentRspDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/enums/ResponseCodeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:集成leaf用于分布式ID生成">
+      <change afterPath="$PROJECT_DIR$/doc/day11.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-api/.flattened-pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-api/src/main/java/com/zealsinger/id/generator/api/IdGeneratorApi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-api/src/main/java/com/zealsinger/id/generator/constant/ApiConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-api/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/ZealsingerbookNoteApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/config/MyBatisPlusDateHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/config/RedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/controller/NoteController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/entity/Channel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/entity/ChannelTopicRel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/entity/Note.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/entity/Topic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/enums/NoteStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/enums/NoteTypeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/enums/NoteVisibleEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/enums/ResponseCodeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/vo/PublishNoteReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/mapper/ChannelMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/mapper/ChannelTopicRelMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/mapper/NoteMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/mapper/TopicMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/rpc/IdGeneratorRpcService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/rpc/KvRpcService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/server/Impl/NoteServerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/server/NoteServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/application-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/application-prod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/generatorConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/logback-spring.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/mapper/ChannelMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/mapper/ChannelTopicRelMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/mapper/NoteMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/mapper/TopicMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-api/src/main/java/com/zealsinger/user/dto/FindUserByIdReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-api/src/main/java/com/zealsinger/user/dto/FindUserByIdRspDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/java/com/zealsinger/user/config/ThreadPoolConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/java/com/zealsinger/user/constant/RedisConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/java/com/zealsinger/user/rpc/IdGeneratorRpcService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/day07.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day07.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-23-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-23-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-24-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-24-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-25-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-25-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-26-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-26-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-27-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-27-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/auth.2024-09-30-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-09-30-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/auth.2024-10-01-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/auth.2024-10-01-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/kv.2024-10-02-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/kv.2024-10-02-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/oss.2024-09-28-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/oss.2024-09-28-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/oss.2024-10-01-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/oss.2024-10-01-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/user.2024-09-28-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/user.2024-09-28-0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/user.2024-10-01-0.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/user.2024-10-01-0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/day10.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day10.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/api/KVFeignApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/api/KVFeignApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/CassandraConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/config/CassandraConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/controller/NoteContentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/controller/NoteContentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/VerificationCodeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/server/Impl/VerificationCodeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/sms/AliyunAccessKeyProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-auth/src/main/java/com/zealsinger/zealsingerbookauth/sms/AliyunAccessKeyProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/RedisConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/utils/JsonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/utils/JsonUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/constant/RedisKeyConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/constant/RedisKeyConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/filter/AddUserId2HeaderFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/java/com/zealsinger/filter/AddUserId2HeaderFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/controller/LeafController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/java/com/zealsinger/id/generator/controller/LeafController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/AddNoteContentReqDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/AddNoteContentReqDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/DeleteNoteContentReqDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/DeleteNoteContentReqDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/FindNoteContentReqDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/FindNoteContentReqDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/FindNoteContentRspDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/FindNoteContentRspDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/server/Impl/NoteContentServerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/server/Impl/NoteContentServerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/server/NoteContentServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/server/NoteContentServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-api/src/main/java/com/zealsinger/user/api/UserFeignApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-api/src/main/java/com/zealsinger/user/api/UserFeignApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/java/com/zealsinger/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/java/com/zealsinger/user/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/java/com/zealsinger/user/server/Impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/java/com/zealsinger/user/server/Impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/java/com/zealsinger/user/server/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/java/com/zealsinger/user/server/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,9 +86,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="module-info" />
-        <option value="Enum" />
         <option value="AnnotationType" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -122,89 +124,93 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "JUnit.KVTest.test.executor": "Run",
-    "JUnit.ZealsingerbookAuthApplicationTests.connectTest.executor": "Debug",
-    "JUnit.ZealsingerbookAuthApplicationTests.contextLoads.executor": "Run",
-    "JUnit.ZealsingerbookAuthApplicationTests.redisTest.executor": "Run",
-    "JUnit.ZealsingerbookAuthApplicationTests.threadPoolTest.executor": "Debug",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "Maven.ZealSingerBook [clean].executor": "Run",
-    "Maven.ZealSingerBook [install].executor": "Run",
-    "Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:clean].executor": "Run",
-    "Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:flatten].executor": "Run",
-    "Maven.ZealSingerBook [package].executor": "Run",
-    "Maven.zealsinger-bizcontext-spring-boot-starter [clean].executor": "Run",
-    "Maven.zealsinger-bizcontext-spring-boot-starter [install].executor": "Run",
-    "Maven.zealsinger-bizcontext-spring-boot-starter [package].executor": "Run",
-    "Maven.zealsinger-jackson-spring-boot-starter [clean].executor": "Run",
-    "Maven.zealsinger-jackson-spring-boot-starter [package].executor": "Run",
-    "Maven.zealsinger-operationlog-spring-boot-starter [clean].executor": "Run",
-    "Maven.zealsinger-operationlog-spring-boot-starter [install].executor": "Run",
-    "Maven.zealsinger-operationlog-spring-boot-starter [package].executor": "Run",
-    "Maven.zealsingerbook-api [install].executor": "Run",
-    "Maven.zealsingerbook-auth [clean].executor": "Run",
-    "Maven.zealsingerbook-auth [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor": "Run",
-    "Maven.zealsingerbook-auth [package].executor": "Run",
-    "Maven.zealsingerbook-biz [install].executor": "Run",
-    "Maven.zealsingerbook-common [clean].executor": "Run",
-    "Maven.zealsingerbook-common [install].executor": "Run",
-    "Maven.zealsingerbook-common [package].executor": "Run",
-    "Maven.zealsingerbook-framework [clean].executor": "Run",
-    "Maven.zealsingerbook-framework [install].executor": "Run",
-    "Maven.zealsingerbook-framework [package].executor": "Run",
-    "Maven.zealsingerbook-kv [clean].executor": "Run",
-    "Maven.zealsingerbook-kv [install].executor": "Run",
-    "Maven.zealsingerbook-kv [package].executor": "Run",
-    "Maven.zealsingerbook-user-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.ZealsingerBookUerApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookAuthApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookGatewayApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookIdGeneratorApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookKVApplication.executor": "Run",
-    "Spring Boot.ZealsingerbookOssApplication.executor": "Debug",
-    "git-widget-placeholder": "master",
-    "jdk.selected.JAVA_MODULE": "17",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/ZhuoMian/bigThree/Netty相关资料/ZealSingerBook-test/zealsingerbook-id-generator/zealsingerbook-id-generator-biz/src/main/resources",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "模块",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.45402297",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;JUnit.KVTest.test.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.connectTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.contextLoads.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.redisTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.threadPoolTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:flatten].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-bizcontext-spring-boot-starter [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-bizcontext-spring-boot-starter [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-bizcontext-spring-boot-starter [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-jackson-spring-boot-starter [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-jackson-spring-boot-starter [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-operationlog-spring-boot-starter [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-operationlog-spring-boot-starter [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-operationlog-spring-boot-starter [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-api [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-auth [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-auth [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-auth [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-biz [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-common [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-common [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-common [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-framework [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-framework [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-framework [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-id-generator-api [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-id-generator-api [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-kv [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-kv [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-kv [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-note-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-user-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ZealsingerBookUerApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookAuthApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookGatewayApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookIdGeneratorApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookKVApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookNoteApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookOssApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/ZhuoMian/bigThree/Netty相关资料/ZealSingerBook-test/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/config&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.45402297&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.zealsinger.note.server.Impl" />
       <recent name="com.zealsinger.kv.server.Impl" />
       <recent name="com.zealsinger.user.server.Impl" />
       <recent name="com.zealsinger.oss.service.Impl" />
       <recent name="com.zealsinger.oss.strategy.Impl" />
-      <recent name="com.zealsinger.zealsingerbookauth.server.Impl" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-note\zealsingerbook-note-biz\src\main\java\com\zealsinger\note\config" />
+      <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-note\zealsingerbook-note-biz\src\main\resources" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-id-generator\zealsingerbook-id-generator-biz\src\main\resources" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-id-generator\zealsingerbook-id-generator-biz\src\main\java\com\zealsinger\id\generator" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-id-generator\zealsingerbook-id-generator-biz\src\main\java\com\zealsinger\id\generator\core" />
-      <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-kv\zealsingerbook-biz\src\main\resources" />
-      <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-user\zealsingerbook-user-biz\src\main\java\com\zealsinger\user" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-id-generator\zealsingerbook-id-generator-biz\src\main\resources\config" />
@@ -215,6 +221,7 @@
       <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.zealsinger.note.rpc" />
       <recent name="com.zealsinger.kv.constanst" />
       <recent name="com.zealsinger.zealsingerbookauth.domain.vo" />
       <recent name="com.zealsinger.user.dto" />
@@ -307,6 +314,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ZealsingerbookNoteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="zealsingerbook-note-biz" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.zealsinger.note.ZealsingerbookNoteApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ZealsingerbookOssApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="zealsingerbook-oss-biz" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.zealsinger.oss.ZealsingerbookOssApplication" />
@@ -323,19 +337,12 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.ZealsingerbookIdGeneratorApplication" />
-        <item itemvalue="Spring Boot.ZealsingerbookKVApplication" />
         <item itemvalue="Spring Boot.ZealsingerbookGatewayApplication" />
         <item itemvalue="Spring Boot.ZealsingerbookOssApplication" />
+        <item itemvalue="Spring Boot.ZealsingerbookKVApplication" />
         <item itemvalue="JUnit.KVTest.test" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -396,7 +403,11 @@
       <workItem from="1727856133438" duration="3059000" />
       <workItem from="1727869332741" duration="755000" />
       <workItem from="1727916720665" duration="7464000" />
-      <workItem from="1727936089471" duration="9495000" />
+      <workItem from="1727936089471" duration="10580000" />
+      <workItem from="1728004313697" duration="8258000" />
+      <workItem from="1728024378101" duration="12918000" />
+      <workItem from="1728112529656" duration="10244000" />
+      <workItem from="1728129487387" duration="7045000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -526,7 +537,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727869640386</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="feat:集成leaf用于分布式ID生成">
+      <option name="closed" value="true" />
+      <created>1727963902068</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1727963902068</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -560,7 +579,8 @@
     <MESSAGE value="feat:添加uer模块的基础搭建" />
     <MESSAGE value="feat:添加用户信息更新接口" />
     <MESSAGE value="feat:重构代码结构，优化模块任务分工" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:重构代码结构，优化模块任务分工" />
+    <MESSAGE value="feat:集成leaf用于分布式ID生成" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:集成leaf用于分布式ID生成" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -569,11 +589,6 @@
           <url>file://$PROJECT_DIR$/zealsingerbook-oss/zealsingerbook-oss-biz/src/main/java/com/zealsinger/oss/strategy/Impl/AliyunOssFileStrategyImpl.java</url>
           <line>30</line>
           <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/java/com/zealsinger/user/exception/GlobalExceptionHandler.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

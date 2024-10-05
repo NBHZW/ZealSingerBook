@@ -41,11 +41,12 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         }
         // 不存在 生成验证码并且发送过去
         String code = RandomUtil.randomNumbers(6).replace("\"","");
+        Integer intCode = Integer.valueOf(code);
         log.info("==> 手机号: {}, 已生成验证码：【{}】", phone, code);
 
         // todo 异步调用第三方服务发送消息
         taskExecutor.submit(()->{
-            String signName = "Zeal书";
+            String signName = "singer预约";
             String templateCode = "SMS_473835044";
             String resultCode = String.format("{\"code\":\"%s\"}", code);
             aliyunHelper.sendMessage(signName,templateCode,phone,resultCode);
@@ -53,7 +54,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
         log.info("成功向手机号 {}  发送验证码 {} , 有效期 3min",phone,code);
         // 存入redis并且设置过期时间
-        redisTemplate.opsForValue().set(redisKey,code,3, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(redisKey,intCode,3, TimeUnit.MINUTES);
         return Response.success();
     }
 }

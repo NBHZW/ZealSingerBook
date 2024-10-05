@@ -5,8 +5,6 @@ spring:
     active: dev # 默认激活 dev 本地开发环境
   cloud:
     nacos:
-      username: nacos
-      password: nacos
       discovery:
         server-addr: 192.168.17.131:8848 # 指定 Nacos 注册中心的服务器地址
         enabled: true # 启用服务发现

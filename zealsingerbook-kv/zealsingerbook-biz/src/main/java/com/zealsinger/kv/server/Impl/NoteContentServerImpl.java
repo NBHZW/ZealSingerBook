@@ -23,9 +23,9 @@ public class NoteContentServerImpl implements NoteContentServer {
     private NoteContentRepository noteContentRepository;
     @Override
     public Response<?> addNoteContent(AddNoteContentReqDTO addNoteContentReqDTO) {
-        Long noteId = addNoteContentReqDTO.getId();
+        String noteId = addNoteContentReqDTO.getId();
         String content = addNoteContentReqDTO.getContent();
-        NoteContent noteContent = NoteContent.builder().id(UUID.randomUUID()).content(content).build();
+        NoteContent noteContent = NoteContent.builder().id(UUID.fromString(noteId)).content(content).build();
         noteContentRepository.save(noteContent);
         return Response.success();
     }
@@ -42,7 +42,7 @@ public class NoteContentServerImpl implements NoteContentServer {
         NoteContent noteContentDO = optional.get();
         // 构建返参 DTO
         FindNoteContentRspDTO findNoteContentRspDTO = FindNoteContentRspDTO.builder()
-                .id(String.valueOf(noteContentDO.getId()))
+                .id(noteContentDO.getId())
                 .content(noteContentDO.getContent())
                 .build();
 

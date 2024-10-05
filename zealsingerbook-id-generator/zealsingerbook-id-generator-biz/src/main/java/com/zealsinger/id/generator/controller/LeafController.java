@@ -10,6 +10,7 @@ import com.zealsinger.id.generator.service.SnowflakeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,12 +25,12 @@ public class LeafController {
     @Autowired
     private SnowflakeService snowflakeService;
 
-    @RequestMapping(value = "/segment/get/{key}")
+    @GetMapping(value = "/segment/get/{key}")
     public String getSegmentId(@PathVariable("key") String key) {
         return get(key, segmentService.getId(key));
     }
 
-    @RequestMapping(value = "/snowflake/get/{key}")
+    @GetMapping(value = "/snowflake/get/{key}")
     public String getSnowflakeId(@PathVariable("key") String key) {
         return get(key, snowflakeService.getId(key));
     }

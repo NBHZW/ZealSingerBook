@@ -16,6 +16,12 @@ spring:
             - Path=/user/**
           filters:
             - StripPrefix=1
+        - id: note
+          uri: lb://zealsingerbook-note
+          predicates:
+            - Path=/note/**
+          filters:
+            - StripPrefix=1
   data:
     redis:
       database: 12

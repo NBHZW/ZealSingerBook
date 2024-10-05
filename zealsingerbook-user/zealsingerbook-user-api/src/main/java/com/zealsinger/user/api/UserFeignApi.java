@@ -2,10 +2,7 @@ package com.zealsinger.user.api;
 
 import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.user.constanst.ApiConstants;
-import com.zealsinger.user.dto.FindUserByPhoneReqDTO;
-import com.zealsinger.user.dto.FindUserByPhoneRspDTO;
-import com.zealsinger.user.dto.RegisterUserReqDTO;
-import com.zealsinger.user.dto.UpdatePasswordReqDTO;
+import com.zealsinger.user.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,4 +31,7 @@ public interface UserFeignApi {
 
     @PostMapping(value = PREFIX + "/updatePassword")
     Response<?> updatePassword(@RequestBody UpdatePasswordReqDTO updatePasswordReqDTO);
+
+    @PostMapping(value = PREFIX + "/findById")
+    Response<?> findById(@RequestBody FindUserByIdReqDTO findUserByIdReqDTO);
 }

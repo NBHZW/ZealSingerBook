@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealsinger.note.mapper.NoteMapper">
+  <resultMap id="BaseResultMap" type="com.zealsinger.note.domain.entity.Note">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="is_content_empty" jdbcType="BIT" property="isContentEmpty" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="topic_id" jdbcType="BIGINT" property="topicId" />
+    <result column="topic_name" jdbcType="VARCHAR" property="topicName" />
+    <result column="is_top" jdbcType="BIT" property="isTop" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="img_uris" jdbcType="VARCHAR" property="imgUris" />
+    <result column="video_uri" jdbcType="VARCHAR" property="videoUri" />
+    <result column="visible" jdbcType="TINYINT" property="visible" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, is_content_empty, creator_id, topic_id, topic_name, is_top, `type`, img_uris, 
+    video_uri, visible, create_time, update_time, `status`
+  </sql>
+
+</mapper>

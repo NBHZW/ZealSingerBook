@@ -57,4 +57,4 @@ spring:
 
 logging:
   level:
-    com.zealsinger.zealsingerbookauth.mapper: debug
+    com.zealsinger.user.mapper: debug

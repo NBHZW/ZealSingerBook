@@ -12,6 +12,6 @@ import org.checkerframework.checker.units.qual.N;
 @NoArgsConstructor
 @Builder
 public class FindNoteContentReqDTO {
-    @NotBlank(message = "笔记id不能为空")
+    @NotBlank(message = "笔记uuid不能为空")
     private String id;
 }

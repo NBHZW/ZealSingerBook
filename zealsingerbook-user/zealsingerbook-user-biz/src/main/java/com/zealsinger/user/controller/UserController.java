@@ -6,10 +6,7 @@ import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.user.domain.entity.User;
 import com.zealsinger.user.domain.enums.ResponseCodeEnum;
 import com.zealsinger.user.domain.vo.UpdateUserInfoReqVO;
-import com.zealsinger.user.dto.FindUserByPhoneReqDTO;
-import com.zealsinger.user.dto.FindUserByPhoneRspDTO;
-import com.zealsinger.user.dto.RegisterUserReqDTO;
-import com.zealsinger.user.dto.UpdatePasswordReqDTO;
+import com.zealsinger.user.dto.*;
 import com.zealsinger.user.server.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,7 +36,7 @@ public class UserController {
     // ===================================== 对其他服务提供的接口 ===================================== //
     @PostMapping("/register")
     @ZealLog(description = "用户注册")
-    public Response<Long> register(@Validated @RequestBody RegisterUserReqDTO registerUserReqDTO) {
+    public Response<Long> registerUser(@Validated @RequestBody RegisterUserReqDTO registerUserReqDTO) {
         return userService.register(registerUserReqDTO);
     }
 
@@ -53,6 +50,12 @@ public class UserController {
     @ZealLog(description = "修改密码")
     public Response<?> updatePassword(@Validated @RequestBody UpdatePasswordReqDTO updatePasswordReqDTO) {
         return userService.updatePassword(updatePasswordReqDTO);
+    }
+
+    @PostMapping("/findById")
+    @ZealLog(description = "根据用户id查询用户信息")
+    public Response<?> findById(@RequestBody @Validated FindUserByIdReqDTO findUserByIdReqDTO) {
+        return userService.findById(findUserByIdReqDTO);
     }
 
 }

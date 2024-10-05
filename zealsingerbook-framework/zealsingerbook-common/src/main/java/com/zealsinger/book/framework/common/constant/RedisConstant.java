@@ -2,13 +2,6 @@ package com.zealsinger.book.framework.common.constant;
 
 public class RedisConstant {
     public static final String VERIFICATION_CODE_KEY_PREFIX="zealsinger_verification_code:";
-
-
-    /**
-     * 用户账户ID
-     */
-    public static final String ZEALSINGER_BOOK_ID_GENERATOR_KEY="zealsinger_id_generator";
-
     /**
      * 用户角色数据 KEY 前缀
      */
@@ -19,6 +12,17 @@ public class RedisConstant {
      */
     private static final String ROLE_PERMISSIONS_KEY_PREFIX = "role:permissions:";
 
+
+    public static final String USER_INFO_KEY = "user:info:";
+
+    /**
+     * 用户信息缓存id
+     * @param userId
+     * @return
+     */
+    public static String getUserInfoKey(Long userId) {
+        return USER_INFO_KEY + userId;
+    }
 
     /**
      * 构建角色对应的权限集合 KEY

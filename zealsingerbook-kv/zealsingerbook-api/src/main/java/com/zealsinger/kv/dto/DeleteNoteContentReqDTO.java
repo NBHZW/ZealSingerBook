@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class DeleteNoteContentReqDTO {
-    @NotBlank(message = "id不能为空")
+    @NotBlank(message = "笔记uuid不能为空")
     private String id;
 }

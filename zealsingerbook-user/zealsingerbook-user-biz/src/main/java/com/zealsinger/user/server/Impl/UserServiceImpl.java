@@ -1,8 +1,11 @@
 package com.zealsinger.user.server.Impl;
 
+import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.zealsinger.book.framework.common.constant.RedisConstant;
@@ -21,19 +24,20 @@ import com.zealsinger.user.domain.entity.UserRole;
 import com.zealsinger.user.domain.enums.ResponseCodeEnum;
 import com.zealsinger.user.domain.enums.SexEnum;
 import com.zealsinger.user.domain.vo.UpdateUserInfoReqVO;
-import com.zealsinger.user.dto.FindUserByPhoneReqDTO;
-import com.zealsinger.user.dto.FindUserByPhoneRspDTO;
-import com.zealsinger.user.dto.RegisterUserReqDTO;
-import com.zealsinger.user.dto.UpdatePasswordReqDTO;
+import com.zealsinger.user.dto.*;
 import com.zealsinger.user.mapper.RoleMapper;
 import com.zealsinger.user.mapper.UserMapper;
 import com.zealsinger.user.mapper.UserRoleMapper;
+import com.zealsinger.user.rpc.IdGeneratorRpcService;
 import com.zealsinger.user.rpc.OssRpcService;
 import com.zealsinger.user.server.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.common.util.report.qual.ReportUse;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,6 +45,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
@@ -62,6 +68,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Resource
     private RedisTemplate<String,Object> redisTemplate;
+
+    @Resource(name = "taskExecutor")
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+
+    @Resource
+    private IdGeneratorRpcService idGneratorRpcService;
+
+    private static final Cache<Long,FindUserByIdRspDTO> LOCAL_USERINFO_CACHE = Caffeine.newBuilder()
+            .initialCapacity(1000)
+            .expireAfterWrite(30,TimeUnit.MINUTES)
+            .maximumSize(1000)
+            .build();
 
 
     @Override
@@ -154,13 +172,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             //  新用户 需要注册
             try{
                 // 获取全局自增的小哈书 ID
-                Long zealId = redisTemplate.opsForValue().increment(RedisConstant.ZEALSINGER_BOOK_ID_GENERATOR_KEY);
+                String zealsingerBookId = idGneratorRpcService.getZealsingerBookId();
                 User userDO = User.builder()
                         .phone(phone)
                         // 自动生成 账号ID
-                        .zealsingerBookId(String.valueOf(zealId))
+                        .zealsingerBookId(zealsingerBookId)
                         // 自动生成昵称, 如：zealsingerbook10000
-                        .nickname("zealsingerbook" + zealId)
+                        .nickname(idGneratorRpcService.getZealsingerBookUserName())
                         // 状态为启用
                         .status(StatusEnum.ENABLE.getValue())
                         // 逻辑删除
@@ -219,5 +237,49 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }catch (Exception e){
             throw  new BusinessException(ResponseCodeEnum.PASSWORD_UPDATE_FAIL);
         }
+    }
+
+    @Override
+    public Response<?> findById(FindUserByIdReqDTO findUserByIdReqDTO) {
+        Long userId = findUserByIdReqDTO.getId();
+        FindUserByIdRspDTO findUserByIdRspDTO = null;
+        // 先从本地缓存中拿取
+        findUserByIdRspDTO = LOCAL_USERINFO_CACHE.getIfPresent(userId);
+        if(findUserByIdRspDTO != null){
+            log.info("===>命中本地缓存,获取到用户数据: {} ", findUserByIdRspDTO);
+            return Response.success(findUserByIdRspDTO);
+        }
+
+        // 再从redis缓存中拿取 如果没有在从库中获取
+        String userinfoStr=(String) redisTemplate.opsForValue().get(RedisConstant.getUserInfoKey(userId));
+        if(StringUtils.isNotBlank(userinfoStr)){
+            findUserByIdRspDTO = JsonUtil.JsonStringToObj(userinfoStr, FindUserByIdRspDTO.class);
+            return Response.success(findUserByIdRspDTO);
+        }
+
+        // 从数据库中获取 查询后存入redis缓存
+        User user = userMapper.selectById(userId);
+        if(user == null){
+            // 缓存空值  防止穿透
+            long expireSeconds = 60+RandomUtil.randomInt(60);
+            redisTemplate.opsForValue().set(RedisConstant.buildUserRoleKey(userId), "null",expireSeconds, TimeUnit.SECONDS);
+            throw new BusinessException(ResponseCodeEnum.USER_NOT_EXIST);
+        }
+        findUserByIdRspDTO = FindUserByIdRspDTO.builder()
+                .id(user.getId())
+                .avatar(user.getAvatar())
+                .nickname(user.getNickname())
+                .build();
+
+        //异步缓存数据 防止阻塞主线程  一分钟+随机数 防止雪崩
+
+        FindUserByIdRspDTO finalFindUserByIdRspDTO = findUserByIdRspDTO;
+        threadPoolTaskExecutor.submit(()->{
+            long expireSeconds = 60+RandomUtil.randomInt(60);
+            LOCAL_USERINFO_CACHE.put(userId, finalFindUserByIdRspDTO);
+            redisTemplate.opsForValue().set(RedisConstant.getUserInfoKey(userId), JsonUtil.ObjToJsonString(finalFindUserByIdRspDTO),expireSeconds, TimeUnit.SECONDS);
+        });
+
+        return Response.success(findUserByIdRspDTO);
     }
 }

@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     private UserRpcServer userRpcServer;
 
     @Resource
-    private RedisTemplate<String,Object> redisTemplate;
+    private RedisTemplate<String,String> redisTemplate;
 
     @Resource
     private PasswordEncoder passwordEncoder;

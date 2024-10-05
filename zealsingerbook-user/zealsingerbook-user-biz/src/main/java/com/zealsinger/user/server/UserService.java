@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.user.domain.entity.User;
 import com.zealsinger.user.domain.vo.UpdateUserInfoReqVO;
-import com.zealsinger.user.dto.FindUserByPhoneReqDTO;
-import com.zealsinger.user.dto.FindUserByPhoneRspDTO;
-import com.zealsinger.user.dto.RegisterUserReqDTO;
-import com.zealsinger.user.dto.UpdatePasswordReqDTO;
+import com.zealsinger.user.dto.*;
 
 public interface UserService extends IService<User> {
     Response<?> updateUserInfo(UpdateUserInfoReqVO vo);
@@ -23,4 +20,6 @@ public interface UserService extends IService<User> {
     Response<FindUserByPhoneRspDTO> findByPhone(FindUserByPhoneReqDTO findUserByPhoneReqDTO);
 
     Response<?> updatePassword(UpdatePasswordReqDTO updatePasswordReqDTO);
+
+    Response<?> findById(FindUserByIdReqDTO findUserByIdReqDTO);
 }

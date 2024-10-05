@@ -475,3 +475,16 @@ api模块加入common基础依赖和openFeign和负载均衡依赖
 biz模块加入common基础模块和springboot基础依赖和服务注册和发现模块
 
 ![image-20241003210400900](../../ZealSingerBook/img/image-20241003210400900.png)
+
+Leaf中提供了很强大的对外集成功能 将Leaf-core文件里面的文件放到项目的core文件夹中 然后将server文件夹中的放到同级下即可 配置文件也放到resource中
+
+![image-20241004092912520](../../ZealSingerBook/img/image-20241004092912520.png)
+
+需要注意的是  某些文件中的类型路径需要修改 还有部分文件的引用是在代码中使用String进行标识的 例如下图 这些地方的路径也需要对应的修改
+
+![image-20241004093154487](../../ZealSingerBook/img/image-20241004093154487.png)
+
+保证能成功启动即可
+
+# 重构-zealsingerbookID的生成和用户ID
+
