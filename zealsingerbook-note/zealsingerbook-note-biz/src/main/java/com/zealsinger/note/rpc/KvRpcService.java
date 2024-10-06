@@ -2,8 +2,7 @@ package com.zealsinger.note.rpc;
 
 import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.kv.api.KVFeignApi;
-import com.zealsinger.kv.dto.AddNoteContentReqDTO;
-import com.zealsinger.kv.dto.DeleteNoteContentReqDTO;
+import com.zealsinger.kv.dto.*;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +37,24 @@ public class KvRpcService {
         DeleteNoteContentReqDTO deleteNoteContentReqDTO = new DeleteNoteContentReqDTO();
         deleteNoteContentReqDTO.setId(uuid);
         Response<?> response = kvFeignApi.deleteNoteContent(deleteNoteContentReqDTO);
+        if(Objects.isNull(response)){
+            return false;
+        }
+        return response.isSuccess();
+    }
+
+    public FindNoteContentRspDTO findNoteContentById(String uuid){
+        FindNoteContentReqDTO findNoteContentReqDTO = FindNoteContentReqDTO.builder().id(uuid).build();
+        Response<FindNoteContentRspDTO> noteContent = kvFeignApi.findNoteContent(findNoteContentReqDTO);
+        if(Objects.isNull(noteContent) || !noteContent.isSuccess()){
+            return null;
+        }
+        return noteContent.getData();
+    }
+
+    public Boolean updateNoteContent(String contentUuid,String content){
+        UpdateNoteContentReqDTO updateNoteContentReqDTO = UpdateNoteContentReqDTO.builder().contentUuid(contentUuid).content(content).build();
+        Response<?> response = kvFeignApi.updateNoteContent(updateNoteContentReqDTO);
         if(Objects.isNull(response)){
             return false;
         }

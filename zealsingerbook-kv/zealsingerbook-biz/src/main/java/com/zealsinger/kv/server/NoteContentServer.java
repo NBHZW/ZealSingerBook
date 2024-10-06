@@ -4,6 +4,7 @@ import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.kv.dto.AddNoteContentReqDTO;
 import com.zealsinger.kv.dto.DeleteNoteContentReqDTO;
 import com.zealsinger.kv.dto.FindNoteContentReqDTO;
+import com.zealsinger.kv.dto.UpdateNoteContentReqDTO;
 
 public interface NoteContentServer {
     Response<?> addNoteContent(AddNoteContentReqDTO addNoteContentReqDTO);
@@ -11,4 +12,6 @@ public interface NoteContentServer {
     Response<?> findNoteContent(FindNoteContentReqDTO findNoteContentReqDTO);
 
     Response<?> deleteNoteContent(DeleteNoteContentReqDTO deleteNoteContentReqDTO);
+
+    Response<?> updateNoteContent(UpdateNoteContentReqDTO updateNoteContentReqDTO);
 }

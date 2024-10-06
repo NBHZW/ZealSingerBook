@@ -2,9 +2,7 @@ package com.zealsinger.kv.api;
 
 import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.kv.constanst.ApiConstants;
-import com.zealsinger.kv.dto.AddNoteContentReqDTO;
-import com.zealsinger.kv.dto.DeleteNoteContentReqDTO;
-import com.zealsinger.kv.dto.FindNoteContentReqDTO;
+import com.zealsinger.kv.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +16,11 @@ public interface KVFeignApi {
     Response<?> addNoteContent(@RequestBody @Validated AddNoteContentReqDTO addNoteContentReqDTO);
 
     @PostMapping(value = PREFIX + "/NoteContent/find")
-    Response<?> findNoteContent(@Validated @RequestBody FindNoteContentReqDTO findeNoteContentReqDTO);
+    Response<FindNoteContentRspDTO> findNoteContent(@Validated @RequestBody FindNoteContentReqDTO findeNoteContentReqDTO);
 
     @PostMapping(value = PREFIX + "/NoteContent/delete")
     Response<?> deleteNoteContent(@RequestBody @Validated DeleteNoteContentReqDTO deleteNoteContentReqDTO);
+
+    @PostMapping(value = PREFIX + "/NoteContent/update")
+    Response<?> updateNoteContent(@RequestBody @Validated UpdateNoteContentReqDTO updateNoteContentReqDTO);
 }

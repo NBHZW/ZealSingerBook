@@ -19,6 +19,15 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zealsinger.user</groupId>
+            <artifactId>zealsingerbook-user-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.zealsinger.id.generator</groupId>
             <artifactId>zealsingerbook-id-generator-api</artifactId>

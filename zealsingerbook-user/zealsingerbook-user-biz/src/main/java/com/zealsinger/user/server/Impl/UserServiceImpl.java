@@ -253,7 +253,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 再从redis缓存中拿取 如果没有在从库中获取
         String userinfoStr=(String) redisTemplate.opsForValue().get(RedisConstant.getUserInfoKey(userId));
         if(StringUtils.isNotBlank(userinfoStr)){
+            // 如果redis中存在  直接返回 存入本地缓存
             findUserByIdRspDTO = JsonUtil.JsonStringToObj(userinfoStr, FindUserByIdRspDTO.class);
+            // 异步写入本地缓存
+            FindUserByIdRspDTO finalFindUserByIdRspDTO1 = findUserByIdRspDTO;
+            threadPoolTaskExecutor.submit(()-> LOCAL_USERINFO_CACHE.put(userId, finalFindUserByIdRspDTO1));
             return Response.success(findUserByIdRspDTO);
         }
 
@@ -275,7 +279,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         FindUserByIdRspDTO finalFindUserByIdRspDTO = findUserByIdRspDTO;
         threadPoolTaskExecutor.submit(()->{
-            long expireSeconds = 60+RandomUtil.randomInt(60);
+            // 保底一天+随机数防止雪崩
+            long expireSeconds = 60*60*24 + RandomUtil.randomInt(60*60*24);
             LOCAL_USERINFO_CACHE.put(userId, finalFindUserByIdRspDTO);
             redisTemplate.opsForValue().set(RedisConstant.getUserInfoKey(userId), JsonUtil.ObjToJsonString(finalFindUserByIdRspDTO),expireSeconds, TimeUnit.SECONDS);
         });

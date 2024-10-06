@@ -33,5 +33,5 @@ public interface UserFeignApi {
     Response<?> updatePassword(@RequestBody UpdatePasswordReqDTO updatePasswordReqDTO);
 
     @PostMapping(value = PREFIX + "/findById")
-    Response<?> findById(@RequestBody FindUserByIdReqDTO findUserByIdReqDTO);
+    Response<FindUserByIdRspDTO> findById(@RequestBody FindUserByIdReqDTO findUserByIdReqDTO);
 }

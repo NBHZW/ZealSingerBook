@@ -3,10 +3,7 @@ package com.zealsinger.kv.server.Impl;
 import com.zealsinger.book.framework.common.exception.BusinessException;
 import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.kv.domain.NoteContent;
-import com.zealsinger.kv.dto.AddNoteContentReqDTO;
-import com.zealsinger.kv.dto.DeleteNoteContentReqDTO;
-import com.zealsinger.kv.dto.FindNoteContentReqDTO;
-import com.zealsinger.kv.dto.FindNoteContentRspDTO;
+import com.zealsinger.kv.dto.*;
 import com.zealsinger.kv.enums.ResponseCodeEnum;
 import com.zealsinger.kv.repository.NoteContentRepository;
 import com.zealsinger.kv.server.NoteContentServer;
@@ -53,6 +50,18 @@ public class NoteContentServerImpl implements NoteContentServer {
     public Response<?> deleteNoteContent(DeleteNoteContentReqDTO deleteNoteContentReqDTO) {
         String id = deleteNoteContentReqDTO.getId();
         noteContentRepository.deleteById(UUID.fromString(id));
+        return Response.success();
+    }
+
+    @Override
+    public Response<?> updateNoteContent(UpdateNoteContentReqDTO updateNoteContentReqDTO) {
+        try{
+            String contentUuid = updateNoteContentReqDTO.getContentUuid();
+            String content = updateNoteContentReqDTO.getContent();
+            noteContentRepository.updateContentByUuid(content, UUID.fromString(contentUuid));
+        }catch (Exception e){
+            throw new BusinessException(ResponseCodeEnum.SYSTEM_ERROR);
+        }
         return Response.success();
     }
 }

@@ -13,7 +13,22 @@ public class RedisConstant {
     private static final String ROLE_PERMISSIONS_KEY_PREFIX = "role:permissions:";
 
 
+    /**
+     * 用户信息缓存 KEY 前缀
+     */
     public static final String USER_INFO_KEY = "user:info:";
+
+    /**
+     * 笔记详情缓存Key前缀
+     */
+    public static final String NOTE_DETAIL_KEY_PREFIX = "note:detail:";
+
+    /**
+     * 获取笔记详情缓存id
+     */
+    public static String getNoteCacheId(String noteId){
+        return NOTE_DETAIL_KEY_PREFIX + noteId;
+    }
 
     /**
      * 用户信息缓存id

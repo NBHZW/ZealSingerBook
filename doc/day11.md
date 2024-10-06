@@ -474,3 +474,496 @@ caffeine的使用和介绍可以去看以前的cloud笔记 里面有涉及
 二次压测查看QPS  发现尼玛一样 严重怀疑是网络和设备的问题
 
 ![image-20241005223433628](../../ZealSingerBook/img/image-20241005223433628.png)
+
+
+
+------
+
+然后是继续写查看笔记详情的接口
+
+入参
+
+```json
+{
+	“noteId":...
+}
+```
+
+出参
+
+```json
+{
+    "success": true,
+    "message": null,
+    "errorCode": null,
+    "data": {
+        "id": 1842530793780412511,
+        "title": "图文笔记测试标题",
+        "creatorId": 2,
+        "creatorName": "zealsingerbook101",
+        "topicId": 1,
+        "topicName": "高分美剧推荐",
+        "isTop": false,
+        "type": 0,
+        "imgUris": [
+            "http://116.62.199.48:9000/weblog/c89cc6b66f0341c0b7854771ae063eac.jpg"
+        ],
+        "videoUri": null,
+        "visible": 0,
+        "updateTime": null,
+        "contentUuid": "ec79c4dd-c835-4381-8345-1e12860b7d97",
+        "content": null
+    }
+}
+```
+
+主体逻辑
+
+```
+public Response<?> findById(FindNoteByIdReqDTO findNoteByIdReqDTO) {
+        String noteId = findNoteByIdReqDTO.getNoteId();
+        Note note = noteMapper.selectById(noteId);
+        if(note==null){
+            throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+        }
+        checkVisible(note);
+        String content =null;
+        List<String> imgUris = null;
+        if(!note.getIsContentEmpty()) {
+            FindNoteContentRspDTO noteContent = kvRpcService.findNoteContentById(note.getContentUuid());
+            content = noteContent.getContent();
+        }
+
+        FindUserByIdRspDTO userInfoById = userRpcService.getUserInfoById(note.getCreatorId());
+        String creatorName = userInfoById.getNickname();
+        String noteImgUris = note.getImgUris();
+        if(StringUtils.isNotBlank(noteImgUris)){
+            imgUris  = Arrays.asList(noteImgUris.split(","));
+        }
+
+        FindNoteByIdRspVO resultNoteVO = FindNoteByIdRspVO.builder().id(note.getId())
+                .title(note.getTitle())
+                .creatorId(note.getCreatorId())
+                .creatorName(creatorName)
+                .topicId(note.getTopicId())
+                .topicName(note.getTopicName())
+                .isTop(note.getIsTop())
+                .type(note.getType())
+                .imgUris(imgUris)
+                .videoUri(note.getVideoUri())
+                .visible(note.getVisible())
+                .content(content)
+                .contentUuid(note.getContentUuid())
+                .updateTime(note.getUpdateTime())
+                .build();
+
+        return Response.success(resultNoteVO);
+
+    }
+```
+
+同样的 可以添加redis缓存和本地缓存 从而提高接口的高可用
+
+```Java
+ @Override
+    public Response<?> findById(FindNoteByIdReqDTO findNoteByIdReqDTO) {
+        String noteId = findNoteByIdReqDTO.getNoteId();
+        FindNoteByIdRspVO resultNoteVO = null;
+        resultNoteVO = LOCAL_NOTEVO_CACHE.getIfPresent(noteId);
+        if(resultNoteVO !=null){
+            log.info("===>命中本地缓存{}",resultNoteVO);
+            return Response.success(resultNoteVO);
+        }
+        // 查询redis缓存
+        String noteStr = (String) redisTemplate.opsForValue().get(RedisConstant.getNoteCacheId(noteId));
+        if(StringUtils.isNotBlank(noteStr)){
+            resultNoteVO = JsonUtil.JsonStringToObj(noteStr, FindNoteByIdRspVO.class);
+            // 异步存入本地缓存
+            FindNoteByIdRspVO finalResultNoteVO1 = resultNoteVO;
+            threadPoolTaskExecutor.submit(()-> LOCAL_NOTEVO_CACHE.put(noteId, finalResultNoteVO1));
+            return Response.success(resultNoteVO);
+        }
+
+        // 两层缓存中均无数据 查库！！
+
+        Note note = noteMapper.selectById(noteId);
+        if(note==null){
+            // 缓存空值 防止穿透
+            long expireSeconds = 60+RandomUtil.randomInt(60);
+            redisTemplate.opsForValue().set(RedisConstant.getNoteCacheId(noteId), "null", expireSeconds, TimeUnit.SECONDS);
+            throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+        }
+        checkVisible(note);
+        String content =null;
+        List<String> imgUris = null;
+        if(!note.getIsContentEmpty()) {
+            FindNoteContentRspDTO noteContent = kvRpcService.findNoteContentById(note.getContentUuid());
+            content = noteContent.getContent();
+        }
+
+        FindUserByIdRspDTO userInfoById = userRpcService.getUserInfoById(note.getCreatorId());
+        String creatorName = userInfoById.getNickname();
+        String noteImgUris = note.getImgUris();
+        if(StringUtils.isNotBlank(noteImgUris)){
+            imgUris  = Arrays.asList(noteImgUris.split(","));
+        }
+
+        resultNoteVO = FindNoteByIdRspVO.builder().id(note.getId())
+                .title(note.getTitle())
+                .creatorId(note.getCreatorId())
+                .creatorName(creatorName)
+                .topicId(note.getTopicId())
+                .topicName(note.getTopicName())
+                .isTop(note.getIsTop())
+                .type(note.getType())
+                .imgUris(imgUris)
+                .videoUri(note.getVideoUri())
+                .visible(note.getVisible())
+                .content(content)
+                .contentUuid(note.getContentUuid())
+                .updateTime(note.getUpdateTime())
+                .build();
+
+        // 异步写入redis缓存 和 本地缓存
+        FindNoteByIdRspVO finalResultNoteVO = resultNoteVO;
+        threadPoolTaskExecutor.submit(()->{
+            long expireSeconds = 60*60*24 + RandomUtil.randomInt(60*60*24);
+            LOCAL_NOTEVO_CACHE.put(noteId, finalResultNoteVO);
+            redisTemplate.opsForValue().set(RedisConstant.getNoteCacheId(noteId), JsonUtil.ObjToJsonString(finalResultNoteVO), expireSeconds, TimeUnit.SECONDS);
+        });
+        return Response.success(resultNoteVO);
+
+    }
+```
+
+## 压测
+
+但是还是很令人心痛的吞吐量数据  四分半  近6w样本数据  220的吞吐量......  有点抽象
+
+![image-20241006160306627](../../ZealSingerBook/img/image-20241006160306627.png)
+
+## 二次优化！！！
+
+发现我们目前的架构是
+
+查找笔记详情----->查库中对应的数据----->KV模块服务找content内容---->User模块服务只要userName---->返回结果
+
+会发现 本来模块间远程调用其实就已经是属于比较耗时的操作了 我们这里同步进行两个调用 效率自然会比较低下
+
+![image-20241006160657407](../../ZealSingerBook/img/image-20241006160657407.png)
+
+为了解决这个问题 我们的用户服务和KV服务的调用是两个完全不会冲突的服务调用 所以完全可以让这两个过程异步调用 并发调用
+
+![image-20241006160833179](../../ZealSingerBook/img/image-20241006160833179.png)
+
+### CompletableFuture
+
+`CompletableFuture` 是 `Future` 的一个扩展，能够简化异步编程。它允许你更容易地组合和变换任务的结果，并提供了丰富的 API 来处理错误和取消操作
+
+#### 简单入门
+
+如下是使用`CompletableFuture` 实现异步单个任务并且等待任务完成得到结果
+
+```Java
+public class CompletableFutureExample {
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+            // 模拟一个耗时的任务
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            return 42; // 返回任务的结果
+        });
+
+        // 等待任务完成
+        Integer result = future.get();
+        System.out.println("Result: " + result);
+    }
+}
+```
+
+`CompletableFuture` 提供了链式编程，能轻松实现多个异步任务链接在一起
+
+```Java
+public class CompletableFutureChainExample {
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> "Hello")
+            .thenApply(s -> s.toUpperCase()) // 转换成大写
+            .thenCompose(s -> CompletableFuture.supplyAsync(() -> s + " World!")); // 组合字符串
+
+        String result = future.get();
+        System.out.println("Result: " + result);
+    }
+}
+
+最终输出  Result: HELLO World
+可以发现 第二个任务也会等待第一个任务
+```
+
+CompletableFuture中也提供了对应的错误处理 当异步任务执行期间出现异常 可以按照我们的配置处理异常  主要是exceptionally方法和handler方法
+
+```
+public class CompletableFutureErrorHandling {
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+                    if (Math.random() < 0.5) { // 获取一个随机数，若小于 0.5， 则抛出运行时异常
+                        throw new RuntimeException("Something went wrong!");
+                    }
+                    return "Success!"; // 否则，返回 Success
+                })
+                .exceptionally(e -> { // 处理异常
+                    System.out.println("Caught exception: " + e.getMessage());
+                    return "Error occurred";
+                });
+
+        String result = future.get();
+        System.out.println("Result: " + result);
+    }
+}
+```
+
+![image-20241006161431293](../../ZealSingerBook/img/image-20241006161431293.png)
+
+同样 也提供了异步任务取消机制 能很好地中断异步任务的执行 **cancel方法**
+
+可以猜想 cancel底层其实就是抛出一个异常CancellationException被cache捕获
+
+```Java
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+public class CompletableFutureCancellation {
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            return "Done!";
+        });
+
+        future.cancel(true); // 尝试取消任务
+
+        try {
+            String result = future.get();
+            System.out.println("Result: " + result);
+        } catch (CancellationException e) {
+            System.out.println("Task was cancelled.");
+        }
+    }
+}
+
+```
+
+![image-20241006161547865](../../ZealSingerBook/img/image-20241006161547865.png)
+
+#### 重构代码
+
+```Java
+@Override
+    public Response<?> findById(FindNoteByIdReqDTO findNoteByIdReqDTO) throws ExecutionException, InterruptedException {
+        String noteId = findNoteByIdReqDTO.getNoteId();
+        FindNoteByIdRspVO resultNoteVO = null;
+        resultNoteVO = LOCAL_NOTEVO_CACHE.getIfPresent(noteId);
+        if(resultNoteVO !=null){
+            log.info("===>命中本地缓存{}",resultNoteVO);
+            return Response.success(resultNoteVO);
+        }
+        // 查询redis缓存
+        String noteStr = (String) redisTemplate.opsForValue().get(RedisConstant.getNoteCacheId(noteId));
+        if(StringUtils.isNotBlank(noteStr)){
+            resultNoteVO = JsonUtil.JsonStringToObj(noteStr, FindNoteByIdRspVO.class);
+            // 异步存入本地缓存
+            FindNoteByIdRspVO finalResultNoteVO1 = resultNoteVO;
+            threadPoolTaskExecutor.submit(()-> LOCAL_NOTEVO_CACHE.put(noteId, finalResultNoteVO1));
+            return Response.success(resultNoteVO);
+        }
+
+        // 两层缓存中均无数据 查库！！
+
+        Note note = noteMapper.selectById(noteId);
+        if(note==null){
+            // 缓存空值 防止穿透
+            long expireSeconds = 60+RandomUtil.randomInt(60);
+            redisTemplate.opsForValue().set(RedisConstant.getNoteCacheId(noteId), "null", expireSeconds, TimeUnit.SECONDS);
+            throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+        }
+        checkVisible(note);
+        CompletableFuture<String> contentResultFuture = CompletableFuture.completedFuture(null);
+        if(!note.getIsContentEmpty()) {
+            contentResultFuture = contentResultFuture.supplyAsync(()->{
+                // 异步调用KV服务获取笔记内容
+                FindNoteContentRspDTO noteContentById = kvRpcService.findNoteContentById(note.getContentUuid());
+                return noteContentById.getContent();
+            },threadPoolTaskExecutor);
+        }
+
+        // 异步调用user模块
+        CompletableFuture<FindUserByIdRspDTO> userResultFuture =  CompletableFuture.supplyAsync(()->userRpcService.getUserInfoById(note.getCreatorId()),threadPoolTaskExecutor);
+        CompletableFuture<String> finalContentResultFuture = contentResultFuture;
+        // 整体异步任务连接封装返回对象
+        CompletableFuture<FindNoteByIdRspVO> resultFuture = CompletableFuture
+            // allof方法 参数为可变参数 接收多个completableFutrue对象  等待其所有接受的futrue对象完成才会进行下面的任务
+                .allOf(userResultFuture, contentResultFuture)
+                .thenApply(s -> {
+                            FindUserByIdRspDTO join = userResultFuture.join();
+                            String creatorName = join.getNickname();
+                            String content = finalContentResultFuture.join();
+                            List<String> imgUris = null;
+                            String noteImgUris = note.getImgUris();
+                            if(StringUtils.isNotBlank(noteImgUris)){
+                                imgUris  = Arrays.asList(noteImgUris.split(","));
+                            }
+                            return FindNoteByIdRspVO.builder().id(note.getId())
+                                    .title(note.getTitle())
+                                    .creatorId(note.getCreatorId())
+                                    .creatorName(creatorName)
+                                    .topicId(note.getTopicId())
+                                    .topicName(note.getTopicName())
+                                    .isTop(note.getIsTop())
+                                    .type(note.getType())
+                                    .imgUris(imgUris)
+                                    .videoUri(note.getVideoUri())
+                                    .visible(note.getVisible())
+                                    .content(content)
+                                    .contentUuid(note.getContentUuid())
+                                    .updateTime(note.getUpdateTime())
+                                    .build();
+                        });
+
+        // 等待异步运行结果 获取拼装后的 FindNoteDetailRspVO
+        resultNoteVO = resultFuture.get();
+        // 异步写入redis缓存 和 本地缓存
+        FindNoteByIdRspVO finalResultNoteVO = resultNoteVO;
+        threadPoolTaskExecutor.submit(()->{
+            long expireSeconds = 60*60*24 + RandomUtil.randomInt(60*60*24);
+            LOCAL_NOTEVO_CACHE.put(noteId, finalResultNoteVO);
+            redisTemplate.opsForValue().set(RedisConstant.getNoteCacheId(noteId), JsonUtil.ObjToJsonString(finalResultNoteVO), expireSeconds, TimeUnit.SECONDS);
+        });
+        return Response.success(resultNoteVO);
+
+    }
+```
+
+# 更新笔记
+
+更新笔记 接口逻辑还是比较简单的  无需多言
+
+入参
+
+```json
+{
+    "id":"",
+    "title":"",
+    "content": "",
+    "imgUris": [],
+    "videoUri": "",
+    "topicId": 4, // 话题
+    "type": 1
+}
+```
+
+出参
+
+```json
+{
+	"success": true,
+	"message": null,
+	"errorCode": null,
+	"data": null
+}
+```
+
+## 注意事项
+
+更新操作的整体逻辑不难 但是细节需要注意
+
+1：对于**不同type需要记得进行特判**    例如 图文的图片数量不能大于8且不能为空
+
+2：如果**内容content变为了空 需要讲KV中对应存储的内容删除 如果没有变空 需要同步更新KV中的数据**
+
+3：**内容是否为空也需要同时影响数据库中的uuid 和 isContentEmpty字段的属性**
+
+4：全部操作完成之后 最后**需要记得删除本地缓存和redis缓存**（这个不建议异步删除  因为整体删除了才算更新成功 异步的话 返回success结果异步过程失败或者本线程还在异步还没删除完成的的时候再来访问就容易出现问题）
+
+5：同时涉及到先后更新KV数据库和MySQL还有缓存 所以**如果有一个步骤失败 前面的都应该回滚 所以添加@Transactional()注解让Spring管理事务回滚**
+
+## 业务代码
+
+```Java
+@Override
+    @Transactional(rollbackFor = Exception.class)
+    public Response<?> updateNote(UpdateNoteReqVO reqVO) {
+        Integer type = reqVO.getType();
+        NoteTypeEnum typeEnum = NoteTypeEnum.getType(type);
+        if(typeEnum==null){
+            throw new BusinessException(ResponseCodeEnum.TYPE_ERROR);
+        }
+        List<String> imgUriList = reqVO.getImgUris();
+        String videoUri = reqVO.getVideoUri();
+        String imgUris = null;
+        // 根据类型进行特判
+        if(NoteTypeEnum.TEXT.getValue().equals(type)){
+            Preconditions.checkArgument(CollUtil.isNotEmpty(imgUriList),"图片不能为空");
+            Preconditions.checkArgument(imgUriList.size()<=8,"图片数量不能多于8张");
+        }else{
+            Preconditions.checkArgument(StringUtils.isNotBlank(videoUri),"视频不能为空");
+        }
+        imgUris = String.join(",",imgUriList);
+
+        String content = reqVO.getContent();
+        String id = reqVO.getId();
+        Note note = noteMapper.selectById(id);
+        String contentUuid = note.getContentUuid();
+        LambdaUpdateWrapper<Note> queryWrapper = new LambdaUpdateWrapper<>();
+        if(StringUtils.isNotBlank(content)){
+            Boolean isUpdateSuccess = kvRpcService.updateNoteContent(contentUuid, content);
+            if(!isUpdateSuccess){
+                throw new BusinessException(ResponseCodeEnum.NOTE_UPDATE_FAIL);
+            }
+        }else{
+            // 如果内容为空 则删除kv存储中的内容
+            kvRpcService.deleteNoteContent(contentUuid);
+            contentUuid = null;
+        }
+
+        String topicName = null;
+        Long topicId = reqVO.getTopicId();
+        if(topicId!=null){
+            topicName = topicMapper.selectById(topicId).getName();
+        }
+
+        queryWrapper.eq(Note::getId, id)
+                .set(Note::getImgUris,imgUris)
+                .set(Note::getTitle,reqVO.getTitle())
+                .set(Note::getTopicId, topicId)
+                .set(Note::getTopicName,topicName)
+                .set(Note::getType, type)
+                .set(Note::getContentUuid,contentUuid)
+                .set(Note::getIsContentEmpty,StringUtils.isBlank(content))
+                .set(Note::getVideoUri, videoUri);
+
+        noteMapper.update(queryWrapper);
+
+        // 更新完毕后删除缓存
+        LOCAL_NOTEVO_CACHE.invalidate(id);
+        redisTemplate.delete(RedisConstant.getNoteCacheId(id));
+
+        return Response.success();
+    }
+```
+
+## 存在的问题以及MQ解决
+
+**上述业务单机测试没啥问题 但是需要考虑到分布式环境  我们的删除本地笔记缓存的操作 只会操作本地  就会导致数据更新后  操作的设备对应的服务器上的被清除 其他的服务器上的本地数据均没有被清理 这个自然是不行的  我们需要的是 所有的对应的笔记服务中的本地缓存都被删除**
+
+![image-20241006212706004](../../ZealSingerBook/img/image-20241006212706004.png)
+
+所以针对这个问题 我们采用MQ进行解决  采用消息通知的方式  当某一个服务触发了更新 就让所有的订阅消息的服务接收到消息后进行删除本地缓存的操作  从而达到好的操作效果 

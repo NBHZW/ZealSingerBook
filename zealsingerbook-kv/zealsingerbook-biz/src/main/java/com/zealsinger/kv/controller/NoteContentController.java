@@ -4,6 +4,7 @@ import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.kv.dto.AddNoteContentReqDTO;
 import com.zealsinger.kv.dto.DeleteNoteContentReqDTO;
 import com.zealsinger.kv.dto.FindNoteContentReqDTO;
+import com.zealsinger.kv.dto.UpdateNoteContentReqDTO;
 import com.zealsinger.kv.server.NoteContentServer;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -32,4 +33,9 @@ public class NoteContentController {
     public Response<?>  deleteNoteContent(@RequestBody @Validated DeleteNoteContentReqDTO deleteNoteContentReqDTO){
         return noteContentService.deleteNoteContent(deleteNoteContentReqDTO);
     }
+    @PostMapping("/NoteContent/update")
+    public Response<?> updateNoteContent(@RequestBody @Validated UpdateNoteContentReqDTO updateNoteContentReqDTO){
+        return noteContentService.updateNoteContent(updateNoteContentReqDTO);
+    }
+
 }

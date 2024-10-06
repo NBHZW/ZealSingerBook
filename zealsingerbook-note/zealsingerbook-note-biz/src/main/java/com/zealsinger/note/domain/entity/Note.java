@@ -24,7 +24,7 @@ public class Note {
     private String title;
 
     /**
-     * 内容是否为空
+     * 内容是否为空 0为空 1不为空
      */
     @TableField("is_content_empty")
     private Boolean isContentEmpty;
