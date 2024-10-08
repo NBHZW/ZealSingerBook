@@ -2,7 +2,10 @@ package com.zealsinger.note.controller;
 
 import com.zealsinger.aspect.ZealLog;
 import com.zealsinger.book.framework.common.response.Response;
+import com.zealsinger.note.domain.dto.DeleteNoteByIdReqDTO;
 import com.zealsinger.note.domain.dto.FindNoteByIdReqDTO;
+import com.zealsinger.note.domain.dto.UpdateTopStatusDTO;
+import com.zealsinger.note.domain.dto.UpdateVisibleOnlyMeReqVO;
 import com.zealsinger.note.domain.vo.PublishNoteReqVO;
 import com.zealsinger.note.domain.vo.UpdateNoteReqVO;
 import com.zealsinger.note.server.NoteServer;
@@ -36,5 +39,20 @@ public class NoteController {
     @PostMapping("/update")
     public Response<?> updateNote(@Validated @RequestBody UpdateNoteReqVO reqVO){
         return noteServer.updateNote(reqVO);
+    }
+
+    @PostMapping("/delete")
+    public Response<?> deleteNote(@Validated @RequestBody DeleteNoteByIdReqDTO deleteNoteByIdReqDTO){
+        return noteServer.deleteNote(deleteNoteByIdReqDTO);
+    }
+
+    @PostMapping("/visibleOnlyMe")
+    public Response<?> visibleOnlyMe(@Validated @RequestBody UpdateVisibleOnlyMeReqVO updateVisibleOnlyMeReqVO){
+        return noteServer.visibleOnlyMe(updateVisibleOnlyMeReqVO);
+    }
+
+    @PostMapping("/top")
+    public Response<?> updateTopStatus(@Validated @RequestBody UpdateTopStatusDTO updateTopStatusDTO){
+        return noteServer.updateTopStatus(updateTopStatusDTO);
     }
 }

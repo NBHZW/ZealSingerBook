@@ -13,7 +13,11 @@ import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.book.framework.common.utils.JsonUtil;
 import com.zealsinger.frame.filter.LoginUserContextHolder;
 import com.zealsinger.kv.dto.FindNoteContentRspDTO;
+import com.zealsinger.note.constant.RocketMQConstant;
+import com.zealsinger.note.domain.dto.DeleteNoteByIdReqDTO;
 import com.zealsinger.note.domain.dto.FindNoteByIdReqDTO;
+import com.zealsinger.note.domain.dto.UpdateTopStatusDTO;
+import com.zealsinger.note.domain.dto.UpdateVisibleOnlyMeReqVO;
 import com.zealsinger.note.domain.entity.Note;
 import com.zealsinger.note.domain.enums.NoteStatusEnum;
 import com.zealsinger.note.domain.enums.NoteTypeEnum;
@@ -32,6 +36,7 @@ import com.zealsinger.user.dto.FindUserByIdRspDTO;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -69,6 +74,9 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
 
     @Resource
     private NoteMapper noteMapper;
+
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
 
     private static final Cache<String,FindNoteByIdRspVO> LOCAL_NOTEVO_CACHE = Caffeine.newBuilder()
             .initialCapacity(1000)
@@ -184,8 +192,10 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
         }
 
         // 两层缓存中均无数据 查库！！
-
-        Note note = noteMapper.selectById(noteId);
+        LambdaUpdateWrapper<Note> queryWrapper = new LambdaUpdateWrapper<>();
+        queryWrapper.eq(Note::getId, noteId);
+        queryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());
+        Note note = noteMapper.selectOne(queryWrapper);
         if(note==null){
             // 缓存空值 防止穿透
             long expireSeconds = 60+RandomUtil.randomInt(60);
@@ -299,9 +309,91 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
 
         noteMapper.update(queryWrapper);
 
-        // 更新完毕后删除缓存
-        LOCAL_NOTEVO_CACHE.invalidate(id);
+        // 更新完毕后删除本地缓存  利用MQ进行通知删除
+        rocketMQTemplate.syncSend(RocketMQConstant.TOPIC_DELETE_NOTE_LOCAL_CACHE,id);
+
+        // 更新后删除redis远程缓存
         redisTemplate.delete(RedisConstant.getNoteCacheId(id));
+
+        return Response.success();
+    }
+
+    @Override
+    public void deleteNoteLocalCache(String noteId) {
+        LOCAL_NOTEVO_CACHE.invalidate(noteId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Response<?> deleteNote(DeleteNoteByIdReqDTO deleteNoteByIdReqDTO) {
+        String id = deleteNoteByIdReqDTO.getId();
+        // 我们的删除是逻辑删除 所以实际上的行为为更新操作
+        Note note = noteMapper.selectById(id);
+        if(note==null){
+            throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+        }
+        note.setStatus(NoteStatusEnum.DELETED.getCode());
+        noteMapper.updateById(note);
+        // 删除缓存 和 kv中的数据
+        rocketMQTemplate.syncSend(RocketMQConstant.TOPIC_DELETE_NOTE_LOCAL_CACHE,id);
+        log.info("====> MQ：删除笔记本地缓存发送成功...");
+        redisTemplate.delete(RedisConstant.getNoteCacheId(id));
+        threadPoolTaskExecutor.submit(()->{
+            try{
+                if(!note.getIsContentEmpty()) {
+                    kvRpcService.deleteNoteContent(note.getContentUuid());
+                }
+            }catch (Exception e){
+                log.warn("删除kv笔记内容失败,笔记UUID:{}",note.getContentUuid());
+            }
+        });
+        return Response.success();
+    }
+
+    @Override
+    public Response<?> visibleOnlyMe(UpdateVisibleOnlyMeReqVO updateVisibleOnlyMeReqVO) {
+        try{
+            String id = updateVisibleOnlyMeReqVO.getId();
+            LambdaUpdateWrapper<Note> updateWrapper = new LambdaUpdateWrapper<>();
+            Boolean visibleOnlyMe = updateVisibleOnlyMeReqVO.getVisibleOnlyMe();
+            if(visibleOnlyMe){
+                updateWrapper.eq(Note::getId,id).eq(Note::getStatus,NoteStatusEnum.NORMAL.getCode()).set(Note::getVisible,NoteVisibleEnum.PRIVATE.getValue());
+            }else{
+                updateWrapper.eq(Note::getId,id).eq(Note::getStatus,NoteStatusEnum.NORMAL.getCode()).set(Note::getVisible,NoteVisibleEnum.PUBLIC.getValue());
+            }
+
+            noteMapper.update(updateWrapper);
+            // 删除缓redis缓存
+            redisTemplate.delete(RedisConstant.getNoteCacheId(id));
+            // 消息通知删除本地缓存
+            rocketMQTemplate.syncSend(RocketMQConstant.TOPIC_DELETE_NOTE_LOCAL_CACHE,id);
+            log.info("====> MQ：删除笔记本地缓存发送成功...");
+            return Response.success();
+        }catch (Exception e){
+            throw new BusinessException(ResponseCodeEnum.SET_ONLY_ME_FAIL);
+        }
+
+    }
+
+    @Override
+    public Response<?> updateTopStatus(UpdateTopStatusDTO updateTopStatusDTO) {
+        try{
+            String id = updateTopStatusDTO.getId();
+            Boolean isTop = updateTopStatusDTO.getIsTop();
+            LambdaUpdateWrapper<Note> updateWrapper = new LambdaUpdateWrapper<>();
+            updateWrapper.eq(Note::getId,id).eq(Note::getStatus,NoteStatusEnum.NORMAL.getCode()).set(Note::getIsTop,isTop);
+            noteMapper.update(updateWrapper);
+            // 删除 Redis 缓存
+            String noteDetailRedisKey = RedisConstant.getNoteCacheId(id);
+            redisTemplate.delete(noteDetailRedisKey);
+
+            // 同步发送广播模式 MQ，将所有实例中的本地缓存都删除掉
+            rocketMQTemplate.syncSend(RocketMQConstant.TOPIC_DELETE_NOTE_LOCAL_CACHE,id);
+            log.info("====> MQ：删除笔记本地缓存发送成功...");
+        }catch(Exception e){
+            throw new BusinessException(ResponseCodeEnum.SET_NOTE_TOP_FAIL);
+        }
+
 
         return Response.success();
     }

@@ -2,7 +2,10 @@ package com.zealsinger.note.server;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zealsinger.book.framework.common.response.Response;
+import com.zealsinger.note.domain.dto.DeleteNoteByIdReqDTO;
 import com.zealsinger.note.domain.dto.FindNoteByIdReqDTO;
+import com.zealsinger.note.domain.dto.UpdateTopStatusDTO;
+import com.zealsinger.note.domain.dto.UpdateVisibleOnlyMeReqVO;
 import com.zealsinger.note.domain.entity.Note;
 import com.zealsinger.note.domain.vo.PublishNoteReqVO;
 import com.zealsinger.note.domain.vo.UpdateNoteReqVO;
@@ -15,4 +18,16 @@ public interface NoteServer extends IService<Note> {
     Response<?> findById(FindNoteByIdReqDTO findNoteByIdReqDTO) throws ExecutionException, InterruptedException;
 
     Response<?> updateNote(UpdateNoteReqVO reqVO);
+
+    /**
+     * 删除本地笔记缓存
+     * @param noteId
+     */
+    void deleteNoteLocalCache(String noteId);
+
+    Response<?> deleteNote(DeleteNoteByIdReqDTO deleteNoteByIdReqDTO);
+
+    Response<?> visibleOnlyMe(UpdateVisibleOnlyMeReqVO updateVisibleOnlyMeReqVO);
+
+    Response<?> updateTopStatus(UpdateTopStatusDTO updateTopStatusDTO);
 }

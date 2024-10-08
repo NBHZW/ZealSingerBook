@@ -585,8 +585,9 @@ public Response<?> findById(FindNoteByIdReqDTO findNoteByIdReqDTO) {
         }
 
         // 两层缓存中均无数据 查库！！
-
-        Note note = noteMapper.selectById(noteId);
+        LambdaUpdateWrapper<Note> queryWrapper = new LambdaUpdateWrapper<>();
+        queryWrapper.eq(Note::getId, noteId);
+        queryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());  // 这里对于上面进行了修改 因为我们是逻辑删除 所以这里需要加status的判断 否则会查出逻辑删除数据造成问题
         if(note==null){
             // 缓存空值 防止穿透
             long expireSeconds = 60+RandomUtil.randomInt(60);
@@ -966,4 +967,196 @@ public class CompletableFutureCancellation {
 
 ![image-20241006212706004](../../ZealSingerBook/img/image-20241006212706004.png)
 
+车祸现场复现
+
+查询某个ID的笔记详情 我们多请求几次 保证所有的服务都存在了本地缓存 然后我们使用更新 将tile更新为"图文qweqweqwe"
+
+![image-20241007102648764](../../ZealSingerBook/img/image-20241007102648764.png)
+
+![image-20241007102813031](../../ZealSingerBook/img/image-20241007102813031.png)
+
+然后在这个之后 我们再次请求查询接口  这个时候就可能出现每次请求结果不一样了
+
+![image-20241007102901154](../../ZealSingerBook/img/image-20241007102901154.png)
+
+![image-20241007102849251](../../ZealSingerBook/img/image-20241007102849251.png)
+
 所以针对这个问题 我们采用MQ进行解决  采用消息通知的方式  当某一个服务触发了更新 就让所有的订阅消息的服务接收到消息后进行删除本地缓存的操作  从而达到好的操作效果 
+
+经典各种MQ技术维度对比  大数据领域才会可能使用到Kafka  个人用户和中小数据量还是使用RabbitMQ和RocketMQ
+
+![image-20241007100425901](../../ZealSingerBook/img/image-20241007100425901.png)
+
+### RocketMQ
+
+本次我们采用RocketMQ来解决这个问题
+
+RocketMQ也是满足推送-订阅模型的
+
+#### SpringBoot整合RocketMQ
+
+首先是整体依赖管理  即父项目文件中的pom.xml文件管理
+
+```
+ <properties>
+		// 省略...
+		
+        <rocketmq.version>2.2.3</rocketmq.version>
+    </properties>
+
+    <!-- 统一依赖管理 -->
+    <dependencyManagement>
+        <dependencies>
+            // 省略...
+
+            <!-- Rocket MQ -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+```
+
+然后在子模块中引入对应的依赖
+
+之后 在配置文件中添加相关配置信息
+
+```
+rocketmq:
+  name-server: 192.168.17.131:9876 # name server 地址
+  producer:
+    group: xiaohashu_group
+    send-message-timeout: 3000 # 消息发送超时时间，默认 3s
+    retry-times-when-send-failed: 3 # 同步发送消息失败后，重试的次数
+    retry-times-when-send-async-failed: 3 # 异步发送消息失败后，重试的次数
+    max-message-size: 4096 # 消息最大大小
+  consumer:
+    group: xiaohashu_group
+    pull-batch-size: 5 # 每次拉取的最大消息数
+
+```
+
+添加配置类RocketMQConfig
+
+```
+由于 rocketmq-spring-boot-starter 本身是基于 Spring Boot 2.x 开发的，2.x和 3.x 在定义 starter 时的格式是有区别的，存在兼容性问题。为了能够在 Spring Boot 3.x 中使用它，需要在 /config 包下，创建一个 RocketMQConfig 配置类，并添加 @Import(RocketMQAutoConfiguration.class) , 手动引入一下自动配置类：@Import(RocketMQAutoConfiguration.class)
+```
+
+![image-20241007104808382](../../ZealSingerBook/img/image-20241007104808382.png)
+
+添加常量接口 用于保存Topic主题信息
+
+![image-20241007104913890](../../ZealSingerBook/img/image-20241007104913890.png)
+
+然后修noteserver中的删除本地缓存的逻辑
+
+```
+......
+// rocket的操作对象template对象是导入依赖后可以直接注入的
+@Resource
+private RocketMQTemplate  rocketMQTemplate;
+.......
+// 更新完毕后删除本地缓存  利用MQ进行通知删除  通知方法syncSend(topic,message)  这是一个同步消息通知的方法  第一个参数为topic 第二个参数为对应的消息
+rocketMQTemplate.syncSend(RocketMQConstant.TOPIC_DELETE_NOTE_LOCAL_CACHE,id);
+
+```
+
+![image-20241007104944603](../../ZealSingerBook/img/image-20241007104944603.png)
+
+同样的  MQ既然发送了消息 我们的消费者也需要有对应的消费逻辑  我们知道 这个消息是通知给其他的NOTE服务的 所以在Note模块下 我们还需要再次写一个消费者的逻辑
+
+创建一个软件包专门存放作为消费者的相关逻辑  使用@RocketMQMessageListener注解标志这是一个消费者 用于监听MQ的消息
+
+@RocketMQMessageListener这是来自于spring-cloud-stream-binder-rocketchat库的一个注解，用于配置 RocketMQ 的消息监听器。它指定了消息消费者组、主题（topic）以及消息模型。
+
+- `consumerGroup="xiaohashu_group"`：定义了消息的消费者组名，RocketMQ 使用消费者组来区分不同的消息订阅者。
+- `topic=MQConstants.TOPIC_DELETE_NOTE_LOCAL_CACHE`：消息的主题。
+- `messageModel=MessageModel.BROADCASTING`：定义了消息模式为广播模式，在这种模式下，所有的消费者都会接收到所有发布到主题的消息。
+
+类实现RocketMQListener<String>接口 说明该消费者监听消费String类型的信息参数 然后重写接口中的onMEssage方法  入参String s就是MQ中对应的Topic中的消息Message
+
+(RocketMQ中提供了两种方式：消费者主动拉取MQ中的消息进行消费，MQ主动推送消息给消费者进行消费)
+
+```java
+@Component
+@Slf4j
+@RocketMQMessageListener(consumerGroup = "zealsingerbook_group", // Group
+        topic = RocketMQConstant.TOPIC_DELETE_NOTE_LOCAL_CACHE, // 消费的主题 Topic
+        messageModel = MessageModel.BROADCASTING) // 广播模式
+public class DeleteLocalNoteCacheConsumer implements RocketMQListener<String> {
+
+    @Resource
+    private NoteServer noteServer;
+
+    @Override
+    public void onMessage(String s) {
+        log.info("DeleteLocalNoteCacheConsumer receive message: {}  准备进行消费", s);
+        noteServer.deleteNoteLocalCache(s);
+        log.info("### 消费完成 {}",s);
+
+    }
+}
+```
+
+![image-20241007105244230](../../ZealSingerBook/img/image-20241007105244230.png)
+
+整合完毕后测试功能即可
+
+# 删除笔记
+
+入参
+
+```
+{
+	"id":""
+}
+```
+
+出参
+
+```json
+{
+	"success": true,
+	"message": null,
+	"errorCode": null,
+	"data": null
+}
+```
+
+主体逻辑
+
+这里redis和本地缓存进行了同步删除 但是kv中的内容我们采用异步 这是因为个人认为  数据库中数据被删除了和缓存删除了 本质上用户已经无法找到这个数据了 所以已经算删除了 其对应的UUID的笔记内容  我们可以异步的方式删除从而不阻塞主线程  异步中如果删除失败了 我们打印的方式记录UUID可以日后人为干涉
+
+```Java
+	@Override
+    @Transactional(rollbackFor = Exception.class)
+    public Response<?> deleteNote(DeleteNoteByIdReqDTO deleteNoteByIdReqDTO) {
+        String id = deleteNoteByIdReqDTO.getId();
+        // 我们的删除是逻辑删除 所以实际上的行为为更新操作
+        Note note = noteMapper.selectById(id);
+        if(note==null){
+            throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+        }
+        note.setStatus(NoteStatusEnum.DELETED.getCode());
+        noteMapper.updateById(note);
+        // 删除缓存 和 kv中的数据
+        rocketMQTemplate.syncSend(RocketMQConstant.TOPIC_DELETE_NOTE_LOCAL_CACHE,id);
+        log.info("====> MQ：删除笔记本地缓存发送成功...");
+        redisTemplate.delete(RedisConstant.getNoteCacheId(id));
+        threadPoolTaskExecutor.submit(()->{
+            try{
+                if(!note.getIsContentEmpty()){
+                    kvRpcService.deleteNoteContent(note.getContentUuid());
+                }
+            }catch (Exception e){
+                log.warn("删除kv笔记内容失败,笔记UUID:{}",note.getContentUuid());
+            }
+        });
+        return Response.success();
+    }
+```
+
+# 设置仅自己可见
+
