@@ -277,7 +277,16 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
 
         String content = reqVO.getContent();
         String id = reqVO.getId();
-        Note note = noteMapper.selectById(id);
+        LambdaUpdateWrapper<Note> findQueryWrapper = new LambdaUpdateWrapper<>();
+        findQueryWrapper.eq(Note::getId, id);
+        findQueryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());
+        Note note = noteMapper.selectOne(findQueryWrapper);
+        if(note==null){
+            throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+        }
+        if(!Objects.equals(LoginUserContextHolder.getUserId(), note.getCreatorId())){
+            throw new BusinessException(ResponseCodeEnum.NOT_HAVE_PERMISSIONS);
+        }
         String contentUuid = note.getContentUuid();
         LambdaUpdateWrapper<Note> queryWrapper = new LambdaUpdateWrapper<>();
         if(StringUtils.isNotBlank(content)){
@@ -328,9 +337,15 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
     public Response<?> deleteNote(DeleteNoteByIdReqDTO deleteNoteByIdReqDTO) {
         String id = deleteNoteByIdReqDTO.getId();
         // 我们的删除是逻辑删除 所以实际上的行为为更新操作
-        Note note = noteMapper.selectById(id);
+        LambdaUpdateWrapper<Note> queryWrapper = new LambdaUpdateWrapper<>();
+        queryWrapper.eq(Note::getId, id);
+        queryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());
+        Note note = noteMapper.selectOne(queryWrapper);
         if(note==null){
             throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+        }
+        if(!Objects.equals(LoginUserContextHolder.getUserId(), note.getCreatorId())){
+            throw new BusinessException(ResponseCodeEnum.NOT_HAVE_PERMISSIONS);
         }
         note.setStatus(NoteStatusEnum.DELETED.getCode());
         noteMapper.updateById(note);
@@ -354,6 +369,16 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
     public Response<?> visibleOnlyMe(UpdateVisibleOnlyMeReqVO updateVisibleOnlyMeReqVO) {
         try{
             String id = updateVisibleOnlyMeReqVO.getId();
+            LambdaUpdateWrapper<Note> queryWrapper = new LambdaUpdateWrapper<>();
+            queryWrapper.eq(Note::getId, id);
+            queryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());
+            Note note = noteMapper.selectOne(queryWrapper);
+            if(note==null){
+                throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+            }
+            if(!Objects.equals(LoginUserContextHolder.getUserId(), note.getCreatorId())){
+                throw new BusinessException(ResponseCodeEnum.NOT_HAVE_PERMISSIONS);
+            }
             LambdaUpdateWrapper<Note> updateWrapper = new LambdaUpdateWrapper<>();
             Boolean visibleOnlyMe = updateVisibleOnlyMeReqVO.getVisibleOnlyMe();
             if(visibleOnlyMe){
@@ -379,6 +404,16 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
     public Response<?> updateTopStatus(UpdateTopStatusDTO updateTopStatusDTO) {
         try{
             String id = updateTopStatusDTO.getId();
+            LambdaUpdateWrapper<Note> queryWrapper = new LambdaUpdateWrapper<>();
+            queryWrapper.eq(Note::getId, id);
+            queryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());
+            Note note = noteMapper.selectOne(queryWrapper);
+            if(note==null){
+                throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+            }
+            if(!Objects.equals(LoginUserContextHolder.getUserId(), note.getCreatorId())){
+                throw new BusinessException(ResponseCodeEnum.NOT_HAVE_PERMISSIONS);
+            }
             Boolean isTop = updateTopStatusDTO.getIsTop();
             LambdaUpdateWrapper<Note> updateWrapper = new LambdaUpdateWrapper<>();
             updateWrapper.eq(Note::getId,id).eq(Note::getStatus,NoteStatusEnum.NORMAL.getCode()).set(Note::getIsTop,isTop);
