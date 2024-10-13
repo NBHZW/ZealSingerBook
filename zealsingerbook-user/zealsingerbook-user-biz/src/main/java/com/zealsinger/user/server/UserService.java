@@ -22,4 +22,6 @@ public interface UserService extends IService<User> {
     Response<?> updatePassword(UpdatePasswordReqDTO updatePasswordReqDTO);
 
     Response<?> findById(FindUserByIdReqDTO findUserByIdReqDTO);
+
+    Response<Boolean> checkUserExist(CheckUserExistReqDTO checkUserExistReqDTO);
 }

@@ -58,4 +58,8 @@ public class UserController {
         return userService.findById(findUserByIdReqDTO);
     }
 
+    @PostMapping("/checkUserExist")
+    Response<Boolean> checkUserExist(@RequestBody CheckUserExistReqDTO checkUserExistReqDTO){
+        return userService.checkUserExist(checkUserExistReqDTO);
+    }
 }

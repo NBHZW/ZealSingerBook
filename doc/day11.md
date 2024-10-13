@@ -1158,5 +1158,88 @@ public class DeleteLocalNoteCacheConsumer implements RocketMQListener<String> {
     }
 ```
 
-# 设置仅自己可见
+# 设置仅自己可见 和 设置是否置顶
+
+入参形式基本都一直 整体逻辑也都差不多
+
+入参
+
+```
+{
+    "id": "1842530793784606770",
+    "isTop": true  // true是设置置顶  false设置非置顶
+}
+
+和
+
+{
+    "id":"1842530793784606770",
+    "visibleOnlyMe": false  // true是设置私有  false设置非私有
+}
+```
+
+出参
+
+```
+{
+	"success":
+	"mesasge":
+	"errorCode":
+	"data":
+}
+```
+
+整理逻辑就是更新逻辑 +删除缓存
+
+```Java
+@Override
+    public Response<?> updateTopStatus(UpdateTopStatusDTO updateTopStatusDTO) {
+        try{
+            String id = updateTopStatusDTO.getId();
+            Boolean isTop = updateTopStatusDTO.getIsTop();
+            LambdaUpdateWrapper<Note> updateWrapper = new LambdaUpdateWrapper<>();
+            updateWrapper.eq(Note::getId,id).eq(Note::getStatus,NoteStatusEnum.NORMAL.getCode()).set(Note::getIsTop,isTop);
+            noteMapper.update(updateWrapper);
+            // 删除 Redis 缓存
+            String noteDetailRedisKey = RedisConstant.getNoteCacheId(id);
+            redisTemplate.delete(noteDetailRedisKey);
+
+            // 同步发送广播模式 MQ，将所有实例中的本地缓存都删除掉
+            rocketMQTemplate.syncSend(RocketMQConstant.TOPIC_DELETE_NOTE_LOCAL_CACHE,id);
+            log.info("====> MQ：删除笔记本地缓存发送成功...");
+        }catch(Exception e){
+            throw new BusinessException(ResponseCodeEnum.SET_NOTE_TOP_FAIL);
+        }
+
+
+        return Response.success();
+    }
+    
+    
+    
+@Override
+    public Response<?> visibleOnlyMe(UpdateVisibleOnlyMeReqVO updateVisibleOnlyMeReqVO) {
+        try{
+            String id = updateVisibleOnlyMeReqVO.getId();
+            LambdaUpdateWrapper<Note> updateWrapper = new LambdaUpdateWrapper<>();
+            Boolean visibleOnlyMe = updateVisibleOnlyMeReqVO.getVisibleOnlyMe();
+            if(visibleOnlyMe){
+                updateWrapper.eq(Note::getId,id).eq(Note::getStatus,NoteStatusEnum.NORMAL.getCode()).set(Note::getVisible,NoteVisibleEnum.PRIVATE.getValue());
+            }else{
+                updateWrapper.eq(Note::getId,id).eq(Note::getStatus,NoteStatusEnum.NORMAL.getCode()).set(Note::getVisible,NoteVisibleEnum.PUBLIC.getValue());
+            }
+
+            noteMapper.update(updateWrapper);
+            // 删除缓redis缓存
+            redisTemplate.delete(RedisConstant.getNoteCacheId(id));
+            // 消息通知删除本地缓存
+            rocketMQTemplate.syncSend(RocketMQConstant.TOPIC_DELETE_NOTE_LOCAL_CACHE,id);
+            log.info("====> MQ：删除笔记本地缓存发送成功...");
+            return Response.success();
+        }catch (Exception e){
+            throw new BusinessException(ResponseCodeEnum.SET_ONLY_ME_FAIL);
+        }
+
+    }
+```
 

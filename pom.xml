@@ -24,6 +24,7 @@
         <module>zealsingerbook-kv</module>
         <module>zealsingerbook-id-generator</module>
         <module>zealsingerbook-note</module>
+        <module>zealsingerbook-user-relation</module>
     </modules>
 
     <properties>

@@ -24,14 +24,17 @@ public interface UserFeignApi {
      * @return
      */
     @PostMapping(value = PREFIX + "/register")
-    Response<Long> registerUser(@RequestBody RegisterUserReqDTO registerUserReqDTO);
+    Response<Long> registerUser(@RequestBody  @Validated RegisterUserReqDTO registerUserReqDTO);
 
     @PostMapping(value = PREFIX + "/findByPhone")
-    Response<FindUserByPhoneRspDTO> findByPhone(@RequestBody FindUserByPhoneReqDTO findUserByPhoneReqDTO);
+    Response<FindUserByPhoneRspDTO> findByPhone(@RequestBody  @Validated FindUserByPhoneReqDTO findUserByPhoneReqDTO);
 
     @PostMapping(value = PREFIX + "/updatePassword")
-    Response<?> updatePassword(@RequestBody UpdatePasswordReqDTO updatePasswordReqDTO);
+    Response<?> updatePassword(@RequestBody  @Validated UpdatePasswordReqDTO updatePasswordReqDTO);
 
     @PostMapping(value = PREFIX + "/findById")
-    Response<FindUserByIdRspDTO> findById(@RequestBody FindUserByIdReqDTO findUserByIdReqDTO);
+    Response<FindUserByIdRspDTO> findById(@RequestBody @Validated FindUserByIdReqDTO findUserByIdReqDTO);
+
+    @PostMapping(value = PREFIX + "/checkUserExist")
+    Response<Boolean> checkUserExist(@RequestBody CheckUserExistReqDTO checkUserExistReqDTO);
 }

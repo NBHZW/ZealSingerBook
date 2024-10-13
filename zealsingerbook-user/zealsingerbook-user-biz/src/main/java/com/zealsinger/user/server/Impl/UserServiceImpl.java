@@ -287,4 +287,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         return Response.success(findUserByIdRspDTO);
     }
+
+    @Override
+    public Response<Boolean> checkUserExist(CheckUserExistReqDTO checkUserExistReqDTO) {
+        Long id = checkUserExistReqDTO.getId();
+        if(Objects.isNull(id)){
+            return Response.success(false);
+        }
+        LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userLambdaQueryWrapper.eq(User::getId,id);
+        userLambdaQueryWrapper.eq(User::getStatus,StatusEnum.ENABLE.getValue());
+        User user = userMapper.selectOne(userLambdaQueryWrapper);
+        if(user==null){
+            return Response.success(false);
+        }
+        return Response.success(true);
+    }
 }
