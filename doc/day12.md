@@ -948,9 +948,9 @@ MQ消息体结构如下
 
 可以看到 我们其实对于操作的异步执行还是同步执行其实也是有讲究的
 
-我们这里是取消关注的接口 直接需要明显的是用户要从关注列表中看不到取消的用户 这个是直接效果  所以操作following的zset缓存列表需要同步执行
+**我们这里是取消关注的接口 直接需要明显的是用户要从关注列表中看不到取消的用户 这个是直接效果  所以操作following的zset缓存列表需要同步执行**
 
-但是对于被取消关注的用户而言，本身就是被动操作，所以不一定需要及时知道，允许异步操作稍微慢点
+**但是对于被取消关注的用户而言，本身就是被动操作，所以不一定需要及时知道，允许异步操作稍微慢点**
 
 ```java 
 @Override
@@ -1011,3 +1011,751 @@ MQ消息体结构如下
     }
 ```
 
+## RocketMQ实现消息顺序消费
+
+就目前而言 我们有了关注和取消关注的接口  对应的有了两种MQ消息通知  此时我们需要考虑一个问题  
+
+**消息的消费顺序对于逻辑会不会有影响，如果有，如何去避免？**
+
+考虑如下场景：
+
+A用户对B用户快速进行如下操作  **关注->取消关注-->关注**
+
+那么按照正常情况下 会出现  **MQ需要消费关注消息，给表添加数据，新增fans的zset集合数据--->MQ消费取消关注的消息，删库，去除fans的zset集合--->MQ需要消费关注消息，给表添加数据，新增fans的zset集合数据三个操作**
+
+在上述情况中，我们可以看到，我们同一个消费者需要向同一个Topic发送多条消息，在RocketMQ中，给出了一张官方贴图如下，为了保证消息的水平拓展，对于同一个Topic接收到的消息，会使用多个MessageQueue队列存放储存消息  自然 多条个消息队列之间的的消费是并行执行的
+
+![image-20241013162411572](../../ZealSingerBook/img/image-20241013162411572.png)
+
+那么现在就在上述情景中出现了问题：**短时间内发送这三条消息，可能会被分配到三个不同的消息队列中，然而又因为消息队列之间是并行的，最终就会导致实际的消费顺序可能不是 关注--->取关--->关注  比如会变成  关注--->关注--->取关**  最终逻辑就变成完全相反的操作，这明显是很不合理的  并且我的消费者也是分布式集群部署的，有可能消费者集群中的节点都消费到了消息，导致重复消费
+
+so  我们需要控制消费顺序
+
+可以先通过如下代码观察一下RocketMQ中同一个Topic在应该对多个消息的时候的队列情况
+
+如下代码中 我们模拟出当i为偶数的时候发送关注的MQ消息，当i为奇数的时候发送取消关注的MQ消息
+
+```Java
+@SpringBootTest
+@Slf4j
+class MQTests {
+
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
+
+    // 省略...
+
+    /**
+     * 测试：发送对同一个用户关注、取关 MQ
+     */
+    @Test
+    void testSendFollowUnfollowMQ() {
+        // 操作者用户ID
+        Long userId = 27L;
+        // 目标用户ID
+        Long targetUserId = 100L;
+
+        for (long i = 0; i < 10; i++) {
+            if (i % 2 == 0) { // 偶数发送关注 MQ
+                log.info("{} 是偶数", i);
+
+                // 发送 MQ
+                // 构建消息体 DTO
+                FollowUserMqDTO followUserMqDTO = FollowUserMqDTO.builder()
+                        .userId(userId)
+                        .followUserId(targetUserId)
+                        .createTime(LocalDateTime.now())
+                        .build();
+
+                // 构建消息对象，并将 DTO 转成 Json 字符串设置到消息体中
+                Message<String> message = MessageBuilder.withPayload(JsonUtils.toJsonString(followUserMqDTO))
+                        .build();
+
+                // 通过冒号连接, 可让 MQ 发送给主题 Topic 时，携带上标签 Tag
+                String destination = MQConstants.TOPIC_FOLLOW_OR_UNFOLLOW + ":" + MQConstants.TAG_FOLLOW;
+
+                // 发送 MQ 消息
+                SendResult sendResult = rocketMQTemplate.syncSend(destination, message);
+
+                log.info("==> MQ 发送结果，SendResult: {}", sendResult);
+            } else { // 取关发送取关 MQ
+                log.info("{} 是奇数", i);
+
+                // 发送 MQ
+                // 构建消息体 DTO
+                UnfollowUserMqDTO unfollowUserMqDTO = UnfollowUserMqDTO.builder()
+                        .userId(userId)
+                        .unfollowUserId(targetUserId)
+                        .createTime(LocalDateTime.now())
+                        .build();
+
+                // 构建消息对象，并将 DTO 转成 Json 字符串设置到消息体中
+                Message<String> message = MessageBuilder.withPayload(JsonUtils.toJsonString(unfollowUserMqDTO))
+                        .build();
+
+                // 通过冒号连接, 可让 MQ 发送给主题 Topic 时，携带上标签 Tag
+                String destination = MQConstants.TOPIC_FOLLOW_OR_UNFOLLOW + ":" + MQConstants.TAG_UNFOLLOW;
+
+                // 发送 MQ 消息
+                SendResult sendResult = rocketMQTemplate.syncSend(destination, message);
+
+                log.info("==> MQ 发送结果，SendResult: {}", sendResult);
+            }
+        }
+    }
+
+}
+
+```
+
+最终打印结果如下  可以看到 确实放到了不同的Queue队列中处理消息
+
+![image-20241013204506780](../../ZealSingerBook/img/image-20241013204506780.png)
+
+那如何保证消息的顺序消费？可以分别从消息提供者和消息消费者入手：
+
+**在发送端，保证消息都按照顺序发送到同i个队列中，保证先进先出**
+
+**在消费端，从单个队列中按照顺序拿取消费消息，消费端不能并发去消费，只能由有个服务实例去消费该队列**
+
+### 发送端处理
+
+修改发送端的发送异步MQ消息的逻辑
+
+使用asyncSendOrderly方法，允许多加入一个参数作为hashKey，同一个HashKey会投递到同一个消息队列中
+
+**这里我们使用UserId作为HashKey 就能保证这个人的所有相关操作都发送到一个队列中 先进先出进行操作**
+
+**为啥不选用followId呢？如果该被关注的人是个大V或者热点事件人物，就可能在某段时间内被大量关注，从而导致该短时间内这个Queue队列满造成单点瓶颈，不适合高并发场景，而关注者作为HashKey，一个人的操作量始终有限，关注者也肯定比被关注者多，从而保证消息更加的分散**
+
+```
+ // 采用  Topic:str 的形式作为topic 后面的str就是tag
+        String header = RocketMQConstant.TOPIC_FOLLOW_OR_UNFOLLOW+":"+RocketMQConstant.TAG_FOLLOW;
+        String hashKey = String.valueOf(userId);
+        log.info("==> 开始发送关注操作 MQ, 消息体: {}", mqFollowUserDTO);
+        // 异步发送MQ消息  提高性能
+        rocketTemplate.asyncSendOrderly(header, message, hashKey,new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> MQ 发送成功，SendResult: {}", sendResult);
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> MQ 发送异常: ", throwable);
+            }
+        });
+```
+
+![image-20241013205513589](../../ZealSingerBook/img/image-20241013205513589.png)
+
+### 接收端处理
+
+消费端主要是要顺序消费，直接在注解中添加属性即可
+
+```Java
+consumeMode = ConsumeMode.ORDERLY
+```
+
+![image-20241013211809965](../../ZealSingerBook/img/image-20241013211809965.png)
+
+# 批量获取用户信息接口开发
+
+接下来是**关注列表接口的开发**
+
+可以看到关注列表中返回的应该是 **头像+昵称+简介**
+
+![image-20241013212032894](../../ZealSingerBook/img/image-20241013212032894.png)
+
+我们之前是存在关注列表ZSET的缓存的，但是Redis中只存在了对应的followingUserId，按照我们目前的需求，还需要再次调用User模块查找我们需要的信息
+
+![image-20241013212317823](../../ZealSingerBook/img/image-20241013212317823.png)
+
+目前，我们在Note笔记页面的时候，那里需要userId查询用户信息，但是那里我们只需要头像+昵称的信息而不需要简介，并且那个接口我们是单个查询，效率是比较低的，自然是不适合在目前这个需求下进行的
+
+所以我们需要再写一个根据ID集合批量获取用户信息的接口
+
+## User模块主体编写
+
+入参
+
+入参设置@Size进行集合大小限制，第一是防止null 第二是防止恶意访问刷取数据，设置最大数值为10是比较复合前端的分页查询每页大小，防止返回过多
+
+```
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class FindUsersByIdsReqDTO {
+    @NotNull(message = "用户 ID 集合不能为空")
+    @Size(min = 1, max = 10, message = "用户 ID 集合大小必须大于等于 1, 小于等于 10")
+    private List<Long> ids;
+}
+```
+
+出参  可以在原本的用户相信接口的返回值下面添加  简介  属性即可
+
+```
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class FindUserByIdRspDTO {
+    /**
+     * 用户主键ID
+     */
+    private Long id;
+
+    /**
+     * 昵称
+     */
+    private String nickname;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
+     * 简介
+     */
+    private String description;
+}
+```
+
+整理一下整体逻辑：
+
+接收到前端传来的UserID的List，通过UserIDList获得之前接口缓存的信息对应的redis缓存Key（ user:infor:{userId} ）的集合
+
+通过redisKeyList，通过mutilget方法传入keyList从而得到valueList（提高效率）
+
+然后将redisValues转化为出参resultList  将resultList去除空值后比对一下resultList的长度和入参userIdList的长度，从而判断缓存中的数据是否满足返回需求
+
+如果等于，则说明缓存中存在所有需要返回的数据，直接返回resultList即可
+
+如果不相等，则说明缓存中没有数据或者只有部分数据
+
+如果没有数据，直接通过userIDList查出数据后返回即可
+
+如果是部分数据，那么userIDList中去除resultListID中已经有的数据后得到userIDsNeedList，然后在数据库中查userIDsNeedList中的学号对应的数据得到resultList2，然后将resultList+resultList2返回
+
+需要注意一点，还需要将resultList2异步同步缓存到redis，尽量下次能直接从redis拿，减少库的操作
+
+```Java
+@Override
+    public Response<?> findByIds(FindUsersByIdsReqDTO findUsersByIdsReqDTO) {
+        // 获取所有的userId
+        List<Long> userIdList = findUsersByIdsReqDTO.getIds();
+        // 通过ID获取所有的redisKey列表
+        List<String> redisKeyList = userIdList.stream().map(aLong -> RedisConstant.getUserInfoKey(aLong)).toList();
+        // 通过multiGet方法批量获取key所对应的value
+        List<Object> redisValues = redisTemplate.opsForValue().multiGet(redisKeyList);
+        // 如果缓存中不为空
+        if (CollUtil.isNotEmpty(redisValues)) {
+            // 过滤掉为空的数据
+            redisValues = redisValues.stream().filter(Objects::nonNull).toList();
+        }
+        // 返参列表
+        List<FindUserByIdRspDTO> findUserByIdRspDTOS = Lists.newArrayList();
+
+        // 将过滤后的缓存集合，转换为 DTO 返参实体类
+        if (CollUtil.isNotEmpty(redisValues)) {
+            findUserByIdRspDTOS = redisValues.stream()
+                    .map(value -> JsonUtil.JsonStringToObj(String.valueOf(value), FindUserByIdRspDTO.class))
+                    .toList();
+        }
+
+        // 比对缓存中的数据个数和需要的数据个数  如果相同则说明redis都有数据 直接返回redis中的数据
+        if(findUserByIdRspDTOS.size()== userIdList.size()){
+            return Response.success(findUserByIdRspDTOS);
+        }
+        // 如果不等于 那么一定小于  小于的话两种情况 如果redis中查出来为null 则直接查库；如果不为null，则说明redis中只有部分数据，需要补充后再返回
+        List<Long> userIdsNeedQuery = null;
+        if(CollUtil.isNotEmpty(findUserByIdRspDTOS)){
+            // 不为空 则说明redis缓存中有部分数据 补充即可
+            // userID为key 本身FindUserByIdsRsp作为value 保存为map集合
+            Map<Long, FindUserByIdRspDTO> collect = findUserByIdRspDTOS.stream().collect(Collectors.toMap(FindUserByIdRspDTO::getId, p -> p));
+            // 筛选出Map中没有 但是入参userIdList中有的，也就是还需要从数据库中查询的数据
+            userIdsNeedQuery = userIdList.stream().filter(aLong -> Objects.isNull(collect.get(aLong))).toList();
+        }else{
+            // redis中查出来为null  则说明只能从库中找
+            userIdsNeedQuery = userIdList;
+        }
+        List<User> users = userMapper.selectBatchIds(userIdsNeedQuery);
+        List<FindUserByIdRspDTO> needList = Lists.newArrayList();
+        if(CollUtil.isNotEmpty(users)){
+            needList = users.stream().map(user -> FindUserByIdRspDTO.builder().id(user.getId())
+                    .nickname(user.getNickname())
+                    .avatar(user.getAvatar())
+                    .description(user.getIntroduction()).build()).toList();
+            // 走到这里 肯定说明redis中还少数据 异步将数据补充到redis中
+
+        }
+        if(CollUtil.isNotEmpty(needList)){
+            findUserByIdRspDTOS.addAll(needList);
+        }
+        return Response.success(findUserByIdRspDTOS);
+    }
+```
+
+因为我们是将List数据同步到redis，为了提高效率，我们不采用循环，而是**使用redis管道技术pipline实现批量添加，它能将一组 Redis 命令进行组装，通过一次传输给 Redis 并返回结果集**
+
+（redis本身是基于Request/Response协议的  虽然提供了类似于mset  mget批量获取的命令，但是某些操作本身可能就不是批量操作）
+
+![image-20241013225435302](../../ZealSingerBook/img/image-20241013225435302.png)
+
+## redis-pipline技术的使用
+
+redisTemplate使用pipline技术主要依靠**executePipelined方法，方法的参数是一个函数式接口，实现RedisCallback的doInRedis方法 这个方法只能返回null** 
+
+**在这个方法中，进行的redis操作都不会直接执行，等到方法完毕才会一起执行**
+
+```Java
+threadPoolTaskExecutor.submit(()->{
+                Map<Long, FindUserByIdRspDTO> redisMap = finalNeedList.stream().collect(Collectors.toMap(FindUserByIdRspDTO::getId, p -> p));
+                redisTemplate.executePipelined(new RedisCallback<Void>() {
+                    @Override
+                    public Void doInRedis(RedisConnection connection) throws DataAccessException {
+                        for (Long l : userIdList) {
+                            FindUserByIdRspDTO value = redisMap.get(l);
+                            String key = RedisConstant.getUserInfoKey(l);
+                            String valueStr = JsonUtil.ObjToJsonString(value);
+                            // 过期时间（保底1天 + 随机秒数，将缓存过期时间打散，防止同一时间大量缓存失效，导致数据库压力太大）
+                            long expireSeconds = 60*60*24 + RandomUtil.randomInt(60*60*24);
+                            redisTemplate.opsForValue().set(key,valueStr,expireSeconds,TimeUnit.SECONDS);
+                        }
+                        return null;
+                    }
+                });
+            });
+```
+
+------
+
+所以最终该接口的server代码如下
+
+```Java
+@Override
+    public Response<?> findByIds(FindUsersByIdsReqDTO findUsersByIdsReqDTO) {
+        // 获取所有的userId
+        List<Long> userIdList = findUsersByIdsReqDTO.getIds();
+        // 通过ID获取所有的redisKey列表
+        List<String> redisKeyList = userIdList.stream().map(aLong -> RedisConstant.getUserInfoKey(aLong)).toList();
+        // 通过multiGet方法批量获取key所对应的value
+        List<Object> redisValues = redisTemplate.opsForValue().multiGet(redisKeyList);
+        // 如果缓存中不为空
+        if (CollUtil.isNotEmpty(redisValues)) {
+            // 过滤掉为空的数据
+            redisValues = redisValues.stream().filter(Objects::nonNull).toList();
+        }
+        // 返参列表
+        List<FindUserByIdRspDTO> findUserByIdRspDTOS = Lists.newArrayList();
+
+        // 将过滤后的缓存集合，转换为 DTO 返参实体类
+        if (CollUtil.isNotEmpty(redisValues)) {
+            findUserByIdRspDTOS = redisValues.stream()
+                    .map(value -> JsonUtil.JsonStringToObj(String.valueOf(value), FindUserByIdRspDTO.class))
+                    .toList();
+        }
+
+        // 比对缓存中的数据个数和需要的数据个数  如果相同则说明redis都有数据 直接返回redis中的数据
+        if(findUserByIdRspDTOS.size()== userIdList.size()){
+            return Response.success(findUserByIdRspDTOS);
+        }
+        // 如果不等于 那么一定小于  小于的话两种情况 如果redis中查出来为null 则直接查库；如果不为null，则说明redis中只有部分数据，需要补充后再返回
+        List<Long> userIdsNeedQuery = null;
+        if(CollUtil.isNotEmpty(findUserByIdRspDTOS)){
+            // 不为空 则说明redis缓存中有部分数据 补充即可
+            // userID为key 本身FindUserByIdsRsp作为value 保存为map集合
+            Map<Long, FindUserByIdRspDTO> collect = findUserByIdRspDTOS.stream().collect(Collectors.toMap(FindUserByIdRspDTO::getId, p -> p));
+            // 筛选出Map中没有 但是入参userIdList中有的，也就是还需要从数据库中查询的数据
+            userIdsNeedQuery = userIdList.stream().filter(aLong -> Objects.isNull(collect.get(aLong))).toList();
+        }else{
+            // redis中查出来为null  则说明只能从库中找
+            userIdsNeedQuery = userIdList;
+        }
+        List<User> users = userMapper.selectBatchIds(userIdsNeedQuery);
+        List<FindUserByIdRspDTO> needList = Lists.newArrayList();
+        if(CollUtil.isNotEmpty(users)){
+            needList = users.stream().map(user -> FindUserByIdRspDTO.builder().id(user.getId())
+                    .nickname(user.getNickname())
+                    .avatar(user.getAvatar())
+                    .description(user.getIntroduction()).build()).toList();
+            // 走到这里 肯定说明redis中还少数据 异步将数据补充到redis中
+            List<FindUserByIdRspDTO> finalNeedList = needList;
+            threadPoolTaskExecutor.submit(()->{
+                Map<Long, FindUserByIdRspDTO> redisMap = finalNeedList.stream().collect(Collectors.toMap(FindUserByIdRspDTO::getId, p -> p));
+                redisTemplate.executePipelined((RedisCallback<Void>) connection -> {
+                    for (Long l : userIdList) {
+                        FindUserByIdRspDTO value = redisMap.get(l);
+                        String key = RedisConstant.getUserInfoKey(l);
+                        String valueStr = JsonUtil.ObjToJsonString(value);
+                        // 过期时间（保底1天 + 随机秒数，将缓存过期时间打散，防止同一时间大量缓存失效，导致数据库压力太大）
+                        long expireSeconds = 60*60*24 + RandomUtil.randomInt(60*60*24);
+                        redisTemplate.opsForValue().set(key,valueStr,expireSeconds,TimeUnit.SECONDS);
+                    }
+                    return null;
+                });
+            });
+        }
+        if(CollUtil.isNotEmpty(needList)){
+            findUserByIdRspDTOS.addAll(needList);
+        }
+        return Response.success(findUserByIdRspDTOS);
+    }
+```
+
+# 关注列表接口编写
+
+写完User模块中的方法，那么就能准备在User-relation模块中进行代码编写
+
+我们之前提到 防止恶意 也为了防止返回过多，我们采取分页的方式返回能提高并发
+
+入参
+
+```json
+{
+    "userId": 27, // 想要查询的用户 ID
+    "pageNo": 1 // 当前页码
+}
+```
+
+出参
+
+```json
+{
+	"success": true,
+	"message": null,
+	"errorCode": null,
+	"data": [ // 分页数据
+		{
+			"userId": 100, // 用户ID
+			"avatar": "http://127.0.0.1:9000/xiaohashu/14d8b7c3adad49f5b81dfa68417c0ab3.jpg", // 用户头像
+			"nickname": "犬小哈", // 昵称
+			"introduction": "一枚 Java 程序员" // 简介
+		}
+	],
+	"pageNo": 1, // 当前页码
+	"totalCount": 0, // 总数据量
+	"pageSize": 10, // 每页展示的数据量
+	"totalPage": 0 // 总页数
+}
+
+```
+
+我们这是分页返回，将当前页面和总数据量还是每页展示数量，总页数均返回，这里需要我们封装一个专门用于返回分页数据的工具类
+
+**totalPage = (totalCount + pageSize - 1) / pageSize  这是一个数学技巧  记住就行 感觉很吊**
+
+```Java
+/**
+ * @description: 分页响应参数工具类
+ **/
+@Data
+public class PageResponse<T> extends Response<List<T>> {
+
+    private long pageNo; // 当前页码
+    private long totalCount; // 总数据量
+    private long pageSize; // 每页展示的数据量
+    private long totalPage; // 总页数
+
+    public static <T> PageResponse<T> success(List<T> data, long pageNo, long totalCount) {
+        PageResponse<T> pageResponse = new PageResponse<>();
+        pageResponse.setSuccess(true);
+        pageResponse.setData(data);
+        pageResponse.setPageNo(pageNo);
+        pageResponse.setTotalCount(totalCount);
+        // 每页展示的数据量
+        long pageSize = 10L;
+        pageResponse.setPageSize(pageSize);
+        // 计算总页数
+        long totalPage = (totalCount + pageSize - 1) / pageSize;
+        pageResponse.setTotalPage(totalPage);
+        return pageResponse;
+    }
+
+    public static <T> PageResponse<T> success(List<T> data, long pageNo, long totalCount, long pageSize) {
+        PageResponse<T> pageResponse = new PageResponse<>();
+        pageResponse.setSuccess(true);
+        pageResponse.setData(data);
+        pageResponse.setPageNo(pageNo);
+        pageResponse.setTotalCount(totalCount);
+        pageResponse.setPageSize(pageSize);
+        // 计算总页数
+        long totalPage = pageSize == 0 ? 0 : (totalCount + pageSize - 1) / pageSize;
+        pageResponse.setTotalPage(totalPage);
+        return pageResponse;
+    }
+
+    /**
+     * 获取总页数
+     * @return
+     */
+    public static long getTotalPage(long totalCount, long pageSize) {
+        return pageSize == 0 ? 0 : (totalCount + pageSize - 1) / pageSize;
+    }
+
+}
+```
+
+然后是正式的逻辑
+
+从入参中拿去当前页pageNo 和 查询学号userID  然后首先到redis中查询是否有userId相关的关注列表信息  如果有直接从redis中拿取对应的数据即可
+
+这里如果需要拿数据 那么需要从redis中进行分页操作 也就是拿取（pageNo-1）* pageSize 到  （pageNo-1）* pageSize+pageSize 之间的数据 这里涉及到了redis的分页范围查询操作
+
+使用如下方法 **可进行redis的范围查找  reverseRangeByScore 范围且按照Score分数降序进行查找  综合而言就是查询 redisUserInfoKey的Set集合，查询分数在 Double.NEGATIVE_INFINITY,  ~~ Double.POSITIVE_INFINITY 之间的且在offset~offset+limit偏移量中间的数据，按照降序排序返回**
+
+**使用Double.NEGATIVE_INFINITY(double数值的负无穷 ) 和 Double.POSITIVE(double 的正无穷) 作为范围**
+
+```Java
+ redisTemplate.opsForZSet().reverseRangeByScore(redisUserInfoKey, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, offset, limit);
+```
+
+得到Redis中对应的数据后，进行空判，**如果为空，说明Reids中没有粉丝数据，那么就需要查表全量同步到Redis中，反之，如果不为空，直接返回Redis中查到的数据  如下是不为空的时候，直接返回Redis中的数据**
+
+```Java
+ Long pageNo = findFollowingListReqVO.getPageNo();
+        Long userId = findFollowingListReqVO.getUserId();
+        // 先从redis中查询
+        String redisUserInfoKey = RedisConstant.getFollowingKey(String.valueOf(userId));
+        Long total = redisTemplate.opsForZSet().zCard(redisUserInfoKey);
+        // 每页展示 10 条数据
+        long limit = 10;
+        List<FindFollowingListRspVO> resultList = null;
+        if(total>0) {
+            // 说明有数据
+            // 计算一共多少页
+            long totalPage = PageResponse.getTotalPage(total, limit);
+            // 请求的页码超出了总页数
+            if (pageNo > totalPage) {
+                return PageResponse.success(null, pageNo, total);
+            }
+            // 拿取对应的数据进行返回
+            long offset = (pageNo - 1) * limit;
+            // Set<Object> range = redisTemplate.opsForZSet().range(redisUserInfoKey, offset, offset + limit - 1);
+            // 使用 ZREVRANGEBYSCORE 命令（该命令返回的set集合是key的每一个value数值 而不是value的分数  所以直接返回了followingUserId）按 score 降序获取元素，同时使用 LIMIT 子句实现分页
+            // 注意：这里使用了 Double.POSITIVE_INFINITY 和 Double.NEGATIVE_INFINITY 作为分数范围
+            // 因为关注列表最多有 1000 个元素，这样可以确保获取到所有的元素
+            Set<Object> followingUserIdsSet = redisTemplate.opsForZSet()
+                    .reverseRangeByScore(redisUserInfoKey, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, offset, limit);
+            if (CollUtil.isNotEmpty(followingUserIdsSet)) {
+                // 如果不为空 拿去数据封装返回即可
+                // 提取所有用户 ID 到集合中
+                List<Long> userIds = followingUserIdsSet.stream().map(object -> Long.valueOf(object.toString())).toList();
+                List<FindUserByIdRspDTO> findUserByIdRspDTOS = userRpcServer.findUserByIds(userIds);
+                if (CollUtil.isNotEmpty(findUserByIdRspDTOS)) {
+                    resultList = findUserByIdRspDTOS.stream().map(findUserByIdRspDTO -> FindFollowingListRspVO.builder().userId(findFollowingListReqVO.getUserId())
+                            .nickname(findUserByIdRspDTO.getNickname())
+                            .avatar(findUserByIdRspDTO.getAvatar())
+                            .introduction(findUserByIdRspDTO.getDescription())
+                            .build()).toList();
+                }
+            }
+        }
+```
+
+然后是当Redis中不为空的时候的操作，根据userID查找其关注列表，然后封装为返回对象后返回，利用ThreadPoolTaskExecutor异步去同步redis，将查询的关注列表数据同步到Redis的操作，我们在关注接口的时候就已经写过了，利用之前的Lua脚本，直接使用即可
+
+```Lua
+Lua脚本follow_batch_add_and_expire.lua
+
+-- 操作的 Key
+local key = KEYS[1]
+
+-- 准备批量添加数据的参数
+local zaddArgs = {}
+
+-- 遍历 ARGV 参数，将分数和值按顺序插入到 zaddArgs 变量中
+for i = 1, #ARGV - 1, 2 do
+    table.insert(zaddArgs, ARGV[i])      -- 分数（关注时间）
+    table.insert(zaddArgs, ARGV[i+1])    -- 值（关注的用户ID）
+end
+
+-- 调用 ZADD 批量插入数据
+redis.call('ZADD', key, unpack(zaddArgs))
+
+-- 设置 ZSet 的过期时间
+local expireTime = ARGV[#ARGV] -- 最后一个参数为过期时间
+redis.call('EXPIRE', key, expireTime)
+
+return 0
+```
+
+redis中没有数据时候的逻辑为下
+
+```Java
+else{
+                // todo 缓存中没有数据  查库 并且 异步保存到redis中
+                if(pageNo<1){
+                    pageNo = 1L;
+                }
+                LambdaQueryWrapper<Following> followingLambdaQueryWrapper = new LambdaQueryWrapper<>();
+                followingLambdaQueryWrapper.eq(Following::getUserId, userId);
+                followingLambdaQueryWrapper.orderByDesc(Following::getCreateTime);
+                followingLambdaQueryWrapper.last("limit"+" "+(pageNo-1)*limit+","+limit);
+                List<Following> followingList = followingMapper.selectList(followingLambdaQueryWrapper);
+                if(CollUtil.isNotEmpty(followingList)){
+                    // 收集ID的List
+                    List<Long> followingIdList = followingList.stream().map(Following::getFollowingUserId).distinct().toList();
+                    // 调用User模块的RPC 查询用户信息
+                    List<FindUserByIdRspDTO> userByIds = userRpcServer.findUserByIds(followingIdList);
+                    if (CollUtil.isNotEmpty(userByIds)) {
+                        resultList= userByIds.stream().map(findUserByIdRspDTO -> FindFollowingListRspVO.builder().userId(findFollowingListReqVO.getUserId())
+                                .nickname(findUserByIdRspDTO.getNickname())
+                                .avatar(findUserByIdRspDTO.getAvatar())
+                                .introduction(findUserByIdRspDTO.getDescription())
+                                .build()).toList();
+                        // TODO 异步同步到redis
+                        taskExecutor.submit(()-> syncFollowingList2Redis(userId));
+                    }
+                }
+            }
+
+
+
+/**
+     * 全量同步关注列表至 Redis 中  直接套用之前的Lua脚本即可
+     */
+    private void syncFollowingList2Redis(Long userId) {
+        LambdaQueryWrapper<Following> followingLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        followingLambdaQueryWrapper.eq(Following::getUserId, userId);
+        List<Following> followingList = followingMapper.selectList(followingLambdaQueryWrapper);
+        if(CollUtil.isNotEmpty(followingList)){
+            String redisKey = RedisConstant.getFollowingKey(String.valueOf(userId));
+            long expireSeconds = 60*60*24 + RandomUtil.randomInt(60*60*24);
+            // 和之前的逻辑一样 利用方法构建redisLua脚本所需要的参数格式
+            Object[] luaArgs = buildLuaArgs(followingList, expireSeconds);
+            DefaultRedisScript<Long> script = new DefaultRedisScript<>();
+            script.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/follow_batch_add_and_expire.lua")));
+            script.setResultType(Long.class);
+            redisTemplate.execute(script, Collections.singletonList(redisKey), luaArgs);
+        }
+    }
+```
+
+所以最终 整体的关注列表的Service如下
+
+```java 
+@Override
+    public Response<?> list(FindFollowingListReqVO findFollowingListReqVO) {
+        Long pageNo = findFollowingListReqVO.getPageNo();
+        Long userId = findFollowingListReqVO.getUserId();
+        // 先从redis中查询
+        String redisUserInfoKey = RedisConstant.getFollowingKey(String.valueOf(userId));
+        Long total = redisTemplate.opsForZSet().zCard(redisUserInfoKey);
+        // 每页展示 10 条数据
+        long limit = 10;
+        List<FindFollowingListRspVO> resultList = null;
+        if(total>0) {
+            // 说明有数据
+            // 计算一共多少页
+            long totalPage = PageResponse.getTotalPage(total, limit);
+            // 请求的页码超出了总页数
+            if (pageNo > totalPage) {
+                return PageResponse.success(null, pageNo, total);
+            }
+            // 拿取对应的数据进行返回
+            long offset = (pageNo - 1) * limit;
+            // Set<Object> range = redisTemplate.opsForZSet().range(redisUserInfoKey, offset, offset + limit - 1);
+            // 使用 ZREVRANGEBYSCORE 命令（该命令返回的set集合是key的每一个value数值 而不是value的分数  所以直接返回了followingUserId）按 score 降序获取元素，同时使用 LIMIT 子句实现分页
+            // 注意：这里使用了 Double.POSITIVE_INFINITY 和 Double.NEGATIVE_INFINITY 作为分数范围
+            // 因为关注列表最多有 1000 个元素，这样可以确保获取到所有的元素
+            Set<Object> followingUserIdsSet = redisTemplate.opsForZSet()
+                    .reverseRangeByScore(redisUserInfoKey, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, offset, limit);
+            if (CollUtil.isNotEmpty(followingUserIdsSet)) {
+                // 如果不为空 拿去数据封装返回即可
+                // 提取所有用户 ID 到集合中
+                List<Long> userIds = followingUserIdsSet.stream().map(object -> Long.valueOf(object.toString())).toList();
+                List<FindUserByIdRspDTO> findUserByIdRspDTOS = userRpcServer.findUserByIds(userIds);
+                if (CollUtil.isNotEmpty(findUserByIdRspDTOS)) {
+                    resultList = findUserByIdRspDTOS.stream().map(findUserByIdRspDTO -> FindFollowingListRspVO.builder().userId(findFollowingListReqVO.getUserId())
+                            .nickname(findUserByIdRspDTO.getNickname())
+                            .avatar(findUserByIdRspDTO.getAvatar())
+                            .introduction(findUserByIdRspDTO.getDescription())
+                            .build()).toList();
+                }
+            }
+        }else{
+                // todo 缓存中没有数据  查库 并且 异步保存到redis中
+                if(pageNo<1){
+                    pageNo = 1L;
+                }
+                LambdaQueryWrapper<Following> followingLambdaQueryWrapper = new LambdaQueryWrapper<>();
+                followingLambdaQueryWrapper.eq(Following::getUserId, userId);
+                followingLambdaQueryWrapper.orderByDesc(Following::getCreateTime);
+                followingLambdaQueryWrapper.last("limit"+" "+(pageNo-1)*limit+","+limit);
+                List<Following> followingList = followingMapper.selectList(followingLambdaQueryWrapper);
+                if(CollUtil.isNotEmpty(followingList)){
+                    // 收集ID的List
+                    List<Long> followingIdList = followingList.stream().map(Following::getFollowingUserId).distinct().toList();
+                    // 调用User模块的RPC 查询用户信息
+                    List<FindUserByIdRspDTO> userByIds = userRpcServer.findUserByIds(followingIdList);
+                    if (CollUtil.isNotEmpty(userByIds)) {
+                        resultList= userByIds.stream().map(findUserByIdRspDTO -> FindFollowingListRspVO.builder().userId(findFollowingListReqVO.getUserId())
+                                .nickname(findUserByIdRspDTO.getNickname())
+                                .avatar(findUserByIdRspDTO.getAvatar())
+                                .introduction(findUserByIdRspDTO.getDescription())
+                                .build()).toList();
+                        // TODO 异步同步到redis
+                        taskExecutor.submit(()-> syncFollowingList2Redis(userId));
+                    }
+                }
+            }
+        return PageResponse.success(resultList, pageNo, total);
+    }
+```
+
+# 粉丝列表接口编写
+
+首先是需求分析  粉丝列表接口中需要返回的数据有**头像 昵称 粉丝数  笔记数**
+
+![image-20241015185719375](../../ZealSingerBook/img/image-20241015185719375.png)
+
+入参
+
+```json
+{
+	"userId":"",  //用户ID
+	"pageNo":""   //当前页
+}
+```
+
+出参
+
+```json
+{
+	"success": true,
+	"message": null,
+	"errorCode": null,
+	"data": [
+		{
+			"userId": 101, // 用户ID
+			"avatar": "http://127.0.0.1:9000/xiaohashu/f22e21fb0c144c088bd20bc616916ff3.jpg", // 头像
+			"nickname": "犬小哈", // 昵称
+			"fansTotal": 0, // 粉丝总量
+			"noteTotal": 0 // 笔记总量
+		},
+		{
+			"userId": 28,
+			"avatar": null,
+			"nickname": "小红薯10100",
+			"fansTotal": 0,
+			"noteTotal": 0
+		}
+	],
+	"pageNo": 1,
+	"totalCount": 3,
+	"pageSize": 10,
+	"totalPage": 1
+}
+
+```
+
+首先创建好对应的出参入参实体类
+
+![image-20241015191430443](../../ZealSingerBook/img/image-20241015191430443.png)
+
+![image-20241015191421749](../../ZealSingerBook/img/image-20241015191421749.png)
+
+然后是主要逻辑，顺序还是那一套：先查缓存，缓存有则返回，没有则查库后返回

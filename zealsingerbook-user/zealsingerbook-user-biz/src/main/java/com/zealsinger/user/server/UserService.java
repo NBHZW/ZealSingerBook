@@ -24,4 +24,6 @@ public interface UserService extends IService<User> {
     Response<?> findById(FindUserByIdReqDTO findUserByIdReqDTO);
 
     Response<Boolean> checkUserExist(CheckUserExistReqDTO checkUserExistReqDTO);
+
+    Response<?> findByIds(FindUsersByIdsReqDTO findUsersByIdsReqDTO);
 }

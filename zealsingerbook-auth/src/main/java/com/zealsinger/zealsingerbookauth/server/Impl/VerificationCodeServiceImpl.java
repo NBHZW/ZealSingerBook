@@ -54,7 +54,8 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
         log.info("成功向手机号 {}  发送验证码 {} , 有效期 3min",phone,code);
         // 存入redis并且设置过期时间
-        redisTemplate.opsForValue().set(redisKey,intCode,3, TimeUnit.MINUTES);
+        // redisTemplate.opsForValue().set(redisKey,intCode,3, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(redisKey,intCode);
         return Response.success();
     }
 }

@@ -1,5 +1,6 @@
 package com.zealsinger.user.server.Impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -17,6 +18,7 @@ import com.zealsinger.book.framework.common.utils.JsonUtil;
 import com.zealsinger.book.framework.common.utils.ParamUtils;
 import com.zealsinger.frame.filter.LoginUserContextHolder;
 import com.zealsinger.oss.api.FileFeignApi;
+import com.zealsinger.user.constant.RedisConstants;
 import com.zealsinger.user.constant.RoleConstants;
 import com.zealsinger.user.domain.entity.Role;
 import com.zealsinger.user.domain.entity.User;
@@ -36,6 +38,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.common.util.report.qual.ReportUse;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
@@ -44,9 +49,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -273,6 +282,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .id(user.getId())
                 .avatar(user.getAvatar())
                 .nickname(user.getNickname())
+                .description(user.getIntroduction())
                 .build();
 
         //异步缓存数据 防止阻塞主线程  一分钟+随机数 防止雪崩
@@ -302,5 +312,74 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return Response.success(false);
         }
         return Response.success(true);
+    }
+
+    @Override
+    public Response<?> findByIds(FindUsersByIdsReqDTO findUsersByIdsReqDTO) {
+        // 获取所有的userId
+        List<Long> userIdList = findUsersByIdsReqDTO.getIds();
+        // 通过ID获取所有的redisKey列表
+        List<String> redisKeyList = userIdList.stream().map(aLong -> RedisConstant.getUserInfoKey(aLong)).toList();
+        // 通过multiGet方法批量获取key所对应的value
+        List<Object> redisValues = redisTemplate.opsForValue().multiGet(redisKeyList);
+        // 如果缓存中不为空
+        if (CollUtil.isNotEmpty(redisValues)) {
+            // 过滤掉为空的数据
+            redisValues = redisValues.stream().filter(Objects::nonNull).toList();
+        }
+        // 返参列表
+        List<FindUserByIdRspDTO> findUserByIdRspDTOS = Lists.newArrayList();
+
+        // 将过滤后的缓存集合，转换为 DTO 返参实体类
+        if (CollUtil.isNotEmpty(redisValues)) {
+            findUserByIdRspDTOS = redisValues.stream()
+                    .map(value -> JsonUtil.JsonStringToObj(String.valueOf(value), FindUserByIdRspDTO.class))
+                    .toList();
+        }
+
+        // 比对缓存中的数据个数和需要的数据个数  如果相同则说明redis都有数据 直接返回redis中的数据
+        if(findUserByIdRspDTOS.size()== userIdList.size()){
+            return Response.success(findUserByIdRspDTOS);
+        }
+        // 如果不等于 那么一定小于  小于的话两种情况 如果redis中查出来为null 则直接查库；如果不为null，则说明redis中只有部分数据，需要补充后再返回
+        List<Long> userIdsNeedQuery = null;
+        if(CollUtil.isNotEmpty(findUserByIdRspDTOS)){
+            // 不为空 则说明redis缓存中有部分数据 补充即可
+            // userID为key 本身FindUserByIdsRsp作为value 保存为map集合
+            Map<Long, FindUserByIdRspDTO> collect = findUserByIdRspDTOS.stream().collect(Collectors.toMap(FindUserByIdRspDTO::getId, p -> p));
+            // 筛选出Map中没有 但是入参userIdList中有的，也就是还需要从数据库中查询的数据
+            userIdsNeedQuery = userIdList.stream().filter(aLong -> Objects.isNull(collect.get(aLong))).toList();
+        }else{
+            // redis中查出来为null  则说明只能从库中找
+            userIdsNeedQuery = userIdList;
+        }
+        List<User> users = userMapper.selectBatchIds(userIdsNeedQuery);
+        List<FindUserByIdRspDTO> needList = Lists.newArrayList();
+        if(CollUtil.isNotEmpty(users)){
+            needList = users.stream().map(user -> FindUserByIdRspDTO.builder().id(user.getId())
+                    .nickname(user.getNickname())
+                    .avatar(user.getAvatar())
+                    .description(user.getIntroduction()).build()).toList();
+            // 走到这里 肯定说明redis中还少数据 异步将数据补充到redis中
+            List<FindUserByIdRspDTO> finalNeedList = needList;
+            threadPoolTaskExecutor.submit(()->{
+                Map<Long, FindUserByIdRspDTO> redisMap = finalNeedList.stream().collect(Collectors.toMap(FindUserByIdRspDTO::getId, p -> p));
+                redisTemplate.executePipelined((RedisCallback<Void>) connection -> {
+                    for (Long l : userIdList) {
+                        FindUserByIdRspDTO value = redisMap.get(l);
+                        String key = RedisConstant.getUserInfoKey(l);
+                        String valueStr = JsonUtil.ObjToJsonString(value);
+                        // 过期时间（保底1天 + 随机秒数，将缓存过期时间打散，防止同一时间大量缓存失效，导致数据库压力太大）
+                        long expireSeconds = 60*60*24 + RandomUtil.randomInt(60*60*24);
+                        redisTemplate.opsForValue().set(key,valueStr,expireSeconds,TimeUnit.SECONDS);
+                    }
+                    return null;
+                });
+            });
+        }
+        if(CollUtil.isNotEmpty(needList)){
+            findUserByIdRspDTOS.addAll(needList);
+        }
+        return Response.success(findUserByIdRspDTOS);
     }
 }

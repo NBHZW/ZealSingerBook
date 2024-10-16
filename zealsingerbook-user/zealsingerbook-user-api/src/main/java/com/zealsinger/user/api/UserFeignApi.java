@@ -8,6 +8,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 
 /**
  * 文件服务feign接口
@@ -37,4 +39,8 @@ public interface UserFeignApi {
 
     @PostMapping(value = PREFIX + "/checkUserExist")
     Response<Boolean> checkUserExist(@RequestBody CheckUserExistReqDTO checkUserExistReqDTO);
+
+    @PostMapping("/findByIds")
+    Response<List<FindUserByIdRspDTO>> findByIds(@Validated @RequestBody FindUsersByIdsReqDTO findUsersByIdsReqDTO);
+
 }

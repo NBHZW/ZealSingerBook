@@ -58,8 +58,23 @@ public class UserController {
         return userService.findById(findUserByIdReqDTO);
     }
 
+    /**
+     * 检测用户ID是否合理
+     * @param checkUserExistReqDTO
+     * @return
+     */
     @PostMapping("/checkUserExist")
     Response<Boolean> checkUserExist(@RequestBody CheckUserExistReqDTO checkUserExistReqDTO){
         return userService.checkUserExist(checkUserExistReqDTO);
+    }
+
+    /**
+     * 批量查询用户信息 用于关注列表
+     * @param findUsersByIdsReqDTO
+     * @return
+     */
+    @PostMapping("/findByIds")
+    public Response<?> findByIds(@Validated @RequestBody FindUsersByIdsReqDTO findUsersByIdsReqDTO){
+        return userService.findByIds(findUsersByIdsReqDTO);
     }
 }

@@ -30,10 +30,10 @@ spring:
             - StripPrefix=1
   data:
     redis:
-      database: 12
-      host: 111.229.213.244
+      database: 0
+      host: 192.168.17.131
       port: 6379
-      password: R8saMAsKc4GvC9ED
+      password: zealsingerredis
       connect-timeout: 10s
       timeout: 10s
       lettuce:
