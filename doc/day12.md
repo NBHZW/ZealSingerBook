@@ -1759,3 +1759,101 @@ else{
 ![image-20241015191421749](../../ZealSingerBook/img/image-20241015191421749.png)
 
 然后是主要逻辑，顺序还是那一套：先查缓存，缓存有则返回，没有则查库后返回
+
+```Java
+/**
+     * 返回粉丝列表
+     * @param findFansListReqVO
+     * @return
+     */
+    @Override
+    public Response<?> findFansListReqVO(FindFansListReqVO findFansListReqVO) {
+        Long userId = findFansListReqVO.getUserId();
+        Long pageNo = findFansListReqVO.getPageNo();
+        if(pageNo < 1){
+            pageNo =1L ;
+        }
+        String fansKey = RedisConstant.getFansKey(String.valueOf(userId));
+        Long total = redisTemplate.opsForZSet().zCard(fansKey);
+        long limit = 10;
+        List<FindFansListRspVO> resultList = null;
+        if(total > 0){
+            // 说明缓存中有数据
+            if(pageNo > total) {
+                return PageResponse.success(null, pageNo, total);
+            }
+            long offset = (pageNo - 1) * limit;
+            Set<Object> redisObjectList = redisTemplate.opsForZSet().reverseRangeByScore(fansKey, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, offset, limit);
+            if(CollUtil.isNotEmpty(redisObjectList)) {
+                List<Long> fansUserIdList = redisObjectList.stream().map(object -> Long.valueOf(object.toString())).toList();
+                List<FindUserByIdRspDTO> userByIds = userRpcServer.findUserByIds(fansUserIdList);
+                if (CollUtil.isNotEmpty(userByIds)) {
+                    resultList = userByIds.stream().map(findUserByIdRspDTO -> FindFansListRspVO.builder().userId(findUserByIdRspDTO.getId())
+                            .avatar(findUserByIdRspDTO.getAvatar())
+                            // TODO 计数模块再补充这两个数据
+                            .fansCount(null)
+                            .noteCount(null)
+                            .build()).toList();
+                }
+            }
+        }else{
+            LambdaQueryWrapper<Fans> fansLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            // 查询数据库返回 异步同步到redis中
+            Long fansTotal = fansMapper.selectCount(fansLambdaQueryWrapper.eq(Fans::getUserId, userId));
+            // 粉丝数量是无上限的  防止返回过多和恶意攻击  之前有做限定 不能大于500页
+            if(pageNo > fansTotal || pageNo > 500) {
+                return PageResponse.success(null, pageNo, total);
+            }
+            // 返回前500的数据 到这里能确定pageNo小于500
+            fansLambdaQueryWrapper.orderByDesc(Fans::getCreateTime);
+            fansLambdaQueryWrapper.last("limit"+" "+(pageNo-1)*limit+","+limit);
+            List<Fans> fansList = fansMapper.selectList(fansLambdaQueryWrapper);
+            if(CollUtil.isNotEmpty(fansList)){
+                List<Long> fansIdList = fansList.stream().map(Fans::getFansUserId).distinct().toList();
+                List<FindUserByIdRspDTO> userByIds = userRpcServer.findUserByIds(fansIdList);
+                if (CollUtil.isNotEmpty(userByIds)) {
+                    resultList = userByIds.stream().map(findUserByIdRspDTO -> FindFansListRspVO.builder().userId(findUserByIdRspDTO.getId())
+                            .avatar(findUserByIdRspDTO.getAvatar())
+                            // TODO 计数模块再补充这两个数据
+                            .fansCount(null)
+                            .noteCount(null)
+                            .build()).toList();
+                    // 异步将粉丝数据同步到redis中
+                    taskExecutor.submit(()-> syncFansList2Redis(userId));
+                }
+            }
+        }
+        return PageResponse.success(resultList, pageNo, total);
+    }
+
+    private void syncFansList2Redis(Long userId) {
+        LambdaQueryWrapper<Fans> fansLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        fansLambdaQueryWrapper.eq(Fans::getUserId, userId);
+        fansLambdaQueryWrapper.orderByDesc(Fans::getCreateTime);
+        fansLambdaQueryWrapper.last("limit"+" "+0+" , "+ 5000);
+        List<Fans> fansList = fansMapper.selectList(fansLambdaQueryWrapper);
+        if(CollUtil.isNotEmpty(fansList)){
+            long expireSeconds = 60*60*24 + RandomUtil.randomInt(60*60*24);
+            Object[] luaArgs = buildFansLuaArgs(fansList, expireSeconds);
+            // 执行 Lua 脚本，批量同步关注关系数据到 Redis 中
+            DefaultRedisScript<Long> script = new DefaultRedisScript<>();
+            script.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/follow_batch_add_and_expire.lua")));
+            script.setResultType(Long.class);
+            redisTemplate.execute(script, Collections.singletonList(RedisConstant.getFansKey(String.valueOf(userId))), luaArgs);
+        }
+    }
+
+    private Object[] buildFansLuaArgs(List<Fans> list,long expireSeconds){
+        int len = list.size()*2+1;
+        Object[] args = new Object[len];
+        int i =0 ;
+        for (Fans fans : list) {
+            args[i] = DateUtils.localDateTime2Timestamp(fans.getCreateTime());
+            args[i+1] = fans.getFansUserId();
+            i+=2;
+        }
+        args[len-1] = expireSeconds;
+        return args;
+    }
+```
+

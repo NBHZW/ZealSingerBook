@@ -355,7 +355,7 @@ public class UserRelationServerImpl implements UserRelationServer {
             fansLambdaQueryWrapper.last("limit"+" "+(pageNo-1)*limit+","+limit);
             List<Fans> fansList = fansMapper.selectList(fansLambdaQueryWrapper);
             if(CollUtil.isNotEmpty(fansList)){
-                List<Long> fansIdList = fansList.stream().map(Fans::getUserId).distinct().toList();
+                List<Long> fansIdList = fansList.stream().map(Fans::getFansUserId).distinct().toList();
                 List<FindUserByIdRspDTO> userByIds = userRpcServer.findUserByIds(fansIdList);
                 if (CollUtil.isNotEmpty(userByIds)) {
                     resultList = userByIds.stream().map(findUserByIdRspDTO -> FindFansListRspVO.builder().userId(findUserByIdRspDTO.getId())

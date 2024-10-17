@@ -2,6 +2,7 @@ package com.zealsinger.user.relation.consumer;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.util.concurrent.RateLimiter;
+import com.zealsinger.book.framework.common.constant.MQConstant;
 import com.zealsinger.book.framework.common.utils.DateUtils;
 import com.zealsinger.book.framework.common.utils.JsonUtil;
 import com.zealsinger.user.relation.constant.RedisConstant;
@@ -32,7 +33,7 @@ import java.util.Objects;
 
 @Component
 @Slf4j
-@RocketMQMessageListener(consumerGroup = "zealsingerbook_group",
+@RocketMQMessageListener(consumerGroup = "zealsingerbook_group"+ MQConstant.FOLLOW_AND_UNFOLLOW,
         topic = RocketMQConstant.TOPIC_FOLLOW_OR_UNFOLLOW,
         consumeMode = ConsumeMode.ORDERLY)
 public class FollowAndUnFollowConsumer implements RocketMQListener<Message> {

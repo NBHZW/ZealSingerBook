@@ -40,7 +40,7 @@ public interface UserFeignApi {
     @PostMapping(value = PREFIX + "/checkUserExist")
     Response<Boolean> checkUserExist(@RequestBody CheckUserExistReqDTO checkUserExistReqDTO);
 
-    @PostMapping("/findByIds")
+    @PostMapping(value = PREFIX + "/findByIds")
     Response<List<FindUserByIdRspDTO>> findByIds(@Validated @RequestBody FindUsersByIdsReqDTO findUsersByIdsReqDTO);
 
 }
