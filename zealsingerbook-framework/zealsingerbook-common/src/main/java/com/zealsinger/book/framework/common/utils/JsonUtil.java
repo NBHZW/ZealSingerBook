@@ -1,11 +1,14 @@
 package com.zealsinger.book.framework.common.utils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.commons.lang3.StringUtils;
 import lombok.SneakyThrows;
+
+import java.util.Map;
 
 public class JsonUtil {
     /**
@@ -44,5 +47,24 @@ public class JsonUtil {
             return OBJECT_MAPPER.readValue(json, clazz);
         }
         return null;
+    }
+
+    /**
+     * 将 JSON 字符串转换为 Map
+     * @param jsonStr
+     * @param keyClass
+     * @param valueClass
+     * @return
+     * @param <K>
+     * @param <V>
+     * @throws Exception
+     */
+    public static <K, V> Map<K, V> parseMap(String jsonStr, Class<K> keyClass, Class<V> valueClass) throws Exception {
+        // 创建 TypeReference，指定泛型类型
+        TypeReference<Map<K, V>> typeRef = new TypeReference<Map<K, V>>() {
+        };
+
+        // 将 JSON 字符串转换为 Map
+        return OBJECT_MAPPER.readValue(jsonStr, OBJECT_MAPPER.getTypeFactory().constructMapType(Map.class, keyClass, valueClass));
     }
 }

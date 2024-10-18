@@ -1,5 +1,5 @@
 server:
-  port: 8082 # 项目启动的端口
+  port: 8089 # 项目启动的端口
 
 spring:
   servlet:
@@ -17,4 +17,6 @@ mybatis:
 rate-limit:
   api:
     limit: 100 # 接口限流阈值
-    
+
+
+

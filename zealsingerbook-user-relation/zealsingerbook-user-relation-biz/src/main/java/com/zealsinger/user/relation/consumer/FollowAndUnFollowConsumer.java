@@ -7,22 +7,28 @@ import com.zealsinger.book.framework.common.utils.DateUtils;
 import com.zealsinger.book.framework.common.utils.JsonUtil;
 import com.zealsinger.user.relation.constant.RedisConstant;
 import com.zealsinger.user.relation.constant.RocketMQConstant;
+import com.zealsinger.user.relation.domain.dto.CountFollowUnfollowMqDTO;
 import com.zealsinger.user.relation.domain.dto.MqFollowUserDTO;
 import com.zealsinger.user.relation.domain.dto.MqUnFollowUserDTO;
 import com.zealsinger.user.relation.domain.entity.Fans;
 import com.zealsinger.user.relation.domain.entity.Following;
-import com.zealsinger.user.relation.domain.enums.LuaResultEnum;
+import com.zealsinger.user.relation.domain.enums.FollowUnfollowTypeEnum;
 import com.zealsinger.user.relation.mapper.FansMapper;
 import com.zealsinger.user.relation.mapper.FollowingMapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.hibernate.validator.internal.constraintvalidators.bv.number.bound.decimal.DecimalMaxValidatorForLong;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -52,6 +58,10 @@ public class FollowAndUnFollowConsumer implements RocketMQListener<Message> {
 
     @Resource
     private RedisTemplate<String,Object> redisTemplate;
+
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
+    private DecimalMaxValidatorForLong decimalMaxValidatorForLong;
 
     @Override
     public void onMessage(Message message) {
@@ -102,6 +112,8 @@ public class FollowAndUnFollowConsumer implements RocketMQListener<Message> {
         Boolean isSuccess = transactionTemplate.execute(status -> {
             try {
                 followingMapper.insert(following);
+                Fans fans = Fans.builder().userId(followUserId).fansUserId(userId).createTime(followTime).build();
+                fansMapper.insert(fans);
                 return true;
             } catch (Exception e) {
                 status.setRollbackOnly();
@@ -123,12 +135,15 @@ public class FollowAndUnFollowConsumer implements RocketMQListener<Message> {
             script.setResultType(Long.class);
             long timestamp = DateUtils.localDateTime2Timestamp(followTime);
             redisTemplate.execute(script, Collections.singletonList(fansKey), userId, timestamp);
-            Fans fans = Fans.builder().userId(followUserId).fansUserId(userId).createTime(followTime).build();
-            fansMapper.insert(fans);
+
+            // TODO 发送消息给关注数和粉丝数计数模块消息
+            CountFollowUnfollowMqDTO followUnfollowMqDTO = CountFollowUnfollowMqDTO.builder().userId(mqFollowUserDTO.getUserId())
+                    .targetUserId(mqFollowUserDTO.getFollowUserId())
+                    .type(FollowUnfollowTypeEnum.FOLLOW.getValue())
+                    .build();
+            sendCountMqMessage(followUnfollowMqDTO);
+
         }
-
-
-
     }
 
 
@@ -155,7 +170,6 @@ public class FollowAndUnFollowConsumer implements RocketMQListener<Message> {
                 fansLambdaQueryWrapper.eq(Fans::getUserId, unfollowUserId);
                 fansLambdaQueryWrapper.eq(Fans::getFansUserId, userId);
                 fansMapper.delete(fansLambdaQueryWrapper);
-
                 return true;
             } catch (Exception e) {
                 return false;
@@ -166,6 +180,40 @@ public class FollowAndUnFollowConsumer implements RocketMQListener<Message> {
         if(Boolean.TRUE.equals(executeSuccess)){
             String fansKey  = RedisConstant.getFansKey(String.valueOf(unfollowUserId));
             redisTemplate.opsForZSet().remove(fansKey,userId);
+            // 发送MQ给计数模块
+            CountFollowUnfollowMqDTO followUnfollowMqDTO = CountFollowUnfollowMqDTO.builder().userId(Long.valueOf(userId))
+                    .targetUserId(Long.valueOf(unfollowUserId))
+                    .type(FollowUnfollowTypeEnum.UNFOLLOW.getValue())
+                    .build();
+            sendCountMqMessage(followUnfollowMqDTO);
         }
+    }
+
+    public void sendCountMqMessage(CountFollowUnfollowMqDTO countFollowUnfollowMqDTO){
+        org.springframework.messaging.Message<String> message= MessageBuilder.withPayload(JsonUtil.ObjToJsonString(countFollowUnfollowMqDTO)).build();
+        rocketMQTemplate.asyncSend(RocketMQConstant.TOPIC_COUNT_FOLLOWING, message, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("### 关注计数模块 MQ消费成功");
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.info("### 关注计数模块 MQ消费失败");
+            }
+        });
+
+        rocketMQTemplate.asyncSend(RocketMQConstant.TOPIC_COUNT_FANS, message, new SendCallback() {
+
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("### 粉丝计数模块 MQ消费成功");
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.info("### 粉丝计数模块 MQ消费成功");
+            }
+        });
     }
 }

@@ -5,6 +5,12 @@
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-auth/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-auth/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-count/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-count/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count.api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count.api/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-framework/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-framework/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zealsingerbook-framework/zealsinger-bizcontext-spring-boot-starter/src/main/java" charset="UTF-8" />
