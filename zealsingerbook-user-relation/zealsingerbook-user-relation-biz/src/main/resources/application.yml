@@ -24,6 +24,6 @@ logging:
 
 mq-consumer: # MQ 消费者
   follow-unfollow: # 关注、取关
-    rate-limit: 10 # 每秒限流阈值
+    rate-limit: 1000 # 每秒限流阈值
 
     

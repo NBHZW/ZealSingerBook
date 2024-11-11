@@ -700,3 +700,475 @@ public class CountFollowDBConsumer implements RocketMQListener<String> {
 
 ```
 
+# 笔记点赞计数
+
+对应小红书的界面
+
+![image-20241021143629579](../../ZealSingerBook/img/image-20241021143629579.png)
+
+用户点赞某笔记，调用后端笔记点赞接口，若服务响应success为true，则说明点赞成功，前端能一直知道点赞数目，第二次进入也不需要再次请求就能知道小红心是否需要点亮，标识该毕竟已经被当前用户点赞过，并请求笔记详情接口返回点赞总数并展示，前端自行进行计数+1的操作
+
+另外，自己点赞过的用户，能查看到点赞的列表（需要注意 只有自己能看到自己点赞过的  别人是看不到）
+
+![image-20241021144053191](../../ZealSingerBook/img/image-20241021144053191.png)
+
+![image-20241021144144287](../../ZealSingerBook/img/image-20241021144144287.png)
+
+## 点赞列表设计
+
+及时自己只能看自己的列表，但是**每个人点赞的数量是没有上限的**，当有多个用户在线，同时查看自己点赞列表的时候，全部直接走数据库依旧是不小的负担，所以**依旧需要缓存层**
+
+点赞列表有如下特点：
+
+**点赞需要查看按照时间排序，一般用户都是喜欢查看最近点赞的作品，但是很久之前的其实一般曝光率比较低**
+
+在我们的点赞列表中，前端依旧是采用流式布局，后端自然也是分页查询 ， 然后**前面几页我们进行缓存，当超出一定页数之后我们在进行查库操作**
+
+![image-20241021145841845](../../ZealSingerBook/img/image-20241021145841845.png)
+
+## 是否点赞条件判断设计
+
+可以看到上面的流程图，在正式更新点赞数据之前，需要判断 **笔记ID的合理性** 和 **是否已经点赞过** 
+
+对于这两个判断，笔记ID的合理性比较简单，直接查库就行，因为只要查一次，压力也不会很大
+
+但是对于的是否已经被点赞过的条件判断，我们需要考虑一下，暂且有如下方案
+
+### 直接查库
+
+最简单直接的，每个用户发起的点赞保存到数据库中（记录一个点赞表 userId-noteId对照关系），每次点赞的时候查询数据库中是否有该数据
+
+**优点：实现简单，适合小规模操作的点赞**
+
+**缺点：并发承受力小，查询和写入性能低**
+
+### Redis Set存储点赞记录
+
+使用Redis的Set结构存储，每个用户对应一个Set，点赞过的笔记NoteId存放到对应的set中，每次点赞查询set中是否存在该数据即可
+
+基本步骤如下
+
+**使用Redis的SISMEMBER指令判断是否点赞过 ； 如果点赞过返回对应的提示 ； 如果没点赞过使用Add添加**
+
+优点：快，简单实现
+
+缺点：因为点赞数据肯定要持久化，userId 和 nodeId都是Long类型，那么一共就是n个8字节，假设一个用户点赞1000篇，一亿用户，那么就是约等于90+GB，对于内存型的redis肯定是不适合的，内存昂贵
+
+### Redis BitMap
+
+Redis的BitMap是一种基于位操作的结构，可以高效的存储某一个集合内的信息，在我们的场景下，可以每个用户维护一个BitMap，每一位对应一个笔记NoteId，0/1标识是否给该笔记点赞
+
+```
+Long noteID = x;
+SETBIT userID  noteID 1
+```
+
+基本步骤为：**GETBIT判断是否点赞过 ； SETBIT 1 将noteId对应的位变为1标识点赞** 
+
+**优点：内存占用少，查询效率高**
+
+**缺点：需要合理的设计NoteId和位图偏移策略，BitMap的操作局限在二进制的0/1无法进行多维数据的操作，并且在我们当前的业务场景中，我们的笔记ID是雪花算法算出来的1+41+5+5+12=64位，而Readis中的BitMap位图最大偏移量位为无符号32位整数，所以我们当前场景是无法使用BitMap的**
+
+### 布隆过滤器
+
+Redis Set其实除了内存问题是一个比较好的选择，而布隆过滤器可以有效的减少存储空间，布隆过滤器底层使用通过Hash数值的计算判断是否存在，存在一定的误判（布隆过滤器中有的不一定有，布隆过滤器中没有的一定没有）
+
+- > 1. **为每个用户点赞列表初始化一个布隆过滤器，并在每次点赞笔记时，将笔记 ID 入到该布隆过滤器中；**
+  > 2. **使用 `Bloom Filter` 的 `BF.EXISTS` 命令判断笔记是否已经点赞过；**
+  > 3. **如果返回未点赞（不存在误报），则继续执行后续点赞逻辑；若返回已点赞（可能有误报），则需要进一步确认是否已点赞。**
+
+- **优点：显著减少内存消耗，适合海量用户场景。**
+
+- **缺点：对于已点赞笔记，存在一定的误判（对未点赞的笔记判断，则绝对正确）。**
+
+#### 布隆过滤器简介
+
+其本质就是**二进制的数组**  也就是0/1数组  **如果数据存在那么为1 不存在为0**
+
+![image-20241021204826685](../../ZealSingerBook/img/image-20241021204826685.png)
+
+**布隆过滤器会将要存入的数据value，经过多个Hash函数（试图中为三个 实际上不一定）），也就是对应的不同的哈希算法得出value的多个Hash值,然后将对应的Hash值的数组中的下标位置为1**
+
+**从上述存入的逻辑，我们可以推出查询的逻辑，将需要查询的数也按照Hash函数算出多个Hash值，然后检测对应的所有下标位置的元素是否全部为1  只要有一个 不为1那么就说明不存在，反之则说明存在**
+
+![image-20241021205015976](../../ZealSingerBook/img/image-20241021205015976.png)
+
+**但是同时也需要知道，既然放入数据是通过Hash计算的，必然会出现Hash冲突，也就是多个数据会操作同一个数组下标位置的数据，如下，假设"你好"和“Hello”都映射到了索引为2的位置的数据,此时下标为2的位置的1其实代表了存了两个数据，但是当我们删除某一个的时候，该位置变为0，其实说明沃尔玛呢同时删除了"你好"和“Hello”两个数据，所以一般情况下是不会删除布隆过滤器中的数据的**
+
+![image-20241021205545870](../../ZealSingerBook/img/image-20241021205545870.png)
+
+因为是基于数组的，**布隆过滤器的速度极快**，每个数据对应的Hash值，然后直接数组中操作下标位置，每个hash函数对应一个Hash值，对应操作一个角标位置，每一个时间复杂度为O（1），如果有K个哈希函数，那么时间总复杂度就是**O（K）**
+
+除此之外，**占用空间少**，然后因为存储的是0和1而不应是原来的数据，所以**保密性也很好**
+
+**布隆过滤器一个很大的也是不可避免的问题就是误判，如上，假设"你好"和“Hello”都映射到了索引为2的位置的数据，那么先存入”Hello”让下标为2的位置变为1，此时来判断“”你好”是否存在，因为二者映射关系一样，所以判断依据也是看下标为2的位置是否为1，但是因为“Hello”的存在导致确实为1就会认为存在，但实际上不存在，也就出现了误判**
+
+![image-20241021205956836](../../ZealSingerBook/img/image-20241021205956836.png)
+
+**为了降低误判率，所以才会有多个Hash函数，多个Hash值全部一样才算是真正的Hash碰撞，这就是为啥会要求多个Hash数值，但是同时，误判率越低，Hash越多会降低性能**
+
+再者Redis也就解决缓存穿透（缓存中和库中都没数据，一般是恶意查询）
+
+#### 安装RedisBloom
+
+```
+docker run -p 6379:6379 --name redis -v /root/Docker/redis/conf/redis.conf:/etc/redis/redis.conf -v /root/Docker/redis/data:/data -v /root/Docker/redis/modules:/etc/redis/modules -d redis:7.0.12 redis-server /etc/redis/redis.conf --appendonly yes
+```
+
+#### 指令简介
+
+```
+BF.ADD  KEY VALUE
+添加一个元素
+
+BF.EXEISTE KEY VALUE
+检测key对应的数值中是否存在vlaue
+
+BF.MADD key value1 value2.....
+批量添加
+
+BF.MEXISTS key value1 value2....
+批量检测是否存在
+```
+
+## 主要逻辑编写
+
+就按照上面流程图的顺序，**首先检测note合理性，查note无法就是查note表，但是我们查看笔记详情的时候是存在对笔记的缓存的，也是就说redis和本地缓存中其实都有可能存在数据，所以我们可以在查库之间先查缓存**
+
+```Java
+// 校验note合理性 + 是否已经点赞 + 更新点赞列表 + 发送MQ落库
+        Long noteId = likeNoteReqVO.getNoteId();
+        // 因为会存在本地缓存笔记详情，所以可以先查本地缓存
+        FindNoteByIdRspVO findNoteByIdRspVO = LOCAL_NOTEVO_CACHE.getIfPresent(String.valueOf(noteId));
+        if(Objects.isNull(findNoteByIdRspVO)){
+            // 本地缓存无 查redis
+            String noteCacheKey = RedisConstant.getNoteCacheId(String.valueOf(noteId));
+            String noteStr = redisTemplate.opsForValue().get(noteCacheKey);
+            findNoteByIdRspVO = JsonUtil.JsonStringToObj(noteStr,FindNoteByIdRspVO.class);
+            if(Objects.isNull(findNoteByIdRspVO)){
+                // 都不存在就去查库
+                LambdaQueryWrapper<Note> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(Note::getId, noteId);
+                queryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());
+                Note note = noteMapper.selectOne(queryWrapper);
+                if(note==null){
+                    throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+                }
+                // 库中存在的话 异步缓存一下笔记信息  直接调用之前写的的查询笔记详情方法从而实现同步缓存
+                threadPoolTaskExecutor.submit(()->{
+                    FindNoteByIdReqDTO build = FindNoteByIdReqDTO.builder().noteId(String.valueOf(noteId)).build();
+                    try {
+                        findById(build);
+                    } catch (ExecutionException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+            // redis中有缓存 异步存入本地缓存即可
+            FindNoteByIdRspVO finalFindNoteByIdRspVO = findNoteByIdRspVO;
+            threadPoolTaskExecutor.submit(()->{
+                LOCAL_NOTEVO_CACHE.put(String.valueOf(noteId), finalFindNoteByIdRspVO);
+            });
+        }
+```
+
+然后是对于**是否已经被点赞过的判断，因为redisTemplate不能直接操作布隆过滤器，所以我们采用Lua脚本的形式使用布隆过滤器相关的操作**
+
+
+
+```Java
+// 判断是否已经点赞
+        Long userId = LoginUserContextHolder.getUserId();
+// 布隆过滤器缓存对应的key
+        String bloomKey = RedisConstant.getBloomUserNoteLikeListKey(userId);
+// 执行Lua脚本  作用是检测是否存在数据
+        DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
+        redisScript.setResultType(Long.class);
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/bloom_note_like_check.lua")));
+// 获得执行结果
+        Long result = redisTemplate.execute(redisScript, Collections.singletonList(bloomKey), noteId);
+        NoteBloomLuaResultEnmu resultEnmu = NoteBloomLuaResultEnmu.valueOf(result);
+// 对结果进行判断 从而进行不同操作
+        switch (resultEnmu) {
+                // 如果在布隆过滤器中查到 那么就需要抛出已经点赞过的异常 但是因为布隆过滤器存在误判 这里还需要修改
+            case NOTE_LIKED -> throw new BusinessException(ResponseCodeEnum.NOTE_ALREADY_LIKED);
+                // 这里是说明布隆过滤器不存在 也就是reids中不存在bloomKey 那么需要初始化布隆过滤器 也需要查库验证
+            case BLOOM_NOT_EXIST -> {
+                // 查库判断是否点赞过
+                LambdaQueryWrapper<NoteLike> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(NoteLike::getUserId, userId);
+                queryWrapper.eq(NoteLike::getNoteId, noteId);
+                queryWrapper.eq(NoteLike::getStatus, LikeStatusEnum.LIKE.getCode());
+                // 先查库是否存在
+                NoteLike noteLike = noteLikeMapper.selectOne(queryWrapper);
+                long expiredSecond = 60*60*24 + RandomUtil.randomInt(60*60*24);
+                if(!Objects.isNull(noteLike)){
+                    // 存在 说明已经点赞 不能重复点 抛出异常 异步初始化布隆过滤器
+                    threadPoolTaskExecutor.submit(()->{
+                        batchAddNoteLike2BloomAndExpire(userId,expiredSecond,bloomKey);
+                    });
+                    throw new BusinessException(ResponseCodeEnum.NOTE_ALREADY_LIKED);
+                }
+                // 到这里的就是未点赞 主动初始化布隆过滤器  添加新记录 异步放入到库中
+                batchAddNoteLike2BloomAndExpire(userId,expiredSecond,bloomKey);
+                // 将新记录加入
+                DefaultRedisScript<Long> script = new DefaultRedisScript<>();
+                script.setResultType(Long.class);
+                script.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/bloom_add_like_note_and_expire.lua")));
+                redisTemplate.execute(script, Collections.singletonList(bloomKey), noteId,expiredSecond);
+            }
+            default -> {}
+        }
+```
+
+上面可以看到两个Lua文件，第一个/lua/bloom_note_like_check.lua  负责检测布隆过滤器重是否存在数据
+
+```lua
+-- LUA 脚本：点赞布隆过滤器
+
+local key = KEYS[1] -- 操作的 Redis Key
+local noteId = ARGV[1] -- 笔记ID
+
+-- 使用 EXISTS 命令检查布隆过滤器是否存在
+local exists = redis.call('EXISTS', key)
+if exists == 0 then
+    return -1
+end
+
+-- 校验该篇笔记是否被点赞过(1 表示已经点赞，0 表示未点赞)
+local isLiked = redis.call('BF.EXISTS', key, noteId)
+if isLiked == 1 then
+    return 1
+end
+
+-- 未被点赞，添加点赞数据
+redis.call('BF.ADD', key, noteId)
+return 0
+
+```
+
+/lua/bloom_add_like_note_and_expire.lua  主要负责新增新的数据设置过期时间  主要作用于当初始化布隆过滤器之后添加当前请求的点赞记录
+
+```lua
+-- 操作的 Key
+local key = KEYS[1]
+local noteId = ARGV[1] -- 笔记ID
+local expireSeconds = ARGV[2] -- 过期时间（秒）
+
+redis.call("BF.ADD", key, noteId)
+-- 设置过期时间
+redis.call("EXPIRE", key, expireSeconds)
+return 0
+
+```
+
+然后是解决上面的：布隆过滤器中判断存在的误判问题的解决，这个自然是不能容忍的，我们的结局方案是采用三重检测
+
+**Bloom过滤器 + ZSet校验 + 数据库校验方案**
+
+![image-20241022191810686](../../ZealSingerBook/img/image-20241022191810686.png)
+
+```Java
+// 布隆中已经存在 进行二次判断
+            case NOTE_LIKED -> {
+                // 多重检测之ZSET检测  检测zset中是否存在noteId的记录
+                Double score = redisTemplate.opsForZSet().score(noteLikeZSetKey, noteId);
+                if(Objects.nonNull(score)){
+                    throw new BusinessException(ResponseCodeEnum.NOTE_ALREADY_LIKED);
+                }
+                // zset中不存在数据 查库
+                LambdaQueryWrapper<NoteLike> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(NoteLike::getUserId, userId);
+                queryWrapper.eq(NoteLike::getNoteId, noteId);
+                queryWrapper.eq(NoteLike::getStatus, LikeStatusEnum.LIKE.getCode());
+                NoteLike noteLike = noteLikeMapper.selectOne(queryWrapper);
+                if(noteLike!=null){
+                    // 到这里说明数据库中存在但是zset中没有数据,zset过期 所有需要被初始化  异步初始化zset 抛出异常
+                    threadPoolTaskExecutor.execute(()->{
+                        LambdaQueryWrapper<NoteLike> lastQueryWrapper = new LambdaQueryWrapper<>();
+                        lastQueryWrapper.eq(NoteLike::getUserId, userId);
+                        lastQueryWrapper.eq(NoteLike::getStatus, LikeStatusEnum.LIKE.getCode());
+                        lastQueryWrapper.orderByDesc(NoteLike::getUpdateTime);
+                        lastQueryWrapper.last("limit 100");
+                        List<NoteLike> lastNoteLikeList = noteLikeMapper.selectList(lastQueryWrapper);
+                        if(CollUtil.isNotEmpty(lastNoteLikeList)){
+                            // 非空 初始化ZSET
+                            Object[] luaArgs = buildNoteLikeZsetArg(lastNoteLikeList);
+                            DefaultRedisScript<Long> script3 = new DefaultRedisScript<>();
+                            script3.setResultType(Long.class);
+                            script3.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/batch_add_note_like_zset_and_expire")));
+                            redisTemplate.execute(script3,Collections.singletonList(noteLikeZSetKey),luaArgs);
+                        }
+                    });
+                    throw new BusinessException(ResponseCodeEnum.NOTE_ALREADY_LIKED);
+                }
+                // 走到这里说明数据库中都没有 布隆过滤器确实误判了 初始化布隆过滤器然后将当前记录加入到布隆过滤器中
+                batchAddNoteLike2BloomAndExpire(userId,expiredSecond,bloomKey);
+                // 将新记录加入
+                DefaultRedisScript<Long> script = new DefaultRedisScript<>();
+                script.setResultType(Long.class);
+                script.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/bloom_add_like_note_and_expire.lua")));
+                redisTemplate.execute(script, Collections.singletonList(bloomKey), noteId,expiredSecond);
+            }
+```
+
+对于是否已经点赞的逻辑完成之后，就是**确保布隆过滤器中已经存在新数据**，现在只需要**更新ZSET集合以及数据落库就行**
+
+```Java
+// 到这里说明之前没点赞过且一定更新完布隆过滤器了
+        // 更新点赞zset数据 执行lua脚本 先判断是否zset存在 如果存在 判断是否有100个数据 如果有 则删除最早那个  如果没有则直接新增
+        DefaultRedisScript<Long> script2 = new DefaultRedisScript<>();
+        script2.setResultType(Long.class);
+        script2.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/note_like_check_and_update_zset.lua")));
+        Long zsetResult = redisTemplate.execute(script2, Collections.singletonList(noteLikeZSetKey), noteId, expiredSecond);
+        if(Objects.equals(zsetResult, NoteBloomLuaResultEnmu.ZSET_NOT_EXIST.getCode())){
+            // ZSET不存在 进行初始化 找到当前用户最近的100个点赞用于初始化ZSET
+            LambdaQueryWrapper<NoteLike> lastQueryWrapper = new LambdaQueryWrapper<>();
+            lastQueryWrapper.eq(NoteLike::getUserId, userId);
+            lastQueryWrapper.eq(NoteLike::getStatus, LikeStatusEnum.LIKE.getCode());
+            lastQueryWrapper.orderByDesc(NoteLike::getUpdateTime);
+            lastQueryWrapper.last("limit 100");
+            List<NoteLike> lastNoteLikeList = noteLikeMapper.selectList(lastQueryWrapper);
+            if(CollUtil.isNotEmpty(lastNoteLikeList)){
+                // 非空 初始化ZSET
+                Object[] luaArgs = buildNoteLikeZsetArg(lastNoteLikeList);
+                DefaultRedisScript<Long> script3 = new DefaultRedisScript<>();
+                script3.setResultType(Long.class);
+                script3.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/batch_add_note_like_zset_and_expire.lua")));
+                redisTemplate.execute(script3,Collections.singletonList(noteLikeZSetKey),luaArgs);
+                // 再次调用新增ZSET的Lua脚本,将本次数据添加进去
+                redisTemplate.execute(script2, Collections.singletonList(noteLikeZSetKey), noteId, expiredSecond);
+            }
+        }
+        // 直接到这里标识zset的更新操作没问题 zset存在并且添加更新成功  准备异步MQ入库
+        log.info("===>点赞消息准备异步落库,用户{},笔记{}",userId,noteId);
+        LikeUnlikeMqDTO likeUnlikeMqDTO = LikeUnlikeMqDTO.builder().userId(userId)
+                .noteId(noteId)
+                .likeStatus(LikeStatusEnum.LIKE.getCode())
+                .optionTime(LocalDateTime.now())
+                .build();
+        Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(likeUnlikeMqDTO)).build();
+        String messageHead = RocketMQConstant.TOPIC_LIKE_OR_UNLIKE + ":" + RocketMQConstant.TAG_LIKE;
+        rocketMQTemplate.asyncSendOrderly(messageHead, message,String.valueOf(userId), new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("用户{}点赞笔记{}落库操作成功",userId,noteId);
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.info("用户{}点赞笔记{}落库操作失败",userId,noteId);
+            }
+        });
+
+        return Response.success();
+```
+
+#### 异步点赞落库消费者逻辑
+
+异步点赞落库逻辑比较简单  **注意令牌桶限流 和 注意一下数据可能在库中是逻辑删除，所以添加数据的时候可能是新增也可能是更新**
+
+```Java
+
+@Component
+@Slf4j
+@RocketMQMessageListener(
+        consumerGroup = "zealsingerbook_group"+ RocketMQConstant.TOPIC_LIKE_OR_UNLIKE,
+        topic = RocketMQConstant.TOPIC_LIKE_OR_UNLIKE,
+        consumeMode = ConsumeMode.ORDERLY // 设置为顺序消费模式
+)
+public class LikeUnlikeNoteConsumer implements RocketMQListener<Message> {
+    @Resource
+    private NoteLikeMapper noteLikeMapper;
+
+    // 每秒创建 5000 个令牌
+    private RateLimiter rateLimiter = RateLimiter.create(5000);
+
+    @Override
+    public void onMessage(Message message) {
+        rateLimiter.acquire();
+        log.info("开始落库点赞消息{}",message);
+        if(Objects.isNull(message)){
+            return;
+        }
+        // 获取标签和消息体
+        String tags = message.getTags();
+        String body = new String(message.getBody());
+        if(Objects.equals(tags,RocketMQConstant.TAG_LIKE)){
+            handleLikeNoteTagMessage(body);
+        }else if(Objects.equals(tags,RocketMQConstant.TAG_UNLIKE)){
+            handleUnlikeNoteTagMessage(body);
+        }else{
+            log.info("消息{}点赞状态错误",message);
+        }
+    }
+
+    /**
+     * 笔记点赞
+     * @param bodyJsonStr
+     */
+    private void handleLikeNoteTagMessage(String bodyJsonStr) {
+        if(StringUtils.isBlank(bodyJsonStr)){
+            return;
+        }
+        LikeUnlikeMqDTO likeUnlikeMqDTO = JsonUtil.JsonStringToObj(bodyJsonStr, LikeUnlikeMqDTO.class);
+        LambdaQueryWrapper<NoteLike> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(NoteLike::getNoteId, likeUnlikeMqDTO.getNoteId());
+        queryWrapper.eq(NoteLike::getUserId, likeUnlikeMqDTO.getUserId());
+        NoteLike noteLike = noteLikeMapper.selectOne(queryWrapper);
+        if(Objects.isNull(noteLike)){
+            noteLike = NoteLike.builder().userId(likeUnlikeMqDTO.getUserId())
+                    .noteId(likeUnlikeMqDTO.getNoteId())
+                    .createTime(likeUnlikeMqDTO.getOptionTime())
+                    .status(likeUnlikeMqDTO.getLikeStatus().byteValue())
+                    .build();
+            noteLikeMapper.insert(noteLike);
+            return;
+        }
+        noteLike.setStatus(likeUnlikeMqDTO.getLikeStatus().byteValue());
+        noteLikeMapper.updateById(noteLike);
+
+        // TODO 发送MQ计数服务
+
+    }
+
+
+}
+
+```
+
+## 取消点赞接口
+
+取消点赞的接口设计，和点赞接口还是类似的
+
+触发取消点赞请求---->判断笔记是否存在---->判断是否已经被点赞（只能对于已经点赞的笔记进行笔记取消点赞操作）---->更新ZSET点赞列表----->异步落库操作----->计数模块
+
+![image-20241030103613891](../../ZealSingerBook/img/image-20241030103613891.png)
+
+详细逻辑如下：
+
+- 首先，判断想要取消点赞的笔记是否真实存在，若不存在，抛出业务异常，提示用户 “笔记不存在”；
+
+- 判断笔记点赞布隆过滤器是否存在：
+
+  - 若不存在布隆过滤器，查询数据库，校验是否有点赞过目标笔记，若没有点赞，则抛出业务异常，提示用户 “您未点赞该篇笔记，无法取消点赞”；并异步初始化布隆过滤器；
+
+  - 若存在布隆过滤器，通过布隆过滤器来校验目标笔记是否点赞：
+
+    - 若返回未点赞，则判断绝对正确，抛出业务异常，提示用户对应提示信息；
+
+    - 若返回已点赞，可能存在很小几率的误判的情况（误判则代表该用户实际上没点赞，但是返回已经点赞）；
+
+      > **误判是否能够容忍？**
+      >
+      > - 分析一波业务场景，大多数情况下，用户不会对刚刚点赞的笔记进行取消点赞，反而是以前点赞的笔记，没有价值了，进行了取消点赞。
+      > - 另一方面，ZSET 只会缓存最新点赞的部分笔记，而为了校验这些小几率事件，当 ZSET 中不存在时，就不得不查数据库来校验，这就导致大部分流量都会打到数据库，导致数据库压力太大，反而得不偿失了！
+      > - **相比较笔记点赞的场景，误判会影响用户正常的操作，必须得校验，这里的误判是可以容忍的！只需要在 MQ 异步数据落库的时候，再次校验一下即可，那么，接口中就无需操作数据库，保证取消点赞接口支持高并发写。**
+
+- 若笔记已点赞，删除 `ZSET` 笔记点赞列表中对应的笔记 ID;
+
+- 发送 MQ, 异步对数据进行更新落库；
+
+对于布隆过滤器的误判的容忍，可能比较绕，可以对比一下点赞和取消点赞逻辑的区别
+
+![image-20241030105338544](../../ZealSingerBook/img/image-20241030105338544.png)

@@ -6,7 +6,9 @@ import com.zealsinger.note.domain.dto.DeleteNoteByIdReqDTO;
 import com.zealsinger.note.domain.dto.FindNoteByIdReqDTO;
 import com.zealsinger.note.domain.dto.UpdateTopStatusDTO;
 import com.zealsinger.note.domain.dto.UpdateVisibleOnlyMeReqVO;
+import com.zealsinger.note.domain.vo.LikeNoteReqVO;
 import com.zealsinger.note.domain.vo.PublishNoteReqVO;
+import com.zealsinger.note.domain.vo.UnlikeNoteReqVO;
 import com.zealsinger.note.domain.vo.UpdateNoteReqVO;
 import com.zealsinger.note.server.NoteServer;
 import jakarta.annotation.Resource;
@@ -54,5 +56,15 @@ public class NoteController {
     @PostMapping("/top")
     public Response<?> updateTopStatus(@Validated @RequestBody UpdateTopStatusDTO updateTopStatusDTO){
         return noteServer.updateTopStatus(updateTopStatusDTO);
+    }
+
+    @PostMapping("/like")
+    public Response<?> likeNote(@RequestBody @Validated LikeNoteReqVO likeNoteReqVO){
+        return noteServer.likeNote(likeNoteReqVO);
+    }
+
+    @PostMapping("/unlike")
+    public Response<?> unlikeNote(@RequestBody @Validated UnlikeNoteReqVO unlikeNoteReqVO){
+        return noteServer.unlikeNote(unlikeNoteReqVO);
     }
 }
