@@ -23,7 +23,7 @@ import java.util.Objects;
 @RocketMQMessageListener(consumerGroup = "zealsinger_group"+ MQConstant.TOPIC_COUNT_NOTE_LIKE_2_DB,
         topic = MQConstant.TOPIC_COUNT_NOTE_LIKE_2_DB
 )
-public class CountNoteLike2DBConsumer implements RocketMQListener<String> {
+public class CountNoteLikeDBConsumer implements RocketMQListener<String> {
     @Resource
     private NoteCountMapper noteCountMapper;
 

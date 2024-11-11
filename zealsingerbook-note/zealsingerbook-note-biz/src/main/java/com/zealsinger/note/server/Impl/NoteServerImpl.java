@@ -656,22 +656,24 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
         switch(resultEnmu){
             case BLOOM_NOT_EXIST ->{
                 //布隆过滤器不存在  查库判断是否点赞  初始化布隆过滤器
+                //先初始化
+                // 说明没有点赞过  抛出异常 初始化bloom
+                long expiredSecond =60*60*24 + RandomUtil.randomInt(60*60*24);
+                threadPoolTaskExecutor.submit(()-> batchAddNoteLike2BloomAndExpire(userId,expiredSecond,bloomKey));
+                // 查库判断是否点赞
                 LambdaQueryWrapper<NoteLike> queryWrapper = new LambdaQueryWrapper<>();
                 queryWrapper.eq(NoteLike::getUserId,userId).eq(NoteLike::getNoteId,noteId);
                 NoteLike noteLike = noteLikeMapper.selectOne(queryWrapper);
                 if(Objects.isNull(noteLike) || noteLike.getStatus().equals(Byte.valueOf(String.valueOf(LikeStatusEnum.UNLIKE.getCode())))){
-                    // 说明没有点赞过  抛出异常 初始化bloom
-                    long expiredSecond =60*60*24 + RandomUtil.randomInt(60*60*24);
-                    threadPoolTaskExecutor.submit(()-> batchAddNoteLike2BloomAndExpire(userId,expiredSecond,bloomKey));
                     throw new BusinessException(ResponseCodeEnum.NOT_LIKED_NOTE);
                 }
-                // 到这里说明确实点赞了 通过了已点赞校验
+                // 到这里属于数据库确认了 说明确实点赞了 通过了已点赞校验
             }
             // 到这里说明布隆中没有数据 布隆中没有数据的不会存在误判 所以确实没有点赞  抛出异常
             case NOTE_UNLIKED ->{
                 throw new BusinessException(ResponseCodeEnum.NOT_LIKED_NOTE);
             }
-            // 到这里说明布隆过滤波器中存在数据 通过了已点赞校验
+            // 到这里说明布隆过滤器中存在数据 通过了已点赞校验
             case SUCCESS -> {}
         }
         // 到这里说明布隆过滤波器中存在数据 通过了已点赞校验
@@ -698,11 +700,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                 log.error("==> 【笔记取消点赞】MQ 发送异常: ", throwable);
             }
         });
-
         return Response.success();
-
-
-
     }
 
     public Object[] buildNoteLikeZsetArg(List<NoteLike> noteLikeList) {

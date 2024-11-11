@@ -1217,4 +1217,294 @@ public Response<?> unlikeNote(UnlikeNoteReqVO unlikeNoteReqVO) {
 检测完noteId的合理性，我们**接下来就是检测是否已经点赞，我们只能对已经点赞过的笔记进行取消点赞操作  这里利用布隆过滤器进行**这里再次来梳理一下检测的逻辑：
 首先查看布隆过滤器中是否有对应的redisKey，**第一种情况就是布隆过滤器不存在，不存在的话需要初始化布隆过滤器**
 
-第二种情况就是布隆过滤器存在，然后检测布隆过滤器中是否有对应的数据，如果没有，不存在误判，说明确实该用户还没有点赞该笔记，自然就不能进行取消点赞的操作  ； 如果有则说明用户确实对该笔记已经点赞过了，那么可以进行取消点赞操作，虽然存在误判，但是只要在数据库更新的时候条件中加入like_status==1即可（也就是确保修改的数据是原本就是取消点赞）
+**第二种情况就是布隆过滤器存在，然后检测布隆过滤器中是否有对应的数据，如果没有，不存在误判，说明确实该用户还没有点赞该笔记，自然就不能进行取消点赞的操作  ； 如果有则说明用户确实对该笔记已经点赞过了，那么可以进行取消点赞操作，虽然存在误判，但是只要在数据库更新的时候条件中加入like_status==1即可（也就是确保修改的数据是原本就是取消点赞）**
+
+```Java
+// noteId合理 检测是否已经点赞过 使用Lua去布隆过滤器中检测
+        Long userId = LoginUserContextHolder.getUserId();
+        String bloomKey = RedisConstant.getBloomUserNoteLikeListKey(userId);
+        DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
+        redisScript.setResultType(Long.class);
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/bloom_note_unlike_check.lua")));
+        Long result = redisTemplate.execute(redisScript, Collections.singletonList(bloomKey), noteId);
+        NoteBloomLuaResultEnmu resultEnmu = NoteBloomLuaResultEnmu.valueOf(result);
+        switch(resultEnmu){
+            case BLOOM_NOT_EXIST ->{
+                //布隆过滤器不存在  查库判断是否点赞  初始化布隆过滤器
+                // 先初始化布隆过滤器
+                long expiredSecond =60*60*24 + RandomUtil.randomInt(60*60*24);
+                threadPoolTaskExecutor.submit(()-> batchAddNoteLike2BloomAndExpire(userId,expiredSecond,bloomKey));
+                // 初始完毕后
+                LambdaQueryWrapper<NoteLike> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(NoteLike::getUserId,userId).eq(NoteLike::getNoteId,noteId);
+                NoteLike noteLike = noteLikeMapper.selectOne(queryWrapper);
+                if(Objects.isNull(noteLike) || noteLike.getStatus().equals(Byte.valueOf(String.valueOf(LikeStatusEnum.UNLIKE.getCode())))){
+                    // 说明没有点赞过  抛出异常
+                    throw new BusinessException(ResponseCodeEnum.NOT_LIKED_NOTE);
+                }
+                // 到这里说明确实点赞了 这里是数据库层面的取人 通过了已点赞校验
+            }
+            // 到这里说明布隆中没有数据 布隆中没有数据的不会存在误判 所以确实没有点赞  抛出异常
+            case NOTE_UNLIKED ->{
+                throw new BusinessException(ResponseCodeEnum.NOT_LIKED_NOTE);
+            }
+            // 到这里说明布隆过滤器中存在数据 通过了已点赞校验
+            case SUCCESS -> {}
+        }
+```
+
+对应的Lua脚本如下
+
+```lua
+-- LUA 脚本：点赞布隆过滤器
+
+local key = KEYS[1] -- 操作的 Redis Key
+local noteId = ARGV[1] -- 笔记ID
+
+-- 使用 EXISTS 命令检查布隆过滤器是否存在
+local exists = redis.call('EXISTS', key)
+if exists == 0 then
+    return -1
+end
+
+-- 校验该篇笔记是否被点赞过(1 表示已经点赞，0 表示未点赞)
+local isLiked = redis.call('BF.EXISTS', key, noteId)
+-- 如果为1 则说明已经点赞 可以返回了 因为布隆一般不进行删除操作  如果为0则说明不存在 确实没点赞
+if isLiked == 0 then
+    return 1
+end
+
+return 0
+
+```
+
+经过switch过滤之后  就说明通过了点赞过滤，确保操作的数据是当前用户已经点赞了的数据  那么剩下的逻辑 就是处理zset的数据 然后异步落库
+
+```Java
+// 到这里说明布隆过滤波器中存在数据 通过了已点赞校验
+        // 接下来执行的操作：删除zset中的点赞记录，异步落库数据库
+        String unlikeNoteRedisKey = RedisConstant.buildUserNoteLikeZSetKey(userId);
+        redisTemplate.opsForZSet().remove(unlikeNoteRedisKey,noteId);
+        // 异步MQ消息落库
+        String topicHeader = RocketMQConstant.TOPIC_LIKE_OR_UNLIKE+":"+RocketMQConstant.TAG_UNLIKE;
+        LikeUnlikeMqDTO build = LikeUnlikeMqDTO.builder()
+                                .noteId(noteId)
+                                .optionTime(LocalDateTime.now())
+                                .userId(userId)
+                                .likeStatus(LikeStatusEnum.UNLIKE.getCode()).build();
+        Message<String> mqMessage = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(build)).build();
+        String hashKey = String.valueOf(userId);
+        rocketMQTemplate.asyncSendOrderly(topicHeader,mqMessage,hashKey,new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> 【笔记取消点赞】MQ 发送成功，SendResult: {}", sendResult);
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> 【笔记取消点赞】MQ 发送异常: ", throwable);
+            }
+        });
+        return Response.success();
+```
+
+### 异步落库
+
+类似于用户关注接口的异步落库操作  当出现热门文章 就可以出现大量的点赞和取消点赞  那么自然需要进行流量削峰 进行限流操作
+
+```Java
+@Component
+@Slf4j
+@RocketMQMessageListener(
+        consumerGroup = "zealsingerbook_group"+ RocketMQConstant.TOPIC_LIKE_OR_UNLIKE,
+        topic = RocketMQConstant.TOPIC_LIKE_OR_UNLIKE,
+        consumeMode = ConsumeMode.ORDERLY // 设置为顺序消费模式
+)
+public class LikeUnlikeNoteConsumer implements RocketMQListener<Message> {
+    @Resource
+    private NoteLikeMapper noteLikeMapper;
+
+    // 每秒创建 5000 个令牌
+    private RateLimiter rateLimiter = RateLimiter.create(5000);
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Override
+    public void onMessage(Message message) {
+        rateLimiter.acquire();
+        log.info("开始落库点赞消息{}",message);
+        if(Objects.isNull(message)){
+            return;
+        }
+        // 获取标签和消息体
+        String tags = message.getTags();
+        String body = new String(message.getBody());
+        if(Objects.equals(tags,RocketMQConstant.TAG_LIKE)){
+            handleLikeNoteTagMessage(body);
+        }else if(Objects.equals(tags,RocketMQConstant.TAG_UNLIKE)){
+            handleUnlikeNoteTagMessage(body);
+        }else{
+            log.info("消息{}点赞状态错误",message);
+        }
+    }
+
+    /**
+     * 笔记点赞
+     * @param bodyJsonStr
+     */
+    private void handleLikeNoteTagMessage(String bodyJsonStr) {
+        if(StringUtils.isBlank(bodyJsonStr)){
+            return;
+        }
+        LikeUnlikeMqDTO likeUnlikeMqDTO = JsonUtil.JsonStringToObj(bodyJsonStr, LikeUnlikeMqDTO.class);
+        LambdaQueryWrapper<NoteLike> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(NoteLike::getNoteId, likeUnlikeMqDTO.getNoteId());
+        queryWrapper.eq(NoteLike::getUserId, likeUnlikeMqDTO.getUserId());
+        NoteLike noteLike = noteLikeMapper.selectOne(queryWrapper);
+        Boolean updateSuccess = Boolean.FALSE;
+        if(Objects.isNull(noteLike)){
+            noteLike = NoteLike.builder().userId(likeUnlikeMqDTO.getUserId())
+                    .noteId(likeUnlikeMqDTO.getNoteId())
+                    .createTime(likeUnlikeMqDTO.getOptionTime())
+                    .status(likeUnlikeMqDTO.getLikeStatus().byteValue())
+                    .build();
+            int i = noteLikeMapper.insert(noteLike);
+            updateSuccess = i==0?updateSuccess:Boolean.TRUE;
+        }else{
+            noteLike.setStatus(likeUnlikeMqDTO.getLikeStatus().byteValue());
+            int i = noteLikeMapper.updateById(noteLike);
+            updateSuccess = i==0?updateSuccess:Boolean.TRUE;
+        }
+        if(!updateSuccess) {
+            return;
+        }
+        // TODO 发送MQ计数服务
+        org.springframework.messaging.Message<String> countMqMessage = MessageBuilder.withPayload(bodyJsonStr).build();
+        rocketMQTemplate.asyncSend(RocketMQConstant.TOPIC_COUNT_NOTE_LIKE, countMqMessage, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> 【计数: 笔记点赞】MQ 发送成功，SendResult: {}", sendResult);
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> 【计数: 笔记点赞】MQ 发送异常: ", throwable);
+            }
+        });
+    }
+
+    /**
+     * 笔记取消点赞
+     * @param bodyJsonStr
+     */
+    private void handleUnlikeNoteTagMessage(String bodyJsonStr) {
+        if(StringUtils.isBlank(bodyJsonStr)){
+            return;
+        }
+        LikeUnlikeMqDTO likeUnlikeMqDTO = JsonUtil.JsonStringToObj(bodyJsonStr, LikeUnlikeMqDTO.class);
+        LambdaUpdateWrapper<NoteLike> queryWrapper = new LambdaUpdateWrapper<>();
+        queryWrapper.eq(NoteLike::getNoteId, likeUnlikeMqDTO.getNoteId());
+        queryWrapper.eq(NoteLike::getUserId, likeUnlikeMqDTO.getUserId());
+        queryWrapper.eq(NoteLike::getStatus, LikeStatusEnum.LIKE.getCode());
+        queryWrapper.set(NoteLike::getStatus, LikeStatusEnum.UNLIKE.getCode());
+        queryWrapper.set(NoteLike::getUpdateTime, likeUnlikeMqDTO.getOptionTime());
+        int update = noteLikeMapper.update(queryWrapper);
+        // TODO 发送MQ计数服务
+        if(update==0){
+            return;
+        }
+        org.springframework.messaging.Message<String> countMqMessage = MessageBuilder.withPayload(bodyJsonStr).build();
+        rocketMQTemplate.asyncSend(RocketMQConstant.TOPIC_COUNT_NOTE_LIKE, countMqMessage, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> 【计数: 笔记取消点赞】MQ 发送成功，SendResult: {}", sendResult);
+            }
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> 【计数: 笔记取消点赞】MQ 发送异常: ", throwable);
+            }
+        });
+    }
+}
+```
+
+MQ发送消息count计数模块异步处理进行数据的变化  我们需要更新count库中的信息  也要同时更新count对应在redis中的数据（注意 count在redis中的数据表现形式为hash格式  也就是更新某个字段）
+
+同样 点赞操作和关注操作一样  正常情况下 每次点赞进行一次操作的话 数据只会有+1 或者 -1的变化 频繁的操作redis和数据库都是不好的  所以这里我们也需要采取数据聚合的方式  聚合一系列操作之后整合发送DB的操作
+
+```Java
+@Component
+@Slf4j
+@RocketMQMessageListener(consumerGroup = "zealsinger_group"+ MQConstant.TOPIC_COUNT_NOTE_LIKE,
+        topic = MQConstant.TOPIC_COUNT_NOTE_LIKE
+)
+public class CountNoteLikeConsumer implements RocketMQListener<String> {
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Resource
+    private RedisTemplate redisTemplate;
+
+    private BufferTrigger<String> bufferTrigger = BufferTrigger.<String>batchBlocking()
+            .bufferSize(50000) // 缓存队列的最大容量
+            .batchSize(1000)   // 一批次最多聚合 1000 条
+            .linger(Duration.ofSeconds(1)) // 多久聚合一次
+            .setConsumerEx(this::consumeMessage) // 设置消费者方法
+            .build();
+
+    @Override
+    public void onMessage(String message) {
+        bufferTrigger.enqueue(message);
+    }
+
+    private void consumeMessage(List<String> bodys) {
+        log.info("==> 【笔记点赞数】聚合消息, size: {}", bodys.size());
+        log.info("==> 【笔记点赞数】聚合消息, {}", JsonUtil.ObjToJsonString(bodys));
+        List<CountNoteLikeUnlikeNoteMqDTO> list = bodys.stream().map(s -> JsonUtil.JsonStringToObj(s, CountNoteLikeUnlikeNoteMqDTO.class)).toList();
+        Map<Long, List<CountNoteLikeUnlikeNoteMqDTO>> bodysMap = list.stream().collect(Collectors.groupingBy(CountNoteLikeUnlikeNoteMqDTO::getNoteId));
+        Map<Long,Integer> countMap = new HashMap<>();
+        bodysMap.forEach((nodeId,likeUnlikeOptions)->{
+            int endCOunt = 0;
+            for (CountNoteLikeUnlikeNoteMqDTO likeUnlikeOption : likeUnlikeOptions) {
+                NoteLikeTypeEnum typeEnum = NoteLikeTypeEnum.getByCode(likeUnlikeOption.getLikeStatus());
+                if(typeEnum==null){
+                    continue;
+                }
+                switch (typeEnum) {
+                    case LIKE: endCOunt++; break;
+                    case UNLIKE: endCOunt--; break;
+                }
+            }
+            countMap.put(nodeId,endCOunt);
+        });
+        log.info("## 【笔记点赞数】聚合后的计数数据: {}", JsonUtil.ObjToJsonString(bodysMap));
+
+        // 将数据添加到redis缓存中
+        countMap.forEach((k,v)->{
+            String countNoteLikeUnlikeRedisKey = RedisKeyConstants.buildCountNoteKey(k);
+            Boolean isExisted = redisTemplate.hasKey(countNoteLikeUnlikeRedisKey);
+            if(Boolean.TRUE.equals(isExisted)){
+                // 缓存存在就新增 不存在则不会操作
+                redisTemplate.opsForHash().increment(countNoteLikeUnlikeRedisKey,RedisKeyConstants.FIELD_LIKE_TOTAL,v);
+            }
+        });
+        // 异步计数落库
+        Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(bodys)).build();
+        rocketMQTemplate.asyncSend(MQConstant.TOPIC_COUNT_NOTE_LIKE_2_DB,message, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> 【计数服务：笔记点赞数入库】MQ 发送成功，SendResult: {}", sendResult);
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> 【计数服务：笔记点赞数入库】MQ 发送异常: ", throwable);
+            }
+        });
+    }
+}
+```
+
+所以从上可以看到 我们执行了三层异步 
+
+**server中执行异步MQ消费点赞消息---->第一层异步添加限流令牌，修改noteLike表中的相关记录信息，异步调用第二层异步计数模块--->第二层异步计数模块利用聚合操作汇总操作结果，保证最终一致性，得到最终变化数据之后更新redis缓存，调用第三层异步进行count模块的异步落库操作---->利用令牌进行限流，执行落库操作**

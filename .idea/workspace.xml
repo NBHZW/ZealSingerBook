@@ -4,19 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:新增笔记点赞和笔记取消点赞接口">
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteLike2DBConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteLikeConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/domain/dto/CountNoteLikeUnlikeNoteMqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/domain/enums/NoteLikeTypeEnum.java" afterDir="false" />
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:笔记点赞和取消点赞逻辑的聚合处理+聚合结果异步落库">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/day13.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day13.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/constants/RedisKeyConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/constants/RedisKeyConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountFansConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountFansConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/MQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/MQConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/constant/RocketMQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/constant/RocketMQConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/consumer/LikeUnlikeNoteConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/consumer/LikeUnlikeNoteConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-user/zealsingerbook-user-biz/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteLike2DBConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteLikeDBConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/server/Impl/NoteServerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/server/Impl/NoteServerImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -559,7 +551,8 @@
       <workItem from="1731031452450" duration="418000" />
       <workItem from="1731206482537" duration="1088000" />
       <workItem from="1731288561837" duration="5244000" />
-      <workItem from="1731305604818" duration="5458000" />
+      <workItem from="1731305604818" duration="5639000" />
+      <workItem from="1731324237154" duration="4961000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -769,7 +762,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731291608980</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="feat:笔记点赞和取消点赞逻辑的聚合处理+聚合结果异步落库">
+      <option name="closed" value="true" />
+      <created>1731311179269</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1731311179269</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -812,7 +813,8 @@
     <MESSAGE value="feat:完善关注列表和粉丝列表接口;添加MQ的消费组常量定义，解决消费不到和消费慢的问题" />
     <MESSAGE value="feat:新增计数模块的基础搭建+粉丝总数和关注总数计数模块功能" />
     <MESSAGE value="feat:新增笔记点赞和笔记取消点赞接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:新增笔记点赞和笔记取消点赞接口" />
+    <MESSAGE value="feat:笔记点赞和取消点赞逻辑的聚合处理+聚合结果异步落库" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:笔记点赞和取消点赞逻辑的聚合处理+聚合结果异步落库" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
