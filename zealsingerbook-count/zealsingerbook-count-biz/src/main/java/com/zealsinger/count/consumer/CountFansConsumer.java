@@ -47,7 +47,7 @@ public class CountFansConsumer implements RocketMQListener<String> {
     private BufferTrigger<String> bufferTrigger = BufferTrigger.<String>batchBlocking()
             .bufferSize(50000) // 缓存队列的最大容量
             .batchSize(1000)   // 一批次最多聚合 1000 条
-            .linger(Duration.ofSeconds(1)) // 多久聚合一次
+            .linger(Duration.ofSeconds(2)) // 多久聚合一次
             .setConsumerEx(this::consumeMessage)
             .build();
 

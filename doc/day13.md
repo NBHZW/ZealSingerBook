@@ -1172,3 +1172,49 @@ public class LikeUnlikeNoteConsumer implements RocketMQListener<Message> {
 对于布隆过滤器的误判的容忍，可能比较绕，可以对比一下点赞和取消点赞逻辑的区别
 
 ![image-20241030105338544](../../ZealSingerBook/img/image-20241030105338544.png)
+
+### 主体逻辑编写
+
+同样的 首先检测noteID的合理性 利用缓存+查库的方式综合查询  **先查本地缓存 再查redis 再查MySQL**
+
+```Java
+public Response<?> unlikeNote(UnlikeNoteReqVO unlikeNoteReqVO) {
+        // 判断noteId的合理性  先查本地缓存 再查redis  最后查库
+        Long noteId = unlikeNoteReqVO.getNoteId();
+        FindNoteByIdRspVO findNoteByIdRspVO = LOCAL_NOTEVO_CACHE.getIfPresent(noteId.toString());
+        if(Objects.isNull(findNoteByIdRspVO)){ // 本地缓存中 没有数据 则需要查redis
+            String noteCacheId = RedisConstant.getNoteCacheId(String.valueOf(noteId));
+            String noteStr = redisTemplate.opsForValue().get(noteCacheId);
+            findNoteByIdRspVO = JsonUtil.JsonStringToObj(noteStr, FindNoteByIdRspVO.class);
+            if(Objects.isNull(findNoteByIdRspVO)){
+                // redis也为空 查库 异步同步数据到缓存
+                LambdaQueryWrapper<Note> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(Note::getId, noteId);
+                queryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());
+                Note note = noteMapper.selectOne(queryWrapper);
+                if(Objects.isNull(note)){
+                    throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+                }
+                // 存在的话需要异步同步到本地缓存和redis缓存
+                threadPoolTaskExecutor.submit(()->{
+                    FindNoteByIdReqDTO build = FindNoteByIdReqDTO.builder().noteId(String.valueOf(noteId)).build();
+                    try {
+                        findById(build);
+                    } catch (ExecutionException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+            // redis中就存在缓存 异步保存到本地缓存即可
+            FindNoteByIdRspVO finalFindNoteByIdRspVO = findNoteByIdRspVO;
+            threadPoolTaskExecutor.submit(()->{
+               LOCAL_NOTEVO_CACHE.put(String.valueOf(noteId), finalFindNoteByIdRspVO);
+            });
+        }
+        ............
+```
+
+检测完noteId的合理性，我们**接下来就是检测是否已经点赞，我们只能对已经点赞过的笔记进行取消点赞操作  这里利用布隆过滤器进行**这里再次来梳理一下检测的逻辑：
+首先查看布隆过滤器中是否有对应的redisKey，**第一种情况就是布隆过滤器不存在，不存在的话需要初始化布隆过滤器**
+
+第二种情况就是布隆过滤器存在，然后检测布隆过滤器中是否有对应的数据，如果没有，不存在误判，说明确实该用户还没有点赞该笔记，自然就不能进行取消点赞的操作  ； 如果有则说明用户确实对该笔记已经点赞过了，那么可以进行取消点赞操作，虽然存在误判，但是只要在数据库更新的时候条件中加入like_status==1即可（也就是确保修改的数据是原本就是取消点赞）

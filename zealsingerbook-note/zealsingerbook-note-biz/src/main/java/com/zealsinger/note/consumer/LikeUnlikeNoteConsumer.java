@@ -12,12 +12,18 @@ import com.zealsinger.note.mapper.NoteLikeMapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.processing.Messager;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -34,6 +40,8 @@ public class LikeUnlikeNoteConsumer implements RocketMQListener<Message> {
 
     // 每秒创建 5000 个令牌
     private RateLimiter rateLimiter = RateLimiter.create(5000);
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
 
     @Override
     public void onMessage(Message message) {
@@ -67,20 +75,36 @@ public class LikeUnlikeNoteConsumer implements RocketMQListener<Message> {
         queryWrapper.eq(NoteLike::getNoteId, likeUnlikeMqDTO.getNoteId());
         queryWrapper.eq(NoteLike::getUserId, likeUnlikeMqDTO.getUserId());
         NoteLike noteLike = noteLikeMapper.selectOne(queryWrapper);
+        Boolean updateSuccess = Boolean.FALSE;
         if(Objects.isNull(noteLike)){
             noteLike = NoteLike.builder().userId(likeUnlikeMqDTO.getUserId())
                     .noteId(likeUnlikeMqDTO.getNoteId())
                     .createTime(likeUnlikeMqDTO.getOptionTime())
                     .status(likeUnlikeMqDTO.getLikeStatus().byteValue())
                     .build();
-            noteLikeMapper.insert(noteLike);
+            int i = noteLikeMapper.insert(noteLike);
+            updateSuccess = i==0?updateSuccess:Boolean.TRUE;
+        }else{
+            noteLike.setStatus(likeUnlikeMqDTO.getLikeStatus().byteValue());
+            int i = noteLikeMapper.updateById(noteLike);
+            updateSuccess = i==0?updateSuccess:Boolean.TRUE;
+        }
+        if(!updateSuccess) {
             return;
         }
-        noteLike.setStatus(likeUnlikeMqDTO.getLikeStatus().byteValue());
-        noteLikeMapper.updateById(noteLike);
-
         // TODO 发送MQ计数服务
+        org.springframework.messaging.Message<String> countMqMessage = MessageBuilder.withPayload(bodyJsonStr).build();
+        rocketMQTemplate.asyncSend(RocketMQConstant.TOPIC_COUNT_NOTE_LIKE, countMqMessage, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> 【计数: 笔记点赞】MQ 发送成功，SendResult: {}", sendResult);
+            }
 
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> 【计数: 笔记点赞】MQ 发送异常: ", throwable);
+            }
+        });
     }
 
     /**
@@ -97,8 +121,24 @@ public class LikeUnlikeNoteConsumer implements RocketMQListener<Message> {
         queryWrapper.eq(NoteLike::getUserId, likeUnlikeMqDTO.getUserId());
         queryWrapper.eq(NoteLike::getStatus, LikeStatusEnum.LIKE.getCode());
         queryWrapper.set(NoteLike::getStatus, LikeStatusEnum.UNLIKE.getCode());
-        noteLikeMapper.update(queryWrapper);
+        queryWrapper.set(NoteLike::getUpdateTime, likeUnlikeMqDTO.getOptionTime());
+        int update = noteLikeMapper.update(queryWrapper);
         // TODO 发送MQ计数服务
+        if(update==0){
+            return;
+        }
+        org.springframework.messaging.Message<String> countMqMessage = MessageBuilder.withPayload(bodyJsonStr).build();
+        rocketMQTemplate.asyncSend(RocketMQConstant.TOPIC_COUNT_NOTE_LIKE, countMqMessage, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> 【计数: 笔记取消点赞】MQ 发送成功，SendResult: {}", sendResult);
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> 【计数: 笔记取消点赞】MQ 发送异常: ", throwable);
+            }
+        });
     }
 
 }
