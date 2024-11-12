@@ -35,6 +35,7 @@ public class CountNoteLikeDBConsumer implements RocketMQListener<String> {
         rateLimiter.acquire();
 
         // 操作数据库
+
         Map<Long,Integer> countMap;
         try {
             countMap = JsonUtil.parseMap(message,Long.class,Integer.class);
@@ -57,7 +58,7 @@ public class CountNoteLikeDBConsumer implements RocketMQListener<String> {
                 }else{
                     noteCount.setLikeTotal(noteCount.getLikeTotal()+v);
                 }
-                noteCountMapper.updateById(noteCount);
+                noteCountMapper.insertOrUpdate(noteCount);
             });
         }
     }

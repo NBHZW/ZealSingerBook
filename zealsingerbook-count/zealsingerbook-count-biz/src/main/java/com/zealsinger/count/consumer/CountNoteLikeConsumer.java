@@ -72,7 +72,7 @@ public class CountNoteLikeConsumer implements RocketMQListener<String> {
             }
             countMap.put(nodeId,endCOunt);
         });
-        log.info("## 【笔记点赞数】聚合后的计数数据: {}", JsonUtil.ObjToJsonString(bodysMap));
+        log.info("## 【笔记点赞数】聚合后的计数数据: {}", JsonUtil.ObjToJsonString(countMap));
 
         // 将数据添加到redis缓存中
         countMap.forEach((k,v)->{
@@ -84,7 +84,7 @@ public class CountNoteLikeConsumer implements RocketMQListener<String> {
             }
         });
         // 异步计数落库
-        Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(bodys)).build();
+        Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(countMap)).build();
         rocketMQTemplate.asyncSend(MQConstant.TOPIC_COUNT_NOTE_LIKE_2_DB,message, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {

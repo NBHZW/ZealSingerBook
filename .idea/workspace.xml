@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:笔记点赞和取消点赞逻辑的聚合处理+聚合结果异步落库">
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:修改了取消点赞接口中布隆不存在时候的处理逻辑（之前数据库确认点赞后没有初始化布隆 现在加上了该逻辑）">
+      <change afterPath="$PROJECT_DIR$/doc/总结注意点.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/day13.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day13.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteLike2DBConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteLikeDBConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/server/Impl/NoteServerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/server/Impl/NoteServerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteLikeConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteLikeConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteLikeDBConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteLikeDBConsumer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -413,8 +414,8 @@
       <item itemvalue="Spring Boot.ZealsingerBookUerApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookAuthApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookGatewayApplication" />
-      <item itemvalue="Spring Boot.ZealsingerbookNoteApplication (1)" />
       <item itemvalue="Spring Boot.ZealsingerbookNoteApplication (2)" />
+      <item itemvalue="Spring Boot.ZealsingerbookNoteApplication (1)" />
       <item itemvalue="Spring Boot.ZealsingerbookCountApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookOssApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookUserRelationApplication" />
@@ -422,9 +423,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.ZealsingerbookCountApplication" />
         <item itemvalue="Spring Boot.ZealsingerbookUserRelationApplication" />
         <item itemvalue="Spring Boot.ZealsingerbookOssApplication" />
-        <item itemvalue="Spring Boot.ZealsingerbookCountApplication" />
         <item itemvalue="JUnit.MQTests.testSendCountFollowUnfollowMQ" />
         <item itemvalue="数据库脚本.following:2.sql" />
       </list>
@@ -552,7 +553,7 @@
       <workItem from="1731206482537" duration="1088000" />
       <workItem from="1731288561837" duration="5244000" />
       <workItem from="1731305604818" duration="5639000" />
-      <workItem from="1731324237154" duration="4961000" />
+      <workItem from="1731324237154" duration="7178000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -770,7 +771,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731311179269</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="feat:修改了取消点赞接口中布隆不存在时候的处理逻辑（之前数据库确认点赞后没有初始化布隆 现在加上了该逻辑）">
+      <option name="closed" value="true" />
+      <created>1731329249890</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1731329249891</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -789,7 +798,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter" />
     <MESSAGE value="feat:规范化模块依赖关系;解决子模块单独打包异常的问题" />
     <MESSAGE value="feat:新增全局异常捕获器" />
     <MESSAGE value="feat:添加短信发送服务工具类和发送验证码接口+@PhoneNumber自定义注解约束传参手机号正则校验" />
@@ -814,7 +822,8 @@
     <MESSAGE value="feat:新增计数模块的基础搭建+粉丝总数和关注总数计数模块功能" />
     <MESSAGE value="feat:新增笔记点赞和笔记取消点赞接口" />
     <MESSAGE value="feat:笔记点赞和取消点赞逻辑的聚合处理+聚合结果异步落库" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:笔记点赞和取消点赞逻辑的聚合处理+聚合结果异步落库" />
+    <MESSAGE value="feat:修改了取消点赞接口中布隆不存在时候的处理逻辑（之前数据库确认点赞后没有初始化布隆 现在加上了该逻辑）" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:修改了取消点赞接口中布隆不存在时候的处理逻辑（之前数据库确认点赞后没有初始化布隆 现在加上了该逻辑）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
