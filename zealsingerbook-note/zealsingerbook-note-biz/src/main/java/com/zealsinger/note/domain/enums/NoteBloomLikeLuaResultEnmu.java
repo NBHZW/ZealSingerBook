@@ -7,20 +7,15 @@ import java.util.Objects;
 
 @AllArgsConstructor
 @Getter
-public enum NoteBloomLuaResultEnmu {
+public enum NoteBloomLikeLuaResultEnmu {
     // 布隆过滤器不存在
     BLOOM_NOT_EXIST(-1L),
     // 笔记已点赞
     NOTE_LIKED(1L),
-
     // ZSET不存在
     ZSET_NOT_EXIST(-1L),
-
     // Lua结果成功
     SUCCESS(0L),
-
-    // 笔记未点赞
-    NOTE_UNLIKED(1L)
     ;
     private final Long code;
 
@@ -29,8 +24,8 @@ public enum NoteBloomLuaResultEnmu {
      * @param code
      * @return
      */
-    public static NoteBloomLuaResultEnmu valueOf(Long code) {
-        for (NoteBloomLuaResultEnmu noteLikeLuaResultEnum : NoteBloomLuaResultEnmu.values()) {
+    public static NoteBloomLikeLuaResultEnmu valueOf(Long code) {
+        for (NoteBloomLikeLuaResultEnmu noteLikeLuaResultEnum : NoteBloomLikeLuaResultEnmu.values()) {
             if (Objects.equals(code, noteLikeLuaResultEnum.getCode())) {
                 return noteLikeLuaResultEnum;
             }

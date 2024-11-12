@@ -441,37 +441,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
         // 校验note合理性 + 是否已经点赞 + 更新点赞列表 + 发送MQ落库
         Long noteId = likeNoteReqVO.getNoteId();
         // 因为会存在本地缓存笔记详情，所以可以先查本地缓存
-        FindNoteByIdRspVO findNoteByIdRspVO = LOCAL_NOTEVO_CACHE.getIfPresent(String.valueOf(noteId));
-        if(Objects.isNull(findNoteByIdRspVO)){
-            // 本地缓存无 查redis
-            String noteCacheKey = RedisConstant.getNoteCacheId(String.valueOf(noteId));
-            String noteStr = redisTemplate.opsForValue().get(noteCacheKey);
-            findNoteByIdRspVO = JsonUtil.JsonStringToObj(noteStr,FindNoteByIdRspVO.class);
-            if(Objects.isNull(findNoteByIdRspVO)){
-                // 都不存在就去查库
-                LambdaQueryWrapper<Note> queryWrapper = new LambdaQueryWrapper<>();
-                queryWrapper.eq(Note::getId, noteId);
-                queryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());
-                Note note = noteMapper.selectOne(queryWrapper);
-                if(note==null){
-                    throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
-                }
-                // 库中存在的话 异步缓存一下笔记信息  直接调用上面的查询笔记详情方法从而实现同步缓存
-                threadPoolTaskExecutor.submit(()->{
-                    FindNoteByIdReqDTO build = FindNoteByIdReqDTO.builder().noteId(String.valueOf(noteId)).build();
-                    try {
-                        findById(build);
-                    } catch (ExecutionException | InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            }
-            // redis中有缓存 异步存入本地缓存即可
-            FindNoteByIdRspVO finalFindNoteByIdRspVO = findNoteByIdRspVO;
-            threadPoolTaskExecutor.submit(()->{
-                LOCAL_NOTEVO_CACHE.put(String.valueOf(noteId), finalFindNoteByIdRspVO);
-            });
-        }
+        checkNoteIdIsExits(noteId);
         // 判断是否已经点赞
         Long userId = LoginUserContextHolder.getUserId();
         String bloomKey = RedisConstant.getBloomUserNoteLikeListKey(userId);
@@ -479,7 +449,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
         redisScript.setResultType(Long.class);
         redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/bloom_note_like_check.lua")));
         Long result = redisTemplate.execute(redisScript, Collections.singletonList(bloomKey), noteId);
-        NoteBloomLuaResultEnmu resultEnmu = NoteBloomLuaResultEnmu.valueOf(result);
+        NoteBloomLikeLuaResultEnmu resultEnmu = NoteBloomLikeLuaResultEnmu.valueOf(result);
         long expiredSecond = 60*60*24 + RandomUtil.randomInt(60*60*24);
         String noteLikeZSetKey = RedisConstant.buildUserNoteLikeZSetKey(userId);
         switch (resultEnmu) {
@@ -567,7 +537,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
         script2.setResultType(Long.class);
         script2.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/note_like_check_and_update_zset.lua")));
         Long zsetResult = redisTemplate.execute(script2, Collections.singletonList(noteLikeZSetKey), noteId, expiredSecond);
-        if(Objects.equals(zsetResult, NoteBloomLuaResultEnmu.ZSET_NOT_EXIST.getCode())){
+        if(Objects.equals(zsetResult, NoteBloomLikeLuaResultEnmu.ZSET_NOT_EXIST.getCode())){
             // ZSET不存在 进行初始化 找到当前用户最近的100个点赞用于初始化ZSET
             LambdaQueryWrapper<NoteLike> lastQueryWrapper = new LambdaQueryWrapper<>();
             lastQueryWrapper.eq(NoteLike::getUserId, userId);
@@ -615,36 +585,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
     public Response<?> unlikeNote(UnlikeNoteReqVO unlikeNoteReqVO) {
         // 判断noteId的合理性  先查本地缓存 再查redis  最后查库
         Long noteId = unlikeNoteReqVO.getNoteId();
-        FindNoteByIdRspVO findNoteByIdRspVO = LOCAL_NOTEVO_CACHE.getIfPresent(noteId.toString());
-        if(Objects.isNull(findNoteByIdRspVO)){
-            String noteCacheId = RedisConstant.getNoteCacheId(String.valueOf(noteId));
-            String noteStr = redisTemplate.opsForValue().get(noteCacheId);
-            findNoteByIdRspVO = JsonUtil.JsonStringToObj(noteStr, FindNoteByIdRspVO.class);
-            if(Objects.isNull(findNoteByIdRspVO)){
-                // redis也为空 查库 异步同步数据到缓存
-                LambdaQueryWrapper<Note> queryWrapper = new LambdaQueryWrapper<>();
-                queryWrapper.eq(Note::getId, noteId);
-                queryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());
-                Note note = noteMapper.selectOne(queryWrapper);
-                if(Objects.isNull(note)){
-                    throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
-                }
-                // 存在的话需要异步同步到缓存
-                threadPoolTaskExecutor.submit(()->{
-                    FindNoteByIdReqDTO build = FindNoteByIdReqDTO.builder().noteId(String.valueOf(noteId)).build();
-                    try {
-                        findById(build);
-                    } catch (ExecutionException | InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            }
-            // redis中就存在缓存 异步保存到本地缓存即可
-            FindNoteByIdRspVO finalFindNoteByIdRspVO = findNoteByIdRspVO;
-            threadPoolTaskExecutor.submit(()->{
-               LOCAL_NOTEVO_CACHE.put(String.valueOf(noteId), finalFindNoteByIdRspVO);
-            });
-        }
+        checkNoteIdIsExits(noteId);
         // noteId合理 检测是否已经点赞过 使用Lua去布隆过滤器中检测
         Long userId = LoginUserContextHolder.getUserId();
         String bloomKey = RedisConstant.getBloomUserNoteLikeListKey(userId);
@@ -652,9 +593,9 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
         redisScript.setResultType(Long.class);
         redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/bloom_note_unlike_check.lua")));
         Long result = redisTemplate.execute(redisScript, Collections.singletonList(bloomKey), noteId);
-        NoteBloomLuaResultEnmu resultEnmu = NoteBloomLuaResultEnmu.valueOf(result);
+        NoteUnlikeLuaResultEnum resultEnmu = NoteUnlikeLuaResultEnum.valueOf(result);
         switch(resultEnmu){
-            case BLOOM_NOT_EXIST ->{
+            case NOT_EXIST ->{
                 //布隆过滤器不存在  查库判断是否点赞  初始化布隆过滤器
                 //先初始化
                 // 说明没有点赞过  抛出异常 初始化bloom
@@ -670,11 +611,11 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                 // 到这里属于数据库确认了 说明确实点赞了 通过了已点赞校验
             }
             // 到这里说明布隆中没有数据 布隆中没有数据的不会存在误判 所以确实没有点赞  抛出异常
-            case NOTE_UNLIKED ->{
+            case  NOTE_NOT_LIKED->{
                 throw new BusinessException(ResponseCodeEnum.NOT_LIKED_NOTE);
             }
             // 到这里说明布隆过滤器中存在数据 通过了已点赞校验
-            case SUCCESS -> {}
+            case  NOTE_LIKED-> {}
         }
         // 到这里说明布隆过滤波器中存在数据 通过了已点赞校验
         // 接下来执行的操作：删除zset中的点赞记录，异步落库数据库
@@ -701,6 +642,39 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
             }
         });
         return Response.success();
+    }
+
+    /**
+     * 收藏笔记
+     * @param collectNoteReqVO
+     * @return
+     */
+    @Override
+    public Response<?> collectNote(CollectNoteReqVO collectNoteReqVO) {
+        // 先检测noteId的合理性 先查本地缓存 再查redis缓存 最后查库
+        Long noteId = collectNoteReqVO.getNoteId();
+        checkNoteIdIsExits(noteId);
+        //检测完noteId的合理性之后 就需要检测是否已经收藏了  采用布隆过滤器判断  过程类似笔记点赞
+        Long userId = LoginUserContextHolder.getUserId();
+        String bloomNoteCollectsRedisKey = RedisConstant.buildBloomUserNoteCollectsKey(userId);
+        DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
+        redisScript.setResultType(Long.class);
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("lua/bloom_note_collect_check.lua")));
+        Long execute = redisTemplate.execute(redisScript, Collections.singletonList(bloomNoteCollectsRedisKey), noteId);
+        // 确定是未收藏的笔记 更新收藏笔记缓存 异步落库
+        NoteCollectLuaResultEnum noteCollectLuaResultEnum = NoteCollectLuaResultEnum.valueOf(execute);
+        switch(noteCollectLuaResultEnum){
+            // 布隆过滤器不存在 初始化布隆
+            case NOT_EXIST ->{
+
+            }
+            // 已经收藏 存在误判 需要多层校验
+            case NOTE_COLLECTED ->{
+
+            }
+            //  布隆过滤器存在且没有被收藏且成功添加到布隆中
+            case NOTE_COLLECTED_SUCCESS ->{}
+        }
     }
 
     public Object[] buildNoteLikeZsetArg(List<NoteLike> noteLikeList) {
@@ -752,6 +726,38 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
             }
         }catch (Exception e){
             log.error("## 异步初始化布隆过滤器异常: ", e);
+        }
+    }
+
+
+    public void checkNoteIdIsExits(Long noteId) {
+        FindNoteByIdRspVO findNoteByIdRspVO = LOCAL_NOTEVO_CACHE.getIfPresent(noteId.toString());
+        if(Objects.isNull(findNoteByIdRspVO)){
+            String noteCacheId = RedisConstant.getNoteCacheId(String.valueOf(noteId));
+            String noteStr = redisTemplate.opsForValue().get(noteCacheId);
+            findNoteByIdRspVO = JsonUtil.JsonStringToObj(noteStr, FindNoteByIdRspVO.class);
+            if(Objects.isNull(findNoteByIdRspVO)){
+                // redis也为空 查库 异步同步数据到缓存
+                LambdaQueryWrapper<Note> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(Note::getId, noteId);
+                queryWrapper.eq(Note::getStatus, NoteStatusEnum.NORMAL.getCode());
+                Note note = noteMapper.selectOne(queryWrapper);
+                if(Objects.isNull(note)){
+                    throw new BusinessException(ResponseCodeEnum.NOTE_NOT_FOUND);
+                }
+                // 存在的话需要异步同步到缓存
+                threadPoolTaskExecutor.submit(()->{
+                    FindNoteByIdReqDTO build = FindNoteByIdReqDTO.builder().noteId(String.valueOf(noteId)).build();
+                    try {
+                        findById(build);
+                    } catch (ExecutionException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+            // redis中就存在缓存 异步保存到本地缓存即可
+            FindNoteByIdRspVO finalFindNoteByIdRspVO = findNoteByIdRspVO;
+            threadPoolTaskExecutor.submit(()-> LOCAL_NOTEVO_CACHE.put(String.valueOf(noteId), finalFindNoteByIdRspVO));
         }
     }
 }

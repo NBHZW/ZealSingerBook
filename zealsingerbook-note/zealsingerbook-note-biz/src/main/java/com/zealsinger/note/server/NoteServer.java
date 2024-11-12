@@ -7,10 +7,7 @@ import com.zealsinger.note.domain.dto.FindNoteByIdReqDTO;
 import com.zealsinger.note.domain.dto.UpdateTopStatusDTO;
 import com.zealsinger.note.domain.dto.UpdateVisibleOnlyMeReqVO;
 import com.zealsinger.note.domain.entity.Note;
-import com.zealsinger.note.domain.vo.LikeNoteReqVO;
-import com.zealsinger.note.domain.vo.PublishNoteReqVO;
-import com.zealsinger.note.domain.vo.UnlikeNoteReqVO;
-import com.zealsinger.note.domain.vo.UpdateNoteReqVO;
+import com.zealsinger.note.domain.vo.*;
 
 import java.util.concurrent.ExecutionException;
 
@@ -36,4 +33,6 @@ public interface NoteServer extends IService<Note> {
     Response<?> likeNote(LikeNoteReqVO likeNoteReqVO);
 
     Response<?> unlikeNote(UnlikeNoteReqVO unlikeNoteReqVO);
+
+    Response<?> collectNote(CollectNoteReqVO collectNoteReqVO);
 }

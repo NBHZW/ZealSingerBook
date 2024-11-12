@@ -45,28 +45,7 @@
                              targetProject="src/main/java"/>
 
         <!-- 需要生成的表-实体类 -->
-        <table tableName="t_note" domainObjectName="Note"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false"/>
-
-        <table tableName="t_channel" domainObjectName="Channel"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false"/>
-
-        <table tableName="t_topic" domainObjectName="Topic"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false"/>
-
-        <table tableName="t_channel_topic_rel" domainObjectName="ChannelTopicRel"
+        <table tableName="t_note_collection" domainObjectName="NoteCollection"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

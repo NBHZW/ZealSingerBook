@@ -6,10 +6,7 @@ import com.zealsinger.note.domain.dto.DeleteNoteByIdReqDTO;
 import com.zealsinger.note.domain.dto.FindNoteByIdReqDTO;
 import com.zealsinger.note.domain.dto.UpdateTopStatusDTO;
 import com.zealsinger.note.domain.dto.UpdateVisibleOnlyMeReqVO;
-import com.zealsinger.note.domain.vo.LikeNoteReqVO;
-import com.zealsinger.note.domain.vo.PublishNoteReqVO;
-import com.zealsinger.note.domain.vo.UnlikeNoteReqVO;
-import com.zealsinger.note.domain.vo.UpdateNoteReqVO;
+import com.zealsinger.note.domain.vo.*;
 import com.zealsinger.note.server.NoteServer;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -66,5 +63,10 @@ public class NoteController {
     @PostMapping("/unlike")
     public Response<?> unlikeNote(@RequestBody @Validated UnlikeNoteReqVO unlikeNoteReqVO){
         return noteServer.unlikeNote(unlikeNoteReqVO);
+    }
+
+    @PostMapping("/collect")
+    public Response<?> collectNote(@RequestBody @Validated CollectNoteReqVO collectNoteReqVO){
+        return noteServer.collectNote(collectNoteReqVO);
     }
 }
