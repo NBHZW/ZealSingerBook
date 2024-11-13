@@ -28,4 +28,19 @@ public interface RocketMQConstant {
      * Tag 标签：取消点赞
      */
     String TAG_UNLIKE = "Unlike";
+
+    /**
+     * Topic:收藏和取消收藏统一一个大Topic
+     */
+    String TOPIC_COLLECTION_UNCOLLECTION = "CollectionUnCollectTopic";
+
+    /**
+     * Tag标签：收藏
+     */
+    String TAG_COLLECTION = "Collection";
+
+    /**
+     * Tag标签：取消收藏
+     */
+    String TAG_UNCOLLECTION = "UnCollect";
 }

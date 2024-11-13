@@ -1,5 +1,5 @@
--- 操作的 Key
-local key = KEYS[1]
+-- note点赞布隆过滤器的初始化
+local key = KEYS[1]  -- 操作的 Key
 
 for i = 1, #ARGV - 1 do
     redis.call("BF.ADD", key, ARGV[i])

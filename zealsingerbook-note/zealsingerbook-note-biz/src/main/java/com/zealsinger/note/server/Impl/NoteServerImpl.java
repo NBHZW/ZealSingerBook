@@ -1,6 +1,7 @@
 package com.zealsinger.note.server.Impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -8,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.zealsinger.book.framework.common.constant.RedisConstant;
 import com.zealsinger.book.framework.common.exception.BusinessException;
 import com.zealsinger.book.framework.common.response.Response;
@@ -18,9 +20,11 @@ import com.zealsinger.kv.dto.FindNoteContentRspDTO;
 import com.zealsinger.note.constant.RocketMQConstant;
 import com.zealsinger.note.domain.dto.*;
 import com.zealsinger.note.domain.entity.Note;
+import com.zealsinger.note.domain.entity.NoteCollection;
 import com.zealsinger.note.domain.entity.NoteLike;
 import com.zealsinger.note.domain.enums.*;
 import com.zealsinger.note.domain.vo.*;
+import com.zealsinger.note.mapper.NoteCollectionMapper;
 import com.zealsinger.note.mapper.NoteLikeMapper;
 import com.zealsinger.note.mapper.NoteMapper;
 import com.zealsinger.note.mapper.TopicMapper;
@@ -38,6 +42,7 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.core.script.DefaultScriptExecutor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -74,6 +79,9 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
 
     @Resource
     private NoteMapper noteMapper;
+
+    @Resource
+    private NoteCollectionMapper noteCollectionMapper;
 
     @Resource
     private RocketMQTemplate rocketMQTemplate;
@@ -469,20 +477,23 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                 if(noteLike!=null){
                     // 到这里说明zset中没有数据,zset过期 所有需要被初始化  异步初始化zset
                     threadPoolTaskExecutor.execute(()->{
-                        LambdaQueryWrapper<NoteLike> lastQueryWrapper = new LambdaQueryWrapper<>();
-                        lastQueryWrapper.eq(NoteLike::getUserId, userId);
-                        lastQueryWrapper.eq(NoteLike::getStatus, LikeStatusEnum.LIKE.getCode());
-                        lastQueryWrapper.orderByDesc(NoteLike::getUpdateTime);
-                        lastQueryWrapper.last("limit 100");
-                        List<NoteLike> lastNoteLikeList = noteLikeMapper.selectList(lastQueryWrapper);
-                        if(CollUtil.isNotEmpty(lastNoteLikeList)){
-                            // 非空 初始化ZSET 初始化之前删除一下该用户的点赞zset记录 否则会导致zest中数据超过100条的限制
-                            redisTemplate.delete(noteLikeZSetKey);
-                            Object[] luaArgs = buildNoteLikeZsetArg(lastNoteLikeList);
-                            DefaultRedisScript<Long> script3 = new DefaultRedisScript<>();
-                            script3.setResultType(Long.class);
-                            script3.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/batch_add_note_like_zset_and_expire")));
-                            redisTemplate.execute(script3,Collections.singletonList(noteLikeZSetKey),luaArgs);
+                        Boolean hasLikeZset = redisTemplate.hasKey(noteLikeZSetKey);
+                        if(Boolean.FALSE.equals(hasLikeZset)){
+                            LambdaQueryWrapper<NoteLike> lastQueryWrapper = new LambdaQueryWrapper<>();
+                            lastQueryWrapper.eq(NoteLike::getUserId, userId);
+                            lastQueryWrapper.eq(NoteLike::getStatus, LikeStatusEnum.LIKE.getCode());
+                            lastQueryWrapper.orderByDesc(NoteLike::getUpdateTime);
+                            lastQueryWrapper.last("limit 100");
+                            List<NoteLike> lastNoteLikeList = noteLikeMapper.selectList(lastQueryWrapper);
+                            if(CollUtil.isNotEmpty(lastNoteLikeList)){
+                                // 非空 初始化ZSET 初始化之前删除一下该用户的点赞zset记录 否则会导致zest中数据超过100条的限制
+                                redisTemplate.delete(noteLikeZSetKey);
+                                Object[] luaArgs = buildNoteLikeZsetArg(lastNoteLikeList);
+                                DefaultRedisScript<Long> script3 = new DefaultRedisScript<>();
+                                script3.setResultType(Long.class);
+                                script3.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/batch_add_note_like_zset_and_expire")));
+                                redisTemplate.execute(script3,Collections.singletonList(noteLikeZSetKey),luaArgs);
+                            }
                         }
                     });
                     throw new BusinessException(ResponseCodeEnum.NOTE_ALREADY_LIKED);
@@ -505,9 +516,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                 NoteLike noteLike = noteLikeMapper.selectOne(queryWrapper);
                 if(!Objects.isNull(noteLike)){
                     // 说明已经点赞 进行返回 异步初始化布隆过滤器
-                    threadPoolTaskExecutor.submit(()->{
-                        batchAddNoteLike2BloomAndExpire(userId,expiredSecond,bloomKey);
-                    });
+                    threadPoolTaskExecutor.submit(()-> batchAddNoteLike2BloomAndExpire(userId,expiredSecond,bloomKey));
                     throw new BusinessException(ResponseCodeEnum.NOTE_ALREADY_LIKED);
                 }
                 // noteLike为null 说明 说明没被点赞过  老规矩 初始化布隆过滤器后加入当前记录
@@ -657,23 +666,149 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
         //检测完noteId的合理性之后 就需要检测是否已经收藏了  采用布隆过滤器判断  过程类似笔记点赞
         Long userId = LoginUserContextHolder.getUserId();
         String bloomNoteCollectsRedisKey = RedisConstant.buildBloomUserNoteCollectsKey(userId);
+        String userCollectionZsetKey = RedisConstant.buildUserCollectionZSetKey(userId);
         DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
         redisScript.setResultType(Long.class);
-        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("lua/bloom_note_collect_check.lua")));
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/bloom_note_collect_check.lua")));
         Long execute = redisTemplate.execute(redisScript, Collections.singletonList(bloomNoteCollectsRedisKey), noteId);
         // 确定是未收藏的笔记 更新收藏笔记缓存 异步落库
         NoteCollectLuaResultEnum noteCollectLuaResultEnum = NoteCollectLuaResultEnum.valueOf(execute);
         switch(noteCollectLuaResultEnum){
             // 布隆过滤器不存在 初始化布隆
             case NOT_EXIST ->{
-
+                //查库判断是否已经收藏
+                long expiredSecond = 60*60*24 + RandomUtil.randomInt(60*60*24);
+                LambdaQueryWrapper<NoteCollection> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(NoteCollection::getUserId,userId)
+                        .eq(NoteCollection::getNoteId,noteId)
+                        .eq(NoteCollection::getStatus,NoteCollectionStatusEnum.COLLECTION.getCode());
+                NoteCollection noteCollection = noteCollectionMapper.selectOne(queryWrapper);
+                // 如果查到了 则说明已经收藏 抛出异常  异步初始化collection的bloom布隆
+                if(!Objects.isNull(noteCollection)){
+                    threadPoolTaskExecutor.submit(()->{
+                        batchAddNoteCollection2BloomAndExpire(userId,expiredSecond,bloomNoteCollectsRedisKey);
+                    });
+                }
+                // 到这里说明没查到 那么该笔记确实还没收藏  但还是需要初始化布隆
+                batchAddNoteCollection2BloomAndExpire(userId,expiredSecond,bloomNoteCollectsRedisKey);
+                // 添加新记录到布隆中
+                DefaultRedisScript<Long> redisScript2 = new DefaultRedisScript<>();
+                redisScript2.setResultType(Long.class);
+                redisScript2.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/bloom_add_collection_note_and_expire.lua")));
+                redisTemplate.execute(redisScript2, Collections.singletonList(bloomNoteCollectsRedisKey), noteId,expiredSecond);
             }
             // 已经收藏 存在误判 需要多层校验
             case NOTE_COLLECTED ->{
-
+                // 存在误判 先查zset
+                Double score = redisTemplate.opsForZSet().score(userCollectionZsetKey, noteId);
+                if(Objects.isNull(score)){
+                    // zset中也不存在  需要查库
+                    LambdaQueryWrapper<NoteCollection> queryWrapper = new LambdaQueryWrapper<>();
+                    queryWrapper.eq(NoteCollection::getUserId,userId);
+                    queryWrapper.eq(NoteCollection::getNoteId,noteId);
+                    queryWrapper.eq(NoteCollection::getStatus,NoteCollectionStatusEnum.COLLECTION.getCode());
+                    NoteCollection noteCollection = noteCollectionMapper.selectOne(queryWrapper);
+                    if(!Objects.isNull(noteCollection)){
+                        // 不为null 则数据库中有  没有误判  但是zset中没有 异步初始化zset 抛出异常已经收藏
+                        threadPoolTaskExecutor.execute(()->{
+                            // 初始化收藏的zset  先检测zset是否存在 不存在则需要初始化
+                            Boolean hasZset = redisTemplate.hasKey(userCollectionZsetKey);
+                            if(Boolean.FALSE.equals(hasZset)){
+                                // zset不存在需要进行初始化
+                                LambdaQueryWrapper<NoteCollection> queryWrappy = new LambdaQueryWrapper<>();
+                                queryWrappy.eq(NoteCollection::getUserId,userId);
+                                queryWrappy.eq(NoteCollection::getStatus,NoteCollectionStatusEnum.COLLECTION.getCode());
+                                queryWrappy.orderByDesc(NoteCollection::getUpdateTime);
+                                // 收藏能被别人看到 相比较于喜欢 可悲操作的人多一些 所以缓存也设置大一点
+                                queryWrappy.last("limit 300");
+                                List<NoteCollection> noteCollectionList = noteCollectionMapper.selectList(queryWrappy);
+                                if(CollUtil.isNotEmpty(noteCollectionList)){
+                                    DefaultRedisScript<Long> redisScript2 = new DefaultRedisScript<>();
+                                    redisScript2.setResultType(Long.class);
+                                    redisScript2.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/batch_add_note_collection_zset_and_expire.lua")));
+                                    long expireSecond = 60*60*24+RandomUtil.randomInt(60*60);
+                                    Object[] userCollectionZsetLuaArg = buildNoteCollectionZSetLuaArgs(noteCollectionList,expireSecond);
+                                    redisTemplate.execute(redisScript2, Collections.singletonList(userCollectionZsetKey), userCollectionZsetLuaArg);
+                                }
+                            }
+                        });
+                        throw new BusinessException(ResponseCodeEnum.NOTE_ALREADY_COLLECTED);
+                    }
+                    // 为null则说明数据库中没有数据 没有收藏 误判了 不要管
+                }else{
+                    // zset中存在 说明没有误判了 确实已经收藏了 抛出异常
+                    throw new BusinessException(ResponseCodeEnum.NOTE_ALREADY_COLLECTED);
+                }
             }
             //  布隆过滤器存在且没有被收藏且成功添加到布隆中
             case NOTE_COLLECTED_SUCCESS ->{}
+        }
+        // 到这里说明noteId合理且没有被收藏 将数据更新到zset中并且异步落库
+        DefaultRedisScript<Long> redisScript3 = new DefaultRedisScript<>();
+        redisScript3.setResultType(Long.class);
+        redisScript3.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/note_collection_check_and_update_zset.lua")));
+        long timestamp = DateUtils.localDateTime2Timestamp(LocalDateTime.now());
+        Long executeResult = redisTemplate.execute(redisScript3, Collections.singletonList(userCollectionZsetKey), noteId, timestamp);
+        if(Objects.equals(executeResult,NoteCollectLuaResultEnum.NOT_EXIST.getCode())){
+            // 不存在 先初始化 然后再次调用
+            LambdaQueryWrapper<NoteCollection> queryWrappy = new LambdaQueryWrapper<>();
+            queryWrappy.eq(NoteCollection::getUserId,userId);
+            queryWrappy.eq(NoteCollection::getStatus,NoteCollectionStatusEnum.COLLECTION.getCode());
+            queryWrappy.orderByDesc(NoteCollection::getUpdateTime);
+            queryWrappy.last("limit 300");
+            List<NoteCollection> noteCollectionList = noteCollectionMapper.selectList(queryWrappy);
+            if(CollUtil.isNotEmpty(noteCollectionList)){
+                DefaultRedisScript<Long> redisScript2 = new DefaultRedisScript<>();
+                redisScript2.setResultType(Long.class);
+                redisScript2.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/batch_add_note_collection_zset_and_expire.lua")));
+                long expireSecond = 60*60*24+RandomUtil.randomInt(60*60);
+                Object[] userCollectionZsetLuaArg = buildNoteCollectionZSetLuaArgs(noteCollectionList,expireSecond);
+                redisTemplate.execute(redisScript2, Collections.singletonList(userCollectionZsetKey), userCollectionZsetLuaArg);
+                // 再次调用  加入本次记录
+                redisTemplate.execute(redisScript3, Collections.singletonList(userCollectionZsetKey), noteId, timestamp);
+            }
+        }
+        // 到这里 确保新元素已经加入到笔记收藏的ZSET中了 布隆过滤器中也有数据了
+        // 准备异步落库操作
+
+    }
+
+    private Object[] buildNoteCollectionZSetLuaArgs(List<NoteCollection> noteCollectionList, long expireSecond) {
+        int leng = noteCollectionList.size() * 2 + 1;
+        Object[] result =new Object[leng];
+        int i=0;
+        for(NoteCollection noteCollection : noteCollectionList){
+            result[i] = DateUtils.localDateTime2Timestamp(noteCollection.getUpdateTime());
+            result[i+1] = noteCollection.getNoteId();
+            i += 2;
+        }
+        result[leng-1] = expireSecond;
+        return result;
+    }
+
+    /**
+     * 初始化笔记收藏布隆过滤器
+     * @param userId
+     * @param expiredSecond
+     * @param bloomNoteCollectsRedisKey
+     */
+    private void batchAddNoteCollection2BloomAndExpire(Long userId, long expiredSecond, String bloomNoteCollectsRedisKey) {
+        try{
+            LambdaQueryWrapper<NoteCollection> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(NoteCollection::getUserId,userId).eq(NoteCollection::getStatus,NoteCollectionStatusEnum.COLLECTION.getCode());
+            List<NoteCollection> noteCollections = noteCollectionMapper.selectList(queryWrapper);
+            if(CollUtil.isNotEmpty(noteCollections)){
+                DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
+                redisScript.setResultType(Long.class);
+                redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/bloom_batch_add_note_collection_and_expire.lua")));
+                // 构建笔记收藏布隆过滤器初始化lua脚本所需要的参数
+                List<Object> collectionLuaArg = Lists.newArrayList();
+                noteCollections.forEach(noteCollection -> collectionLuaArg.add(noteCollection.getNoteId()));
+                collectionLuaArg.add(expiredSecond); // 最后一个参数为过期时间
+                redisTemplate.execute(redisScript, Collections.singletonList(bloomNoteCollectsRedisKey),collectionLuaArg.toArray())
+            }
+        }catch (Exception e){
+            log.error("## 异步初始化笔记收藏布隆过滤器失败 ",e);
         }
     }
 
@@ -700,7 +835,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
     }
 
     /**
-     * 初始化布隆过滤器
+     * 初始化笔记点赞布隆过滤器
      * @param userId
      * @param expireSeconds
      * @param bloomUserNoteLikeListKey
@@ -725,7 +860,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                 redisTemplate.execute(script, Collections.singletonList(bloomUserNoteLikeListKey), luaArgs.toArray());
             }
         }catch (Exception e){
-            log.error("## 异步初始化布隆过滤器异常: ", e);
+            log.error("## 异步初始化笔记点赞布隆过滤器异常: ", e);
         }
     }
 

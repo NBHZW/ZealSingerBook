@@ -39,6 +39,18 @@ public class RedisConstant {
     public static final String BLOOM_USER_NOTE_COLLECT_LIST_KEY = "bloom:note:collects:";
 
     /**
+     * 用户笔记收藏列表ZSet前缀
+     */
+    public static final String USER_NOTE_COLLECTION_ZSET_KEY = "user:note:collects:";
+
+    /**
+     * 构建用户笔记收藏列表ZSET的RedisKey
+     */
+    public static String buildUserCollectionZSetKey(Long userId){
+        return USER_NOTE_COLLECTION_ZSET_KEY + userId;
+    }
+
+    /**
      *  构建完整的布隆过滤器笔记收藏Redis
      */
     public static String buildBloomUserNoteCollectsKey(Long userId){
