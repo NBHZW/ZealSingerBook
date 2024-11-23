@@ -23,8 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.processing.Messager;
-import java.util.Arrays;
 import java.util.Objects;
 
 @Component
@@ -40,7 +38,7 @@ public class LikeUnlikeNoteConsumer implements RocketMQListener<Message> {
 
     // 每秒创建 5000 个令牌
     private RateLimiter rateLimiter = RateLimiter.create(5000);
-    @Autowired
+    @Resource
     private RocketMQTemplate rocketMQTemplate;
 
     @Override

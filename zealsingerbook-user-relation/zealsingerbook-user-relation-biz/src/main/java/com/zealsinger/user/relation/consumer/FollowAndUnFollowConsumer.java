@@ -61,7 +61,7 @@ public class FollowAndUnFollowConsumer implements RocketMQListener<Message> {
 
     @Resource
     private RocketMQTemplate rocketMQTemplate;
-    private DecimalMaxValidatorForLong decimalMaxValidatorForLong;
+
 
     @Override
     public void onMessage(Message message) {

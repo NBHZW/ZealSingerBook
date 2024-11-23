@@ -4,20 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:笔记收藏接口初始搭建">
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/dto/CollectionUnCollectionMqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/enums/NoteCollectionStatusEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/lua/batch_add_note_collection_zset_and_expire.lua" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/lua/bloom_add_collection_note_and_expire.lua" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/lua/bloom_batch_add_note_collection_and_expire.lua" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/lua/note_collection_check_and_update_zset.lua" afterDir="false" />
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:完成笔记收藏的noteId合理性判断以及note是否已经收藏的检测（完成了异步MQ之前的逻辑）">
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteCollectConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteCollectDBConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/domain/dto/CountCollectUnCollectNoteMqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/domain/enums/NoteCollectionStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/consumer/CollectionUnCollectionConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/enums/NoteUnCollectLuaResultEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/vo/UnCollectNoteReqVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/lua/bloom_note_uncollect_check.lua" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/RedisConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/day12.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day12.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/总结注意点.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/总结注意点.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/constants/RedisKeyConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/constants/RedisKeyConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountFansDBConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountFansDBConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountFollowConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountFollowConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountFollowDBConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountFollowDBConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/MQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/MQConstant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/constant/RocketMQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/constant/RocketMQConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/consumer/LikeUnlikeNoteConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/consumer/LikeUnlikeNoteConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/controller/NoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/controller/NoteController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/domain/enums/ResponseCodeEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/server/Impl/NoteServerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/server/Impl/NoteServerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/lua/bloom_batch_add_note_like_and_expire.lua" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/lua/bloom_batch_add_note_like_and_expire.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/lua/bloom_note_collect_check.lua" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/resources/lua/bloom_note_collect_check.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/server/NoteServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-note/zealsingerbook-note-biz/src/main/java/com/zealsinger/note/server/NoteServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-user-relation/zealsingerbook-user-relation-biz/src/main/java/com/zealsinger/user/relation/consumer/FollowAndUnFollowConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-user-relation/zealsingerbook-user-relation-biz/src/main/java/com/zealsinger/user/relation/consumer/FollowAndUnFollowConsumer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,11 +193,11 @@
       <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.zealsinger.count.consumer" />
+      <recent name="com.zealsinger.count.domain.enums" />
+      <recent name="com.zealsinger.note.domain.vo" />
       <recent name="com.zealsinger.note.domain.entity" />
       <recent name="com.zealsinger.count.constants" />
-      <recent name="com.zealsinger.count.domain.enums" />
-      <recent name="com.zealsinger.user.relation.config" />
-      <recent name="com.zealsinger.note.rpc" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -566,7 +576,15 @@
       <workItem from="1731389746748" duration="12054000" />
       <workItem from="1731464144381" duration="2677000" />
       <workItem from="1731478913752" duration="5153000" />
-      <workItem from="1731494011603" duration="6025000" />
+      <workItem from="1731494011603" duration="6139000" />
+      <workItem from="1731570862332" duration="503000" />
+      <workItem from="1731720977398" duration="578000" />
+      <workItem from="1731813447944" duration="746000" />
+      <workItem from="1731933889633" duration="1345000" />
+      <workItem from="1732009338575" duration="1469000" />
+      <workItem from="1732259087616" duration="1995000" />
+      <workItem from="1732327287308" duration="6348000" />
+      <workItem from="1732342106337" duration="5669000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -808,7 +826,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731415505373</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="feat:完成笔记收藏的noteId合理性判断以及note是否已经收藏的检测（完成了异步MQ之前的逻辑）">
+      <option name="closed" value="true" />
+      <created>1731502334921</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1731502334921</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -827,7 +853,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="feat:添加短信发送服务工具类和发送验证码接口+@PhoneNumber自定义注解约束传参手机号正则校验" />
     <MESSAGE value="feat:添加用户验证码登录注册接口" />
     <MESSAGE value="feat:整合MyBatisPlus+实现了登录注册接口" />
     <MESSAGE value="feat:添加createTime和updateTime的拦截自动处理" />
@@ -852,7 +877,8 @@
     <MESSAGE value="feat:修改了取消点赞接口中布隆不存在时候的处理逻辑（之前数据库确认点赞后没有初始化布隆 现在加上了该逻辑）" />
     <MESSAGE value="fix:修复了笔记点赞贺取消点赞异步落库失败" />
     <MESSAGE value="feat:笔记收藏接口初始搭建" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:笔记收藏接口初始搭建" />
+    <MESSAGE value="feat:完成笔记收藏的noteId合理性判断以及note是否已经收藏的检测（完成了异步MQ之前的逻辑）" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:完成笔记收藏的noteId合理性判断以及note是否已经收藏的检测（完成了异步MQ之前的逻辑）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

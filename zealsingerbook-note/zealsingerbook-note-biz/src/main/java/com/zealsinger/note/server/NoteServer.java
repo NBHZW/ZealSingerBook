@@ -35,4 +35,6 @@ public interface NoteServer extends IService<Note> {
     Response<?> unlikeNote(UnlikeNoteReqVO unlikeNoteReqVO);
 
     Response<?> collectNote(CollectNoteReqVO collectNoteReqVO);
+
+    Response<?> uncollectNote(UnCollectNoteReqVO unCollectNoteReqVO);
 }

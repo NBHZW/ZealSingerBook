@@ -69,4 +69,9 @@ public class NoteController {
     public Response<?> collectNote(@RequestBody @Validated CollectNoteReqVO collectNoteReqVO){
         return noteServer.collectNote(collectNoteReqVO);
     }
+
+    @PostMapping("/uncollect")
+    public Response<?> uncollectNote(@RequestBody @Validated UnCollectNoteReqVO unCollectNoteReqVO){
+        return noteServer.uncollectNote(unCollectNoteReqVO);
+    }
 }

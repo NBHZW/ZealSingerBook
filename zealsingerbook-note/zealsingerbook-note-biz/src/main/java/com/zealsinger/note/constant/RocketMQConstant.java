@@ -43,4 +43,9 @@ public interface RocketMQConstant {
      * Tag标签：取消收藏
      */
     String TAG_UNCOLLECTION = "UnCollect";
+
+    /**
+     * Topic: 计数 - 笔记收藏数
+     */
+    String TOPIC_COUNT_NOTE_COLLECT = "CountNoteCollectTopic";
 }

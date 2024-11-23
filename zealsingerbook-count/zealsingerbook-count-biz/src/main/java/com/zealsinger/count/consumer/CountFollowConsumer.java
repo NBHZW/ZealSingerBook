@@ -20,7 +20,7 @@ import java.util.Objects;
 
 @Component
 @Slf4j
-@RocketMQMessageListener(consumerGroup = "zealsingerbook-group"+ MQConstant.TOPIC_COUNT_FOLLOWING,
+@RocketMQMessageListener(consumerGroup = "zealsingerbook_group"+ MQConstant.TOPIC_COUNT_FOLLOWING,
         topic = MQConstant.TOPIC_COUNT_FOLLOWING
 )
 public class CountFollowConsumer implements RocketMQListener<String> {
@@ -40,7 +40,7 @@ public class CountFollowConsumer implements RocketMQListener<String> {
             Long userId = countFollowUnfollowMqDTO.getUserId();
             String redisKey = RedisKeyConstants.buildCountUserKey(userId);
             Boolean isHave = redisTemplate.hasKey(redisKey);
-            if(isHave){
+            if(Boolean.TRUE.equals(isHave)){
                 int number = FollowUnfollowTypeEnum.getFollowUnfollowTypeEnum(countFollowUnfollowMqDTO.getType())==FollowUnfollowTypeEnum.FOLLOW ? 1 : -1;
                 redisTemplate.opsForHash().increment(redisKey,RedisKeyConstants.FIELD_FOLLOWING_TOTAL,number);
             }

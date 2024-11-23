@@ -28,7 +28,10 @@ public class RedisKeyConstants {
      */
     public static final String FIELD_LIKE_TOTAL = "likeTotal";
 
-    // 省略...
+    /**
+     * Hash Field: 笔记收藏总数
+     */
+    public static final String FIELD_COLLECT_TOTAL = "collectTotal";
 
     /**
      * 构建笔记维度计数 Key

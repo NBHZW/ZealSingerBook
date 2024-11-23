@@ -19,7 +19,7 @@ import java.util.Optional;
 @Component
 @Slf4j
 @RocketMQMessageListener(
-        consumerGroup = "zealsingerbook-group" + MQConstant.TOPIC_COUNT_FOLLOWING_2_DB,
+        consumerGroup = "zealsingerbook_group" + MQConstant.TOPIC_COUNT_FOLLOWING_2_DB,
         topic = MQConstant.TOPIC_COUNT_FOLLOWING_2_DB
 )
 public class CountFollowDBConsumer implements RocketMQListener<String> {

@@ -1431,7 +1431,7 @@ threadPoolTaskExecutor.submit(()->{
 		{
 			"userId": 100, // 用户ID
 			"avatar": "http://127.0.0.1:9000/xiaohashu/14d8b7c3adad49f5b81dfa68417c0ab3.jpg", // 用户头像
-			"nickname": "犬小哈", // 昵称
+			"nickname": "xxxx", // 昵称
 			"introduction": "一枚 Java 程序员" // 简介
 		}
 	],
