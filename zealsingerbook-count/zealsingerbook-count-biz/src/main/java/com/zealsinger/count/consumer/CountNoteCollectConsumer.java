@@ -6,6 +6,7 @@ import com.zealsinger.book.framework.common.constant.MQConstant;
 import com.zealsinger.book.framework.common.constant.RedisConstant;
 import com.zealsinger.book.framework.common.utils.JsonUtil;
 import com.zealsinger.count.constants.RedisKeyConstants;
+import com.zealsinger.count.domain.dto.AggregationCountCollectUncollectNoteMqDTO;
 import com.zealsinger.count.domain.dto.CountCollectUnCollectNoteMqDTO;
 import com.zealsinger.count.domain.enums.NoteCollectionStatusEnum;
 import jakarta.annotation.Resource;
@@ -21,10 +22,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -58,14 +56,16 @@ public class CountNoteCollectConsumer implements RocketMQListener<String> {
         if(CollUtil.isNotEmpty(bodys)){
             List<CountCollectUnCollectNoteMqDTO> countCollectUnCollectNoteMqDTOS = bodys.stream().map(s -> JsonUtil.JsonStringToObj(s, CountCollectUnCollectNoteMqDTO.class)).toList();
             Map<Long, List<CountCollectUnCollectNoteMqDTO>> groupMap= countCollectUnCollectNoteMqDTOS.stream().collect(Collectors.groupingBy(CountCollectUnCollectNoteMqDTO::getNoteId));
-            Map<Long, Integer> countMap = new HashMap<>();
+            List<AggregationCountCollectUncollectNoteMqDTO> countList = new ArrayList<>();
             for (Map.Entry<Long, List<CountCollectUnCollectNoteMqDTO>> entry : groupMap.entrySet()) {
                 List<CountCollectUnCollectNoteMqDTO> list = entry.getValue();
                 // 最终的计数值，默认为 0
                 int finalCount = 0;
+                Long creator = null;
                 for (CountCollectUnCollectNoteMqDTO countCollectUnCollectNoteMqDTO : list) {
+                    creator = countCollectUnCollectNoteMqDTO.getCreatorId();
                     // 获取操作类型
-                    Integer type = countCollectUnCollectNoteMqDTO.getType();
+                    Integer type = countCollectUnCollectNoteMqDTO.getStatus();
                     if(Objects.equals(type, NoteCollectionStatusEnum.COLLECTION.getCode())){
                         finalCount++;
                     }
@@ -74,18 +74,29 @@ public class CountNoteCollectConsumer implements RocketMQListener<String> {
                     }
                 }
                 // 将分组后统计出的最终计数，存入 countMap 中
-                countMap.put(entry.getKey(), finalCount);
+                countList.add(AggregationCountCollectUncollectNoteMqDTO.builder()
+                                .noteId(entry.getKey())
+                                .creatorId(creator)
+                                .count(finalCount)
+                                .build());
             }
-            log.info("## 【笔记收藏数】聚合后的计数数据: {}", JsonUtil.ObjToJsonString(countMap));
-            countMap.forEach((k,v)->{
-                String redisHashKey = RedisKeyConstants.buildCountNoteKey(k);
-                Boolean b = redisTemplate.hasKey(redisHashKey);
-                if(Boolean.TRUE.equals(b)){
-                    redisTemplate.opsForHash().increment(redisHashKey,RedisKeyConstants.FIELD_FOLLOWING_TOTAL,v);
+            log.info("## 【笔记收藏数】聚合后的计数数据: {}", JsonUtil.ObjToJsonString(countList));
+            countList.forEach(item->{
+                String redisHashKey = RedisKeyConstants.buildCountNoteKey(item.getNoteId());
+                Boolean isExisted = redisTemplate.hasKey(redisHashKey);
+                if(Boolean.TRUE.equals(isExisted)){
+                    redisTemplate.opsForHash().increment(redisHashKey,RedisKeyConstants.FIELD_COLLECT_TOTAL, item.getCount());
+                }
+
+                String buildCountUserKey = RedisKeyConstants.buildCountUserKey(item.getCreatorId());
+                isExisted = redisTemplate.hasKey(buildCountUserKey);
+                if(Boolean.TRUE.equals(isExisted)){
+                    redisTemplate.opsForHash().increment(buildCountUserKey,RedisKeyConstants.FIELD_COLLECT_TOTAL,item.getCount());
                 }
             });
+
             // 异步MQ落库
-            Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(countMap)).build();
+            Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(countList)).build();
             // 落库
             rocketMQTemplate.asyncSend(MQConstant.TOPIC_COUNT_NOTE_COLLECT_2_DB, message, new SendCallback() {
                 @Override

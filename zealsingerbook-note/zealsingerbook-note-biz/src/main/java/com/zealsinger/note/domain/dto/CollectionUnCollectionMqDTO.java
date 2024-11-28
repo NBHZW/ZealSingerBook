@@ -18,5 +18,6 @@ public class CollectionUnCollectionMqDTO {
      * 1收藏 0取消收藏
      */
     private Integer status;
+    private Long creatorId;
     private LocalDateTime optionTime;
 }

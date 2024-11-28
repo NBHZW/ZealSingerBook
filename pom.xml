@@ -26,6 +26,7 @@
         <module>zealsingerbook-note</module>
         <module>zealsingerbook-user-relation</module>
         <module>zealsingerbook-count</module>
+        <module>zealsingerbook-data-align</module>
     </modules>
 
     <properties>
@@ -63,12 +64,19 @@
         <caffeine.version>3.1.8</caffeine.version>
         <rocketmq.version>2.2.3</rocketmq.version>
         <buffertrigger.version>0.2.21</buffertrigger.version>
+        <xxl-job.version>2.4.2-SNAPSHOT</xxl-job.version>
     </properties>
 
 
     <!--统一依赖管理  防止多次依赖-->
     <dependencyManagement>
         <dependencies>
+            <!-- XXL-JOB 分布式定时任务调度 -->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
+            </dependency>
             <!-- 快手 Buffer Trigger -->
             <dependency>
                 <groupId>com.github.phantomthief</groupId>

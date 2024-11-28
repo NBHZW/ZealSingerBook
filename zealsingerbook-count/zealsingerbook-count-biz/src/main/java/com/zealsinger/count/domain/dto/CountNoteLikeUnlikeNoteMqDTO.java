@@ -15,5 +15,6 @@ public class CountNoteLikeUnlikeNoteMqDTO {
     private Long userId;
     private Long noteId;
     private Integer likeStatus;
+    private Long creatorId;
     private LocalDateTime optionTime;
 }

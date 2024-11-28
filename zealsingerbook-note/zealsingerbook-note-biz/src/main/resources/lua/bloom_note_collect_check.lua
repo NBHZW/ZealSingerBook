@@ -15,6 +15,6 @@ if isCollected == 1 then
 end
 
 -- 到这里说明布隆存在 且 数据没有被收藏(布隆过滤器存在但是过滤器中没有这个数据) 那么直接添加并且返回0
-redis.call('BF.ADD',key,note)
+redis.call('BF.ADD',key,noteId)
 return 0
 

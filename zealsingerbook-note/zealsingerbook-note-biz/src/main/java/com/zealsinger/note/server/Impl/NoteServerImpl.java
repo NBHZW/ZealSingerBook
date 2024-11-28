@@ -176,7 +176,31 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                 }
                 throw new BusinessException(ResponseCodeEnum.NOTE_PUBLISH_FAIL);
             }
+            // 异步发送MQ进行用户发布笔记数统计
+            NoteOperateMqDTO noteOperateMqDTO = NoteOperateMqDTO.builder()
+                    .creatorId(LoginUserContextHolder.getUserId())
+                    .noteId(Long.valueOf(contentId))
+                    .type(NoteOperateEnum.PUBLISH.getCode()) // 发布笔记
+                    .build();
+            // 构建消息对象，并将 DTO 转成 Json 字符串设置到消息体中
+            Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(noteOperateMqDTO))
+                    .build();
 
+            // 通过冒号连接, 可让 MQ 发送给主题 Topic 时，携带上标签 Tag
+            String destination = RocketMQConstant.TOPIC_NOTE_OPERATE + ":" + RocketMQConstant.TAG_NOTE_PUBLISH;
+
+            // 异步发送 MQ 消息，提升接口响应速度
+            rocketMQTemplate.asyncSend(destination, message, new SendCallback() {
+                @Override
+                public void onSuccess(SendResult sendResult) {
+                    log.info("==> 【笔记发布】MQ 发送成功，SendResult: {}", sendResult);
+                }
+
+                @Override
+                public void onException(Throwable throwable) {
+                    log.error("==> 【笔记发布】MQ 发送异常: ", throwable);
+                }
+            });
             return Response.success();
         }else{
             throw new BusinessException(ResponseCodeEnum.TYPE_ERROR);
@@ -373,6 +397,33 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                 log.warn("删除kv笔记内容失败,笔记UUID:{}",note.getContentUuid());
             }
         });
+        // 发送 MQ
+        // 构建消息体 DTO
+        NoteOperateMqDTO noteOperateMqDTO = NoteOperateMqDTO.builder()
+                .creatorId(note.getCreatorId())
+                .noteId(note.getId())
+                .type(NoteOperateEnum.DELETE.getCode()) // 删除笔记
+                .build();
+
+        // 构建消息对象，并将 DTO 转成 Json 字符串设置到消息体中
+        Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(noteOperateMqDTO))
+                .build();
+
+        // 通过冒号连接, 可让 MQ 发送给主题 Topic 时，携带上标签 Tag
+        String destination = RocketMQConstant.TOPIC_NOTE_OPERATE + ":" + RocketMQConstant.TAG_NOTE_DELETE;
+
+        // 异步发送 MQ 消息，提升接口响应速度
+        rocketMQTemplate.asyncSend(destination, message, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> 【笔记删除】MQ 发送成功，SendResult: {}", sendResult);
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> 【笔记删除】MQ 发送异常: ", throwable);
+            }
+        });
         return Response.success();
     }
 
@@ -449,7 +500,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
         // 校验note合理性 + 是否已经点赞 + 更新点赞列表 + 发送MQ落库
         Long noteId = likeNoteReqVO.getNoteId();
         // 因为会存在本地缓存笔记详情，所以可以先查本地缓存
-        checkNoteIdIsExits(noteId);
+        Long creatorId = checkNoteIdIsExits(noteId);
         // 判断是否已经点赞
         Long userId = LoginUserContextHolder.getUserId();
         String bloomKey = RedisConstant.getBloomUserNoteLikeListKey(userId);
@@ -571,6 +622,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                 .noteId(noteId)
                 .likeStatus(LikeStatusEnum.LIKE.getCode())
                 .optionTime(LocalDateTime.now())
+                .creatorId(creatorId)
                 .build();
         Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(likeUnlikeMqDTO)).build();
         String messageHead = RocketMQConstant.TOPIC_LIKE_OR_UNLIKE + ":" + RocketMQConstant.TAG_LIKE;
@@ -594,7 +646,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
     public Response<?> unlikeNote(UnlikeNoteReqVO unlikeNoteReqVO) {
         // 判断noteId的合理性  先查本地缓存 再查redis  最后查库
         Long noteId = unlikeNoteReqVO.getNoteId();
-        checkNoteIdIsExits(noteId);
+        Long creatorId = checkNoteIdIsExits(noteId);
         // noteId合理 检测是否已经点赞过 使用Lua去布隆过滤器中检测
         Long userId = LoginUserContextHolder.getUserId();
         String bloomKey = RedisConstant.getBloomUserNoteLikeListKey(userId);
@@ -636,6 +688,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                                 .noteId(noteId)
                                 .optionTime(LocalDateTime.now())
                                 .userId(userId)
+                                .creatorId(creatorId)
                                 .likeStatus(LikeStatusEnum.UNLIKE.getCode()).build();
         Message<String> mqMessage = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(build)).build();
         String hashKey = String.valueOf(userId);
@@ -662,7 +715,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
     public Response<?> collectNote(CollectNoteReqVO collectNoteReqVO) {
         // 先检测noteId的合理性 先查本地缓存 再查redis缓存 最后查库
         Long noteId = collectNoteReqVO.getNoteId();
-        checkNoteIdIsExits(noteId);
+        Long creatorId = checkNoteIdIsExits(noteId);
         //检测完noteId的合理性之后 就需要检测是否已经收藏了  采用布隆过滤器判断  过程类似笔记点赞
         Long userId = LoginUserContextHolder.getUserId();
         String bloomNoteCollectsRedisKey = RedisConstant.buildBloomUserNoteCollectsKey(userId);
@@ -776,6 +829,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                 .noteId(noteId)
                 .status(NoteCollectionStatusEnum.COLLECTION.getCode())
                 .optionTime(LocalDateTime.now())
+                .creatorId(creatorId)
                 .build();
         Message<String> collectionMessage = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(collectionUnCollectionMqDTO)).build();
         String head = RocketMQConstant.TOPIC_COLLECTION_UNCOLLECTION + ":" + RocketMQConstant.TAG_COLLECTION;
@@ -798,7 +852,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
         Long noteId = unCollectNoteReqVO.getNoteId();
 
         // 1. 校验笔记是否真实存在
-        checkNoteIdIsExits(noteId);
+        Long creatorId = checkNoteIdIsExits(noteId);
 
         // TODO: 2. 校验笔记是否被收藏过
         Long userId = LoginUserContextHolder.getUserId();
@@ -844,6 +898,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                 .noteId(noteId)
                 .status(NoteCollectionStatusEnum.UNCOLLECTION.getCode())
                 .optionTime(LocalDateTime.now())
+                .creatorId(creatorId)
                 .build();
 
         // 构建消息对象，并将 DTO 转成 Json 字符串设置到消息体中
@@ -962,7 +1017,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
     }
 
 
-    public void checkNoteIdIsExits(Long noteId) {
+    public Long checkNoteIdIsExits(Long noteId) {
         FindNoteByIdRspVO findNoteByIdRspVO = LOCAL_NOTEVO_CACHE.getIfPresent(noteId.toString());
         if(Objects.isNull(findNoteByIdRspVO)){
             String noteCacheId = RedisConstant.getNoteCacheId(String.valueOf(noteId));
@@ -986,10 +1041,13 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
                         throw new RuntimeException(e);
                     }
                 });
+                return note.getCreatorId();
             }
             // redis中就存在缓存 异步保存到本地缓存即可
             FindNoteByIdRspVO finalFindNoteByIdRspVO = findNoteByIdRspVO;
             threadPoolTaskExecutor.submit(()-> LOCAL_NOTEVO_CACHE.put(String.valueOf(noteId), finalFindNoteByIdRspVO));
+            return findNoteByIdRspVO.getCreatorId();
         }
+        return findNoteByIdRspVO.getCreatorId();
     }
 }

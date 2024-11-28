@@ -20,7 +20,8 @@ public class CountCollectUnCollectNoteMqDTO {
     /**
      * 0: 取消收藏， 1：收藏
      */
-    private Integer type;
+    private Integer status;
+    private Long creatorId;
 
     private LocalDateTime createTime;
 }
