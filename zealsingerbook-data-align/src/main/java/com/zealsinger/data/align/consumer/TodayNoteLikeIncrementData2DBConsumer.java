@@ -96,7 +96,5 @@ public class TodayNoteLikeIncrementData2DBConsumer implements RocketMQListener<S
             redisTemplate.execute(bloomAddScript, Collections.singletonList(userBloomKey), creatorId);
         }
 
-
-
     }
 }

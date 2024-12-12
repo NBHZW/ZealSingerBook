@@ -1,0 +1,874 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20241204.143834.29132.0.001.json",
+    "dumpEventTime": "2024-12-04T14:38:34Z",
+    "dumpEventTimeStamp": "1733294314324",
+    "processId": 29132,
+    "cwd": "D:\\ZhuoMian\\bigThree\\Netty相关资料\\ZealSingerBook-test\\doc",
+    "commandLine": [
+      "C:\\Users\\John\\AppData\\Roaming\\Typora/picgo/win64/picgo.exe",
+      "u",
+      "D:\\\\Typora\\\\img\\\\image-20231113131716653.png"
+    ],
+    "nodejsVersion": "v12.13.0",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "12.13.0",
+      "v8": "7.7.299.13-node.12",
+      "uv": "1.32.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.39.2",
+      "napi": "5",
+      "llhttp": "1.1.4",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019a",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.13.0/node-v12.13.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.13.0/node-v12.13.0.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v12.13.0/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.22631",
+    "osVersion": "Windows 10 Home China",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 345812,
+        "nice": 0,
+        "sys": 953031,
+        "idle": 11531187,
+        "irq": 105531
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 69296,
+        "nice": 0,
+        "sys": 98578,
+        "idle": 12661906,
+        "irq": 1718
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 256203,
+        "nice": 0,
+        "sys": 290000,
+        "idle": 12283593,
+        "irq": 4796
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 82796,
+        "nice": 0,
+        "sys": 73343,
+        "idle": 12673640,
+        "irq": 875
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 204921,
+        "nice": 0,
+        "sys": 195937,
+        "idle": 12428906,
+        "irq": 2875
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 92500,
+        "nice": 0,
+        "sys": 93765,
+        "idle": 12643500,
+        "irq": 984
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 186890,
+        "nice": 0,
+        "sys": 167531,
+        "idle": 12475343,
+        "irq": 2000
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 100406,
+        "nice": 0,
+        "sys": 153953,
+        "idle": 12575421,
+        "irq": 953
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 180984,
+        "nice": 0,
+        "sys": 198265,
+        "idle": 12450531,
+        "irq": 2656
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 87375,
+        "nice": 0,
+        "sys": 78218,
+        "idle": 12664187,
+        "irq": 812
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 201562,
+        "nice": 0,
+        "sys": 144890,
+        "idle": 12483328,
+        "irq": 1968
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 104359,
+        "nice": 0,
+        "sys": 75234,
+        "idle": 12650187,
+        "irq": 625
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 151859,
+        "nice": 0,
+        "sys": 190562,
+        "idle": 12487343,
+        "irq": 2281
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 64125,
+        "nice": 0,
+        "sys": 66078,
+        "idle": 12699578,
+        "irq": 890
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 191906,
+        "nice": 0,
+        "sys": 230203,
+        "idle": 12407640,
+        "irq": 2750
+      },
+      {
+        "model": "AMD Ryzen 7 5800H with Radeon Graphics         ",
+        "speed": 3194,
+        "user": 105156,
+        "nice": 0,
+        "sys": 126921,
+        "idle": 12597671,
+        "irq": 1031
+      }
+    ],
+    "host": "ZZW"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x00007ff70dcc1439",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70dcc587c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70dcc4828",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70ddb331b",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e5b6a6e",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e59eab1",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e46c2dc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e4482d3",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e4465cb",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e471c4d",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e473954",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e469a43",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e468214",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e48231e",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e4896b4",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e494eca",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e494c9c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e494a45",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e1eca4b",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e9e2a9d",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e9f767a",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e9f9ffc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e95fbe1",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e95f7cc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e4c49c3",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e4c4346",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e31dd2b",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e321a0d",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e2d2a42",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e300918",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e1e2a28",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e1e2015",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e9e2a9d",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70ea3b699",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e96262c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e95fbe1",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e95f7cc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e4c49c3",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e4c4346",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70e59563b",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70ddd949e",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70ddd8611",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70dd7b705",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70ddd9133",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70dc9666c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff70ea95b88",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ffc7ec6259d",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ffc7fdaaf38",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 22814720,
+    "totalCommittedMemory": 22814720,
+    "usedMemory": 12302816,
+    "availableMemory": 2183806144,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 262144,
+        "capacity": 261872,
+        "used": 32296,
+        "available": 229576
+      },
+      "new_space": {
+        "memorySize": 8388608,
+        "committedMemory": 8388608,
+        "capacity": 4189952,
+        "used": 203280,
+        "available": 3986672
+      },
+      "old_space": {
+        "memorySize": 7450624,
+        "committedMemory": 7450624,
+        "capacity": 6193496,
+        "used": 6056272,
+        "available": 137224
+      },
+      "code_space": {
+        "memorySize": 425984,
+        "committedMemory": 425984,
+        "capacity": 181792,
+        "used": 181792,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 790528,
+        "committedMemory": 790528,
+        "capacity": 412640,
+        "used": 412640,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 5447680,
+        "committedMemory": 5447680,
+        "capacity": 5412984,
+        "used": 5412984,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 3552,
+        "used": 3552,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 4189952,
+        "used": 0,
+        "available": 4189952
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 0.781,
+    "kernelCpuSeconds": 0.187,
+    "cpuConsumptionPercent": 12.1,
+    "maxRss": 42733568,
+    "pageFaults": {
+      "IORequired": 16292,
+      "IONotRequired": 0
+    },
+    "fsActivity": {
+      "reads": 65,
+      "writes": 90
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "": "D:=D:\\ZhuoMian\\bigThree\\Netty相关资料\\ZealSingerBook-test\\doc",
+    "": "ExitCode=00000000",
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "APPCODE_VM_OPTIONS": "E:\\jetbra\\vmoptions\\appcode.vmoptions",
+    "APPDATA": "C:\\Users\\John\\AppData\\Roaming",
+    "asl.log": "Destination=file",
+    "CLion": "D:\\CLion 2022.2.3\\bin;",
+    "CLION_VM_OPTIONS": "E:\\jetbra\\vmoptions\\clion.vmoptions",
+    "CommonProgramFiles": "C:\\Program Files\\Common Files",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "COMPUTERNAME": "ZZW",
+    "ComSpec": "C:\\WINDOWS\\system32\\cmd.exe",
+    "CPOLAR_HOME": "E:\\Cpolar\\",
+    "DATAGRIP_VM_OPTIONS": "E:\\jetbra\\vmoptions\\datagrip.vmoptions",
+    "DATASPELL_VM_OPTIONS": "E:\\jetbra\\vmoptions\\dataspell.vmoptions",
+    "DEVECOSTUDIO_VM_OPTIONS": "E:\\jetbra\\vmoptions\\devecostudio.vmoptions",
+    "DriverData": "C:\\Windows\\System32\\Drivers\\DriverData",
+    "EFC_11032": "1",
+    "FPS_BROWSER_APP_PROFILE_STRING": "Internet Explorer",
+    "FPS_BROWSER_USER_PROFILE_STRING": "Default",
+    "GATEWAY_VM_OPTIONS": "E:\\jetbra\\vmoptions\\gateway.vmoptions",
+    "GOLAND_VM_OPTIONS": "E:\\jetbra\\vmoptions\\goland.vmoptions",
+    "GOPATH": "D:\\GoWork",
+    "GOROOT": "D:\\go",
+    "GRADLE_HOME": "D:\\gradle-8.8-all\\gradle-8.8",
+    "GRADLE_USER_HOME": "D:\\gradle-8.8-all\\gradle-8.8\\local_repository",
+    "HOMEDRIVE": "C:",
+    "HOMEPATH": "\\Users\\John",
+    "IDEA_VM_OPTIONS": "E:\\jetbra\\vmoptions\\idea.vmoptions",
+    "JAVA1.8_HOME": "E:\\JDK8",
+    "JAVA_HOME": "D:\\New Folder",
+    "JETBRAINSCLIENT_VM_OPTIONS": "E:\\jetbra\\vmoptions\\jetbrainsclient.vmoptions",
+    "JETBRAINS_CLIENT_VM_OPTIONS": "E:\\jetbra\\vmoptions\\jetbrains_client.vmoptions",
+    "LOCALAPPDATA": "C:\\Users\\John\\AppData\\Local",
+    "LOGONSERVER": "\\\\ZZW",
+    "MAVEN_HOME": "E:\\apache-maven-3.8.8",
+    "NEO4J_HOME": "E:\\neo4j-community-5.14.0",
+    "NUMBER_OF_PROCESSORS": "16",
+    "NVM_HOME": "E:\\nvm\\nvm",
+    "NVM_SYMLINK": "E:\\nvm\\node",
+    "OneDrive": "C:\\Users\\John\\OneDrive",
+    "ORIGINAL_XDG_CURRENT_DESKTOP": "undefined",
+    "OS": "Windows_NT",
+    "Path": "D:\\VM17\\bin\\;D:\\python3.12.3\\Scripts;D:\\New Folder\\bin;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;D:\\Git\\cmd;D:\\MySQL Serve 8\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;D:\\python3.12.3;E:\\neo4j-community-5.14.0\\bin;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;D:\\Program Files\\Microsoft Visual Studio\\2022\\Community;E:\\apache-maven-3.8.8\\bin;C:\\Users\\John\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\John\\go\\bin;E:\\Microsoft VS Code\\bin;C:\\Users\\John\\AppData\\Roaming\\npm;E:\\XSHELL\\xftp\\;%QUARTUS_ROOTDIR%\\bin;E:\\微信web开发者工具\\dll;C:\\Program Files (x86)\\NetSarang\\Xshell 7\\;E:\\Nacos\\nacos\\bin;E:\\OCR\\tessdata;C:\\Program Files\\dotnet\\;E:\\nvm\\nvm;E:\\nvm\\node;E:\\node_js;D:\\JBboxApp\\shell;D:\\gradle-8.8-all\\gradle-8.8\\bin;D:\\cmake-3.30.0-windows-x86_64\\bin;D:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\bin\\Hostx64\\x64;E:\\llq\\protoc-27.3-win64\\bin;C:\\Program Files\\Google\\Chrome\\Application\\;C:\\Users\\John\\AppData\\Local\\Microsoft\\WindowsApps;D:\\CLion 2022.2.3\\bin;C:\\Users\\John\\go\\bin;E:\\Microsoft VS Code\\bin;D:\\MySQL Serve 8\\bin;E:\\Cpolar\\;C:\\Users\\John\\AppData\\Local\\JetBrains\\Toolbox\\scripts;E:\\OCR;E:\\OCR\\tessdata;C:\\Users\\John\\.dotnet\\tools;E:\\nvm\\nvm;E:\\nvm\\node;C:\\Users\\John\\AppData\\Local\\Coursier\\data\\bin",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC",
+    "PHPSTORM_VM_OPTIONS": "E:\\jetbra\\vmoptions\\phpstorm.vmoptions",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "PROCESSOR_IDENTIFIER": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "PROCESSOR_LEVEL": "25",
+    "PROCESSOR_REVISION": "5000",
+    "ProgramData": "C:\\ProgramData",
+    "ProgramFiles": "C:\\Program Files",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "ProgramW6432": "C:\\Program Files",
+    "PROMPT": "$P$G",
+    "PSModulePath": "C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
+    "PUBLIC": "C:\\Users\\Public",
+    "PYCHARM_VM_OPTIONS": "E:\\jetbra\\vmoptions\\pycharm.vmoptions",
+    "RIDER_VM_OPTIONS": "E:\\jetbra\\vmoptions\\rider.vmoptions",
+    "ROCKETMQ_HOME": "D:\\rocketmq",
+    "RUBYMINE_VM_OPTIONS": "E:\\jetbra\\vmoptions\\rubymine.vmoptions",
+    "SESSIONNAME": "Console",
+    "SOPC_KIT_NIOS2": "E:\\quartus ii\\Quartus II 13.1\\13.1\\nios2eds",
+    "STUDIO_VM_OPTIONS": "E:\\jetbra\\vmoptions\\studio.vmoptions",
+    "SystemDrive": "C:",
+    "SystemRoot": "C:\\WINDOWS",
+    "TEMP": "C:\\Users\\John\\AppData\\Local\\Temp",
+    "TESSDATA_PREFIX": "E:\\OCR\\tessdata",
+    "TMP": "C:\\Users\\John\\AppData\\Local\\Temp",
+    "USERDOMAIN": "ZZW",
+    "USERDOMAIN_ROAMINGPROFILE": "ZZW",
+    "USERNAME": "John",
+    "USERPROFILE": "C:\\Users\\John",
+    "WEBIDE_VM_OPTIONS": "E:\\jetbra\\vmoptions\\webide.vmoptions",
+    "WEBSTORM_VM_OPTIONS": "E:\\jetbra\\vmoptions\\webstorm.vmoptions",
+    "windir": "C:\\WINDOWS",
+    "XiuMaster_v1_run_lua_1589": "writeInteger(\"itemCount\",\"1000\");sendMessage(g_hwnd_ui,0x8004,g_xgq_id,\"ok\")",
+    "XiuMaster_v1_run_lua_1591": "writeInteger(\"itemCount\",\"1000\");sendMessage(g_hwnd_ui,0x8004,g_xgq_id,\"ok\")",
+    "XiuMaster_v1_run_lua_1596": "writeInteger(\"itemCount\",\"100\");sendMessage(g_hwnd_ui,0x8004,g_xgq_id,\"ok\")"
+  },
+  "sharedObjects": [
+    "C:\\Users\\John\\AppData\\Roaming\\Typora\\picgo\\win64\\picgo.exe",
+    "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+    "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+    "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+    "C:\\WINDOWS\\System32\\WS2_32.dll",
+    "C:\\WINDOWS\\System32\\RPCRT4.dll",
+    "C:\\WINDOWS\\System32\\ADVAPI32.dll",
+    "C:\\WINDOWS\\System32\\msvcrt.dll",
+    "C:\\WINDOWS\\System32\\sechost.dll",
+    "C:\\WINDOWS\\System32\\bcrypt.dll",
+    "C:\\WINDOWS\\System32\\USER32.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dbghelp.dll",
+    "C:\\WINDOWS\\System32\\win32u.dll",
+    "C:\\WINDOWS\\System32\\GDI32.dll",
+    "C:\\WINDOWS\\System32\\gdi32full.dll",
+    "C:\\WINDOWS\\System32\\msvcp_win.dll",
+    "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "C:\\WINDOWS\\System32\\PSAPI.DLL",
+    "C:\\WINDOWS\\System32\\CRYPT32.dll",
+    "C:\\WINDOWS\\SYSTEM32\\IPHLPAPI.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\USERENV.dll",
+    "C:\\WINDOWS\\SYSTEM32\\WINMM.dll",
+    "C:\\WINDOWS\\System32\\combase.dll",
+    "C:\\WINDOWS\\System32\\OLEAUT32.dll",
+    "C:\\WINDOWS\\System32\\IMM32.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\powrprof.dll",
+    "C:\\WINDOWS\\SYSTEM32\\UMPDC.dll",
+    "C:\\WINDOWS\\system32\\uxtheme.dll",
+    "C:\\WINDOWS\\system32\\mswsock.dll",
+    "C:\\WINDOWS\\SYSTEM32\\kernel.appcore.dll",
+    "C:\\WINDOWS\\System32\\bcryptprimitives.dll",
+    "C:\\WINDOWS\\System32\\NSI.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc6.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc.DLL",
+    "C:\\WINDOWS\\System32\\winrnr.dll"
+  ]
+}
