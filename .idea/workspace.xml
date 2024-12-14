@@ -4,34 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:完成数据对齐服务模块">
-      <change afterPath="$PROJECT_DIR$/doc/day16.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/doc/report.20241204.143834.29132.0.001.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/utils/NumberUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/ZealsingerbookSearchApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/config/ElasticsearchProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/config/ElasticsearchRestHighLevelClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/controller/UserSearchController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/enums/ResponseCodeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/index/NoteIndex.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/index/UserIndex.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchNoteReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchNoteRspVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchUserReqVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchUserRspVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/server/SearchUserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/server/impl/SearchUserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/application-dev.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/application-prod.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/logback-spring.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:搭建搜索服务，完成用户搜索服务">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/consumer/TodayNoteLikeIncrementData2DBConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/consumer/TodayNoteLikeIncrementData2DBConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/server/impl/SearchUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/server/impl/SearchUserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -447,18 +422,18 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="应用程序.ZealsingerbookKVApplication" />
       <item itemvalue="Spring Boot.ZealsingerBookUerApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookAuthApplication" />
-      <item itemvalue="Spring Boot.ZealsingerbookCountApplication" />
-      <item itemvalue="Spring Boot.ZealsingerbookDataAlignApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookGatewayApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookIdGeneratorApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookNoteApplication (1)" />
       <item itemvalue="Spring Boot.ZealsingerbookNoteApplication (2)" />
       <item itemvalue="Spring Boot.ZealsingerbookOssApplication" />
+      <item itemvalue="Spring Boot.ZealsingerbookCountApplication" />
+      <item itemvalue="Spring Boot.ZealsingerbookDataAlignApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookSearchApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookUserRelationApplication" />
+      <item itemvalue="应用程序.ZealsingerbookKVApplication" />
     </list>
     <recent_temporary>
       <list>
@@ -617,6 +592,9 @@
       <workItem from="1733479483116" duration="1912000" />
       <workItem from="1733884557481" duration="4111000" />
       <workItem from="1733896727955" duration="2000" />
+      <workItem from="1733990872761" duration="275000" />
+      <workItem from="1734009425142" duration="7000" />
+      <workItem from="1734158840529" duration="1191000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -882,7 +860,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732800770656</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="feat:搭建搜索服务，完成用户搜索服务">
+      <option name="closed" value="true" />
+      <created>1733991060431</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1733991060431</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -901,7 +887,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="feat:添加createTime和updateTime的拦截自动处理" />
     <MESSAGE value="feat:添加网关权限和角色处理" />
     <MESSAGE value="feat:修改网关中全局异常捕获的对于token过期的异常信息的统一" />
     <MESSAGE value="feat:添加网关解析userId通过全局过滤器添加到requestHeader中传递给下游+下游通过过滤器捕获userId存入TransmittableThreadLocal作为模块上下文" />
@@ -926,7 +911,8 @@
     <MESSAGE value="feat:完成笔记收藏的noteId合理性判断以及note是否已经收藏的检测（完成了异步MQ之前的逻辑）" />
     <MESSAGE value="feat:完成笔记收藏和笔记取消收藏接口" />
     <MESSAGE value="feat:完成数据对齐服务模块" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:完成数据对齐服务模块" />
+    <MESSAGE value="feat:搭建搜索服务，完成用户搜索服务" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:搭建搜索服务，完成用户搜索服务" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

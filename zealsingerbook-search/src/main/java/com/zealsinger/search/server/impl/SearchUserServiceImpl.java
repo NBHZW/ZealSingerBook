@@ -1,6 +1,7 @@
 package com.zealsinger.search.server.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.zealsinger.book.framework.common.constant.DateConstants;
 import com.zealsinger.book.framework.common.response.PageResponse;
 import com.zealsinger.book.framework.common.utils.NumberUtils;
 import com.zealsinger.search.domain.index.NoteIndex;
@@ -32,6 +33,8 @@ import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -177,7 +180,7 @@ public class SearchUserServiceImpl implements SearchUserService {
         searchSourceBuilder.sort(new FieldSortBuilder("_score").order(SortOrder.DESC));
 
         // 设置分页
-        searchSourceBuilder.from(pageNo).size(10);
+        searchSourceBuilder.from((pageNo-1)*10).size(10);
 
         // 设置高亮
         HighlightBuilder highlightBuilder = new HighlightBuilder();
@@ -193,6 +196,62 @@ public class SearchUserServiceImpl implements SearchUserService {
         List<SearchNoteRspVO> searchNoteRspVOS = null;
         // 总文档数，默认为 0
         long total = 0;
+        try {
+            log.info("==> SearchRequest: {}", searchRequest);
+            // 执行搜索
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+
+            // 处理搜索结果
+            total = searchResponse.getHits().getTotalHits().value;
+            log.info("==> 命中文档总数, hits: {}", total);
+
+            searchNoteRspVOS = new ArrayList<>();
+
+            // 获取搜索命中的文档列表
+            SearchHits hits = searchResponse.getHits();
+
+            for (SearchHit hit : hits) {
+                log.info("==> 文档数据: {}", hit.getSourceAsString());
+
+                // 获取文档的所有字段（以 Map 的形式返回）
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+
+                // 提取特定字段值
+                Long noteId = (Long) sourceAsMap.get(NoteIndex.FIELD_NOTE_ID);
+                String cover = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_COVER);
+                String title = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_TITLE);
+                String avatar = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_AVATAR);
+                String nickname = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_NICKNAME);
+                // 获取更新时间
+                String updateTimeStr = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_UPDATE_TIME);
+                LocalDateTime updateTime = LocalDateTime.parse(updateTimeStr, DateConstants.DATE_FORMAT_Y_M_D_H_M_S);
+                Integer likeTotal = (Integer) sourceAsMap.get(NoteIndex.FIELD_NOTE_LIKE_TOTAL);
+
+                // 获取高亮字段
+                String highlightedTitle = null;
+                if (CollUtil.isNotEmpty(hit.getHighlightFields())
+                        && hit.getHighlightFields().containsKey(NoteIndex.FIELD_NOTE_TITLE)) {
+                    highlightedTitle = hit.getHighlightFields().get(NoteIndex.FIELD_NOTE_TITLE).fragments()[0].string();
+                }
+
+                // 构建 VO 实体类
+                SearchNoteRspVO searchNoteRspVO = SearchNoteRspVO.builder()
+                        .noteId(noteId)
+                        .cover(cover)
+                        .title(title)
+                        .highlightTitle(highlightedTitle)
+                        .avatar(avatar)
+                        .nickname(nickname)
+                        .updateTime(updateTime)
+                        .likeTotal(NumberUtils.formatNumberString(likeTotal))
+                        .build();
+                searchNoteRspVOS.add(searchNoteRspVO);
+            }
+        } catch (IOException e) {
+            log.error("==> 查询 Elasticserach 异常: ", e);
+        }
+
+        return PageResponse.success(searchNoteRspVOS, pageNo, total);
 
     }
 }
