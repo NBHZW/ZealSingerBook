@@ -1000,3 +1000,806 @@ POST /note/_search
 
 ### 编写搜索代码
 
+也比较简单，主要是ES的相关API的不熟悉可能会导致编写有难度，对照API进行编写就会好很多
+
+```Java
+public PageResponse<SearchNoteRspVO> searchNote(SearchNoteReqVO searchNoteReqVO) {
+        String keyword = searchNoteReqVO.getKeyword();
+        Integer pageNo = searchNoteReqVO.getPageNo();
+        SearchRequest searchRequest = new SearchRequest(NoteIndex.NAME);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        // 创建查询条件
+        QueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(keyword)
+                // 手动设置笔记标题的权重值为 2.0
+                .field(NoteIndex.FIELD_NOTE_TITLE, 2.0f)
+                // 不设置，权重默认为 1.0
+                .field(NoteIndex.FIELD_NOTE_TOPIC);
+
+
+        // 创建算分机制
+        FunctionScoreQueryBuilder.FilterFunctionBuilder[] filterFunctionBuilders = new FunctionScoreQueryBuilder.FilterFunctionBuilder[]{
+                new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+                        new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_LIKE_TOTAL)
+                                .factor(0.5f)
+                                .modifier(FieldValueFactorFunction.Modifier.SQRT)
+                                .missing(0)),
+
+                new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+                        new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_COLLECT_TOTAL)
+                                .factor(0.3f)
+                                .modifier(FieldValueFactorFunction.Modifier.SQRT)
+                                .missing(0)),
+
+                new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+                        new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_COMMENT_TOTAL)
+                                .factor(0.2f)
+                                .modifier(FieldValueFactorFunction.Modifier.SQRT)
+                                .missing(0)),
+        };
+        FunctionScoreQueryBuilder  functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(queryBuilder,filterFunctionBuilders)
+                .scoreMode(FunctionScoreQuery.ScoreMode.SUM)
+                .boostMode(CombineFunction.SUM);
+
+        // 设置查询
+        searchSourceBuilder.query(functionScoreQueryBuilder);
+
+        // 创建排序
+        searchSourceBuilder.sort(new FieldSortBuilder("_score").order(SortOrder.DESC));
+
+        // 设置分页
+        searchSourceBuilder.from((pageNo-1)*10).size(10);
+
+        // 设置高亮
+        HighlightBuilder highlightBuilder = new HighlightBuilder();
+        highlightBuilder.field(NoteIndex.FIELD_NOTE_TITLE);
+        highlightBuilder.preTags("<strong>")
+                .postTags("</strong>");
+        searchSourceBuilder.highlighter(highlightBuilder);
+
+        // 将构造的查询放入请求中
+        searchRequest.source(searchSourceBuilder);
+
+        // 返参 VO 集合
+        List<SearchNoteRspVO> searchNoteRspVOS = null;
+        // 总文档数，默认为 0
+        long total = 0;
+        try {
+            log.info("==> SearchRequest: {}", searchRequest);
+            // 执行搜索
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+
+            // 处理搜索结果
+            total = searchResponse.getHits().getTotalHits().value;
+            log.info("==> 命中文档总数, hits: {}", total);
+
+            searchNoteRspVOS = new ArrayList<>();
+
+            // 获取搜索命中的文档列表
+            SearchHits hits = searchResponse.getHits();
+
+            for (SearchHit hit : hits) {
+                log.info("==> 文档数据: {}", hit.getSourceAsString());
+
+                // 获取文档的所有字段（以 Map 的形式返回）
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+
+                // 提取特定字段值
+                Long noteId = (Long) sourceAsMap.get(NoteIndex.FIELD_NOTE_ID);
+                String cover = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_COVER);
+                String title = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_TITLE);
+                String avatar = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_AVATAR);
+                String nickname = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_NICKNAME);
+                // 获取更新时间
+                String updateTimeStr = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_UPDATE_TIME);
+                LocalDateTime updateTime = LocalDateTime.parse(updateTimeStr, DateConstants.DATE_FORMAT_Y_M_D_H_M_S);
+                Integer likeTotal = (Integer) sourceAsMap.get(NoteIndex.FIELD_NOTE_LIKE_TOTAL);
+
+                // 获取高亮字段
+                String highlightedTitle = null;
+                if (CollUtil.isNotEmpty(hit.getHighlightFields())
+                        && hit.getHighlightFields().containsKey(NoteIndex.FIELD_NOTE_TITLE)) {
+                    highlightedTitle = hit.getHighlightFields().get(NoteIndex.FIELD_NOTE_TITLE).fragments()[0].string();
+                }
+
+                // 构建 VO 实体类
+                SearchNoteRspVO searchNoteRspVO = SearchNoteRspVO.builder()
+                        .noteId(noteId)
+                        .cover(cover)
+                        .title(title)
+                        .highlightTitle(highlightedTitle)
+                        .avatar(avatar)
+                        .nickname(nickname)
+                        .updateTime(updateTime)
+                        .likeTotal(NumberUtils.formatNumberString(likeTotal))
+                        .build();
+                searchNoteRspVOS.add(searchNoteRspVO);
+            }
+        } catch (IOException e) {
+            log.error("==> 查询 Elasticserach 异常: ", e);
+        }
+
+        return PageResponse.success(searchNoteRspVOS, pageNo, total);
+
+    }
+```
+
+## 更多条件的搜索
+
+### 排序依据和笔记类型
+
+在搜索完毕后 可以进行筛选进行搜索
+
+![image-20241214151007786](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241214151007786.png)
+
+那么这里 就需要先设置入参，在原来的基础上加上排序依据和笔记类型
+
+![image-20241214152213039](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241214152213039.png)
+
+那么在之前的搜索逻辑中，我们是没有加其他的条件的，这里就需要在ES搜索的时候再加入其他的条件，我们先单独写过滤类型的ES语句如下
+
+对应的 我们这里整个条件就是  关键字为keyword并且排序类型为X，笔记类型为Y的笔记  这相当于是一些列条件组合查询，这些条件之间的关系为And关系
+
+在ES中组合查询使用的是BoolQuery
+
+![image-20241214152619991](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241214152619991.png)
+
+```json
+POST /note/_search
+{
+  "query": {
+    "bool": {
+      "must": [  // must是必须满足的条件
+        {
+          "multi_match": {
+            "query": "壁纸",
+            "fields": [
+              "title^2",
+              "topic"
+            ]
+          }
+        }
+      ],
+      "filter": [   // filter也是必须满足的条件  但是不会参与算分
+        {
+          "term": {
+            "type": 0
+          }
+        }
+      ]
+    }
+  },
+  "from": 0,
+  "size": 10,
+  "highlight": {
+    "fields": {
+      "title": {
+        "pre_tags": [
+          "<strong>"
+        ],
+        "post_tags": [
+          "</strong>"
+        ]
+      }
+    }
+  }
+}
+
+```
+
+对应的 代码中进行修改  将原本的searchQueryBuilder变为boolQueryBuilder，然后判断type类型添加对应的判断
+
+![image-20241214154434042](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241214154434042.png)
+
+然后是排序方法的筛选，这个主要影响的也只有sort字段
+
+```json
+POST /note/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "multi_match": {
+            "query": "壁纸",
+            "fields": [
+              "title^2.0",
+              "topic^1.0"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "create_time": {
+        "order": "desc"
+      }
+    }
+  ],
+  "from": 0,
+  "size": 10,
+  "highlight": {
+    "pre_tags": [
+      "<strong>"
+    ],
+    "post_tags": [
+      "</strong>"
+    ],
+    "fields": {
+      "title": {}
+    }
+  }
+}
+
+```
+
+修改排序的时候需要注意，sort为null即综合排序的时候，我们采用的是自定义算分排序，而sort不为null的时候才会条件排序，这两种情况不能同时有，所以我们需要if-else进行区分，当sort不为null的时候就需要自定义算分了
+
+```Java
+public PageResponse<SearchNoteRspVO> searchNote(SearchNoteReqVO searchNoteReqVO) {
+        String keyword = searchNoteReqVO.getKeyword();
+        Integer pageNo = searchNoteReqVO.getPageNo();
+        Integer type = searchNoteReqVO.getType();
+        Integer sort = searchNoteReqVO.getSort();
+        SearchRequest searchRequest = new SearchRequest(NoteIndex.NAME);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        // 创建查询条件
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery().must(
+                QueryBuilders.multiMatchQuery(keyword)
+                        .field(NoteIndex.FIELD_NOTE_TITLE, 2.0f) // 手动设置笔记标题的权重值为 2.0
+                        .field(NoteIndex.FIELD_NOTE_TOPIC)); // 不设置，权重默认为 1.0
+
+        if(type!=null){
+            boolQueryBuilder.filter(QueryBuilders.termQuery(NoteIndex.FIELD_NOTE_TYPE, type));
+        }
+
+        // 创建排序
+        if(sort!=null){
+            SearchNoteSortEnum searchNoteSortEnum = SearchNoteSortEnum.valueOf(sort);
+            switch (searchNoteSortEnum) {
+                // 按笔记发布时间降序
+                case LATEST -> searchSourceBuilder.sort(new FieldSortBuilder(NoteIndex.FIELD_NOTE_CREATE_TIME).order(SortOrder.DESC));
+                // 按笔记点赞量降序
+                case MOST_LIKE -> searchSourceBuilder.sort(new FieldSortBuilder(NoteIndex.FIELD_NOTE_LIKE_TOTAL).order(SortOrder.DESC));
+                // 按评论量降序
+                case MOST_COMMENT -> searchSourceBuilder.sort(new FieldSortBuilder(NoteIndex.FIELD_NOTE_COMMENT_TOTAL).order(SortOrder.DESC));
+                // 按收藏量降序
+                case MOST_COLLECT -> searchSourceBuilder.sort(new FieldSortBuilder(NoteIndex.FIELD_NOTE_COLLECT_TOTAL).order(SortOrder.DESC));
+            }
+            searchSourceBuilder.query(boolQueryBuilder);
+        }else{
+            searchSourceBuilder.sort(new FieldSortBuilder("_score").order(SortOrder.DESC));
+            // 创建算分机制
+            FunctionScoreQueryBuilder.FilterFunctionBuilder[] filterFunctionBuilders = new FunctionScoreQueryBuilder.FilterFunctionBuilder[]{
+                    new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+                            new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_LIKE_TOTAL)
+                                    .factor(0.5f)
+                                    .modifier(FieldValueFactorFunction.Modifier.SQRT)
+                                    .missing(0)),
+
+                    new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+                            new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_COLLECT_TOTAL)
+                                    .factor(0.3f)
+                                    .modifier(FieldValueFactorFunction.Modifier.SQRT)
+                                    .missing(0)),
+
+                    new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+                            new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_COMMENT_TOTAL)
+                                    .factor(0.2f)
+                                    .modifier(FieldValueFactorFunction.Modifier.SQRT)
+                                    .missing(0)),
+            };
+            FunctionScoreQueryBuilder  functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(boolQueryBuilder,filterFunctionBuilders)
+                    .scoreMode(FunctionScoreQuery.ScoreMode.SUM)
+                    .boostMode(CombineFunction.SUM);
+
+            // 设置查询
+            searchSourceBuilder.query(functionScoreQueryBuilder);
+        }
+        searchSourceBuilder.query(boolQueryBuilder);
+        // 设置分页
+        searchSourceBuilder.from((pageNo-1)*10).size(10);
+
+        // 设置高亮
+        HighlightBuilder highlightBuilder = new HighlightBuilder();
+        highlightBuilder.field(NoteIndex.FIELD_NOTE_TITLE);
+        highlightBuilder.preTags("<strong>")
+                .postTags("</strong>");
+        searchSourceBuilder.highlighter(highlightBuilder);
+
+        // 将构造的查询放入请求中
+        searchRequest.source(searchSourceBuilder);
+
+        // 返参 VO 集合
+        List<SearchNoteRspVO> searchNoteRspVOS = null;
+        // 总文档数，默认为 0
+        long total = 0;
+        try {
+            log.info("==> SearchRequest: {}", searchRequest);
+            // 执行搜索
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+
+            // 处理搜索结果
+            total = searchResponse.getHits().getTotalHits().value;
+            log.info("==> 命中文档总数, hits: {}", total);
+
+            searchNoteRspVOS = new ArrayList<>();
+
+            // 获取搜索命中的文档列表
+            SearchHits hits = searchResponse.getHits();
+
+            for (SearchHit hit : hits) {
+                log.info("==> 文档数据: {}", hit.getSourceAsString());
+
+                // 获取文档的所有字段（以 Map 的形式返回）
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+
+                // 提取特定字段值
+                Long noteId = (Long) sourceAsMap.get(NoteIndex.FIELD_NOTE_ID);
+                String cover = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_COVER);
+                String title = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_TITLE);
+                String avatar = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_AVATAR);
+                String nickname = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_NICKNAME);
+                // 获取更新时间
+                String updateTimeStr = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_UPDATE_TIME);
+                LocalDateTime updateTime = LocalDateTime.parse(updateTimeStr, DateConstants.DATE_FORMAT_Y_M_D_H_M_S);
+                Integer likeTotal = (Integer) sourceAsMap.get(NoteIndex.FIELD_NOTE_LIKE_TOTAL);
+
+                // 获取高亮字段
+                String highlightedTitle = null;
+                if (CollUtil.isNotEmpty(hit.getHighlightFields())
+                        && hit.getHighlightFields().containsKey(NoteIndex.FIELD_NOTE_TITLE)) {
+                    highlightedTitle = hit.getHighlightFields().get(NoteIndex.FIELD_NOTE_TITLE).fragments()[0].string();
+                }
+
+                // 构建 VO 实体类
+                SearchNoteRspVO searchNoteRspVO = SearchNoteRspVO.builder()
+                        .noteId(noteId)
+                        .cover(cover)
+                        .title(title)
+                        .highlightTitle(highlightedTitle)
+                        .avatar(avatar)
+                        .nickname(nickname)
+                        .updateTime(updateTime)
+                        .likeTotal(NumberUtils.formatNumberString(likeTotal))
+                        .build();
+                searchNoteRspVOS.add(searchNoteRspVO);
+            }
+        } catch (IOException e) {
+            log.error("==> 查询 Elasticserach 异常: ", e);
+        }
+
+        return PageResponse.success(searchNoteRspVOS, pageNo, total);
+
+    }
+```
+
+### 按照发布时间进行过滤
+
+下面这个需求 就是对搜索的时候  进行create_time进行过滤
+
+![image-20241214160609754](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241214160609754.png)
+
+同样的 首先修改入参
+
+![image-20241214160709453](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241214160709453.png)
+
+创建对应的枚举类
+
+```Java
+@AllArgsConstructor
+@Getter
+public enum SearchNoteTimeRangeEnum {
+    // 一天内
+    DAY(0),
+    // 一周内
+    WEEK(1),
+    // 半年内
+    HALF_YEAR(2),
+    ;
+
+    private final Integer code;
+
+    /**
+     * 根据类型 code 获取对应的枚举
+     *
+     * @param code
+     * @return
+     */
+    public static SearchNoteTimeRangeEnum valueOf(Integer code) {
+        for (SearchNoteTimeRangeEnum notePublishTimeRangeEnum : SearchNoteTimeRangeEnum.values()) {
+            if (Objects.equals(code, notePublishTimeRangeEnum.getCode())) {
+                return notePublishTimeRangeEnum;
+            }
+        }
+        return null;
+    }
+}
+```
+
+按照时间范围查到 对于ES和数据库而言其实就是  创建时间>起始时间 <终止时间  所以实质上是一个范围查找  ES中范围查找为RangeQuery
+
+```
+// range查询是按照范围查询的  gte表示大于等于  lte表示小于等于
+// 这两个条件不需要全部都写上去 可以只要一个
+// gte 和 lte后面的e都是表示 equal等于的意思  所以取出e之后  gt和lt就是大于和小于
+
+GET /indexName/_search
+{
+	"query":{
+		"range":{
+			"FIELD":{
+				"gte": ....,
+				"lte": ....
+			}
+		}
+	}
+}
+```
+
+![image-20231227130144160](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20231227130144160.png)
+
+我们在ES中时间数据格式为 2024-09-02 15:22:55   属于LocalDateTime类型  所以我们在工具类中加一个将LocalDateTime类型转化为String类型的工具类
+
+```
+public static String localDateTime2String(LocalDateTime time) {
+        return time.format(DateConstants.DATE_FORMAT_Y_M_D_H_M_S);
+    }
+```
+
+![image-20241214172525789](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241214172525789.png) 写到这里差不多了  自然我们还可以继续优化
+
+目前小红书搜素的返回  
+
+**1：不是统一的返回年份-月份-日 的格式  而是一个相对时间  几分钟前  几天前  然后再是确切的某个日子**
+
+**2：按照最多评论排序的时候，评论量需要被返回**
+
+**3：按照找最多收藏排序的时候，收藏量需要被返回**
+
+![image-20241214172740397](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241214172740397.png)
+
+那么根据上述三个需求  适当的修改一些返回类型
+
+```
+public class SearchNoteRspVO {
+
+    /**
+     * 笔记ID
+     */
+    private Long noteId;
+
+    /**
+     * 封面
+     */
+    private String cover;
+
+    /**
+     * 标题
+     */
+    private String title;
+
+    /**
+     * 标题：关键词高亮
+     */
+    private String highlightTitle;
+
+    /**
+     * 发布者头像
+     */
+    private String avatar;
+
+    /**
+     * 发布者昵称
+     */
+    private String nickname;
+
+    /**
+     * 最后一次编辑时间
+     */
+    private LocalDateTime updateTime;
+
+    /**
+     * 被点赞总数
+     */
+    private String likeTotal;
+
+
+    /**
+     * 被评论数
+     */
+    private String commentTotal;
+
+    /**
+     * 被收藏数
+     */
+    private String collectTotal;
+
+}
+```
+
+
+
+```Java
+ /**
+     * LocalDateTime 转友好的相对时间字符串
+     * @param dateTime
+     * @return
+     */
+    public static String formatRelativeTime(LocalDateTime dateTime) {
+        // 当前时间
+        LocalDateTime now = LocalDateTime.now();
+
+        // 计算与当前时间的差距
+        long daysDiff = ChronoUnit.DAYS.between(dateTime, now);
+        long hoursDiff = ChronoUnit.HOURS.between(dateTime, now);
+        long minutesDiff = ChronoUnit.MINUTES.between(dateTime, now);
+
+        if (daysDiff < 1) {  // 如果是今天
+            if (hoursDiff < 1) {  // 如果是几分钟前
+                return minutesDiff + "分钟前";
+            } else {  // 如果是几小时前
+                return hoursDiff + "小时前";
+            }
+        } else if (daysDiff == 1) {  // 如果是昨天
+            return "昨天 " + dateTime.format(DateConstants.DATE_FORMAT_H_M);
+        } else if (daysDiff < 7) {  // 如果是最近一周
+            return daysDiff + "天前";
+        } else if (dateTime.getYear() == now.getYear()) {  // 如果是今年
+            return dateTime.format(DateConstants.DATE_FORMAT_M_D);
+        } else {  // 如果是去年或更早
+            return dateTime.format(DateConstants.DATE_FORMAT_Y_M_D);
+        }
+    }
+
+```
+
+# 额外知识
+
+ES可以动态添加自定义词库（ik的配置文件IKAnalyzer.cfg.xml中可以配置）和 增加同义词（例如 黑猴  黑悟空  wukong  可以被认定为同义词 这个需要在创建索引的时候就要被设计）
+
+```json
+# 新增笔记索引(测试同义词)
+PUT /note2
+{
+	"settings": {
+		"number_of_shards": 1,
+		"number_of_replicas": 1,
+		"analysis": {
+		  "filter": {
+		    "custom_synonym_filter": {
+		      "type": "synonym",
+		      "synonyms_path": "analysis-ik/custom/synonyms.txt"
+		    }
+		  },
+		  "analyzer": {
+		    "ik_synonym_smart": {
+		      "type": "custom",
+		      "tokenizer": "ik_smart",
+		      "filter": ["custom_synonym_filter"]
+		    },
+		    "ik_synonym_max_word": {
+		      "type": "custom",
+		      "tokenizer": "ik_max_word",
+		      "filter": ["custom_synonym_filter"]
+		    }
+		  }
+		}
+	},
+	"mappings": {
+	  "properties": {
+	    "id": {"type": "long"},
+	    "cover": {"type": "keyword"},
+	    "title": {"type": "text", "analyzer": "ik_synonym_max_word", "search_analyzer": "ik_synonym_smart"},
+	    "topic": {"type": "text", "analyzer": "ik_synonym_max_word", "search_analyzer": "ik_synonym_smart"},
+	    "creator_nickname": {"type": "keyword"},
+	    "creator_avatar": {"type": "keyword"},
+	    "type": {"type": "integer"},
+	    "create_time": {
+	      "type": "date",
+	      "format": "yyyy-MM-dd HH:mm:ss"
+	    },
+	    "update_time": {
+	      "type": "date",
+	      "format": "yyyy-MM-dd HH:mm:ss"
+	    },
+	    "like_total": {"type": "integer"},
+	    "collect_total": {"type": "integer"},
+	    "comment_total": {"type": "integer"}
+	  }
+	}
+}
+
+```
+
+![image-20241214210214233](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241214210214233.png)
+
+# Canal做ES的增量
+
+Canall我们之前就有接触，其作用和相关原理不再过多阐述，直接开始配置
+
+首先需要开启MySQL的binlog功能 然后创建一个专门给canal使用的账户密码
+
+github上下载tg.zip压缩包然后解压
+
+![image-20241215100424717](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241215100424717.png)
+
+进入conf文件的example中修改配置文件
+
+![image-20241215100601526](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241215100601526.png)
+
+![image-20241215100923468](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241215100923468.png)
+
+然后在外层conf文件下的那个配置文件中  这个属性可以注意一下
+
+![image-20241215101030979](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241215101030979.png)
+
+然后进入到bin目录下执行startup.sh文件即可
+
+启动成功即可
+
+
+
+然后SpringBoot整合Canal
+
+配置文件
+
+![image-20241215112403247](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241215112403247.png)
+
+读取配置信息到实体类封装好
+
+![image-20241215112422874](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20241215112422874.png)
+
+注册CanalConnector的Bean对象
+
+```Java
+@Component
+@Slf4j
+public class CanalClient implements DisposableBean {
+    @Resource
+    private CanalProperties canalProperties;
+
+    private CanalConnector canalConnector;
+
+    /**
+     * 实例化 Canal 链接对象
+     * @return
+     */
+    @Bean
+    public CanalConnector getCanalConnector() {
+        // Canal 链接地址
+        String address = canalProperties.getAddress();
+        String[] addressArr = address.split(":");
+        // IP 地址
+        String host = addressArr[0];
+        // 端口
+        int port = Integer.parseInt(addressArr[1]);
+
+        // 创建一个 CanalConnector 实例，连接到指定的 Canal 服务端
+        canalConnector = CanalConnectors.newSingleConnector(
+                new InetSocketAddress(host, port),
+                canalProperties.getDestination(),
+                canalProperties.getUsername(),
+                canalProperties.getPassword());
+
+        // 连接到 Canal 服务端
+        canalConnector.connect();
+        // 订阅 Canal 中的数据变化，指定要监听的数据库和表（可以使用表名、数据库名的通配符）
+        canalConnector.subscribe(canalProperties.getSubscribe());
+        // 回滚 Canal 消费者的位点，回滚到上次提交的消费位置
+        canalConnector.rollback();
+        return canalConnector;
+    }
+
+    /**
+     * 在 Spring 容器销毁时释放资源
+     * @throws Exception
+     */
+    @Override
+    public void destroy() throws Exception {
+        if (Objects.nonNull(canalConnector)) {
+            // 断开 canalConnector 与 Canal 服务的连接
+            canalConnector.disconnect();
+        }
+    }
+}
+```
+
+定义Canal的定时任务 读取记录
+
+```Java
+@Component
+@Slf4j
+public class CanalSchedule implements Runnable {
+    @Resource
+    private CanalConnector canalConnector;
+    @Resource
+    private CanalProperties canalProperties;
+
+
+    @Override
+    @Scheduled(fixedDelay = 100)  // 每隔100ms执行一次
+    public void run() {
+        // 批次ID 初始化为-1 标识没开始或者未获取到数据
+        long batchId = -1;
+        try{
+            // canal批量拉取消息 返回的数据量由batchSize控制 如果不足则会直接拉取已有的数据
+            Message message= canalConnector.getWithoutAck(canalProperties.getBatchSize());
+            // 获取当前拉取批次的ID
+            batchId = message.getId();
+            // 拉取数量
+            List<CanalEntry.Entry> entryList = message.getEntries();
+            int messageSize = entryList.size();
+            if(batchId==-1 || messageSize==0 ){
+                try{
+                    // 没有拉取到数据 则直接睡眠1s 防止频繁拉取
+                    TimeUnit.SECONDS.sleep(1);
+                }catch (InterruptedException e){}
+            }else{
+                printEntry(entryList);
+            }
+            // 对当前消息进行ACK确认  标识该批次成功被消费
+            canalConnector.ack(batchId);
+        }catch (Exception e){
+            log.error("消费 Canal 批次数据异常", e);
+            // 如果出现异常，需要进行数据回滚，以便重新消费这批次的数据
+            canalConnector.rollback(batchId);
+        }
+    }
+
+    /**
+     * 打印这一批次中的数据条目（和官方示例代码一致，后续小节中会自定义这块）
+     * @param entrys
+     */
+    private void printEntry(List<CanalEntry.Entry> entrys) {
+        for (CanalEntry.Entry entry : entrys) {
+            if (entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONBEGIN
+                    || entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONEND) {
+                continue;
+            }
+
+            CanalEntry.RowChange rowChage = null;
+            try {
+                rowChage = CanalEntry.RowChange.parseFrom(entry.getStoreValue());
+            } catch (Exception e) {
+                throw new RuntimeException("ERROR ## parser of eromanga-event has an error , data:" + entry.toString(),
+                        e);
+            }
+
+            CanalEntry.EventType eventType = rowChage.getEventType();
+            System.out.println(String.format("================> binlog[%s:%s] , name[%s,%s] , eventType : %s",
+                    entry.getHeader().getLogfileName(), entry.getHeader().getLogfileOffset(),
+                    entry.getHeader().getSchemaName(), entry.getHeader().getTableName(),
+                    eventType));
+
+            for (CanalEntry.RowData rowData : rowChage.getRowDatasList()) {
+                if (eventType == CanalEntry.EventType.DELETE) {
+                    printColumn(rowData.getBeforeColumnsList());
+                } else if (eventType == CanalEntry.EventType.INSERT) {
+                    printColumn(rowData.getAfterColumnsList());
+                } else {
+                    System.out.println("-------> before");
+                    printColumn(rowData.getBeforeColumnsList());
+                    System.out.println("-------> after");
+                    printColumn(rowData.getAfterColumnsList());
+                }
+            }
+        }
+
+
+    }
+
+    /**
+     * 打印字段信息
+     * @param columns
+     */
+    private static void printColumn(List<CanalEntry.Column> columns) {
+        for (CanalEntry.Column column : columns) {
+            System.out.println(column.getName() + " : " + column.getValue() + "    update=" + column.getUpdated());
+        }
+    }
+}
+
+```
+

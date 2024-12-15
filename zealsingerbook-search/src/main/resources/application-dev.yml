@@ -47,3 +47,11 @@ logging:
 
 elasticsearch:
   address: 49.123.0.28:9200 # Elasticsearch 地址
+
+canal: # Canal 配置
+  address: 192.168.17.131:11111 # 链接地址
+  destination: example # 数据目标
+  username: canal # 数据库用户名
+  password: canal # 数据库密码
+  subscribe: zealsingerbook.t_note,zealsinger.t_user # 订阅规则，只订阅笔记表和用户表
+  batchSize: 1000 # 一批次拉取数据量

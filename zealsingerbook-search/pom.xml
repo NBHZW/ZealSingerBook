@@ -30,6 +30,21 @@
             <artifactId>zealsingerbook-common</artifactId>
         </dependency>
 
+        <!-- Canal -->
+        <dependency>
+            <groupId>com.alibaba.otter</groupId>
+            <artifactId>canal.client</artifactId>
+        </dependency>
+<!--        <dependency>
+            <groupId>com.alibaba.otter</groupId>
+            <artifactId>canal.common</artifactId>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>com.alibaba.otter</groupId>
+            <artifactId>canal.protocol</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.zealsinger.framework</groupId>
             <artifactId>zealsinger-operationlog-spring-boot-starter</artifactId>

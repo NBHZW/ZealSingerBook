@@ -3,7 +3,10 @@ package com.zealsinger.search.server.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.zealsinger.book.framework.common.constant.DateConstants;
 import com.zealsinger.book.framework.common.response.PageResponse;
+import com.zealsinger.book.framework.common.utils.DateUtils;
 import com.zealsinger.book.framework.common.utils.NumberUtils;
+import com.zealsinger.search.domain.enums.SearchNoteSortEnum;
+import com.zealsinger.search.domain.enums.SearchNoteTimeRangeEnum;
 import com.zealsinger.search.domain.index.NoteIndex;
 import com.zealsinger.search.domain.index.UserIndex;
 import com.zealsinger.search.domain.vo.SearchNoteReqVO;
@@ -20,8 +23,10 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.lucene.search.function.CombineFunction;
 import org.elasticsearch.common.lucene.search.function.FieldValueFactorFunction;
 import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.functionscore.FieldValueFactorFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.search.SearchHit;
@@ -139,46 +144,82 @@ public class SearchUserServiceImpl implements SearchUserService {
     public PageResponse<SearchNoteRspVO> searchNote(SearchNoteReqVO searchNoteReqVO) {
         String keyword = searchNoteReqVO.getKeyword();
         Integer pageNo = searchNoteReqVO.getPageNo();
+        // 笔记类型
+        Integer type = searchNoteReqVO.getType();
+        // 排序方式
+        Integer sort = searchNoteReqVO.getSort();
+        // 发布时间范围
+        Integer publishTimeRange = searchNoteReqVO.getPublishTimeRange();
         SearchRequest searchRequest = new SearchRequest(NoteIndex.NAME);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         // 创建查询条件
-        QueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(keyword)
-                // 手动设置笔记标题的权重值为 2.0
-                .field(NoteIndex.FIELD_NOTE_TITLE, 2.0f)
-                // 不设置，权重默认为 1.0
-                .field(NoteIndex.FIELD_NOTE_TOPIC);
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery().must(
+                QueryBuilders.multiMatchQuery(keyword)
+                        .field(NoteIndex.FIELD_NOTE_TITLE, 2.0f) // 手动设置笔记标题的权重值为 2.0
+                        .field(NoteIndex.FIELD_NOTE_TOPIC)); // 不设置，权重默认为 1.0
 
+        if(type!=null){
+            boolQueryBuilder.filter(QueryBuilders.termQuery(NoteIndex.FIELD_NOTE_TYPE, type));
+        }
 
-        // 创建算分机制
-        FunctionScoreQueryBuilder.FilterFunctionBuilder[] filterFunctionBuilders = new FunctionScoreQueryBuilder.FilterFunctionBuilder[]{
-                new FunctionScoreQueryBuilder.FilterFunctionBuilder(
-                        new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_LIKE_TOTAL)
-                                .factor(0.5f)
-                                .modifier(FieldValueFactorFunction.Modifier.SQRT)
-                                .missing(0)),
-
-                new FunctionScoreQueryBuilder.FilterFunctionBuilder(
-                        new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_COLLECT_TOTAL)
-                                .factor(0.3f)
-                                .modifier(FieldValueFactorFunction.Modifier.SQRT)
-                                .missing(0)),
-
-                new FunctionScoreQueryBuilder.FilterFunctionBuilder(
-                        new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_COMMENT_TOTAL)
-                                .factor(0.2f)
-                                .modifier(FieldValueFactorFunction.Modifier.SQRT)
-                                .missing(0)),
-        };
-        FunctionScoreQueryBuilder  functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(queryBuilder,filterFunctionBuilders)
-                .scoreMode(FunctionScoreQuery.ScoreMode.SUM)
-                .boostMode(CombineFunction.SUM);
-
-        // 设置查询
-        searchSourceBuilder.query(functionScoreQueryBuilder);
-
+        SearchNoteTimeRangeEnum searchNoteTimeRangeEnum = SearchNoteTimeRangeEnum.valueOf(publishTimeRange);
+        if(searchNoteTimeRangeEnum!=null){
+            LocalDateTime now = LocalDateTime.now();
+            String endTime = now.format(DateConstants.DATE_FORMAT_Y_M_D_H_M_S);
+            String startTime = null;
+            switch (searchNoteTimeRangeEnum){
+                case DAY -> startTime = DateUtils.localDateTime2String(now.minusDays(1));
+                case WEEK -> startTime = DateUtils.localDateTime2String(now.minusWeeks(1));
+                case HALF_YEAR -> startTime = DateUtils.localDateTime2String(now.minusMonths(6));
+            }
+            if(startTime!=null){
+                boolQueryBuilder.filter(QueryBuilders.rangeQuery(NoteIndex.FIELD_NOTE_CREATE_TIME).lte(endTime).gte(startTime));
+            }
+        }
         // 创建排序
-        searchSourceBuilder.sort(new FieldSortBuilder("_score").order(SortOrder.DESC));
+        if(sort!=null){
+            SearchNoteSortEnum searchNoteSortEnum = SearchNoteSortEnum.valueOf(sort);
+            switch (searchNoteSortEnum) {
+                // 按笔记发布时间降序
+                case LATEST -> searchSourceBuilder.sort(new FieldSortBuilder(NoteIndex.FIELD_NOTE_CREATE_TIME).order(SortOrder.DESC));
+                // 按笔记点赞量降序
+                case MOST_LIKE -> searchSourceBuilder.sort(new FieldSortBuilder(NoteIndex.FIELD_NOTE_LIKE_TOTAL).order(SortOrder.DESC));
+                // 按评论量降序
+                case MOST_COMMENT -> searchSourceBuilder.sort(new FieldSortBuilder(NoteIndex.FIELD_NOTE_COMMENT_TOTAL).order(SortOrder.DESC));
+                // 按收藏量降序
+                case MOST_COLLECT -> searchSourceBuilder.sort(new FieldSortBuilder(NoteIndex.FIELD_NOTE_COLLECT_TOTAL).order(SortOrder.DESC));
+            }
+            searchSourceBuilder.query(boolQueryBuilder);
+        }else{
+            searchSourceBuilder.sort(new FieldSortBuilder("_score").order(SortOrder.DESC));
+            // 创建算分机制
+            FunctionScoreQueryBuilder.FilterFunctionBuilder[] filterFunctionBuilders = new FunctionScoreQueryBuilder.FilterFunctionBuilder[]{
+                    new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+                            new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_LIKE_TOTAL)
+                                    .factor(0.5f)
+                                    .modifier(FieldValueFactorFunction.Modifier.SQRT)
+                                    .missing(0)),
 
+                    new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+                            new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_COLLECT_TOTAL)
+                                    .factor(0.3f)
+                                    .modifier(FieldValueFactorFunction.Modifier.SQRT)
+                                    .missing(0)),
+
+                    new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+                            new FieldValueFactorFunctionBuilder(NoteIndex.FIELD_NOTE_COMMENT_TOTAL)
+                                    .factor(0.2f)
+                                    .modifier(FieldValueFactorFunction.Modifier.SQRT)
+                                    .missing(0)),
+            };
+            FunctionScoreQueryBuilder  functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(boolQueryBuilder,filterFunctionBuilders)
+                    .scoreMode(FunctionScoreQuery.ScoreMode.SUM)
+                    .boostMode(CombineFunction.SUM);
+
+            // 设置查询
+            searchSourceBuilder.query(functionScoreQueryBuilder);
+        }
+        searchSourceBuilder.query(boolQueryBuilder);
         // 设置分页
         searchSourceBuilder.from((pageNo-1)*10).size(10);
 
@@ -222,6 +263,8 @@ public class SearchUserServiceImpl implements SearchUserService {
                 String title = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_TITLE);
                 String avatar = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_AVATAR);
                 String nickname = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_NICKNAME);
+                Integer commentTotal = (Integer) sourceAsMap.get(NoteIndex.FIELD_NOTE_COMMENT_TOTAL);
+                Integer collectTotal = (Integer) sourceAsMap.get(NoteIndex.FIELD_NOTE_COLLECT_TOTAL);
                 // 获取更新时间
                 String updateTimeStr = (String) sourceAsMap.get(NoteIndex.FIELD_NOTE_UPDATE_TIME);
                 LocalDateTime updateTime = LocalDateTime.parse(updateTimeStr, DateConstants.DATE_FORMAT_Y_M_D_H_M_S);
@@ -242,7 +285,9 @@ public class SearchUserServiceImpl implements SearchUserService {
                         .highlightTitle(highlightedTitle)
                         .avatar(avatar)
                         .nickname(nickname)
-                        .updateTime(updateTime)
+                        .updateTime(DateUtils.formatRelativeTime(updateTime))
+                        .commentTotal(NumberUtils.formatNumberString(commentTotal))
+                        .collectTotal(NumberUtils.formatNumberString(collectTotal))
                         .likeTotal(NumberUtils.formatNumberString(likeTotal))
                         .build();
                 searchNoteRspVOS.add(searchNoteRspVO);
