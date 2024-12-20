@@ -3,6 +3,7 @@ package com.zealsinger.search.server.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.zealsinger.book.framework.common.constant.DateConstants;
 import com.zealsinger.book.framework.common.response.PageResponse;
+import com.zealsinger.book.framework.common.response.Response;
 import com.zealsinger.book.framework.common.utils.DateUtils;
 import com.zealsinger.book.framework.common.utils.NumberUtils;
 import com.zealsinger.search.domain.enums.SearchNoteSortEnum;
@@ -13,9 +14,13 @@ import com.zealsinger.search.domain.vo.SearchNoteReqVO;
 import com.zealsinger.search.domain.vo.SearchNoteRspVO;
 import com.zealsinger.search.domain.vo.SearchUserReqVO;
 import com.zealsinger.search.domain.vo.SearchUserRspVO;
+import com.zealsinger.search.dto.RebuildNoteDocumentReqDTO;
+import com.zealsinger.search.dto.RebuildUserDocumentReqDTO;
+import com.zealsinger.search.mapper.SelectMapper;
 import com.zealsinger.search.server.SearchUserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -49,6 +54,9 @@ import java.util.Map;
 public class SearchUserServiceImpl implements SearchUserService {
     @Resource
     private RestHighLevelClient restHighLevelClient;
+
+    @Resource
+    private SelectMapper selectMapper;
 
     @Override
     public PageResponse<SearchUserRspVO> searchUser(SearchUserReqVO searchUserReqVO) {
@@ -298,5 +306,69 @@ public class SearchUserServiceImpl implements SearchUserService {
 
         return PageResponse.success(searchNoteRspVOS, pageNo, total);
 
+    }
+
+
+    /**
+     * 重建笔记文档
+     *
+     * @param rebuildNoteDocumentReqDTO
+     * @return
+     */
+    @Override
+    public Response<Long> rebuildDocument(RebuildNoteDocumentReqDTO rebuildNoteDocumentReqDTO) {
+        Long noteId = rebuildNoteDocumentReqDTO.getId();
+
+        // 从数据库查询 Elasticsearch 索引数据
+        List<Map<String, Object>> result = selectMapper.selectEsNoteIndexData(noteId, null);
+
+        // 遍历查询结果，将每条记录同步到 Elasticsearch
+        for (Map<String, Object> recordMap : result) {
+            // 创建索引请求对象，指定索引名称
+            IndexRequest indexRequest = new IndexRequest(NoteIndex.NAME);
+            // 设置文档的 ID，使用记录中的主键 “id” 字段值
+            indexRequest.id((String.valueOf(recordMap.get(NoteIndex.FIELD_NOTE_ID))));
+            // 设置文档的内容，使用查询结果的记录数据
+            indexRequest.source(recordMap);
+            // 将数据写入 Elasticsearch 索引
+            try {
+                restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+            } catch (IOException e) {
+                log.error("==> 重建笔记文档失败: ", e);
+            }
+        }
+        return Response.success();
+    }
+
+
+    /**
+     * 重建用户文档
+     *
+     * @param rebuildUserDocumentReqDTO
+     * @return
+     */
+    @Override
+    public Response<Long> rebuildDocument(RebuildUserDocumentReqDTO rebuildUserDocumentReqDTO) {
+        Long userId = rebuildUserDocumentReqDTO.getId();
+
+        // 从数据库查询 Elasticsearch 索引数据
+        List<Map<String, Object>> result = selectMapper.selectEsUserIndexData(userId);
+
+        // 遍历查询结果，将每条记录同步到 Elasticsearch
+        for (Map<String, Object> recordMap : result) {
+            // 创建索引请求对象，指定索引名称
+            IndexRequest indexRequest = new IndexRequest(UserIndex.NAME);
+            // 设置文档的 ID，使用记录中的主键 “id” 字段值
+            indexRequest.id((String.valueOf(recordMap.get(UserIndex.FIELD_USER_ID))));
+            // 设置文档的内容，使用查询结果的记录数据
+            indexRequest.source(recordMap);
+            // 将数据写入 Elasticsearch 索引
+            try {
+                restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+            } catch (IOException e) {
+                log.error("==> 重建用户文档异常: ", e);
+            }
+        }
+        return Response.success();
     }
 }

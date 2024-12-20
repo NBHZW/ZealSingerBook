@@ -74,6 +74,12 @@
     <!--统一依赖管理  防止多次依赖-->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.zealsinger.search</groupId>
+                <artifactId>zealsingerbook-search-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
             <!--cannal相关依赖-->
             <dependency>
                 <groupId>com.alibaba.otter</groupId>

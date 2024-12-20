@@ -9,8 +9,12 @@
 
     <groupId>com.zealsinger.search</groupId>
     <artifactId>zealsingerbook-search</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <description>ES搜索模块</description>
+    <modules>
+        <module>zealsingerbook-search-biz</module>
+        <module>zealsingerbook-search-api</module>
+    </modules>
     <name>zealsingerbook-search</name>
 
 
@@ -19,6 +23,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.zealsinger.search</groupId>
+            <artifactId>zealsingerbook-search-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.zealsinger.frame</groupId>
             <artifactId>zealsinger-jackson-spring-boot-starter</artifactId>

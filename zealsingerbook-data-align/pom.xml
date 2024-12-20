@@ -20,6 +20,11 @@
     </properties>
 
     <dependencies>
+        <!--调用search服务的API实现笔记和用户文档的重构-->
+        <dependency>
+            <groupId>com.zealsinger.search</groupId>
+            <artifactId>zealsingerbook-search-api</artifactId>
+        </dependency>
         <!-- Rocket MQ -->
         <dependency>
             <groupId>org.apache.rocketmq</groupId>

@@ -4,23 +4,55 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:完善笔记搜索接口">
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/canal/CanalClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/canal/CanalSchedule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/config/CanalProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/enums/SearchNoteSortEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/enums/SearchNoteTimeRangeEnum.java" afterDir="false" />
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:完成Canal监听从而对ES的数据的一致性">
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/rpc/SearchRpcService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-api/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-api/src/main/java/com/zealsinger/search/api/SearchFeignApi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-api/src/main/java/com/zealsinger/search/constant/ApiConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-api/src/main/java/com/zealsinger/search/dto/RebuildNoteDocumentReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-api/src/main/java/com/zealsinger/search/dto/RebuildUserDocumentReqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-api/src/test/java/com/zealsinger/search/AppTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/canal/CanalSchedule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/enums/NoteStatusEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/enums/NoteVisibleEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/mapper/SelectMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/resources/mapper/SelectMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/day16.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day16.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/day12.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day12.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/DateConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/DateConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/utils/DateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/utils/DateUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-data-align/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-data-align/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/ZealsingerbookDataAlignApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/ZealsingerbookDataAlignApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/job/FansCountShardingXxlJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/job/FansCountShardingXxlJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/job/NoteCollectCountShardingXxlJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/job/NoteCollectCountShardingXxlJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/job/NoteLikeCountShardingXxlJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/job/NoteLikeCountShardingXxlJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/job/NotePublishCountShardingXxlJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-data-align/src/main/java/com/zealsinger/data/align/job/NotePublishCountShardingXxlJob.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-search/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/ZealsingerbookSearchApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/ZealsingerbookSearchApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchNoteReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchNoteReqVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchNoteRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchNoteRspVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/server/impl/SearchUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/server/impl/SearchUserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/ZealsingerbookSearchApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/ZealsingerbookSearchApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/canal/CanalClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/canal/CanalClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/canal/CanalSchedule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/config/CanalProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/config/CanalProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/config/ElasticsearchProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/config/ElasticsearchProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/config/ElasticsearchRestHighLevelClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/config/ElasticsearchRestHighLevelClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/controller/UserSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/controller/UserSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/enums/ResponseCodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/enums/ResponseCodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/enums/SearchNoteSortEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/enums/SearchNoteSortEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/enums/SearchNoteTimeRangeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/enums/SearchNoteTimeRangeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/index/NoteIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/index/NoteIndex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/index/UserIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/index/UserIndex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchNoteReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/vo/SearchNoteReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchNoteRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/vo/SearchNoteRspVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchUserReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/vo/SearchUserReqVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/domain/vo/SearchUserRspVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/domain/vo/SearchUserRspVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/server/SearchUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/server/SearchUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/java/com/zealsinger/search/server/impl/SearchUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/java/com/zealsinger/search/server/impl/SearchUserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/application-prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/resources/application-prod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-search/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-search/zealsingerbook-search-biz/src/main/resources/logback-spring.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,8 +65,8 @@
         <option value="module-info" />
         <option value="AnnotationType" />
         <option value="Mybatis Mapper" />
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -114,6 +146,7 @@
     &quot;Maven.zealsingerbook-kv [install].executor&quot;: &quot;Run&quot;,
     &quot;Maven.zealsingerbook-kv [package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.zealsingerbook-note-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-search-api [install].executor&quot;: &quot;Run&quot;,
     &quot;Maven.zealsingerbook-user-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
     &quot;Maven.zealsingerbook-user-relation-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
@@ -138,14 +171,14 @@
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/ZhuoMian/bigThree/Netty相关资料/ZealSingerBook-test/zealsingerbook-search/src/main/java/com/zealsinger/search&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/ZhuoMian/bigThree/Netty相关资料/ZealSingerBook-test/zealsingerbook-search/zealsingerbook-search-biz&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.45402297&quot;,
     &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
@@ -181,22 +214,22 @@
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-data-align\src\main\resources\mapper" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-search\zealsingerbook-search-biz" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-data-align\src\main\resources\lua" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-data-align\src\main\java\com\zealsinger\data\align\entity\dto" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-note\zealsingerbook-note-biz\src\main\java\com\zealsinger\note\domain\enums" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-id-generator\zealsingerbook-id-generator-biz\src\main\resources\config" />
-      <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-user\zealsingerbook-user-biz\src\main\resources" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.zealsinger.id.generator" />
       <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.zealsinger.search.dto" />
       <recent name="com.zealsinger.search.domain.vo" />
       <recent name="com.zealsinger.search.domain.enums" />
       <recent name="com.zealsinger.data.align.job" />
       <recent name="com.zealsinger.data.align.mapper" />
-      <recent name="com.zealsinger.data.align.entity.dto" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -397,7 +430,7 @@
       </method>
     </configuration>
     <configuration name="ZealsingerbookSearchApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="zealsingerbook-search" />
+      <module name="zealsingerbook-search-biz" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.zealsinger.search.ZealsingerbookSearchApplication" />
       <extension name="coverage">
         <pattern>
@@ -611,7 +644,13 @@
       <workItem from="1734158840529" duration="7263000" />
       <workItem from="1734178287060" duration="4175000" />
       <workItem from="1734227321678" duration="5272000" />
-      <workItem from="1734232615248" duration="303000" />
+      <workItem from="1734232615248" duration="593000" />
+      <workItem from="1734259649148" duration="3171000" />
+      <workItem from="1734313896881" duration="1786000" />
+      <workItem from="1734510841547" duration="1768000" />
+      <workItem from="1734672694797" duration="2071000" />
+      <workItem from="1734675546999" duration="5894000" />
+      <workItem from="1734697312085" duration="1672000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -893,7 +932,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734160078072</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="feat:搭建基础的Canl监听数据库Binlog配置服务">
+      <option name="closed" value="true" />
+      <created>1734233164781</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1734233164781</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -912,8 +959,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="feat:修改网关中全局异常捕获的对于token过期的异常信息的统一" />
-    <MESSAGE value="feat:添加网关解析userId通过全局过滤器添加到requestHeader中传递给下游+下游通过过滤器捕获userId存入TransmittableThreadLocal作为模块上下文" />
     <MESSAGE value="feat:添加账号密码登录接口" />
     <MESSAGE value="feat:添加OSS服务模块（策略模式+工厂模式，支持AliyunOSS对象存储和Minio对象存储两种方式）" />
     <MESSAGE value="feat:添加uer模块的基础搭建" />
@@ -937,7 +982,9 @@
     <MESSAGE value="feat:完成数据对齐服务模块" />
     <MESSAGE value="feat:搭建搜索服务，完成用户搜索服务" />
     <MESSAGE value="feat:完善笔记搜索接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:完善笔记搜索接口" />
+    <MESSAGE value="feat:搭建基础的Canl监听数据库Binlog配置服务" />
+    <MESSAGE value="feat:完成Canal监听从而对ES的数据的一致性" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:完成Canal监听从而对ES的数据的一致性" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
