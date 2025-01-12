@@ -28,6 +28,7 @@
         <module>zealsingerbook-count</module>
         <module>zealsingerbook-data-align</module>
         <module>zealsingerbook-search</module>
+        <module>zealsingerbook-comment</module>
     </modules>
 
     <properties>

@@ -1717,6 +1717,16 @@ public class CanalSchedule implements Runnable {
     @Resource
     private CanalProperties canalProperties;
 
+    @Resource
+    private RestHighLevelClient restHighLevelClient;
+
+    @Resource
+    private SelectMapper selectMapper;
+
+    private final  String USER_TABLE_NAME = "t_user";
+
+    private final  String NOTE_TABLE_NAME = "t_note";
+
 
     @Override
     @Scheduled(fixedDelay = 100)  // 每隔100ms执行一次
@@ -1752,52 +1762,230 @@ public class CanalSchedule implements Runnable {
      * 打印这一批次中的数据条目（和官方示例代码一致，后续小节中会自定义这块）
      * @param entrys
      */
-    private void printEntry(List<CanalEntry.Entry> entrys) {
+    private void printEntry(List<CanalEntry.Entry> entrys) throws Exception {
         for (CanalEntry.Entry entry : entrys) {
-            if (entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONBEGIN
-                    || entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONEND) {
-                continue;
-            }
+            // 只关注行数据 不关注其他的事务和类型
+            if(entry.getEntryType() == CanalEntry.EntryType.ROWDATA){
+                // 获取行数据的事件类型
+                CanalEntry.EventType eventType = entry.getHeader().getEventType();
+                // 获取发生变化的数据库库名称
+                String database = entry.getHeader().getSchemaName();
+                // 获取表名
+                String table = entry.getHeader().getTableName();
 
-            CanalEntry.RowChange rowChage = null;
-            try {
-                rowChage = CanalEntry.RowChange.parseFrom(entry.getStoreValue());
-            } catch (Exception e) {
-                throw new RuntimeException("ERROR ## parser of eromanga-event has an error , data:" + entry.toString(),
-                        e);
-            }
+                // 解析出RowChange对象  该对象中包含了RowData行数据和事件相关的信息
+                CanalEntry.RowChange rowChange = CanalEntry.RowChange.parseFrom(entry.getStoreValue());
+                // 遍历获取所有的行数据
+                for (CanalEntry.RowData rowData : rowChange.getRowDatasList()) {
+                    // 每行数据中所有列的最新数值
+                    List<CanalEntry.Column> afterColumnsList = rowData.getAfterColumnsList();
+                    // 解析为Map方便后续操作
+                    // 将列数据解析为 Map，方便后续处理
+                    Map<String, Object> columnMap = parseColumns2Map(afterColumnsList);
 
-            CanalEntry.EventType eventType = rowChage.getEventType();
-            System.out.println(String.format("================> binlog[%s:%s] , name[%s,%s] , eventType : %s",
-                    entry.getHeader().getLogfileName(), entry.getHeader().getLogfileOffset(),
-                    entry.getHeader().getSchemaName(), entry.getHeader().getTableName(),
-                    eventType));
+                    log.info("EventType: {}, Database: {}, Table: {}, Columns: {}", eventType, database, table, columnMap);
 
-            for (CanalEntry.RowData rowData : rowChage.getRowDatasList()) {
-                if (eventType == CanalEntry.EventType.DELETE) {
-                    printColumn(rowData.getBeforeColumnsList());
-                } else if (eventType == CanalEntry.EventType.INSERT) {
-                    printColumn(rowData.getAfterColumnsList());
-                } else {
-                    System.out.println("-------> before");
-                    printColumn(rowData.getBeforeColumnsList());
-                    System.out.println("-------> after");
-                    printColumn(rowData.getAfterColumnsList());
+                    // TODO：处理事件任务
+                    processEvent(columnMap,table,eventType);
                 }
             }
         }
-
-
     }
 
     /**
-     * 打印字段信息
-     * @param columns
+     * 处理事件
+     * @param columnMap
+     * @param table
+     * @param eventType
      */
-    private static void printColumn(List<CanalEntry.Column> columns) {
-        for (CanalEntry.Column column : columns) {
-            System.out.println(column.getName() + " : " + column.getValue() + "    update=" + column.getUpdated());
+    private void processEvent(Map<String, Object> columnMap, String table, CanalEntry.EventType eventType) throws Exception {
+        // 根据不同的事件类型进行不同的方法处理
+        switch (table){
+            case USER_TABLE_NAME -> handleNoteEvent(columnMap,eventType);
+            case NOTE_TABLE_NAME -> handleUserEvent(columnMap,eventType);
+            default -> log.warn("Table: {} not support", table);
         }
+    }
+
+    /**
+     * 处理用户表事件
+     * @param columnMap
+     * @param eventType
+     */
+    private void handleUserEvent(Map<String, Object> columnMap, CanalEntry.EventType eventType) throws Exception {
+        // 获取用户 ID
+        Long userId = Long.parseLong(columnMap.get("id").toString());
+
+        // 不同的事件，处理逻辑不同
+        switch (eventType) {
+            case INSERT -> syncUserIndex(userId); // 记录新增事件
+            case UPDATE -> { // 记录更新事件
+                // 用户变更后的状态
+                Integer status = Integer.parseInt(columnMap.get("status").toString());
+                // 逻辑删除
+                Integer isDeleted = Integer.parseInt(columnMap.get("is_deleted").toString());
+
+                if (Objects.equals(status, StatusEnum.ENABLE.getValue())
+                        && Objects.equals(isDeleted, 0)) { // 用户状态为已启用，并且未被逻辑删除，将状态重新更新上去即可
+                    // 更新用户索引、笔记索引
+                    syncNotesIndexAndUserIndex(userId);
+                } else if (Objects.equals(status, StatusEnum.DISABLED.getValue()) // 用户状态为禁用  zha
+                        || Objects.equals(isDeleted, 1)) { // 被逻辑删除
+                    // TODO: 删除用户文档
+                    deleteUserDocument(String.valueOf(userId));
+                }
+            }
+            default -> log.warn("Unhandled event type for t_user: {}", eventType);
+        }
+    }
+    /**
+     * 删除指定 ID 的用户文档
+     * @param documentId
+     * @throws Exception
+     */
+    private void deleteUserDocument(String documentId) throws Exception {
+        // 创建删除请求对象，指定索引名称和文档 ID
+        DeleteRequest deleteRequest = new DeleteRequest(UserIndex.NAME, documentId);
+        // 执行删除操作，将指定文档从 Elasticsearch 索引中删除
+        restHighLevelClient.delete(deleteRequest, RequestOptions.DEFAULT);
+    }
+
+    /**
+     * 同步用户索引、笔记索引（可能是多条）
+     * @param userId
+     */
+    private void syncNotesIndexAndUserIndex(Long userId) throws Exception {
+        // TODO
+        // 创建一个 BulkRequest
+        BulkRequest bulkRequest = new BulkRequest();
+
+        // 1. 用户索引
+        List<Map<String, Object>> userResult = selectMapper.selectEsUserIndexData(userId);
+
+        // 遍历查询结果，将每条记录同步到 Elasticsearch
+        for (Map<String, Object> recordMap : userResult) {
+            // 创建索引请求对象，指定索引名称
+            IndexRequest indexRequest = new IndexRequest(UserIndex.NAME);
+            // 设置文档的 ID，使用记录中的主键 “id” 字段值
+            indexRequest.id((String.valueOf(recordMap.get(UserIndex.FIELD_USER_ID))));
+            // 设置文档的内容，使用查询结果的记录数据
+            indexRequest.source(recordMap);
+            // 将每个 IndexRequest 加入到 BulkRequest
+            bulkRequest.add(indexRequest);
+        }
+
+        // 2. 笔记索引
+        List<Map<String, Object>> noteResult = selectMapper.selectEsNoteIndexData(null, userId);
+        for (Map<String, Object> recordMap : noteResult) {
+            // 创建索引请求对象，指定索引名称
+            IndexRequest indexRequest = new IndexRequest(NoteIndex.NAME);
+            // 设置文档的 ID，使用记录中的主键 “id” 字段值
+            indexRequest.id((String.valueOf(recordMap.get(NoteIndex.FIELD_NOTE_ID))));
+            // 设置文档的内容，使用查询结果的记录数据
+            indexRequest.source(recordMap);
+            // 将每个 IndexRequest 加入到 BulkRequest
+            bulkRequest.add(indexRequest);
+        }
+
+        // 执行批量请求
+        restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+    }
+
+    /**
+     * 同步用户索引
+     * @param userId
+     */
+    private void syncUserIndex(Long userId) throws Exception {
+        // 1. 同步用户索引
+        List<Map<String, Object>> userResult = selectMapper.selectEsUserIndexData(userId);
+
+        // 遍历查询结果，将每条记录同步到 Elasticsearch
+        for (Map<String, Object> recordMap : userResult) {
+            // 创建索引请求对象，指定索引名称
+            IndexRequest indexRequest = new IndexRequest(UserIndex.NAME);
+            // 设置文档的 ID，使用记录中的主键 “id” 字段值
+            indexRequest.id((String.valueOf(recordMap.get(UserIndex.FIELD_USER_ID))));
+            // 设置文档的内容，使用查询结果的记录数据
+            indexRequest.source(recordMap);
+            // 将数据写入 Elasticsearch 索引
+            restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+        }
+    }
+
+    /**
+     * 处理笔记表事件
+     * @param columnMap
+     * @param eventType
+     */
+    private void handleNoteEvent(Map<String, Object> columnMap, CanalEntry.EventType eventType) throws Exception {
+        long noteId = Long.parseLong(columnMap.get("id").toString());
+        // 不同的事件，处理逻辑不同
+        switch (eventType){
+            // 处理新增事件
+            case INSERT -> syncNoteIndex(noteId);
+            // 处理更新事件
+            case UPDATE -> {
+                // 笔记变更后的状态
+                Integer status = Integer.parseInt(columnMap.get("status").toString());
+                // 笔记可见范围
+                Integer visible = Integer.parseInt(columnMap.get("visible").toString());
+                if(Objects.equals(status, NoteStatusEnum.NORMAL.getCode())){
+                    if(Objects.equals(visible, NoteVisibleEnum.PUBLIC.getCode())){
+                        // 正常且公开的数据我们才放入到ES中
+                        syncNoteIndex(noteId);
+                    }
+                }else if (Objects.equals(visible, NoteVisibleEnum.PRIVATE.getCode()) // 仅对自己可见
+                        || Objects.equals(status, NoteStatusEnum.DELETED.getCode())
+                        || Objects.equals(status, NoteStatusEnum.DOWNED.getCode())) { // 被逻辑删除、被下架
+                    // TODO: 删除笔记文档
+                    deleteNoteDocument(String.valueOf(noteId));
+                }
+            }
+            // 其余事件  从业务上而言我们的是逻辑删除 实际上的对应的操作是MySQL中更新操作 所以不需要单独的处理
+            default -> log.warn("Unhandled event type for t_note: {}", eventType);
+        }
+    }
+
+    /**
+     * 笔记删除删除
+     */
+    private void deleteNoteDocument(String documentId) throws Exception {
+        // 创建删除请求对象，指定索引名称和文档 ID
+        DeleteRequest deleteRequest = new DeleteRequest(NoteIndex.NAME, documentId);
+        // 执行删除操作，将指定文档从 Elasticsearch 索引中删除
+        restHighLevelClient.delete(deleteRequest, RequestOptions.DEFAULT);
+    }
+
+    /**
+     * 笔记新增事件
+     * @param noteId
+     */
+    private void syncNoteIndex(long noteId) throws IOException {
+        List<Map<String, Object>> result = selectMapper.selectEsNoteIndexData(noteId,null);
+        for(Map<String, Object> recordMap : result){
+            // 创建索引请求对象
+            IndexRequest indexRequest = new IndexRequest(NoteIndex.NAME);
+            // 设置文档ID
+            indexRequest.id(String.valueOf(recordMap.get(NoteIndex.FIELD_NOTE_ID)));
+            // 设置文档内容
+            indexRequest.source(recordMap);
+            //发请求写入ES
+            restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+        }
+    }
+
+    /**
+     * 将行数据对象转化为Map方便后续处理key为列字段 value为对应的值
+     * @param columns
+     * @return
+     */
+    private Map<String, Object> parseColumns2Map(List<CanalEntry.Column> columns) {
+        Map<String,Object> map = new HashMap<>();
+        columns.forEach(column -> {
+            if(Objects.isNull(column)) return;
+            map.put(column.getName(), column.getValue());
+        });
+        return map;
     }
 }
 

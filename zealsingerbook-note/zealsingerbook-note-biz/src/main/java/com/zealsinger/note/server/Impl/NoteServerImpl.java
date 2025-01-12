@@ -239,6 +239,7 @@ public class NoteServerImpl extends ServiceImpl<NoteMapper, Note> implements Not
         }
         checkVisible(note);
         CompletableFuture<String> contentResultFuture = CompletableFuture.completedFuture(null);
+        // 异步调用kv服务查找笔记详情
         if(!note.getIsContentEmpty()) {
             contentResultFuture = contentResultFuture.supplyAsync(()->{
                 FindNoteContentRspDTO noteContentById = kvRpcService.findNoteContentById(note.getContentUuid());

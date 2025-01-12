@@ -121,10 +121,11 @@ WITH replication {.......} ： 指定keyspace键空间的复制策略和配置�
 
 ![image-20241002154941253](../../ZealSingerBook/img/image-20241002154941253.png)
 
-查看所有键空间
+查看所有键空间和某个空间下的所有表
 
 ```cql
 DESCRIBE KEYSPACES;
+DESCRIBE TABLES;
 ```
 
 ![image-20241002154952012](../../ZealSingerBook/img/image-20241002154952012.png)
