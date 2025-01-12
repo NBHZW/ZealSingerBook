@@ -424,3 +424,533 @@ public class CommentServiceImpl implements CommentService {
 
 ### 保证MQ消息可靠性的措施--Spring retry
 
+在配置信息中，其实我们确实配置过了MQ的失败重试次数，这里配置了同步消息和异步消息的重试次数都是三次
+
+![image-20250112155030329](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250112155030329.png)
+
+但是，这明显不够，如果三次都失败了该怎么办？就让消息丢失了么？所以肯定不能这么搞，我们还需要补偿措施，即**采用 重试+补偿 保证MQ消息的可靠性，所谓补偿就是失败的消息落库处理，定时重试再次消费库中的失败消息**
+
+步骤如下：
+
+- **重试方案**：当发送 MQ 失败，则进行重试，并设置时间间隔，如重试 3 次，间隔为 1s 后、2s后、4s后；
+- **失败消息落库**：若重试多次均失败，则不应重复无限制重试，而是将该条发送失败的消息写入数据库中；
+- **补偿发送**：通过定时任务扫库，将发送失败的 MQ 重新捞出来，再次发送，保证 MQ 最终发送成功(发送成功后，需要将数据库中的记录删除)；
+
+![image-20250112155240917](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250112155240917.png)
+
+MQ本身的重试机制比较简单，我们采用Spring retry更为强大的重试框架，因为是Spring的依赖，直接biz的pom文件中导入就行
+
+```xml
+        <!-- Spring Retry 重试框架  -->
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+        
+        <!-- AOP 切面（Spring Retry 重试框架需要） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+```
+
+我们创建一个retry的工具类，帮助我们进行重发
+
+```java 
+@Component
+@Slf4j
+public class SendMqRetryHelper {
+// @Retryable是重试方法，指定异常类型和重试次数以及重试间隔，当方法发生指定类型的异常的时候 就会进行重试
+// @Recover是兜底注解 当触发@Retry重试超过设定次数之后 就会进入到该注解下的方法  进入兜底方法
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Retryable(
+            retryFor = { Exception.class },  // 需要重试的异常类型
+            maxAttempts = 3,                 // 最大重试次数
+            backoff = @Backoff(delay = 1000, multiplier = 2)  // 初始延迟时间 1000ms，每次重试间隔加倍
+    )
+    public void send(String topic, PublishCommentMqDTO publishCommentMqDTO) {
+        log.info("==> 开始异步发送 MQ, Topic: {}, publishCommentMqDTO: {}", topic, publishCommentMqDTO);
+
+        // 构建消息对象，并将 DTO 转成 Json 字符串设置到消息体中
+        Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(publishCommentMqDTO))
+                .build();
+
+        // 同步发送 MQ
+        rocketMQTemplate.syncSend(topic, message);
+    }
+
+    /**
+     * 兜底方案: 将发送失败的 MQ 写入数据库，之后，通过定时任务扫表，将发送失败的 MQ 再次发送，最终发送成功后，将该记录物理删除
+     */
+    @Recover
+    public void asyncSendMessageFallback(Exception e, String topic, PublishCommentMqDTO publishCommentMqDTO) {
+        log.error("==> 多次发送失败, 进入兜底方案, Topic: {}, publishCommentMqDTO: {}", topic, publishCommentMqDTO);
+
+        // TODO:
+    }
+}
+```
+
+除此之外，我们启用Spring retry需要在启动类上加上对应的Enable注解，如下
+
+![image-20250112160349161](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250112160349161.png)
+
+那么写好之后，我们对应的修改一下上面的发布评论的Service层逻辑
+
+```Java
+@Service
+@Slf4j
+public class CommentServiceImpl implements CommentService {
+
+    // 省略...
+    
+    @Resource
+    private SendMqRetryHelper sendMqRetryHelper;
+
+    /**
+     * 发布评论
+     *
+     * @param publishCommentReqVO
+     * @return
+     */
+    @Override
+    public Response<?> publishComment(PublishCommentReqVO publishCommentReqVO) {
+        // 省略...
+
+        // 发送 MQ
+        // 构建消息体 DTO
+        PublishCommentMqDTO publishCommentMqDTO = PublishCommentMqDTO.builder()
+                .noteId(publishCommentReqVO.getNoteId())
+                .content(content)
+                .imageUrl(imageUrl)
+                .replyCommentId(publishCommentReqVO.getReplyCommentId())
+                .createTime(LocalDateTime.now())
+                .creatorId(creatorId)
+                .build();
+
+        // 发送 MQ (包含重试机制)
+        sendMqRetryHelper.send(MQConstants.TOPIC_PUBLISH_COMMENT, publishCommentMqDTO);
+
+        return Response.success();
+    }
+}
+
+
+```
+
+现在是配置好了，**但是需要注意的是，我们这么配置重试之后，整个异步MQ变成了同步MQ，有没有办法还是异步MQ呢？答案是有的**
+
+Spring retry对外提供RetryTemplate让我们自定义重试逻辑，自然同时，需要配置一些重试信息
+
+首先我们准备好重试次数，时间间隔这些配置信息 在properties配置文件中配置信息，然后读取到配置信息类中
+
+![image-20250112162626493](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250112162626493.png)
+
+然后我**们注册自定义RetryTemplate**
+
+```Java
+@Configuration
+public class RetryConfig {
+
+    @Resource
+    private RetryProperties retryProperties;
+
+    @Bean
+    public RetryTemplate retryTemplate() {
+        RetryTemplate retryTemplate = new RetryTemplate();
+
+        // 定义重试策略（最多重试 3 次）
+        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
+        retryPolicy.setMaxAttempts(retryProperties.getMaxAttempts()); // 最大重试次数
+
+        // 定义间隔策略
+        ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
+        backOffPolicy.setInitialInterval(retryProperties.getInitInterval()); // 初始间隔 2000ms
+        backOffPolicy.setMultiplier(retryProperties.getMultiplier());       // 每次乘以 2
+
+        retryTemplate.setRetryPolicy(retryPolicy);
+        retryTemplate.setBackOffPolicy(backOffPolicy);
+
+        return retryTemplate;
+    }
+}
+```
+
+然后既然要异步，**我们知道同步是RetryTemplate同步调用了三次retry，每次retry实际就是同步MQ，这个过程是同步的不能修改的，那么我们异步调用RetryTemplate就能实现异步重试发送消息**
+
+所以我们和之前一样自定义一个线程池，然后修改SendMqRetryHelper
+
+```java 
+Component
+@Slf4j
+public class SendMqRetryHelper {
+
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Resource
+    private ThreadPoolTaskExecutor taskExecutor;
+
+    @Resource
+    private RetryTemplate retryTemplate;
+
+    /**
+     * 异步发送 MQ
+     * @param topic
+     */
+    public void asyncSend(String topic, String body) {
+        log.info("==> 开始异步发送 MQ, Topic: {}, Body: {}", topic, body);
+
+        // 构建消息对象，并将 DTO 转成 Json 字符串设置到消息体中
+        Message<String> message = MessageBuilder.withPayload(body)
+                .build();
+
+        // 异步发送 MQ 消息，提升接口响应速度
+        rocketMQTemplate.asyncSend(topic, message, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> 【评论发布】MQ 发送成功，SendResult: {}", sendResult);
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> 【评论发布】MQ 发送异常: ", throwable);
+                handleRetry(topic, message); // 发生异常的时候调用handlRetry方法进行重试 利用MQ的异步发送捕获异常，异常的时候才会要重发
+            }
+        });
+    }
+
+    /**
+     * 重试处理
+     * @param topic
+     * @param message
+     */
+    private void handleRetry(String topic, Message<String> message) {  
+        // 异步处理
+        taskExecutor.submit(() -> {
+            try {
+                // 通过 retryTemplate 执行重试
+                retryTemplate.execute((RetryCallback<Void, RuntimeException>) context -> {
+                    log.info("==> 开始重试 MQ 发送, 当前重试次数: {}, 时间: {}", context.getRetryCount() + 1, LocalDateTime.now());
+                    // 同步发送 MQ
+                    rocketMQTemplate.syncSend(topic, message);
+                    return null;
+                });
+            } catch (Exception e) {
+                // 多次重试失败，进入兜底方案
+                fallback(e, topic, message.getPayload());
+            }
+        });
+    }
+
+    /**
+     * 兜底方案: 将发送失败的 MQ 写入数据库，之后，通过定时任务扫表，将发送失败的 MQ 再次发送，最终发送成功后，将该记录物理删除
+     */
+    private void fallback(Exception e, String topic, String bodyJson) {
+        log.error("==> 多次发送失败, 进入兜底方案, Topic: {}, bodyJson: {}", topic, bodyJson);
+
+        // TODO:
+    }
+}
+```
+
+我们service中调用asyncSend方法后其实就是异步MQ消息，所以service中的逻辑不会被阻塞，当MQ发生异常，会异步重试，重试的逻辑中也是异步重试
+
+查看一下重看效果
+
+![image-20250112170403813](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250112170403813.png)
+
+注意 **这里不能 用之前的方案+MQ异步，然后再异常回调中使用带注解的retry方法进行，因为注解底层使用AOP，同类方法中调用会导致AOP失效**
+
+
+
+### RocketMQClient批量消费消息
+
+我们之前都是从MQ中拉取一个消息，都是在消费者使用@RocketMQListener注解的方式进行消费，每次只能消费一条消息，效率比较慢，所以我们出现了使用RocketMQClient进行批量消费
+
+批量消费的好处：
+
+1：消费效率高
+
+2：减少网络延迟：批量拉去能减少网络请求次数，降低延迟和系统负载
+
+3：提高系统吞吐量
+
+4：降低消费者的负载：当有大量消息需要被消费的时候，批量消费减少高频操作，减少线程上下文切换的开销
+
+---
+
+那么我们开始在这里引用RocketMQClient
+
+首先在项目最大的pom中引入依赖和同一版本
+
+```
+    <properties>
+        // 省略...
+        
+        <rocketmq-client.version>4.9.4</rocketmq-client.version>
+
+    </properties>
+
+    <!-- 统一依赖管理 -->
+    <dependencyManagement>
+        <dependencies>
+            // 省略...
+            
+            <!-- Rocket MQ 客户端 -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>${rocketmq-client.version}</version>
+            </dependency>
+
+            // 省略...
+    </dependencyManagement>
+
+```
+
+然后在comment模块中添加对应的依赖
+
+```
+<!-- Rocket MQ 客户端 -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>${rocketmq-client.version}</version>
+            </dependency>
+```
+
+**RocketMQClient的主要消费逻辑就是：绑定MQ，然后通过监听器进行批量消费**
+
+我们定义消费者，进行消费
+
+```Java
+@Component
+@Slf4j
+public class Comment2DBConsumer {
+    @Value("${rocketmq.name-server}")
+    private String namesrvAddr;
+
+    private DefaultMQPushConsumer consumer;
+
+    private RateLimiter rateLimiter = RateLimiter.create(1000);
+
+    @Bean
+    public DefaultMQPushConsumer getConsumer() throws MQClientException {
+        String group ="zealsingerbook_group"+ MQConstants.TOPIC_PUBLISH_COMMENT;
+        // 创建一个新的 DefaultMQPushConsumer 实例，并指定消费者的消费组名
+        consumer = new DefaultMQPushConsumer(group);
+
+        // 设置 RocketMQ 的 NameServer 地址
+        consumer.setNamesrvAddr(namesrvAddr);
+
+        // 订阅指定的主题，并设置主题的订阅规则（"*" 表示订阅所有标签的消息）
+        consumer.subscribe(MQConstants.TOPIC_PUBLISH_COMMENT, "*");
+
+        // 设置消费者消费消息的起始位置，如果队列中没有消息，则从最新的消息开始消费。
+        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
+
+        // 设置消息消费模式，这里使用集群模式 (CLUSTERING)
+        consumer.setMessageModel(MessageModel.CLUSTERING);
+
+        // 设置每批次消费的最大消息数量，这里设置为 30，表示每次拉取时最多消费 30 条消息
+        // RocketMQClient使用的时候最需要注意的一点：消息最大批次量不能超过消息队列长度
+        consumer.setConsumeMessageBatchMaxSize(30);
+
+        // 注册消息监听器
+        consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
+            log.info("==> 本批次消息大小: {}", msgs.size());
+            try {
+                // 令牌桶流控  业务处理中还需要对数据库进行操作 防止打垮 需要限流
+                rateLimiter.acquire();
+
+                for (MessageExt msg : msgs) {
+                    String message = new String(msg.getBody());
+                    log.info("==> Consumer - Received message: {}", message);
+
+                    // TODO: 业务处理
+                }
+
+                // 手动 ACK，告诉 RocketMQ 这批次消息消费成功
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+            } catch (Exception e) {
+                log.error("", e);
+                // 手动 ACK，告诉 RocketMQ 这批次消息处理失败，稍后再进行重试
+                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+            }
+        });
+        // 启动消费者
+        consumer.start();
+        return consumer;
+    }
+
+    /**
+     * @PreDestroy注解
+     * 用于标记在Spring容器中的Bean被销毁之前需要执行的方法。这个注解的主要作用是释放资源
+     */
+    @PreDestroy
+    public void destroy() {
+        if (Objects.nonNull(consumer)) {
+            try {
+                consumer.shutdown();  // 关闭消费者
+            } catch (Exception e) {
+                log.error("", e);
+            }
+        }
+    }
+}
+```
+
+### KV服务批量加入
+
+入参
+
+```json
+{
+    "comments": [ // 评论集合
+        {
+            "noteId": 1862481925449449554, // 笔记 ID
+            "yearMonth": "2024-12", // 发布年月
+            "contentId": "95aafb89-997c-4b14-939c-f848aabdad6d", // 内容 ID
+            "content": "这是一条评论内容" // 评论正文
+        },
+        {
+            "noteId": 1862481582414102539,
+            "yearMonth": "2024-12",
+            "contentId": "db8339cd-beba-40a5-9182-c51c2588ae05",
+            "content": "这是一条评论内容2"
+        },
+        {
+            "noteId": 1862482047415615528,
+            "yearMonth": "2024-12",
+            "contentId": "de81edf6-313c-469a-a77d-57d71ba18194",
+            "content": "这是一条评论内容3"
+        }
+    ]
+}
+
+```
+
+出参
+
+```json
+{
+	"success": true,
+	"message": null,
+	"errorCode": null,
+    "data": null
+}
+```
+
+对应Cassandra中的表的实体类如下
+
+```Java
+
+// 操作Cassandra的时候传入的时候这个对象的集合  需要将最下面的转化为这个
+@Table("comment_content")  // 在这里注解表明了是哪个表 所以下面批量查入的server逻辑中就不需要再次额外指明表了
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class CommentContent {
+    @PrimaryKey
+    private CommentContentPrimaryKey primaryKey;
+
+    private String content;
+}
+
+
+public class CommentContentPrimaryKey {
+
+    @PrimaryKeyColumn(name = "note_id", type = PrimaryKeyType.PARTITIONED)
+    private Long noteId; // 分区键1
+
+    @PrimaryKeyColumn(name = "year_month", type = PrimaryKeyType.PARTITIONED)
+    private String yearMonth; // 分区键2
+
+    @PrimaryKeyColumn(name = "content_id", type = PrimaryKeyType.CLUSTERED)
+    private UUID contentId; // 聚簇键
+
+}
+
+// 方法入参是个列表
+public class BatchAddCommentContentReqDTO {
+
+    @NotEmpty(message = "评论内容集合不能为空")
+    @Valid  // 指定集合内的评论 DTO，也需要进行参数校验
+    private List<CommentContentReqDTO> comments;
+
+}
+
+// 入参列表中每个成员
+public class CommentContentReqDTO {
+    @NotNull(message = "评论 ID 不能为空")
+    private Long noteId;
+
+    @NotBlank(message = "发布年月不能为空")
+    private String yearMonth;
+
+    @NotBlank(message = "评论ID 不能为空")
+    private String contentId;
+
+    @NotBlank(message = "评论不能为空")
+    private String content;
+}
+```
+
+对应的service逻辑
+
+```Java
+public class CommentContentServiceImpl implements CommentContentService {
+
+    @Resource
+    private CassandraTemplate cassandraTemplate;
+
+    /**
+     * 批量添加评论内容
+     * @param batchAddCommentContentReqDTO
+     * @return
+     */
+    @Override
+    public Response<?> batchAddCommentContent(BatchAddCommentContentReqDTO batchAddCommentContentReqDTO) {
+        List<CommentContentReqDTO> comments = batchAddCommentContentReqDTO.getComments();
+
+        // DTO 转 DO
+        List<CommentContent> contentDOS = comments.stream()
+                .map(commentContentReqDTO -> {
+                    // 构建主键类
+                    CommentContentPrimaryKey commentContentPrimaryKey = CommentContentPrimaryKey.builder()
+                            .noteId(commentContentReqDTO.getNoteId())
+                            .yearMonth(commentContentReqDTO.getYearMonth())
+                            .contentId(UUID.fromString(commentContentReqDTO.getContentId()))
+                            .build();
+
+                    // DO 实体类
+                    CommentContent commentContentDO = CommentContent.builder()
+                            .primaryKey(commentContentPrimaryKey)
+                            .content(commentContentReqDTO.getContent())
+                            .build();
+
+                    return commentContentDO;
+                }).toList();
+
+        // 批量插入
+        cassandraTemplate.batchOps()
+                .insert(contentDOS)
+                .execute();
+
+        return Response.success();
+    }
+}
+```
+
+### 补充发布评论中的TODO
+
+发布评论之前的逻辑到了MQ消费者这里之后就停止了，所以我们要补充这部分的逻辑
+
+这个逻辑就是将message转化为KV服务中批量存储的接口所需要的入参从而RPC远程调用
+
+![image-20250112213742679](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250112213742679.png)

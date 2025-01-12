@@ -23,4 +23,7 @@ public interface KVFeignApi {
 
     @PostMapping(value = PREFIX + "/NoteContent/update")
     Response<?> updateNoteContent(@RequestBody @Validated UpdateNoteContentReqDTO updateNoteContentReqDTO);
+
+    @PostMapping(value = PREFIX+"/comment/content/batchAdd")
+    Response<?> batchAddCommentContent(@Validated @RequestBody BatchAddCommentContentReqDTO batchAddCommentContentReqDTO);
 }

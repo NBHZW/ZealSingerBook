@@ -37,5 +37,4 @@ public class NoteContentController {
     public Response<?> updateNoteContent(@RequestBody @Validated UpdateNoteContentReqDTO updateNoteContentReqDTO){
         return noteContentService.updateNoteContent(updateNoteContentReqDTO);
     }
-
 }

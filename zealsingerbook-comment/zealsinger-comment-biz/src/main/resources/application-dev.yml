@@ -59,8 +59,8 @@ rocketmq:
   producer:
     group: zealsingerbook_group
     send-message-timeout: 3000 # 消息发送超时时间，默认 3s
-    retry-times-when-send-failed: 3 # 同步发送消息失败后，重试的次数
-    retry-times-when-send-async-failed: 3 # 异步发送消息失败后，重试的次数
+    retry-times-when-send-failed: 0 # 同步发送消息失败后，重试的次数
+    retry-times-when-send-async-failed: 0 # 异步发送消息失败后，重试的次数
     max-message-size: 4096 # 消息最大大小
   consumer:
     group: zealsingerbook_group
@@ -69,3 +69,8 @@ rocketmq:
 logging:
   level:
     com.zealsinger.note.mapper: debug
+
+retry:
+  max-attempts: 3 # 最大重试次数
+  init-interval: 1000 # 初始延迟时间，单位 ms
+  multiplier: 2 # 每次重试间隔加倍（每次乘以 2）

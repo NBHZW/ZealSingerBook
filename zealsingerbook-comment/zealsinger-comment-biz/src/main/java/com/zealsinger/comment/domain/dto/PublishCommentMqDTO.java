@@ -15,6 +15,11 @@ public class PublishCommentMqDTO {
     private Long noteId;
 
     /**
+     * 评论 ID
+     */
+    private Long commentId;
+
+    /**
      * 评论内容
      */
     private String content;
