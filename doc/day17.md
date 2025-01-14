@@ -951,6 +951,227 @@ public class CommentContentServiceImpl implements CommentContentService {
 
 发布评论之前的逻辑到了MQ消费者这里之后就停止了，所以我们要补充这部分的逻辑
 
-这个逻辑就是将message转化为KV服务中批量存储的接口所需要的入参从而RPC远程调用
+这个逻辑就是将message转化为KV服务中批量存储的接口所需要的入参从而RPC远程调用，将内容存入到Cassandra中，然后封装信息存到库中
 
 ![image-20250112213742679](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250112213742679.png)
+
+首先准备好kv服务的对外API接口
+
+![image-20250113162806480](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250113162806480.png)
+
+入参为评论集合，集合的子元素也就是我们发布评论接口的入参
+
+![image-20250113162940356](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250113162940356.png)
+
+服务层的主题逻辑：将集合中的元素全部转化为Cassandra表对应的实体，然后利用Cassdandra的批量插入的逻辑
+
+```Java
+public class CommentContentServiceImpl implements CommentContentService {
+
+    @Resource
+    private CassandraTemplate cassandraTemplate;
+
+    /**
+     * 批量添加评论内容
+     * @param batchAddCommentContentReqDTO
+     * @return
+     */
+    @Override
+    public Response<?> batchAddCommentContent(BatchAddCommentContentReqDTO batchAddCommentContentReqDTO) {
+        List<CommentContentReqDTO> comments = batchAddCommentContentReqDTO.getComments();
+
+        // DTO 转 DO
+        List<CommentContent> contentDOS = comments.stream()
+                .map(commentContentReqDTO -> {
+                    // 构建主键类
+                    CommentContentPrimaryKey commentContentPrimaryKey = CommentContentPrimaryKey.builder()
+                            .noteId(commentContentReqDTO.getNoteId())
+                            .yearMonth(commentContentReqDTO.getYearMonth())
+                            .contentId(UUID.fromString(commentContentReqDTO.getContentId()))
+                            .build();
+
+                    // DO 实体类
+                    CommentContent commentContentDO = CommentContent.builder()
+                            .primaryKey(commentContentPrimaryKey)
+                            .content(commentContentReqDTO.getContent())
+                            .build();
+
+                    return commentContentDO;
+                }).toList();
+
+        // 批量插入
+        cassandraTemplate.batchOps()
+                .insert(contentDOS)
+                .execute();
+
+        return Response.success();
+    }
+}
+```
+
+KV的对外接口提供完毕后，我们可以回到TODO的位置补充逻辑
+
+TODO所在逻辑就是异步MQ的消费者逻辑中，接收每条评论消息，我们将其分别加入到数据库和Cassandra中即可，需要注意的是二级评论和一级评论的一些字段上的区别
+
+```java 
+......
+
+// 注册消息监听器
+        consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
+            log.info("==> 本批次消息大小: {}", msgs.size());
+            try {
+                // 令牌桶流控
+                rateLimiter.acquire();
+                transactionTemplate.execute(status->{
+                    try{
+                        List<CommentContentReqDTO> commentContentReqDTOList = new ArrayList<>();
+                        for (MessageExt msg : msgs) {
+                            String message = new String(msg.getBody());
+                            log.info("==> Consumer - Received message: {}", message);
+                            // TODO: 业务处理
+                            PublishCommentMqDTO publishCommentMqDTO = JsonUtil.JsonStringToObj(message, PublishCommentMqDTO.class);
+                            Comment comment = Comment.builder().id(publishCommentMqDTO.getCommentId())
+                                    .noteId(publishCommentMqDTO.getNoteId())
+                                    .userId(publishCommentMqDTO.getCreatorId())
+                                    .imageUrl(StringUtils.isBlank(publishCommentMqDTO.getImageUrl()) ? "" : publishCommentMqDTO.getImageUrl())
+                                    .isTop(false)
+                                    .replyTotal(0L)
+                                    .likeTotal(0L)
+                                    .replyCommentId(publishCommentMqDTO.getReplyCommentId())
+                                    .createTime(publishCommentMqDTO.getCreateTime())
+                                    .updateTime(publishCommentMqDTO.getCreateTime())
+                                    .build();
+                            String content = publishCommentMqDTO.getContent();
+                            boolean blank = StringUtils.isBlank(content);
+                            String contentUuid = String.valueOf(UUID.randomUUID());
+                            comment.setContentUuid(blank ? "": contentUuid);
+                            comment.setIsContentEmpty(blank);
+                            /*
+                             * reply_comment_id为0则说明回复的笔记  为一级评论
+                             * 如果不为0 则说明为二级评论
+                             *
+                             * 如果为二级评论 parentId为对应的评论ID  如果为一级评论则为笔记ID
+                             *
+                             * reply-user-id只有当回复的是二级评论的时候才会需要 其余的时候不需要
+                             * */
+                            comment.setLevel(publishCommentMqDTO.getReplyCommentId()==0?1:2);
+                            comment.setParentId(publishCommentMqDTO.getReplyCommentId()==0?publishCommentMqDTO.getNoteId(): publishCommentMqDTO.getCommentId());
+
+                            //查询回复的是否为二级评论
+                            LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+                            queryWrapper.eq(Comment::getId, comment.getParentId());
+                            queryWrapper.eq(Comment::getLevel,2);
+                            Comment selectOne = commentMapper.selectOne(queryWrapper);
+                            comment.setReplyUserId(Objects.isNull(selectOne)?0:selectOne.getUserId());
+                            commentMapper.insert(comment);
+                            if(!blank){
+                                CommentContentReqDTO commentContentReqDTO = CommentContentReqDTO.builder().noteId(publishCommentMqDTO.getNoteId())
+                                        .yearMonth(publishCommentMqDTO.getCreateTime().format(DateConstants.DATE_FORMAT_Y_M))
+                                        .contentId(contentUuid)
+                                        .content(content)
+                                        .build();
+                                commentContentReqDTOList.add(commentContentReqDTO);
+                            }
+                        }
+                        boolean isSuccess=true;
+                        if(CollUtil.isNotEmpty(commentContentReqDTOList)){
+                            isSuccess = kvRpcService.batchSaveCommentContent(commentContentReqDTOList);
+                        }
+                        return isSuccess;
+                    }catch (Exception ex){
+                        status.setRollbackOnly();
+                        log.error("", ex);
+                        throw ex;
+                    }
+                });
+
+
+                // 手动 ACK，告诉 RocketMQ 这批次消息消费成功
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+            } catch (Exception e) {
+                log.error("", e);
+                // 手动 ACK，告诉 RocketMQ 这批次消息处理失败，稍后再进行重试
+                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+            }
+        });
+        // 启动消费者
+        consumer.start();
+        return consumer;
+```
+
+### 计数模块评论数变化
+
+评论入库成功之后，就需要通知计数模块，更新评论数的计数，那么我们直接在后面添加MQ发送消息给计数模块即可
+
+![image-20250114162154327](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250114162154327.png)
+
+计数模块这边创建对应的消费者逻辑
+
+这里没有聚合操作是因为前面计数模块上面是将评论数据批量消费，作为List直接发过来，所以不需要再次聚合，然后除此之外有限流进行批量消费，List大小不会很大，可以放心单独使用
+
+将传来的List根据noteId进行分组，然后分别计数即可，对应的操作note_count表中的comment_tatil字段即可
+
+```Java
+public class CountNoteCommentConsumer implements RocketMQListener<String> {
+
+    @Resource
+    private NoteCountMapper noteCountMapper;
+
+    @Override
+    public void onMessage(String message) {
+        try {
+            List<CountPublishCommentMqDTO> countList = JsonUtil.parseList(message, CountPublishCommentMqDTO.class);
+            if(CollUtil.isNotEmpty(countList)){
+                Map<Long, List<CountPublishCommentMqDTO>> map = countList.stream().collect(Collectors.groupingBy(CountPublishCommentMqDTO::getNoteId));
+                map.forEach((noteId,commentList)->{
+                    LambdaQueryWrapper<NoteCount> queryWrapper = new LambdaQueryWrapper<>();
+                    queryWrapper.eq(NoteCount::getNoteId, noteId);
+                    NoteCount noteCount = noteCountMapper.selectOne(queryWrapper);
+                    if(Objects.isNull(noteCount)){
+                        noteCount=NoteCount.builder()
+                                .noteId(noteId)
+                                .likeTotal(0L)
+                                .collectTotal(0L)
+                                .commentTotal((long) commentList.size())
+                                .createTime(LocalDateTime.now())
+                                .updateTime(LocalDateTime.now())
+                                .build();
+                    }else{
+                        noteCount.setCommentTotal(noteCount.getCommentTotal()+commentList.size());
+                    }
+                    noteCountMapper.insertOrUpdate(noteCount);
+                });
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+}
+```
+
+### 二级评论数量计数
+
+二级评论数量是针对于以及评论而言的，也就是说只有一级评论才会有这个属性
+
+![image-20250114162957005](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250114162957005.png)
+
+从正常的逻辑而言，直接查询的话，每一条一级评论x返回的时候都需要到comment表里面查parient_id为x的评论数据数量，这样肯定是不行的，所以我们在comment表中加入一个冗余字段“child_comment_total"进行单独的保存，方便后续拿取
+
+首先往数据库中加入一个新字段
+
+```Java
+alter table t_comment add column `child_comment_total` bigint(20) unsigned DEFAULT '0' COMMENT '二级评论总数（只有一级评论才需要统计）';
+```
+
+我们处理计数的过程，已经将commentList封装为CountPublishCommentMqDTO发送给计数模块了，所以我们可以直接在这个MQ上添加一些信息，方便我们进行计数
+
+![image-20250114163652488](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250114163652488.png)
+
+原本的CountPublishCommentMqDTO只包含了noteId和commentId，现在在添加Leve和parent_id两个成员
+
+![image-20250114163850346](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250114163850346.png)
+
+在消息中将其赋值发送过去即可
+
+![image-20250114163925158](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250114163925158.png)

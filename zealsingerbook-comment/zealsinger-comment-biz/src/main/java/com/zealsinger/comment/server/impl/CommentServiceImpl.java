@@ -31,7 +31,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Response<?> publishComment(PublishCommentReqVO publishCommentReqVO) {
-        Long noteId = publishCommentReqVO.getNoteId();
+        Long noteId = Long.valueOf(publishCommentReqVO.getNoteId());
         String content = publishCommentReqVO.getContent();
         String imageUrl = publishCommentReqVO.getImageUrl();
         /**

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PublishCommentReqVO {
     @NotNull(message = "笔记ID不能为空")
-    private Long noteId;
+    private String noteId;
 
     /**
      * 评论内容

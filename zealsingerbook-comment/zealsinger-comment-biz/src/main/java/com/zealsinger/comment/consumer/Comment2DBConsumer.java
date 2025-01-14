@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zealsinger.book.framework.common.constant.DateConstants;
 import com.zealsinger.book.framework.common.utils.JsonUtil;
 import com.zealsinger.comment.constant.MQConstants;
+import com.zealsinger.comment.domain.dto.CountPublishCommentMqDTO;
 import com.zealsinger.comment.domain.dto.PublishCommentMqDTO;
 import com.zealsinger.comment.domain.entry.Comment;
 import com.zealsinger.comment.mapper.CommentMapper;
@@ -20,15 +21,22 @@ import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.aspectj.bridge.MessageUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.*;
+import java.util.function.Function;
 
 @Component
 @Slf4j
@@ -44,6 +52,9 @@ public class Comment2DBConsumer {
 
     @Resource
     private TransactionTemplate transactionTemplate;
+
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
 
     private DefaultMQPushConsumer consumer;
 
@@ -76,6 +87,7 @@ public class Comment2DBConsumer {
             try {
                 // 令牌桶流控
                 rateLimiter.acquire();
+                List<Comment> commentList = new ArrayList<>();
                 transactionTemplate.execute(status->{
                     try{
                         List<CommentContentReqDTO> commentContentReqDTOList = new ArrayList<>();
@@ -91,6 +103,7 @@ public class Comment2DBConsumer {
                                     .isTop(false)
                                     .replyTotal(0L)
                                     .likeTotal(0L)
+                                    .childCommentTotal(0L)
                                     .replyCommentId(publishCommentMqDTO.getReplyCommentId())
                                     .createTime(publishCommentMqDTO.getCreateTime())
                                     .updateTime(publishCommentMqDTO.getCreateTime())
@@ -109,7 +122,7 @@ public class Comment2DBConsumer {
                              * reply-user-id只有当回复的是二级评论的时候才会需要 其余的时候不需要
                              * */
                             comment.setLevel(publishCommentMqDTO.getReplyCommentId()==0?1:2);
-                            comment.setParentId(publishCommentMqDTO.getReplyCommentId()==0?publishCommentMqDTO.getNoteId(): publishCommentMqDTO.getCommentId());
+                            comment.setParentId(publishCommentMqDTO.getReplyCommentId()==0?publishCommentMqDTO.getNoteId(): publishCommentMqDTO.getReplyCommentId());
 
                             //查询回复的是否为二级评论
                             LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
@@ -118,6 +131,7 @@ public class Comment2DBConsumer {
                             Comment selectOne = commentMapper.selectOne(queryWrapper);
                             comment.setReplyUserId(Objects.isNull(selectOne)?0:selectOne.getUserId());
                             commentMapper.insert(comment);
+                            commentList.add(comment);
                             if(!blank){
                                 CommentContentReqDTO commentContentReqDTO = CommentContentReqDTO.builder().noteId(publishCommentMqDTO.getNoteId())
                                         .yearMonth(publishCommentMqDTO.getCreateTime().format(DateConstants.DATE_FORMAT_Y_M))
@@ -138,8 +152,27 @@ public class Comment2DBConsumer {
                         throw ex;
                     }
                 });
+                if(CollUtil.isNotEmpty(commentList)){
+                    List<CountPublishCommentMqDTO> countPublishCommentMqDTOS = commentList.stream().map(comment -> CountPublishCommentMqDTO.builder()
+                            .noteId(comment.getNoteId())
+                            .commentId(comment.getId())
+                            .level(comment.getLevel())
+                            .parentId(comment.getParentId())
+                            .build()).toList();
 
+                    Message<String> message = MessageBuilder.withPayload(JsonUtil.ObjToJsonString(countPublishCommentMqDTOS)).build();
+                    rocketMQTemplate.asyncSend(MQConstants.TOPIC_COUNT_NOTE_COMMENT, message, new SendCallback() {
+                        @Override
+                        public void onSuccess(SendResult sendResult) {
+                            log.info("==> 【计数: 评论发布】MQ 发送成功，SendResult: {}", sendResult);
+                        }
 
+                        @Override
+                        public void onException(Throwable throwable) {
+                            log.error("==> 【计数: 评论发布】MQ 发送异常: ", throwable);
+                        }
+                    });
+                }
                 // 手动 ACK，告诉 RocketMQ 这批次消息消费成功
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             } catch (Exception e) {

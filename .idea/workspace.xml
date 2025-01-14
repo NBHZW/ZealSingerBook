@@ -5,31 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:初始化搭建comment评论模块">
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/config/RetryConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/config/RetryProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/config/ThreadPoolConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/consumer/Comment2DBConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/retry/SendMqRetryHelper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/rpc/IdGeneratorRpcService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/rpc/KvRpcService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/BatchAddCommentContentReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/dto/CommentContentReqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/controller/CommentContentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/domain/CommentContent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/domain/CommentContentPrimaryKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/server/CommentContentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/server/Impl/CommentContentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/dto/CountPublishCommentMqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteCommentConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/domain/dto/CountPublishCommentMqDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/domain/entity/Comment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/mapper/CommentMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/resources/mapper/CommentMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/day17.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day17.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/ZealsingerbookCommentApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/ZealsingerbookCommentApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/dto/PublishCommentMqDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/dto/PublishCommentMqDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/constant/MQConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/constant/MQConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/consumer/Comment2DBConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/consumer/Comment2DBConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/entry/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/entry/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/vo/PublishCommentReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/vo/PublishCommentReqVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/server/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/server/impl/CommentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/api/KVFeignApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-api/src/main/java/com/zealsinger/kv/api/KVFeignApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/controller/NoteContentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-kv/zealsingerbook-biz/src/main/java/com/zealsinger/kv/controller/NoteContentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/MQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/MQConstant.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +139,7 @@
     "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/ZhuoMian/bigThree/Netty相关资料/ZealSingerBook-test/zealsingerbook-comment/zealsinger-comment-biz/src/main/resources",
+    "last_opened_file_path": "D:/ZhuoMian/bigThree/Netty相关资料/ZealSingerBook-test/zealsingerbook-count/zealsingerbook-count-biz/src/main/resources/mapper",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -186,11 +175,11 @@
       <recent name="com.zealsinger.note.server.Impl" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-count\zealsingerbook-count-biz\src\main\resources\mapper" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-comment\zealsinger-comment-biz\src\main\resources" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-search\src\main\java\com\zealsinger\search" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-search\src\main\java\com\zealsinger\search\domain" />
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-search\src\main\resources" />
-      <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-data-align\src\main\java\com\zealsinger\data\align\job" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\ZhuoMian\bigThree\Netty相关资料\ZealSingerBook-test\zealsingerbook-search\zealsingerbook-search-biz" />
@@ -204,11 +193,11 @@
       <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.zealsinger.count.mapper" />
+      <recent name="com.zealsinger.count.domain.entity" />
+      <recent name="com.zealsinger.count.domain.dto" />
       <recent name="com.zealsinger.search.dto" />
       <recent name="com.zealsinger.search.domain.vo" />
-      <recent name="com.zealsinger.search.domain.enums" />
-      <recent name="com.zealsinger.data.align.job" />
-      <recent name="com.zealsinger.data.align.mapper" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -455,6 +444,7 @@
       <item itemvalue="Spring Boot.ZealsingerbookNoteApplication (1)" />
       <item itemvalue="Spring Boot.ZealsingerbookNoteApplication (2)" />
       <item itemvalue="Spring Boot.ZealsingerbookOssApplication" />
+      <item itemvalue="Spring Boot.ZealsingerbookUserRelationApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookKVApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookCommentApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookCountApplication" />
@@ -464,10 +454,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.ZealsingerbookCommentApplication" />
+        <item itemvalue="Spring Boot.ZealsingerbookCountApplication" />
         <item itemvalue="Spring Boot.ZealsingerbookKVApplication" />
         <item itemvalue="Spring Boot.ZealsingerbookSearchApplication" />
         <item itemvalue="Spring Boot.ZealsingerbookDataAlignApplication" />
-        <item itemvalue="Spring Boot.ZealsingerbookCountApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -641,7 +631,9 @@
       <workItem from="1735895866717" duration="18000" />
       <workItem from="1736563296436" duration="8879000" />
       <workItem from="1736602040588" duration="5542000" />
-      <workItem from="1736667516559" duration="18420000" />
+      <workItem from="1736667516559" duration="19518000" />
+      <workItem from="1736756618002" duration="7961000" />
+      <workItem from="1736840359644" duration="4089000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -947,7 +939,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736668109327</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="feat:初始化搭建comment评论模块">
+      <option name="closed" value="true" />
+      <created>1736695050597</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1736695050597</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1005,11 +1005,6 @@
           <url>file://$PROJECT_DIR$/zealsingerbook-user-relation/zealsingerbook-user-relation-biz/src/main/java/com/zealsinger/user/relation/rpc/UserRpcServer.java</url>
           <line>28</line>
           <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNotePublishConsumer.java</url>
-          <line>55</line>
-          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
