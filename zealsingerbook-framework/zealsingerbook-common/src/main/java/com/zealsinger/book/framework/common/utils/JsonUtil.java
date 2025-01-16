@@ -1,5 +1,6 @@
 package com.zealsinger.book.framework.common.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class JsonUtil {
     /**
@@ -85,6 +87,16 @@ public class JsonUtil {
             @Override
             public CollectionType getType() {
                 return OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, clazz);
+            }
+        });
+    }
+
+    public static <T> Set<T> parseSet(String jsonStr, Class<T> clazz) throws JsonProcessingException {
+        // 使用 TypeReference 指定 List<T> 的泛型类型
+        return OBJECT_MAPPER.readValue(jsonStr, new TypeReference<>() {
+            @Override
+            public CollectionType getType() {
+                return OBJECT_MAPPER.getTypeFactory().constructCollectionType(Set.class, clazz);
             }
         });
     }

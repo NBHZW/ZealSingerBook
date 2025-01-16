@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -55,6 +56,12 @@ public class Comment {
 
     @TableField("child_comment_total")
     private Long childCommentTotal;
+
+    @TableField("heat")
+    private BigDecimal heat = BigDecimal.ZERO;
+
+    @TableField("first_reply_comment_id")
+    private Long firstReplyCommentId = 0L;
 
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;

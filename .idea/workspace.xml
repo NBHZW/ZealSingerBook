@@ -4,21 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:初始化搭建comment评论模块">
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/dto/CountPublishCommentMqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteCommentConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/domain/dto/CountPublishCommentMqDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/domain/entity/Comment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/mapper/CommentMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/resources/mapper/CommentMapper.xml" afterDir="false" />
+    <list default="true" id="e6cb947a-e10d-4b09-a78a-357b6d890c11" name="更改" comment="feat:完成笔记评论计数和一级评论下的二级评论计数">
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/config/RedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/constant/RedisKeyConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/consumer/CommentHeatUpdateConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/consumer/OneLevelCommentFirstReplyCommentIdUpdateConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/util/HeatUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/day17.md" beforeDir="false" afterPath="$PROJECT_DIR$/doc/day17.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/constant/MQConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/constant/MQConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/consumer/Comment2DBConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/consumer/Comment2DBConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/entry/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/entry/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/vo/PublishCommentReqVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/domain/vo/PublishCommentReqVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/server/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-comment/zealsinger-comment-biz/src/main/java/com/zealsinger/comment/server/impl/CommentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteCommentConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-count/zealsingerbook-count-biz/src/main/java/com/zealsinger/count/consumer/CountNoteCommentConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/MQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/constant/MQConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/utils/JsonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/zealsingerbook-framework/zealsingerbook-common/src/main/java/com/zealsinger/book/framework/common/utils/JsonUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,98 +70,98 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "JUnit.KVTest.test.executor": "Run",
-    "JUnit.MQTests.testSendCountFollowUnfollowMQ.executor": "Run",
-    "JUnit.ZealsingerbookAuthApplicationTests.connectTest.executor": "Debug",
-    "JUnit.ZealsingerbookAuthApplicationTests.contextLoads.executor": "Run",
-    "JUnit.ZealsingerbookAuthApplicationTests.redisTest.executor": "Run",
-    "JUnit.ZealsingerbookAuthApplicationTests.threadPoolTest.executor": "Debug",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "Maven.ZealSingerBook [clean].executor": "Run",
-    "Maven.ZealSingerBook [install].executor": "Run",
-    "Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:clean].executor": "Run",
-    "Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:flatten].executor": "Run",
-    "Maven.ZealSingerBook [package].executor": "Run",
-    "Maven.zealsinger-bizcontext-spring-boot-starter [clean].executor": "Run",
-    "Maven.zealsinger-bizcontext-spring-boot-starter [install].executor": "Run",
-    "Maven.zealsinger-bizcontext-spring-boot-starter [package].executor": "Run",
-    "Maven.zealsinger-comment-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor": "Run",
-    "Maven.zealsinger-jackson-spring-boot-starter [clean].executor": "Run",
-    "Maven.zealsinger-jackson-spring-boot-starter [package].executor": "Run",
-    "Maven.zealsinger-operationlog-spring-boot-starter [clean].executor": "Run",
-    "Maven.zealsinger-operationlog-spring-boot-starter [install].executor": "Run",
-    "Maven.zealsinger-operationlog-spring-boot-starter [package].executor": "Run",
-    "Maven.zealsingerbook-api [install].executor": "Run",
-    "Maven.zealsingerbook-auth [clean].executor": "Run",
-    "Maven.zealsingerbook-auth [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor": "Run",
-    "Maven.zealsingerbook-auth [package].executor": "Run",
-    "Maven.zealsingerbook-biz [install].executor": "Run",
-    "Maven.zealsingerbook-common [clean].executor": "Run",
-    "Maven.zealsingerbook-common [install].executor": "Run",
-    "Maven.zealsingerbook-common [package].executor": "Run",
-    "Maven.zealsingerbook-count-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor": "Run",
-    "Maven.zealsingerbook-framework [clean].executor": "Run",
-    "Maven.zealsingerbook-framework [install].executor": "Run",
-    "Maven.zealsingerbook-framework [package].executor": "Run",
-    "Maven.zealsingerbook-id-generator-api [clean].executor": "Run",
-    "Maven.zealsingerbook-id-generator-api [install].executor": "Run",
-    "Maven.zealsingerbook-kv [clean].executor": "Run",
-    "Maven.zealsingerbook-kv [install].executor": "Run",
-    "Maven.zealsingerbook-kv [package].executor": "Run",
-    "Maven.zealsingerbook-note-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor": "Run",
-    "Maven.zealsingerbook-search-api [install].executor": "Run",
-    "Maven.zealsingerbook-user-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor": "Run",
-    "Maven.zealsingerbook-user-relation-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.ZealsingerBookUerApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookAuthApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookCommentApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookCountApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookDataAlignApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookGatewayApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookIdGeneratorApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookKVApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookNoteApplication (1).executor": "Debug",
-    "Spring Boot.ZealsingerbookNoteApplication (2).executor": "Debug",
-    "Spring Boot.ZealsingerbookNoteApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookOssApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookSearchApplication.executor": "Debug",
-    "Spring Boot.ZealsingerbookUserRelationApplication.executor": "Debug",
-    "git-widget-placeholder": "master",
-    "jdk.selected.JAVA_MODULE": "17",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/ZhuoMian/bigThree/Netty相关资料/ZealSingerBook-test/zealsingerbook-count/zealsingerbook-count-biz/src/main/resources/mapper",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "模块",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.45402297",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "File.Encoding",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.ZealsingerbookIdGeneratorApplication.executor": "Debug",
-    "应用程序.ZealsingerbookKVApplication.executor": "Debug"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;JUnit.KVTest.test.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MQTests.testSendCountFollowUnfollowMQ.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.connectTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.contextLoads.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.redisTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZealsingerbookAuthApplicationTests.threadPoolTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [org.codehaus.mojo:flatten-maven-plugin:1.5.0:flatten].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZealSingerBook [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-bizcontext-spring-boot-starter [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-bizcontext-spring-boot-starter [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-bizcontext-spring-boot-starter [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-comment-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-jackson-spring-boot-starter [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-jackson-spring-boot-starter [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-operationlog-spring-boot-starter [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-operationlog-spring-boot-starter [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsinger-operationlog-spring-boot-starter [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-api [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-auth [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-auth [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-auth [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-biz [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-common [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-common [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-common [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-count-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-framework [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-framework [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-framework [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-id-generator-api [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-id-generator-api [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-kv [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-kv [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-kv [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-note-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-search-api [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-user-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.zealsingerbook-user-relation-biz [org.mybatis.generator:mybatis-generator-maven-plugin:1.3.5:generate].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ZealsingerBookUerApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookAuthApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookCommentApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookCountApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookDataAlignApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookGatewayApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookIdGeneratorApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookKVApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookNoteApplication (1).executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookNoteApplication (2).executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookNoteApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookOssApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookSearchApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ZealsingerbookUserRelationApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/ZhuoMian/bigThree/Netty相关资料/ZealSingerBook-test/zealsingerbook-count/zealsingerbook-count-biz/src/main/resources/mapper&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.45402297&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.ZealsingerbookIdGeneratorApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;应用程序.ZealsingerbookKVApplication.executor&quot;: &quot;Debug&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "redis"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;redis&quot;
     ],
-    "RunConfigurationTargetLRU": [
-      "1323a9d6-c82a-4f49-af89-1467ef10be85/schema/\"0\""
+    &quot;RunConfigurationTargetLRU&quot;: [
+      &quot;1323a9d6-c82a-4f49-af89-1467ef10be85/schema/\&quot;0\&quot;&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -193,11 +192,11 @@
       <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.zealsinger.comment.config" />
       <recent name="com.zealsinger.count.mapper" />
       <recent name="com.zealsinger.count.domain.entity" />
       <recent name="com.zealsinger.count.domain.dto" />
       <recent name="com.zealsinger.search.dto" />
-      <recent name="com.zealsinger.search.domain.vo" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -444,12 +443,12 @@
       <item itemvalue="Spring Boot.ZealsingerbookNoteApplication (1)" />
       <item itemvalue="Spring Boot.ZealsingerbookNoteApplication (2)" />
       <item itemvalue="Spring Boot.ZealsingerbookOssApplication" />
-      <item itemvalue="Spring Boot.ZealsingerbookUserRelationApplication" />
-      <item itemvalue="Spring Boot.ZealsingerbookKVApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookCommentApplication" />
+      <item itemvalue="Spring Boot.ZealsingerbookKVApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookCountApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookDataAlignApplication" />
       <item itemvalue="Spring Boot.ZealsingerbookSearchApplication" />
+      <item itemvalue="Spring Boot.ZealsingerbookUserRelationApplication" />
     </list>
     <recent_temporary>
       <list>
@@ -633,7 +632,10 @@
       <workItem from="1736602040588" duration="5542000" />
       <workItem from="1736667516559" duration="19518000" />
       <workItem from="1736756618002" duration="7961000" />
-      <workItem from="1736840359644" duration="4089000" />
+      <workItem from="1736840359644" duration="7510000" />
+      <workItem from="1736852192001" duration="5000" />
+      <workItem from="1736951488416" duration="265000" />
+      <workItem from="1737012002262" duration="19887000" />
     </task>
     <task id="LOCAL-00001" summary="feat:父模块搭建+统一响应Response封装+自定义AOP切面日志starter">
       <option name="closed" value="true" />
@@ -947,7 +949,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736695050597</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="feat:完成笔记评论计数和一级评论下的二级评论计数">
+      <option name="closed" value="true" />
+      <created>1736845601879</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1736845601879</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -966,7 +976,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="feat:添加OSS服务模块（策略模式+工厂模式，支持AliyunOSS对象存储和Minio对象存储两种方式）" />
     <MESSAGE value="feat:添加uer模块的基础搭建" />
     <MESSAGE value="feat:添加用户信息更新接口" />
     <MESSAGE value="feat:重构代码结构，优化模块任务分工" />
@@ -991,7 +1000,8 @@
     <MESSAGE value="feat:搭建基础的Canl监听数据库Binlog配置服务" />
     <MESSAGE value="feat:完成Canal监听从而对ES的数据的一致性" />
     <MESSAGE value="feat:初始化搭建comment评论模块" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:初始化搭建comment评论模块" />
+    <MESSAGE value="feat:完成笔记评论计数和一级评论下的二级评论计数" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:完成笔记评论计数和一级评论下的二级评论计数" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

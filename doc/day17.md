@@ -1175,3 +1175,383 @@ alter table t_comment add column `child_comment_total` bigint(20) unsigned DEFAU
 在消息中将其赋值发送过去即可
 
 ![image-20250114163925158](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250114163925158.png)
+
+### 评论热度值
+
+我们评论区返回评论列表的时候，其实可以看到，一般只有两个排序顺序，**最热和最新**
+
+![image-20250114180737597](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250114180737597.png)
+
+最新排序这个就很简单，就是按照发布时间进行排序，现在就是的**讨论最热排序**
+
+这就涉及到我们的**热度值**计算了,对于**每一个评论的热度值存在一个计算公式**，然后按照热度值的递减返回，就是我们的 最热排序 的返回
+
+可以先来看看，和热度值有关的参数，其实就是用户觉得评论比较好的参考标准
+
+1：内容合法度，质量（非法评论or不良言论应该尽可能热度小）
+
+2：评论点赞数
+
+3：评论回复数（该评论的子评论数）
+
+4：评论用户（用户如果是大V，热度自然会高一些）
+
+5：评论时间（时间应该梯度下降，随着发布时间演唱而衰减，防止新评论永远比不过旧评论）
+
+除此之外，如果有评论收藏，评论转发量这种属性的话，自然也需要被计算上取，综合分配，从而得到热度值，通过上面，我们可以简单的得到一个热度值的计算公式，如果还有别的属性参数，也按照类似的加入计算公式即可
+
+```
+热度 = (点赞数 * 权重1) + (回复数 * 权重2) + (收藏数 * 权重3) + (时间权重) + (用户影响力 * 权重4)
+```
+
+在我们这里就不弄这么复杂，**目前只参考 被回复数和被点赞数 两个参数作为热度的计算**
+
+所以，为了方便获取热度值，我们需要给数据库表添加一个热度值的字段，方便排序，同样的，热度数值这个属性只有在一级评论才会需要，因为评论区直接返回的也是一级评论
+
+```SQL
+ALTER TABLE t_comment ADD COLUMN heat DECIMAL(10, 2) DEFAULT 0 COMMENT '评论热度';
+```
+
+#### 热度值计算/更新触发逻辑
+
+当一级评论被评论了，或者是被点赞的时候，就需要重新计算热度值
+
+![image-20250116153347551](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250116153347551.png)
+
+定义好触发更新逻辑热度值的MQ消息的Topic
+
+```Java
+public interface MQConstants {
+
+	// 省略...
+
+    /**
+     * Topic: 评论热度值更新
+     */
+    String TOPIC_COMMENT_HEAT_UPDATE = "CommentHeatUpdateTopic";
+
+	// 省略...
+
+}
+```
+
+然后我们对计数服务中，统计二级评论的功能进行修改修改一下，添加作为生产者发送MQ消息的逻辑
+
+![image-20250116153938322](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250116153938322.png)
+
+因为一开始MQ评论消息批量消费的时候，我们就限定了30条的消费，这里其实进行了一定的限流削峰，然后可能会导致每次更新热度值得频率还是过高且低效，所以我们需要聚合处理
+
+![image-20250116162221703](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250116162221703.png)
+
+```
+我们发送热度值的更新的MQ消息，是将所有的二级评论按照一级评论分类后，拿出所有的一级评论ID，然后再去进行更新，每次MQ消息只有30条，平均下来，可能一个一级评论会在多个Map中keySet中
+比如说：并发abcababababcbabab这几个一级评论被评论了，每个MQ批量消费三条消息，第一个keySet中abc,第二个就是aba去重后就是ab,如此往后，每个keySet对应一次热度数的计算，那么a b均尽力了两次更新，但是这两次MQ消息到达时间差可能只有几毫秒，所以我们应该要尽量等到更多的消息到达后一次行处理a，比如说我们等到倒数第四个a那一批，然后再一起处理a的热度数计算，就能减少数据库和计算压力，本来评论的热度也不是强实时的要求，完全可以聚合后再处理
+```
+
+所以我们最终的comsumer消费者逻辑如下
+
+```
+
+
+@Component
+@RocketMQMessageListener(
+        consumerGroup = "zealsingerbook_group"+ MQConstants.TOPIC_COMMENT_HEAT_UPDATE,
+        topic = MQConstants.TOPIC_COMMENT_HEAT_UPDATE
+)
+@Slf4j
+public class CommentHeatUpdateConsumer implements RocketMQListener<String> {
+
+    @Resource
+    private CommentMapper commentMapper;
+
+    private BufferTrigger<String> bufferTrigger = BufferTrigger.<String>batchBlocking()
+            .bufferSize(50000) // 缓存队列的最大容量
+            .batchSize(300)   // 一批次最多聚合 300 条
+            .linger(Duration.ofSeconds(2)) // 多久聚合一次（2s 一次）
+            .setConsumerEx(this::consumeMessage) // 设置消费者方法
+            .build();
+
+    private void consumeMessage(List<String> bodys) throws JsonProcessingException {
+        Set<Long> commentIds = Sets.newHashSet();
+        for (String body : bodys) {
+            Set<Long> set = JsonUtil.parseSet(body, Long.class);
+            commentIds.addAll(set);
+        }
+        log.info("去重后要更新热值评论ID；列表===> {}", commentIds);
+        LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Comment::getId, commentIds);
+        List<Comment> comments = commentMapper.selectList(queryWrapper);
+        comments.forEach(comment -> comment.setHeat(HeatUtil.calculateHeat(comment.getLikeTotal(),comment.getChildCommentTotal())));
+        commentMapper.updateById(comments);
+    }
+
+
+    @Override
+    public void onMessage(String message) {
+        bufferTrigger.enqueue(message);
+    }
+}
+
+```
+
+![image-20250116184231300](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250116184231300.png)
+
+其中 HeatUtil.calculateHeat 方法式自定义计算热度值的工具类
+
+```Java
+public class HeatUtil {
+    // 热度计算的权重配置
+    private static final double LIKE_WEIGHT = 0.7;  // 点赞权重 70%
+    private static final double REPLY_WEIGHT = 0.3; // 回复权重 30%
+
+    public static BigDecimal calculateHeat(long likeCount, long replyCount) {
+        // 点赞数权重 70%，被回复数权重 30%
+        BigDecimal likeWeight = new BigDecimal(LIKE_WEIGHT);
+        BigDecimal replyWeight = new BigDecimal(REPLY_WEIGHT);
+
+        // 转换点赞数和回复数为 BigDecimal
+        BigDecimal likeCountBD = new BigDecimal(likeCount);
+        BigDecimal replyCountBD = new BigDecimal(replyCount);
+
+        // 计算热度 (点赞数*点赞权重 + 回复数*回复权重)
+        BigDecimal heat = likeCountBD.multiply(likeWeight).add(replyCountBD.multiply(replyWeight));
+
+        // 四舍五入保留两位小数
+        return heat.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public static void main(String[] args) {
+        int likeCount = 150;    // 点赞数
+        int replyCount = 10;    // 被回复数
+
+        // 计算热度
+        BigDecimal heat = calculateHeat(likeCount, replyCount);
+
+        // 输出热度值
+        System.out.println("Calculated Heat: " + heat);
+    }
+}
+```
+
+## 评论分页查询
+
+评论分页查询自然是一个高并发的接口，主要是高并发读
+
+首先从业务界面分析一下需求
+
+**分页返回一级评论，并且携带一级评论中的子评论下的最早回复的那一条，也就是说，一级评论按照热度降序排序，二级评论按照发布时间升序排序**
+
+![image-20250116185605687](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250116185605687.png)
+
+按照上面需求分析，我们写一下对应的SQL
+
+首先是正常的一级评论的分页返回
+
+```sql
+select * from t_comment where note_id =xxxx and levele =1 order by heat desc limit 0, 10;
+```
+
+然后是一级评论对应的二级评论
+
+```sql
+select * from t_comment where note_id=xxx and parent_id=xxx and level = 2 order by create_time asc limit 1;
+```
+
+那么从这里就可以看出，每有一个人点进一个笔记，一开始就需要进行11查询（一次一级评论的查询，10条二级评论的查询），在高并发的场景下，肯定是不可行的
+
+### 优化方案
+
+采用 空间换时间 的办法，在评论表中添加一个冗余字段，保存记录该评论的最早子评论，当我们返回一级评论的时候就不需要二次查询了
+
+```sql
+alter table t_comment add column first_reply_comment_id bigint(20) unsigned default 0 COMMENT '最早回复的评论ID (只有一级评论需要)';
+```
+
+### 实现优化方案的主体逻辑--评论发布的时候同时更新最早二级评论的信息
+
+在原本的发布评论的逻辑中，所有的评论我们会发送一个MQ给计数模块，从而统计笔记评论数目 和 子评论数目，这个MQ既然已经有了，那我们再次创建一个新的消费者同样消费这些消息，然后记录最早的评论ID即可
+
+![image-20250116191201485](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250116191201485.png)
+
+创建对应的消费者，因为传入的消息CommentList中一级评论和二级评论都会包含，所以我们需要先过滤出所有的二级评论，然后再进行处理，逻辑如下
+
+```Java
+@Component
+@RocketMQMessageListener(consumerGroup = "zealsingerbook_group" + MQConstants.TOPIC_COUNT_NOTE_COMMENT, // Group 组
+        topic = MQConstants.TOPIC_COUNT_NOTE_COMMENT // 主题 Topic
+)
+@Slf4j
+public class OneLevelCommentFirstReplyCommentIdUpdateConsumer implements RocketMQListener<String> {
+
+    private BufferTrigger<String> bufferTrigger = BufferTrigger.<String>batchBlocking()
+            .bufferSize(50000) // 缓存队列的最大容量
+            .batchSize(1000)   // 一批次最多聚合 1000 条
+            .linger(Duration.ofSeconds(1)) // 多久聚合一次（1s 一次）
+            .setConsumerEx(this::consumeMessage) // 设置消费者方法
+            .build();
+
+    @Override
+    public void onMessage(String body) {
+        // 往 bufferTrigger 中添加元素
+        bufferTrigger.enqueue(body);
+    }
+
+    private void consumeMessage(List<String> bodys) {
+        log.info("==> 【一级评论 first_reply_comment_id 更新】聚合消息, size: {}", bodys.size());
+        log.info("==> 【一级评论 first_reply_comment_id 更新】聚合消息, {}", JsonUtil.ObjToJsonString(bodys));
+
+        // 将聚合后的消息体 Json 转 List<CountPublishCommentMqDTO>
+        List<Comment> commentList = Lists.newArrayList();
+        bodys.forEach(body -> {
+            try {
+                List<Comment> list = JsonUtil.parseList(body, Comment.class);
+                commentList.addAll(list);
+            } catch (Exception e) {
+                log.error("", e);
+            }
+        });
+        // 过滤出二级评论的 parent_id（即一级评论 ID），并去重，需要更新对应一级评论的 first_reply_comment_id
+        List<Long> parentIds = commentList.stream().filter(countPublishCommentMqDTO -> countPublishCommentMqDTO.getLevel() == 2).map(Comment::getParentId).distinct().toList();
+
+        if (CollUtil.isEmpty(parentIds)) return;
+
+        // TODO:
+    }
+
+}
+```
+
+在这里 我们的parentIds都是被评论了的一级评论，也就是对应的   first_reply_comment_id 字段需要被修改的，而且第一条评论肯定是不会频繁更新，一级评论的第一条二级评论，只要不是删除了，就会一直是那一条，也就是说parentIds列表中也不是所有的都需要改，我们只需要查看是否有第一条子评论即可
+
+这个完全可以再加上Reids做缓存，提高效率，减少查库
+
+![image-20250116192752101](https://zealsinger-book-bucket.oss-cn-hangzhou.aliyuncs.com/img/image-20250116192752101.png)
+
+首先准备redis对应key  标记是否有firest的数据，如果有则不需要变化，如果没有则需要查库修改
+
+```Java
+	/**
+     * Key 前缀：一级评论的 first_reply_comment_id 字段值是否更新标识
+     */
+    private static final String HAVE_FIRST_REPLY_COMMENT_KEY_PREFIX = "comment:havaFirstReplyCommentId:";
+
+
+    /**
+     * 构建完整 KEY
+     * @param commentId
+     * @return
+     */
+    public static String buildHaveFirstReplyCommentKey(Long commentId) {
+        return HAVE_FIRST_REPLY_COMMENT_KEY_PREFIX + commentId;
+    }
+```
+
+然后就可以对上面过滤出来的二级评论对应的父评论ID集合进行操作
+
+**然后拿着父ID到Redis中找到Redis中没有数据的父ID集合missingCommentIds，将missingCommentIds父评论分为已经有了子评论集合（数据库中有数据没有同步到redis而已）sqlHaveCommentIds 和 没有子评论集合（数据库中还没有记录）sqlMissingCommentIds** 
+
+**进行异步任务先将sqlHaveCommentIds的信息同步到Redis，然后查库给sqlMissingCommentIds 中的每一个ID对应的找到第一个子评论并且更新数据库信息，更新完成后同步Redis**
+
+```Java
+{
+    ....
+// 过滤出二级评论的 parent_id（即一级评论 ID），并去重，需要更新对应一级评论的 first_reply_comment_id
+        List<Long> parentIds = commentList.stream().filter(countPublishCommentMqDTO -> countPublishCommentMqDTO.getLevel() == 2).map(Comment::getParentId).distinct().toList();
+
+        if (CollUtil.isEmpty(parentIds)) return;
+
+        // 构建 Redis Key
+        List<String> keys = parentIds.stream()
+                .map(RedisKeyConstants::buildHaveFirstReplyCommentKey).toList();
+
+        // 批量查询 Redis
+        List<Object> values = redisTemplate.opsForValue().multiGet(keys);
+
+        // 提取 Redis 中不存在的评论 ID
+        List<Long> missingCommentIds = Lists.newArrayList();
+        for (int i = 0; i < values.size(); i++) {
+            if (Objects.isNull(values.get(i))) {
+                missingCommentIds.add(parentIds.get(i));
+            }
+        }
+
+        // 存在的一级评论 ID，说明表中对应记录的 first_reply_comment_id 已经有值
+        if (CollUtil.isNotEmpty(missingCommentIds)) {
+            // TODO: 不存在的，则需要进一步查询数据库来确定，是否要更新记录对应的 first_reply_comment_id 值
+            LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.in(Comment::getId, missingCommentIds);
+            List<Comment> comments = commentMapper.selectList(queryWrapper);
+            List<Comment> sqlHaveCommentIds = comments.stream().filter(comment -> comment.getFirstReplyCommentId() != 0).toList();
+            List<Comment> sqlMissingCommentIds = comments.stream().filter(comment -> comment.getFirstReplyCommentId() == 0).toList();
+            threadPoolTaskExecutor.execute(() -> synchronizeCache(sqlHaveCommentIds));
+            sqlMissingCommentIds.forEach(comment -> {
+                LambdaQueryWrapper<Comment> query = new LambdaQueryWrapper<>();
+                query.eq(Comment::getParentId,comment.getId());
+                query.eq(Comment::getLevel,2);
+                query.orderByAsc(Comment::getCreateTime);
+                query.last("limit 1");
+                Comment one = commentMapper.selectOne(query);
+                comment.setFirstReplyCommentId(one.getId());
+                commentMapper.updateById(comment);
+            });
+            synchronizeCache(sqlMissingCommentIds);
+        }
+    }
+
+    private void synchronizeCache(List<Comment> commentList){
+        ValueOperations<String, Object> operations = redisTemplate.opsForValue();
+        redisTemplate.executePipelined((RedisCallback<Object>) connection -> {
+            commentList.forEach(comment -> {
+                String key = RedisKeyConstants.buildHaveFirstReplyCommentKey(comment.getId());
+                operations.set(key, 1, RandomUtil.randomInt(5 * 60 * 60), TimeUnit.SECONDS);
+            });
+            return null;
+        });
+    }
+```
+
+这里评论后的数据更新完毕了，接下来是正式的查询逻辑
+
+### 查询主逻辑
+
+入参
+
+```json
+POST /kv/comment/content/batchFind
+
+{
+    "noteId": 1862482047415615528, // 笔记ID
+    "commentContentKeys": [
+        {
+            "yearMonth": "2024-12", // 发布年月
+            "contentId": "1a0748f8-2b56-4a3b-905a-efa18871b795" // 评论内容的 UUID
+        },
+        {
+            "yearMonth": "2025-01",
+            "contentId": "71e2585f-5e9f-44e5-ad2e-32c0f0f570e3"
+        }
+    ]
+}
+```
+
+出参
+
+```json
+{
+	"success": true,
+	"message": null,
+	"errorCode": null,
+	"data": [
+		{
+			"contentId": "1a0748f8-2b56-4a3b-905a-efa18871b795", // 评论内容 UUID
+			"content": "这是一条测试评论" // 评论内容
+		},
+		{
+			"contentId": "71e2585f-5e9f-44e5-ad2e-32c0f0f570e3",
+			"content": "评论内容"
+		}
+	]
+}
+
+```
+
